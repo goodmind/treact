@@ -11,6 +11,11 @@ var config = {
 
   debug: true,
 
+  node: {
+    fs: 'empty',
+    net: 'empty'
+  },
+
   resolve: {
     root: path.resolve(__dirname),
     extensions: ['', '.ts', '.tsx', '.js', '.jsx'],
@@ -57,7 +62,7 @@ var config = {
         include: path.resolve('./src/app'),
         loaders: [
           'style-loader',
-          'css-loader?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]',
+          'css-loader?modules&importLoaders=2&localIdentName=[local]___[hash:base64:5]',
           'postcss-loader'
         ]
       },

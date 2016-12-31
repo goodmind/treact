@@ -1,14 +1,36 @@
-.nav ul {
-  list-style-type: none;
-  padding: 0;
+.header {
+  background-color: #6389a8;
+  flex: 1;
+  height: 39px;
+  width: 100%;
 }
 
-.nav ul li {
-  display: inline;
-  padding: 5px;
-  color: blue;
+.headerIcon {
+  float: left;
+  height: 26px;
+  margin: 7px;
+  width: 26px;
 }
 
-a {
-  color: pink;
+.headerButton, .header a {
+  color: #d4e3ef;
+  cursor: default;
+  text-decoration: none;
+  float: left;
+  font-size: 13px;
+  font-weight: 400;
+  height: 39px;
+  line-height: 39px;
+  padding: 0 7px;
+  transition: all .15s linear;
+  -webkit-user-select: none;
+}
+
+.headerButton:hover, .header a:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+.headerButton:active, .header a:active {
+  margin-top: 1px;
 }

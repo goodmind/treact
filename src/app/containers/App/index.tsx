@@ -8,7 +8,7 @@ class App extends React.Component<any, any> {
     const s = require('./style.css');
 
     return (
-      <section className={s.appContainer}>
+      <section className={s.app}>
         <Helmet {...appConfig.app} {...appConfig.app.head}/>
         <Header />
         {this.props.children}

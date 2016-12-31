@@ -1,0 +1,107 @@
+.chat {
+  background-image: url('./bg.jpg');
+  background-size: cover;
+  display: flex;
+  flex: 65;
+  height: 100%;
+}
+
+.bubble {
+  align-self: center;
+  background-color: #89a0b4;
+  border-radius: 27px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0 auto;
+  padding: 3px 12px 4px 12px;
+}
+
+.chatcontainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.chatheader {
+  background-color: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, .1);
+  display: flex;
+  height: 53px;
+  padding-left: 17px;
+}
+
+.left {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  font-size: 13px;
+}
+
+.top {
+  flex: 1;
+  font-weight: 700;
+  padding: 2px 0;
+}
+
+.bottom {
+  color: #979797;
+  flex: 1;
+  font-weight: 400;
+  padding: 2px 0;
+}
+
+.right {
+
+}
+
+.chatbody {
+  align-items: flex-start;
+  display: flex;
+  flex: 1;
+  height: 100%;
+  overflow: auto;
+  padding-bottom: 8px;
+}
+
+.box {
+  min-height: -webkit-min-content;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.chatfooter {
+  background-color: #fff;
+  border-top: 1px solid rgba(0, 0, 0, .1);
+  display: flex;
+}
+
+.editText {
+  border: none;
+  flex: 1;
+  font-size: 13px;
+  line-height: 18px;
+  margin: 12px 0px 12px 7px;
+  max-height: 256px;
+  min-height: 18px;
+  outline: none;
+  padding-left: 5px;
+  resize: none;
+}
+
+.sendbutton {
+  -webkit-user-select: none;
+  align-self: flex-end;
+  background-color: white;
+  color: #0080c0;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 12px 16px;
+  transition: all .2s linear;
+}
+
+.sendbutton:hover {
+  background-color: #f5f5f5;
+  color: #0073ad;
+}

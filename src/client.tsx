@@ -5,10 +5,10 @@ import 'isomorphic-fetch';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-const { Router, browserHistory } = require('react-router');
 import { syncHistoryWithStore } from 'react-router-redux';
-const { ReduxAsyncConnect } = require('redux-connect');
 import { configureStore } from './app/redux/store';
+const { Router, browserHistory } = require('react-router');
+const { ReduxAsyncConnect } = require('redux-connect');
 import 'isomorphic-fetch';
 import routes from './app/routes';
 
@@ -23,10 +23,11 @@ ReactDOM.render(
   <Provider store={store} key="provider">
     <Router
       history={history}
-      render={connectedCmp}
-    >
+      render={connectedCmp}>
       {routes}
     </Router>
   </Provider>,
   document.getElementById('app')
 );
+
+export { store }

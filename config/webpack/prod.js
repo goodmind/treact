@@ -9,6 +9,11 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var config = {
   bail: true,
 
+  node: {
+    fs: 'empty',
+    net: 'empty'
+  },
+
   resolve: {
     root: path.resolve(__dirname),
     extensions: ['', '.ts', '.tsx', '.js', '.jsx']

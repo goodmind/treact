@@ -1,0 +1,50 @@
+.main {
+  background-color: #FFF;
+  width: 100%;
+  flex: 1 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loginStep {
+  text-align: center;
+  width: 300px;
+}
+
+.loginStep h1 {
+  font-weight: 400;
+}
+
+.formGroupLogin {
+  composes: form-group from '../../../vendor/app.css';
+  margin-bottom: 42px;
+}
+
+button.btn {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background-color: #ccc;
+  line-height: 54px;
+  color: #fff;
+  padding: 1px 75px;
+  width: 100%;
+  border-radius: 3px;
+  font-size: 16px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+button.btn:active {
+  padding-top: 2px;
+  padding-bottom: 0px;
+}
+
+button.btn.primary {
+  background-color: #2fa9e2;
+}
+
+button.btn.primary:hover {
+  background-color: #279ad0;
+}

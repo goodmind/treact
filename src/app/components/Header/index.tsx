@@ -6,14 +6,11 @@ class Header extends React.Component<any, any> {
     const s = require('./style.css');
 
     return (
-      <nav className={s.nav}>
-        <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="about">About</Link></li>
-          <li><Link to="counter">Counter</Link></li>
-          <li><Link to="stars">Stars</Link></li>
-        </ul>
-      </nav>
+      <header className={s.header}>
+        <img className={s.headerIcon} src={require('./title-logo.png')} />
+        <Link to="/">Home</Link>
+        <Link to="login">Login</Link>
+      </header>
     );
   }
 }
