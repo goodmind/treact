@@ -1,0 +1,8 @@
+{
+ "private": true,
+ "name": "treact",
+ "version": "0.1",
+ "devDependencies": {
+  "lerna": "^2.9.0"
+ }
+}
