@@ -26,7 +26,8 @@ if (typeof window !== 'undefined') {
       offset_id: 0,
       offset_peer: new client.schema.type.InputPeerEmpty(),
       limit: 0,
-    }).then(config => console.log(config));
+    }).then(config => console.log(config))
+      .catch(err => console.error(err));
   });
   ready = client.setup(config);
   config.deviceModel = navigator.vendor;

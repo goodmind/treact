@@ -41,7 +41,7 @@ var config = {
 
   output: {
     path: path.resolve('./build/public'),
-    publicPath: 'http://rawgit.com/goodmind/treact/gh-pages/public/',
+    publicPath: 'http://rawgit.com/goodmind/treact/gh-pages/',
     filename: 'js/[name].[chunkhash].js'
   },
 

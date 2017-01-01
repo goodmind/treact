@@ -3,7 +3,7 @@ import { restoreAuthKey } from './helpers';
 export const APP_ID = 49631;
 export const APP_HASH = 'fb050b8f6771e15bfda5df2409931569';
 export const SERVER = {
-  host: '149.154.167.40',
+  host: '149.154.167.50',
   port: '443',
 };
 

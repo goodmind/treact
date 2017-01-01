@@ -8,12 +8,14 @@
     "prebuild": "npm run clean",
     "build": "webpack --config config/webpack/index.js",
     "build:prod": "cross-env NODE_ENV=production npm run build",
+    "build:gh-pages": "cross-env NODE_ENV=production webpack --config config/webpack/gh-pages.js",
     "postbuild": "webpack --config config/webpack/server.js",
     "prestart": "npm run build",
     "start": "node build/server.js",
     "start:prod": "cross-env NODE_ENV=production npm start",
     "test": "node_modules/.bin/karma start config/test/karma.conf.js",
-    "lint": "node_modules/.bin/tslint \"src/**/**.ts*\""
+    "lint": "node_modules/.bin/tslint \"src/**/**.ts*\"",
+    "deploy": "git add build; git commit -m 'update'; git subtree push --prefix build/public origin gh-pages"
   },
   "author": "Barbar Startup Factory <hey@barbar.com.tr>",
   "contributors": [
@@ -132,7 +134,7 @@
     "tslint-react": "^1.1.0",
     "typescript": "^2.0.6",
     "url-loader": "^0.5.7",
-    "webpack": "^1.13.2",
+    "webpack": "^1.14.0",
     "webpack-dev-middleware": "^1.8.4",
     "webpack-dev-server": "^1.16.2",
     "webpack-hot-middleware": "^2.13.0",
