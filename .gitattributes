@@ -23,5 +23,3 @@
 *.pyc binary
 *.pdf binary
 
-* text eol=lf
-
