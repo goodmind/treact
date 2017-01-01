@@ -20122,7 +20122,8 @@ module.exports =
 	            offset_id: 0,
 	            offset_peer: new client.schema.type.InputPeerEmpty(),
 	            limit: 0,
-	        }).then(function (config) { return console.log(config); });
+	        }).then(function (config) { return console.log(config); })
+	            .catch(function (err) { return console.error(err); });
 	    });
 	    ready = client.setup(config_1.config);
 	    config_1.config.deviceModel = navigator.vendor;
@@ -24496,11 +24497,11 @@ module.exports =
 	var MTProto = __webpack_require__(176);
 	function restoreAuthKey() {
 	    if (typeof window === 'undefined') {
-	        return null;
+	        return undefined;
 	    }
 	    var storageKey = JSON.parse(localStorage.getItem('reduxPersist:authKey'));
 	    if (!storageKey) {
-	        return null;
+	        return undefined;
 	    }
 	    var _a = restoreAuthKeyWithSaltFromStorableBuffer(Buffer.from(storageKey)), id = _a[0], value = _a[1];
 	    return new MTProto.auth.AuthKey(id, value);
@@ -37698,14 +37699,14 @@ module.exports =
 /***/ function(module, exports) {
 
 	module.exports = {
-		"app.css": "css/app.298a05b1639fcc901763.css",
-		"app.js": "js/app.02736f137631c5a53964.js",
+		"app.css": "css/app.1f751b7cf2f122e87883.css",
+		"app.js": "js/app.c43ba2fb2890a5e8b154.js",
 		"images/bg.jpg": "images/db9e30b75a0a41dd4287b954fec309bf.jpg",
 		"images/icon102.png": "images/74ac0c92674a405a27352fe5898a214d.png",
 		"images/search.png": "images/0bf98074e7c584d39a49fb82ef493890.png",
 		"images/title-logo.png": "images/debbf307db26c6b78227158a681e23fa.png",
-		"vendor.css": "css/vendor.298a05b1639fcc901763.css",
-		"vendor.js": "js/vendor.ffe12daf74f6b41d9a17.js"
+		"vendor.css": "css/vendor.1f751b7cf2f122e87883.css",
+		"vendor.js": "js/vendor.6c2a393ab4fc538e4fbf.js"
 	};
 
 /***/ },
