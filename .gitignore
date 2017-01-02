@@ -37,6 +37,10 @@ node_modules
 
 # TypeScript
 typings
+typings.json
 
 # JetBrains
 .idea
+
+# Visual Studio Code
+.vscode

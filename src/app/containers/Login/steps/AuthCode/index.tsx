@@ -4,23 +4,15 @@ import { signIn } from 'modules/auth';
 const t = require('../../style.css');
 
 class AuthCodeImpl extends React.Component<any, any> {
-  constructor(...args) {
-    super(...args);
+  public state = {
+    authCode: '',
+    error: null,
+  };
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleNextStep = this.handleNextStep.bind(this);
-
-    this.state = {
-      authCode: '',
-      error: null,
-    };
-  }
-
-  public handleChange(event) {
+  public handleChange = event =>
     this.setState({ [event.target.name]: event.target.value });
-  }
 
-  public handleNextStep() {
+  public handleNextStep = () => {
     const { update, skipStep, auth, dispatch } = this.props;
     const { authCode } = this.state;
 
