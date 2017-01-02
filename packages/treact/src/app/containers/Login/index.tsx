@@ -47,23 +47,31 @@ class LoginImpl extends React.Component<any, any> {
 
       switch (step) {
         case 1:
-          return <Steps.Intro
-            nextStep={this.nextStep} />;
+          return (
+            <Steps.Intro
+              nextStep={this.nextStep} />
+          );
         case 2:
-          return <Steps.PhoneNumber
-            form={this.state.form}
-            update={this.updateForm}
-            nextStep={this.nextStep} />;
+          return (
+            <Steps.PhoneNumber
+              form={this.state.form}
+              update={this.updateForm}
+              nextStep={this.nextStep} />
+          );
         case 3:
-          return <Steps.AuthCode
-            form={this.state.form}
-            update={this.updateForm}
-            skipStep={this.skipStep} />;
+          return (
+            <Steps.AuthCode
+              form={this.state.form}
+              update={this.updateForm}
+              skipStep={this.skipStep} />
+          );
         case 4:
-          return <Steps.Password
-            form={this.state.form}
-            update={this.updateForm}
-            nextStep={this.nextStep} />;
+          return (
+            <Steps.Password
+              form={this.state.form}
+              update={this.updateForm}
+              nextStep={this.nextStep} />
+          );
         case 5:
           return <Steps.Success />;
         default:

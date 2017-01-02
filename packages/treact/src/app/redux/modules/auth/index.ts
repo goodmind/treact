@@ -50,9 +50,9 @@ export function authReducer(state = initialState, action: IAuthAction) {
       });
 
     case SIGN_IN_SUCCESS:
-      console.log(action.payload);
       return Object.assign(state, {}, {
         loading: false,
+        authenticated: true,
       });
 
     case SIGN_IN_FAILURE:
@@ -153,7 +153,6 @@ export function checkPassword(password: string) {
 export function signIn(phoneCode) {
   return (dispatch, getState) => {
     const { auth } = getState();
-    console.log(auth);
     dispatch({type: SIGN_IN});
     return invoke('auth.signIn', {
       phone_number: auth.phoneNumber,

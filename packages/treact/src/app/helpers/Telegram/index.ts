@@ -3,6 +3,9 @@ import * as MTProto from '@goodmind/telegram-mt-node';
 import * as TypeLanguage from '@goodmind/telegram-tl-node';
 import { addPublicKeys } from './publickeys';
 import { config, SERVER } from './config';
+import * as isObject from 'lodash/isObject';
+
+/* tslint:disable:no-bitwise */
 
 export const schema = require('./api-tlschema-57.json');
 
@@ -21,23 +24,20 @@ if (typeof window !== 'undefined') {
   connection.connect(() => {
     console.log('Connected to Telegram');
     console.log('Client config: ');
-    invoke('messages.getDialogs', {
+    /*invoke('messages.getDialogs', {
       offset_date: 0,
       offset_id: 0,
       offset_peer: new client.schema.type.InputPeerEmpty(),
-      limit: 0,
-    }).then(config => console.log(config));
+      limit: 20,
+    }).then(config => console.log(config))
+      .catch(err => console.error(err));*/
   });
   ready = client.setup(config);
   config.deviceModel = navigator.vendor;
   config.systemVersion = navigator.userAgent;
 } else {
   const os = require('os');
-  client = {
-    callApi() {
-      return Promise.resolve({});
-    },
-  };
+  client = telegram.createClient();
   ready = Promise.resolve({});
   config.deviceModel = os.type();
   config.systemVersion = os.platform() + '/' + os.release();
@@ -69,6 +69,26 @@ export function invoke(...args: any[]) {
 export const toPrintable =
   (type, ...args) => TypeLanguage.utility.toPrintable.bind(type)(...args);
 
+let dialogsNum = 0;
+export function generateDialogIndex(date) {
+  console.log('dialogsNum', dialogsNum);
+  if (date === undefined) {
+    date = MTProto.time.getLocalTime();
+  }
+  return (date * 0x10000) + ((++dialogsNum) & 0xFFFF);
+}
+
+export function getPeerID (peerString) {
+  if (isObject(peerString)) {
+    return peerString.user_id
+      ? peerString.user_id
+      : -(peerString.channel_id || peerString.chat_id);
+  }
+  const isUser = peerString.charAt(0) === 'u';
+  const peerParams = peerString.substr(1).split('_');
+  return isUser ? peerParams[0] : -peerParams[0] || 0;
+}
+
 export { APP_ID, APP_HASH } from './config';
 export { authKeyWithSaltToStorableBuffer } from './helpers';
-export { client }
+export { client, MTProto, TypeLanguage }
