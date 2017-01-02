@@ -141,6 +141,7 @@
   "dependencies": {
     "@goodmind/telegram-mt-node": "^0.9.12",
     "@goodmind/telegram-tl-node": "^0.12.4",
+    "classnames": "^2.2.5",
     "es6-promise": "^4.0.5",
     "express": "^4.14.0",
     "flexboxgrid": "^6.3.1",

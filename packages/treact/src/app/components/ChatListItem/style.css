@@ -1,19 +1,20 @@
-.chatlistitem {
+.item {
   background-color: #ffffff;
   height: 62px;
   padding-right: 10px;
 }
-.chatlistitem:hover {
+.item:hover {
   background-color: #f5f5f5;
 }
-.chatlistitem.active {
+.active {
   background-color: #6a91b1;
   margin-right: -1px;
 }
-.chatlistitem.active .chatname, 
-.chatlistitem.active .time, 
-.chatlistitem.active .message, 
-.chatlistitem.active .sender {
+
+.active .chatname,
+.active .time,
+.active .message,
+.active .sender {
   color: #fff !important;
 }
 .unread {
@@ -22,7 +23,7 @@
 .counter {
   background-color: #d3e2ee !important;
 }
-.chatlistitem img {
+.item img {
   border-radius: 50px;
   float: left;
   height: 46px;
