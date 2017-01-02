@@ -27,6 +27,20 @@ var config = {
       'webpack-hot-middleware/client?reload=true',
       './src/client.tsx',
       './src/vendor/main.ts'
+    ],
+    vendor: [
+      'react',
+      'react-dom',
+      'react-redux',
+      'react-router',
+      'react-router-redux',
+      'redux',
+      'lodash',
+      'redux-connect',
+      'redux-persist',
+      'redux-thunk',
+      'jsbn',
+      'telegram-js'
     ]
   },
 
@@ -118,6 +132,7 @@ var config = {
         NODE_ENV: JSON.stringify('development')
       }
     }),
+    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
   ]

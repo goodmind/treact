@@ -1,8 +1,9 @@
 import * as React from 'react';
 
+const s = require('./style.css');
+
 class ChatMessage extends React.Component<any, any> {
   public render() {
-    const s = require('./style.css');
     const { message, activeChat } = this.props;
 
     return (

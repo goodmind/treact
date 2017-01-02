@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { ChatMessage, AutoSizeTextarea } from 'components';
 
+const s = require('./style.css');
+
 class Chat extends React.Component<any, any> {
   public render() {
-    const s = require('./style.css');
     const { activeChat, messages } = this.props;
 
     const chatContainer = !activeChat ? (
