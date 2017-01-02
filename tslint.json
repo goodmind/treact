@@ -15,10 +15,7 @@
     ],
     "no-var-requires": false,
     "ordered-imports": false,
-    "no-unused-variable": [
-      true,
-      "react"
-    ],
+    "arrow-parens": false,
     "member-ordering": [
       false
     ],

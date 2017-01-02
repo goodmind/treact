@@ -1,9 +1,13 @@
 import * as MTProto from '@goodmind/telegram-mt-node';
 
 export function restoreAuthKey() {
+  if (typeof window === 'undefined') {
+    return undefined;
+  }
+
   const storageKey = JSON.parse(localStorage.getItem('reduxPersist:authKey'));
   if (!storageKey) {
-    return null;
+    return undefined;
   }
 
   const [id, value] = restoreAuthKeyWithSaltFromStorableBuffer(

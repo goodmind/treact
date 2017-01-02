@@ -10,7 +10,10 @@
   background-color: #6a91b1;
   margin-right: -1px;
 }
-.chatname, .time, .message, .sender {
+.chatlistitem.active .chatname, 
+.chatlistitem.active .time, 
+.chatlistitem.active .message, 
+.chatlistitem.active .sender {
   color: #fff !important;
 }
 .unread {

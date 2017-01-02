@@ -1,14 +1,14 @@
 import { expect } from 'chai';
 import { renderComponent } from 'helpers/TestHelper';
-import { Home } from './index';
+import { InstantMessages } from './index';
 
-describe('<Home />', () => {
+describe('<InstantMessages />', () => {
 
-  const component = renderComponent(Home);
+  const component = renderComponent(InstantMessages);
 
   it('Renders with correct style', () => {
     const s = require('./style.css');
-    expect(component.find(s.home)).to.exist;
+    expect(component.find(s.main)).to.exist;
   });
 
   it('Renders Barbar Logo', () => {

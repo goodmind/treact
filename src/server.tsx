@@ -66,11 +66,11 @@ app.get('*', (req, res) => {
         const asyncRenderData = Object.assign({}, renderProps, { store });
 
         loadOnServer(asyncRenderData).then(() => {
-          const markup = ReactDOMServer.renderToString(
+          const markup = ReactDOMServer.renderToString((
             <Provider store={store} key="provider">
               <ReduxAsyncConnect {...renderProps} />
             </Provider>
-          );
+          ));
           res.status(200).send(renderHTML(markup, store));
         });
       } else {
@@ -84,14 +84,14 @@ app.listen(appConfig.port, appConfig.host, err => {
     console.error(Chalk.bgRed(err));
   } else {
     console.info(Chalk.black.bgGreen(
-      `\n\n💂  Listening at http://${appConfig.host}:${appConfig.port}\n`
+      `\n\n💂  Listening at http://${appConfig.host}:${appConfig.port}\n`,
     ));
   }
 });
 
 function renderHTML(markup: string, store: any) {
   const html = ReactDOMServer.renderToString(
-    <Html markup={markup} manifest={manifest} store={store} />
+    <Html markup={markup} manifest={manifest} store={store} />,
   );
 
   return `<!doctype html> ${html}`;

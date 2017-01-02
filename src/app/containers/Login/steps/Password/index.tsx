@@ -28,7 +28,7 @@ class PasswordImpl extends React.Component<any, any> {
     console.log(this.state, this.props);
     dispatch(checkPassword(this.state.password))
       .then(({payload: error}) => error.error_code ? this.setState({ error }) : this.setState({error: null}))
-      .then(r => this.state.error || nextStep());
+      .then(() => this.state.error || nextStep());
   }
 
   public render() {

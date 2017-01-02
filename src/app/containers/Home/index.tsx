@@ -1,27 +1,24 @@
 import * as React from 'react';
-import { ChatList, Chat } from 'components';
-const s = require('./style.css');
+import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 
-class Home extends React.Component<any, any> {
+class HomeImpl extends React.Component<any, any> {
+  public componentDidMount() {
+    const { currentUser, dispatch } = this.props;
+
+    if (currentUser && currentUser.id) {
+      dispatch(push('/im'));
+      return;
+    }
+
+    dispatch(push('/login'));
+  }
+
   public render() {
-    const onChatClick = (e, chatId) => console.log(e, this, chatId);
-    const chatList = [{
-      unreadItems: 0,
-      name: 'ok',
-      id: 1,
-    }];
-
-    return (
-      <div className={s.main}>
-        <ChatList
-          chatList={chatList}
-          activeChat={1}
-          loadingList={null}
-          onChatClick={onChatClick} />
-        <Chat />
-      </div>
-    );
+    return null;
   }
 }
 
-export { Home }
+const Home = connect<any, any, any>(state => ({ currentUser: state.currentUser }))(HomeImpl);
+
+export { Home }

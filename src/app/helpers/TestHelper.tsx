@@ -18,11 +18,11 @@ const mockStore = configureStore(middlewares);
 function renderComponent(ComponentClass, state?, props?) {
   const store = createStore(rootReducer, state);
 
-  return mount(
+  return mount((
     <Provider store={store}>
       <ComponentClass {...props} />
     </Provider>
-  );
+  ));
 }
 
 export { mockStore, fetchMock, renderComponent };

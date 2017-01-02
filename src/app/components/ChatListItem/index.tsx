@@ -11,7 +11,7 @@ interface IProps {
 
 class ChatListItem extends React.Component<IProps, any> {
   public static defaultProps = {
-    avatar: './dist/static/usercolor1.png',
+    avatar: require('./usercolor1.png'),
     lastMsg: [],
   };
 
