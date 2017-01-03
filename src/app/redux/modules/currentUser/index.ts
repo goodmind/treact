@@ -1,21 +1,8 @@
-import { ICurrentUser, ICurrentUserAction } from 'models/currentUser';
+import { createReducer } from 'redux-act';
 
-export const SET_CURRENT_USER = 'currentUser/SET_CURRENT_USER';
+import { AUTH } from 'actions';
 
-const initialState: ICurrentUser = null;
-
-export function currentUserReducer(state = initialState, action: ICurrentUserAction) {
-  switch (action.type) {
-    case SET_CURRENT_USER:
-      return action.payload;
-    default:
-      return state;
-  }
-}
-
-export function setCurrentUser(user: ICurrentUser) {
-  return {
-    type: SET_CURRENT_USER,
-    payload: user,
-  };
-}
+export const currentUserReducer = createReducer({
+  [AUTH.SIGN_IN.DONE]: (_, { user }) => user,
+  [AUTH.LOG_OUT.DONE]: () => null,
+}, null);

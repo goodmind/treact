@@ -1,137 +1,82 @@
-import { IAuth, IAuthAction } from 'models/auth';
+// import { IAuth, IAuthAction, IAuthActions } from 'models/auth';
+// import { authKeyWithSaltToStorableBuffer } from 'helpers/Telegram';
 import { invoke, APP_HASH, APP_ID, makePasswordHash, client } from 'helpers/Telegram';
-import { setCurrentUser } from '../currentUser';
 import { setAuthKey } from '../authKey';
 
-export const SEND_CODE = 'auth/SEND_CODE';
-export const SEND_CODE_SUCCESS = 'auth/SEND_CODE_SUCCESS';
-export const SEND_CODE_FAILURE = 'auth/SEND_CODE_FAILURE';
-export const SIGN_IN = 'auth/SIGN_IN';
-export const SIGN_IN_SUCCESS = 'auth/SIGN_IN_SUCCESS';
-export const SIGN_IN_FAILURE = 'auth/SIGN_IN_FAILURE';
-export const GET_PASSWORD = 'auth/GET_PASSWORD';
-export const GET_PASSWORD_SUCCESS = 'auth/GET_PASSWORD_SUCCESS';
-export const GET_PASSWORD_FAILURE = 'auth/GET_PASSWORD_FAILURE';
+import { createReducer } from 'redux-act';
+import { combineReducers } from 'redux';
+// import { IAuthKey } from 'models/authKey';
 
-const initialState: IAuth = {
-  authenticated: false,
-  loading: false,
-  phoneNumber: '',
-  phoneCodeHash: '',
-  phoneCode: '',
-  passwordSalt: '',
-  error: {
-    error_code: null,
-    error_message: null,
-  },
-};
+import { AUTH } from 'actions';
+const { SEND_CODE, SIGN_IN, GET_PASSWORD, LOG_OUT } = AUTH;
 
-export function authReducer(state = initialState, action: IAuthAction) {
-  switch (action.type) {
-    case SEND_CODE:
-      return Object.assign(state, {}, {
-        loading: true,
-      });
+const passwordSalt = createReducer({
+  [GET_PASSWORD.DONE]: (_, { passwordSalt }) => passwordSalt,
+}, '');
 
-    case SEND_CODE_SUCCESS:
-      return Object.assign(state, {}, action.payload, {
-        loading: false,
-      });
+const saveError = (_, { error_code, error_message }) => ({ error_code, error_message });
 
-    case SEND_CODE_FAILURE:
-      return Object.assign(state, {}, {
-        loading: false,
-        error: action.payload,
-      });
+const error = createReducer({
+  [SEND_CODE.FAIL]: saveError,
+  [SIGN_IN.FAIL]: saveError,
+  [GET_PASSWORD.FAIL]: saveError,
+}, {
+  error_code: null,
+  error_message: null,
+});
 
-    case SIGN_IN:
-      return Object.assign(state, {}, {
-        loading: true,
-      });
+const FALSE = () => false;
+const TRUE = () => true;
 
-    case SIGN_IN_SUCCESS:
-      return Object.assign(state, {}, {
-        loading: false,
-        authenticated: true,
-      });
+const loading = createReducer({
+  [SEND_CODE.INIT]: TRUE,
+  [SEND_CODE.DONE]: FALSE,
+  [SEND_CODE.FAIL]: FALSE,
+  [SIGN_IN.INIT]: TRUE,
+  [SIGN_IN.DONE]: FALSE,
+  [SIGN_IN.FAIL]: FALSE,
+  [GET_PASSWORD.INIT]: TRUE,
+  [GET_PASSWORD.DONE]: FALSE,
+  [GET_PASSWORD.FAIL]: FALSE,
+}, false);
 
-    case SIGN_IN_FAILURE:
-      return Object.assign(state, {}, {
-        loading: false,
-        error: action.payload,
-      });
+const authenticated = createReducer({
+  [SIGN_IN.DONE]: TRUE,
+}, false);
 
-    case GET_PASSWORD:
-      return Object.assign(state, {}, {
-        loading: true,
-      });
+const phoneNumber = createReducer({
+  [SEND_CODE.DONE]: (_, { phoneNumber }) => phoneNumber,
+}, '');
 
-    case GET_PASSWORD_SUCCESS:
-      return Object.assign(state, {}, action.payload, {
-        loading: false,
-      });
+const phoneCodeHash = createReducer({
+  [SEND_CODE.DONE]: (_, { phoneCodeHash }) => phoneCodeHash,
+}, '');
 
-    case GET_PASSWORD_FAILURE:
-      return Object.assign(state, {}, {
-        loading: false,
-        error: action.payload,
-      });
-
-    default:
-      return state;
-  }
-}
-
-function sendCodeSuccess(payload: {phoneCodeHash: string, phoneNumber: string}) {
-  return {
-    type: SEND_CODE_SUCCESS,
-    payload,
-  };
-}
-
-function sendCodeFailure(err: any) {
-  return {
-    type: SEND_CODE_FAILURE,
-    payload: err,
-  };
-}
-
-function signInSuccess(payload) {
-  return {
-    type: SIGN_IN_SUCCESS,
-    payload,
-  };
-}
-
-function signInFailure(err) {
-  return {
-    type: SIGN_IN_FAILURE,
-    payload: err,
-  };
-}
-
-function getPasswordSuccess(payload) {
-  return {
-    type: GET_PASSWORD_SUCCESS,
-    payload,
-  };
-}
-
-function getPasswordFailure(err) {
-  return {
-    type: GET_PASSWORD_FAILURE,
-    payload: err,
-  };
-}
+export const authReducer = combineReducers({
+  loading,
+  error,
+  authenticated,
+  passwordSalt,
+  phoneNumber,
+  phoneCodeHash,
+});
 
 export function getPassword() {
+  const onDone = ({ current_salt }) => GET_PASSWORD.DONE({
+    passwordSalt: current_salt,
+  });
   return dispatch => {
-    dispatch({type: GET_PASSWORD});
+    dispatch(GET_PASSWORD.INIT());
     return invoke('account.getPassword')
-      .then(result => dispatch(getPasswordSuccess({
-        passwordSalt: result.current_salt,
-      })))
-      .catch(err => dispatch(getPasswordFailure(err)));
+      .then(onDone, GET_PASSWORD.FAIL)
+      .then(dispatch);
+  };
+}
+
+export function onSignedIn(result) {
+  return dispatch => {
+    dispatch(setAuthKey(client.authKey));
+    return dispatch(SIGN_IN.DONE(result));
   };
 }
 
@@ -141,50 +86,49 @@ export function checkPassword(password: string) {
     const hash = makePasswordHash(auth.passwordSalt, password);
     return invoke('auth.checkPassword', {
       password_hash: hash,
-    }).then(result => {
-      dispatch(setCurrentUser(result.user));
-      dispatch(setAuthKey(client.authKey));
-      return dispatch(signInSuccess(result));
-    })
-      .catch(err => dispatch(signInFailure(err)));
+    }).then(onSignedIn, SIGN_IN.FAIL)
+      .then(dispatch);
   };
 }
 
 export function signIn(phoneCode) {
+  const catchNeedPass = err => err.error_message === 'SESSION_PASSWORD_NEEDED'
+      ? getPassword()
+      : SIGN_IN.FAIL(err);
   return (dispatch, getState) => {
     const { auth } = getState();
-    dispatch({type: SIGN_IN});
+    dispatch(SIGN_IN.INIT());
     return invoke('auth.signIn', {
       phone_number: auth.phoneNumber,
       phone_code_hash: auth.phoneCodeHash,
       phone_code: phoneCode,
-    }).then(result => {
-      dispatch(setCurrentUser(result.user));
-      dispatch(setAuthKey(client.authKey));
-      return dispatch(signInSuccess(result));
-    })
-      .catch(err => {
-        if (err.error_message === 'SESSION_PASSWORD_NEEDED') {
-          return dispatch(getPassword()).then(() => err);
-        }
-        return err;
-      })
-      .then(err => dispatch(signInFailure(err)));
+    }).then(onSignedIn, catchNeedPass)
+      .then(dispatch);
   };
 }
 
 export function sendCode(phoneNumber: string) {
+  const onDone = ({ phone_code_hash }) => SEND_CODE.DONE({
+    phoneCodeHash: phone_code_hash,
+    phoneNumber,
+  });
   return dispatch => {
-    dispatch({type: SEND_CODE});
+    dispatch(SEND_CODE.INIT());
     return invoke('auth.sendCode', {
       phone_number: phoneNumber,
       current_number: false,
       api_id: APP_ID,
       api_hash: APP_HASH,
-    }).then(result => dispatch(sendCodeSuccess({
-        phoneCodeHash: result.phone_code_hash,
-        phoneNumber,
-      })))
-      .catch(err => dispatch(sendCodeFailure(err)));
+    }).then(onDone, SEND_CODE.FAIL)
+      .then(dispatch);
+  };
+}
+
+export function logOut() {
+  return dispatch => {
+    dispatch(LOG_OUT.INIT());
+    return invoke('auth.logOut')
+      .then(LOG_OUT.DONE, LOG_OUT.FAIL)
+      .then(dispatch);
   };
 }
