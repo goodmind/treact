@@ -1,3 +1,7 @@
+export interface IAuthError {
+  error_code: number;
+  error_message: string;
+}
 export interface IAuth {
   authenticated: boolean;
   loading: boolean;
@@ -5,7 +9,7 @@ export interface IAuth {
   phoneCodeHash: string;
   phoneCode: string;
   passwordSalt: string;
-  error: any;
+  error: IAuthError;
 }
 export type IAuthActions =
   'auth/SET_AUTH_KEY'
