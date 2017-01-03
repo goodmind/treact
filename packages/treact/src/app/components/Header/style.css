@@ -12,6 +12,10 @@
   width: 26px;
 }
 
+.logout {
+  float: right;
+}
+
 .headerButton, .header a {
   color: #d4e3ef;
   cursor: default;

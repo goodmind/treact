@@ -4,15 +4,21 @@ import { ChatList } from 'containers';
 // import { connect } from 'react-redux';
 import { fetchChatList } from 'modules/chatList';
 import { asyncConnect } from 'redux-connect';
+import { Updates } from 'helpers/Telegram/Updates';
 const s = require('./style.css');
 
 class InstantMessagesImpl extends React.Component<any, any> {
+  public updates = Updates.getInstance();
+
   constructor(...args) {
     super(...args);
     this.state = {
       activeChatID: 0,
       activeChat: null,
     };
+    this.updates.start(update => {
+      console.log(update.getTypeName(), update);
+    });
   }
 
   public render() {

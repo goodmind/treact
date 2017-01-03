@@ -3,13 +3,17 @@ import { connect } from 'react-redux';
 import { toPrintable } from 'helpers/Telegram';
 
 class SuccessImpl extends React.Component<any, any> {
-  public render() {
-    const { currentUser } = this.props;
+  public static defaultPhrase = 'No current user';
+  public toPrintable = () => this.props.currentUser
+    ? toPrintable(this.props.currentUser)
+    : SuccessImpl.defaultPhrase;
 
+  public render() {
+    const print = this.toPrintable();
     return (
       <div>
         Success
-        {toPrintable(currentUser)}
+        {print}
       </div>
     );
   }

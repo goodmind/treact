@@ -22,8 +22,9 @@ if (typeof window !== 'undefined') {
   client = telegram.createClient();
   client.setConnection(connection);
   connection.connect(() => {
-    console.log('Connected to Telegram');
+    console.log('Connected to Telegram on ', SERVER.host);
     console.log('Client config: ');
+    console.log(client.schema, client);
     /*invoke('messages.getDialogs', {
       offset_date: 0,
       offset_id: 0,
@@ -41,6 +42,10 @@ if (typeof window !== 'undefined') {
   ready = Promise.resolve({});
   config.deviceModel = os.type();
   config.systemVersion = os.platform() + '/' + os.release();
+}
+
+export function isReady() {
+  return ready;
 }
 
 function readyApiCall(...args: any[]) {
@@ -87,6 +92,31 @@ export function getPeerID (peerString) {
   const isUser = peerString.charAt(0) === 'u';
   const peerParams = peerString.substr(1).split('_');
   return isUser ? peerParams[0] : -peerParams[0] || 0;
+}
+
+export function getDataCenters() {
+  const tl = TypeLanguage;
+  const promises = Promise.all([
+    invoke('help.getConfig'),
+    invoke('help.getNearestDc'),
+  ]);
+  return promises
+    .then(([config, nearestDc]) => {
+      const dcs = {
+        current: `DC_${nearestDc.this_dc}`,
+        nearestDc: `DC_${nearestDc.nearest_dc}`,
+        toPrintable: tl.utility.toPrintable,
+      };
+      const dcList = config.dc_options.list;
+      dcList.forEach(dc => {
+        dcs[`DC_${dc.id}`] = {
+          host: dc.ip_address,
+          port: dc.port,
+          toPrintable: tl.utility.toPrintable,
+        };
+      });
+      return dcs;
+    });
 }
 
 export { APP_ID, APP_HASH } from './config';

@@ -5,24 +5,17 @@ const s = require('./style.css');
 const t = require('../../style.css');
 
 class PhoneNumberImpl extends React.Component<any, any> {
-  constructor(...args) {
-    super(...args);
+  public state = {
+    phoneCode: '+7',
+    phoneNumber: '',
+    error: null,
+  };
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleNextStep = this.handleNextStep.bind(this);
-
-    this.state = {
-      phoneCode: '+7',
-      phoneNumber: '',
-      error: null,
-    };
-  }
-
-  private handleChange(event) {
+  private handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   }
 
-  public handleNextStep() {
+  public handleNextStep = () => {
     const { dispatch, nextStep, update } = this.props;
     const phoneNumber = this.state.phoneCode + this.state.phoneNumber;
 

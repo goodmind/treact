@@ -4,23 +4,15 @@ import { connect } from 'react-redux';
 const t = require('../../style.css');
 
 class PasswordImpl extends React.Component<any, any> {
-  constructor(...args) {
-    super(...args);
+  public state = {
+    password: '',
+    error: null,
+  };
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleNextStep = this.handleNextStep.bind(this);
-
-    this.state = {
-      password: '',
-      error: null,
-    };
-  }
-
-  public handleChange(event) {
+  public handleChange = event =>
     this.setState({ [event.target.name]: event.target.value });
-  }
 
-  public handleNextStep() {
+  public handleNextStep = () => {
     const { update, nextStep, dispatch } = this.props;
     const { password } = this.state;
 
