@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 const logo = require('./title-logo.png');
 const s = require('./style.css');
 
-import { logOut } from '../../redux/modules/auth';
+import { logOut } from 'modules/auth';
 import { connect } from 'react-redux';
 
 class Header extends React.Component<any, any> {
