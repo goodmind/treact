@@ -13,14 +13,13 @@ class AuthCodeImpl extends React.Component<any, any> {
     this.setState({ [event.target.name]: event.target.value });
 
   public handleNextStep = () => {
-    const { update, skipStep, auth, dispatch } = this.props;
+    const { update, skipStep, dispatch } = this.props;
     const { authCode } = this.state;
 
     update({ authCode });
-    console.log(this.state, this.props);
     dispatch(signIn(this.state.authCode))
       .then(({payload: error}) => (error && error.error_code) ? this.setState({ error }) : this.setState({error: null}))
-      .then(() => skipStep(auth.error.error_message === 'SESSION_PASSWORD_NEEDED' ? 1 : 2));
+      .then(() => skipStep(this.props.auth.error.error_message === 'SESSION_PASSWORD_NEEDED' ? 1 : 2));
   }
 
   public render() {
