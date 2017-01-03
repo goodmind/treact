@@ -1,18 +1,22 @@
 import { invoke, APP_HASH, APP_ID, makePasswordHash } from 'helpers/Telegram';
+import { REHYDRATE } from 'redux-persist/constants';
+import { AUTH } from 'actions';
+import { IAuth, IAuthError } from 'models/auth';
 
 import { createReducer } from 'redux-act';
 import { combineReducers } from 'redux';
 
-import { AUTH } from '../../actions';
 const { SEND_CODE, SIGN_IN, GET_PASSWORD, LOG_OUT } = AUTH;
+const FALSE = () => false;
+const TRUE = () => true;
 
 const passwordSalt = createReducer({
   [GET_PASSWORD.DONE]: (_, { passwordSalt }) => passwordSalt,
 }, '');
 
-const saveError = (_, { error_code, error_message }) => ({ error_code, error_message });
+const saveError = (_, { error_code, error_message }: IAuthError): IAuthError => ({ error_code, error_message });
 
-const error = createReducer({
+const error = createReducer<IAuthError>({
   [SEND_CODE.FAIL]: saveError,
   [SIGN_IN.FAIL]: saveError,
   [GET_PASSWORD.FAIL]: saveError,
@@ -20,9 +24,6 @@ const error = createReducer({
   error_code: null,
   error_message: null,
 });
-
-const FALSE = () => false;
-const TRUE = () => true;
 
 const loading = createReducer({
   [SEND_CODE.INIT]: TRUE,
@@ -38,6 +39,8 @@ const loading = createReducer({
 
 const authenticated = createReducer({
   [SIGN_IN.DONE]: TRUE,
+  [LOG_OUT.DONE]: FALSE,
+  [REHYDRATE]: (_, { authKey, currentUser }) => !!authKey && !!currentUser,
 }, false);
 
 const phoneNumber = createReducer({
@@ -48,7 +51,7 @@ const phoneCodeHash = createReducer({
   [SEND_CODE.DONE]: (_, { phoneCodeHash }) => phoneCodeHash,
 }, '');
 
-export const authReducer = combineReducers({
+export const authReducer = combineReducers<IAuth>({
   loading,
   error,
   authenticated,
@@ -81,18 +84,20 @@ export function checkPassword(password: string) {
 }
 
 export function signIn(phoneCode) {
-  const catchNeedPass = err => err.error_message === 'SESSION_PASSWORD_NEEDED'
-      ? getPassword()
-      : SIGN_IN.FAIL(err);
   return (dispatch, getState) => {
+    const catchNeedPass = err => err.error_message === 'SESSION_PASSWORD_NEEDED'
+      ? dispatch(getPassword()).then(() => err)
+      : err;
+
     const { auth } = getState();
     dispatch(SIGN_IN.INIT());
     return invoke('auth.signIn', {
       phone_number: auth.phoneNumber,
       phone_code_hash: auth.phoneCodeHash,
       phone_code: phoneCode,
-    }).then(SIGN_IN.DONE, catchNeedPass)
-      .then(dispatch);
+    }).then(SIGN_IN.DONE)
+      .catch(catchNeedPass)
+      .then(err => dispatch(SIGN_IN.FAIL(err)));
   };
 }
 
@@ -116,6 +121,7 @@ export function sendCode(phoneNumber: string) {
 export function logOut() {
   return dispatch => {
     dispatch(LOG_OUT.INIT());
+    localStorage.clear();
     return invoke('auth.logOut')
       .then(LOG_OUT.DONE, LOG_OUT.FAIL)
       .then(dispatch);
