@@ -1,13 +1,9 @@
-// import { IAuth, IAuthAction, IAuthActions } from 'models/auth';
-// import { authKeyWithSaltToStorableBuffer } from 'helpers/Telegram';
-import { invoke, APP_HASH, APP_ID, makePasswordHash, client } from 'helpers/Telegram';
-import { setAuthKey } from '../authKey';
+import { invoke, APP_HASH, APP_ID, makePasswordHash } from 'helpers/Telegram';
 
 import { createReducer } from 'redux-act';
 import { combineReducers } from 'redux';
-// import { IAuthKey } from 'models/authKey';
 
-import { AUTH } from 'actions';
+import { AUTH } from '../../actions';
 const { SEND_CODE, SIGN_IN, GET_PASSWORD, LOG_OUT } = AUTH;
 
 const passwordSalt = createReducer({
@@ -73,20 +69,13 @@ export function getPassword() {
   };
 }
 
-export function onSignedIn(result) {
-  return dispatch => {
-    dispatch(setAuthKey(client.authKey));
-    return dispatch(SIGN_IN.DONE(result));
-  };
-}
-
 export function checkPassword(password: string) {
   return (dispatch, getState) => {
     const { auth } = getState();
     const hash = makePasswordHash(auth.passwordSalt, password);
     return invoke('auth.checkPassword', {
       password_hash: hash,
-    }).then(onSignedIn, SIGN_IN.FAIL)
+    }).then(SIGN_IN.DONE, SIGN_IN.FAIL)
       .then(dispatch);
   };
 }
@@ -102,7 +91,7 @@ export function signIn(phoneCode) {
       phone_number: auth.phoneNumber,
       phone_code_hash: auth.phoneCodeHash,
       phone_code: phoneCode,
-    }).then(onSignedIn, catchNeedPass)
+    }).then(SIGN_IN.DONE, catchNeedPass)
       .then(dispatch);
   };
 }

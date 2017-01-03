@@ -3,7 +3,7 @@ import { createAction } from 'redux-act';
 export type IAction<T> = {
   type: string;
   payload: T;
-}
+};
 
 export type IActionCreator<T> = (payload: T) => IAction<T>;
 

@@ -1,23 +1,14 @@
-import { IAuthKey, IAuthKeyAction } from 'models/authKey';
-import { authKeyWithSaltToStorableBuffer } from 'helpers/Telegram';
+import { authKeyWithSaltToStorableBuffer, client } from 'helpers/Telegram';
 
-export const SET_AUTH_KEY = 'authKey/SET_AUTH_KEY';
+import { createReducer } from 'redux-act';
 
-const initialState: IAuthKey = null;
+import { AUTH } from '../../actions';
 
-export function authKeyReducer(state = initialState, action: IAuthKeyAction) {
-  switch (action.type) {
-    case SET_AUTH_KEY:
-      const { key, serverSalt } = action.payload;
-      return authKeyWithSaltToStorableBuffer(key, serverSalt);
-    default:
-      return state;
-  }
+const onSignIn = () => {
+  const { key, serverSalt } = client.authKey;
+  return authKeyWithSaltToStorableBuffer(key, serverSalt);
 }
 
-export function setAuthKey(authKey) {
-  return {
-    type: SET_AUTH_KEY,
-    payload: authKey,
-  };
-}
+export const authKeyReducer = createReducer({
+  [AUTH.SIGN_IN.DONE]: onSignIn,
+}, null);

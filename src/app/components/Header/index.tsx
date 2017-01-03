@@ -8,10 +8,6 @@ import { logOut } from '../../redux/modules/auth';
 import { connect } from 'react-redux';
 
 class Header extends React.Component<any, any> {
-  constructor(...args) {
-    super(...args);
-    this.render = this.render.bind(this);
-  }
   public render() {
     return (
       <header className={s.header}>
