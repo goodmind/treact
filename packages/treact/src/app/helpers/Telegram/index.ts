@@ -68,7 +68,17 @@ export function makePasswordHash (salt, password) {
 
 export function invoke(...args: any[]) {
   return readyApiCall(...args)
-    .then((r: any) => r.error_code ? Promise.reject(r) : r);
+    .then((r: any) => {
+      if (typeof r !== 'boolean' && r.instanceOf('mtproto.type.Rpc_error')) {
+        return Promise.reject(r);
+      } else {
+        return r;
+      }
+    })
+    .catch(err => {
+      console.error('Got networker error', err, err.stack);
+      return Promise.reject(err);
+    });
 }
 
 export const toPrintable =

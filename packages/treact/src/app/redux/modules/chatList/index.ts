@@ -17,7 +17,7 @@ const initialState: IChatList = {
 export function chatListReducer(state = initialState, action: IChatListAction) {
   switch (action.type) {
     case FETCH_CHAT_LIST:
-      return Object.assign(state, {}, {
+      return Object.assign({}, state, {
         loading: true,
       });
 
@@ -27,10 +27,10 @@ export function chatListReducer(state = initialState, action: IChatListAction) {
         const chat = c.getById(-id);
         return chat && (chat.instanceOf('Telegram.type.Channel') || chat.instanceOf('Telegram.type.ChannelForbidden'));
       };
-      return Object.assign(state, {}, {
+      return Object.assign({}, state, {
         loading: false,
         users: u,
-        dialogs: Object.assign(d, {}, {
+        dialogs: Object.assign({}, d, {
           list: d.list.map(dialog => {
             const message = m.getById(dialog.top_message);
             const peerID = getPeerID(dialog.peer);
@@ -44,7 +44,7 @@ export function chatListReducer(state = initialState, action: IChatListAction) {
               }
             }
 
-            return Object.assign(dialog, {}, {
+            return Object.assign({}, dialog, {
               message,
               peerID,
               index: generateDialogIndex(topDate),

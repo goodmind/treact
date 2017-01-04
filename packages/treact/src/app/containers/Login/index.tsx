@@ -26,13 +26,13 @@ class LoginImpl extends React.Component<any, any> {
   }
 
   public updateForm = state => {
-    this.state.form = Object.assign(this.state.form, {}, state);
+    this.state.form = Object.assign({}, this.state.form, state);
   }
 
   public form = () => {
-    const { authKey } = this.props;
+    const { auth } = this.props;
     let step = this.state.step;
-    if (authKey !== null) {
+    if (auth.authenticated) {
       step = 5;
     }
 
@@ -78,6 +78,6 @@ class LoginImpl extends React.Component<any, any> {
   }
 }
 
-const Login = connect<any, any, any>(state => ({ authKey: state.authKey }))(LoginImpl);
+const Login = connect<any, any, any>(state => ({ auth: state.auth }))(LoginImpl);
 
 export { Login }
