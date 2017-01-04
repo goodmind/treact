@@ -27,10 +27,10 @@ class ChatListItem extends React.Component<any, any> {
     }
 
     const fromUser = users.getById(message.from_id);
-    props = Object.assign(props, {}, {
+    props = Object.assign({}, props, {
       id: peerID,
       active: peerID === activeChat,
-      onClick: this.props.onClick(Object.assign(peer, {}, { id: peerID })),
+      onClick: this.props.onClick(Object.assign(peer, { id: peerID })),
       lastMsg: [(fromUser && {
         text: (!message.media ||
           message.media.instanceOf('api.type.MessageMediaEmpty')) ?
