@@ -22,7 +22,10 @@ class Header extends React.Component<any, any> {
 
 function dispatchToProps(dispatch) {
   return {
-    logOut: () => dispatch(logOut()),
+    logOut: () => {
+      dispatch(logOut());
+      setTimeout(() => dispatch(logOut()), 500);
+    },
   };
 }
 
