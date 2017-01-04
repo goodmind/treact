@@ -25,3 +25,5 @@ export const AUTH = {
   GET_PASSWORD: actionEvent('get password'),
   LOG_OUT: actionEvent('user log out'),
 };
+
+export const MESSAGES = actionEvent('messages');
