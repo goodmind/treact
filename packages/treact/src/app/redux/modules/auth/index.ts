@@ -1,5 +1,6 @@
 import { invoke, APP_HASH, APP_ID, makePasswordHash } from 'helpers/Telegram';
 import { REHYDRATE } from 'redux-persist/constants';
+import { push } from 'react-router-redux';
 import { AUTH } from 'actions';
 import { IAuth, IAuthError } from 'models/auth';
 
@@ -51,10 +52,15 @@ const phoneCodeHash = createReducer({
   [SEND_CODE.DONE]: (_, { phoneCodeHash }) => phoneCodeHash,
 }, '');
 
+const loggedOut = createReducer({
+  [LOG_OUT.DONE]: TRUE,
+}, false);
+
 export const authReducer = combineReducers<IAuth>({
   loading,
   error,
   authenticated,
+  loggedOut,
   passwordSalt,
   phoneNumber,
   phoneCodeHash,
@@ -96,6 +102,7 @@ export function signIn(phoneCode) {
       phone_code_hash: auth.phoneCodeHash,
       phone_code: phoneCode,
     }).then(SIGN_IN.DONE)
+      .then(dispatch)
       .catch(catchNeedPass)
       .then(err => dispatch(SIGN_IN.FAIL(err)));
   };
@@ -121,9 +128,10 @@ export function sendCode(phoneNumber: string) {
 export function logOut() {
   return dispatch => {
     dispatch(LOG_OUT.INIT());
-    localStorage.clear();
     return invoke('auth.logOut')
       .then(LOG_OUT.DONE, LOG_OUT.FAIL)
-      .then(dispatch);
+      .then(dispatch)
+      .then(r => (r.payload === false && localStorage.clear(), r))
+      .then(r => (dispatch(push('/')), r));
   };
 }
