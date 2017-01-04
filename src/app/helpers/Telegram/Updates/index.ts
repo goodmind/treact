@@ -1,81 +1,131 @@
-import { invoke, client, MTProto, isReady } from '..';
-
-function manageUpdatesListener(func, callback) {
-  const emitter = this.getParser();
-  console.log('managing updates...');
-  emitter[func]('Telegram.type.UpdatesTooLong', callback);
-  emitter[func]('Telegram.type.UpdateShortMessage', callback);
-  emitter[func]('Telegram.type.UpdateShortChatMessage', callback);
-  emitter[func]('Telegram.type.UpdateShort', callback);
-  emitter[func]('Telegram.type.UpdatesCombined', callback);
-  emitter[func]('Telegram.type.Updates', callback);
-}
-
-const registerOnUpdates = (callback) => {
-  console.log('register updates');
-  manageUpdatesListener.call(client.channel, 'on', callback);
-};
-const stopHttpPollLoop = () => null;
-const httpPoll = (maxWait = 3000, waitAfter = 0, maxDelay = 0) => {
-  const onCallback = (resolve, reject) => (ex, result) => {
-    if (ex) {
-      reject(ex);
-    } else {
-      resolve(result);
-    }
-  };
-
-  return isReady()
-    .then(() => new Promise((resolve, reject) => {
-      MTProto.service.http_wait({
-        props: {
-          max_delay: maxDelay,
-          wait_after: waitAfter,
-          max_wait: maxWait,
-        },
-        channel: client.channel,
-        callback: onCallback(resolve, reject),
-      });
-    }));
-};
+import { invoke } from '..';
+import { HttpLoopEmitter } from './HttpLoopEmitter';
 
 // const UPDATE_INTERVAL = 1000;
 let instance;
 
-class Updates {
-  private pts;
-  private date;
-  private qts;
-  private unreadCount;
+interface IState {
+  pts: number;
+  date: number;
+  qts: number;
+  unread_count: number;
+  seq: number;
+  toPrintable: Function;
+}
 
-  private setState(state) {
-    this.pts = state.pts;
-    this.date = state.date;
-    this.qts = state.qts;
-    this.unreadCount = state.unread_count;
-    console.log('set state', state.toPrintable());
+class Updates {
+  public pts: number;
+  public date: number;
+  public qts: number;
+  public unreadCount: number;
+  public seq: number;
+
+  public onUpdate;
+  public emitter = new HttpLoopEmitter();
+
+  private setState(state: Partial<IState>) {
+    if (!state) {
+      return;
+    }
+
+    this.pts = state.pts || this.pts;
+    this.date = state.date || this.date;
+    this.qts = state.qts || this.qts;
+    this.unreadCount = state.unread_count || this.unreadCount;
+    this.seq = state.seq || this.seq;
+
+    console.log('set state', state.toPrintable ? state.toPrintable() : state);
   }
 
   public start(onUpdate) {
     console.log('start updates');
-    return invoke('account.updateStatus', { offline: false })
+    return new Promise((resolve, reject) => {
+      invoke('account.updateStatus', { offline: false })
       .then(() => {
-        registerOnUpdates(onUpdate);
-        return invoke('updates.getState');
+        this.onUpdate = update => {
+          const processOpts = {
+            date: update.date,
+            seq: update.seq,
+            seqStart: update.seq_start,
+          };
+
+          switch (update.getTypeName()) {
+            case 'Telegram.type.UpdatesTooLong':
+            case 'mtproto.type.New_session_created':
+              this.getDifference();
+              break;
+
+            case 'Telegram.type.UpdateShort':
+              console.log(processOpts);
+              break;
+
+            case 'Telegram.type.UpdateShortMessage':
+            case 'Telegram.type.UpdateShortChatMessage':
+              console.log(processOpts);
+              break;
+
+            case 'Telegram.type.UpdatesCombined':
+            case 'Telegram.type.Updates':
+              console.log(update.users.list, update.chats.list, update.updates.list, processOpts);
+              break;
+
+            default:
+              onUpdate(update);
+              break;
+          }
+        };
+        this.emitter.registerOnUpdates(this.onUpdate);
+        invoke('updates.getState').then(state => {
+          this.setState(state);
+          this.emitter.on('error', err => {
+            console.error('http poll error', err, err.stack);
+          });
+          this.emitter.httpPoll();
+          setTimeout(resolve, 100);
+        });
       })
-      .then(state => {
-        this.setState(state);
-        return httpPoll();
-      });
+      .catch(reject);
+    });
+  }
+
+  public stopEmitter() {
+    this.emitter.unregisterOnUpdates(this.onUpdate);
   }
 
   public stop() {
-    console.log('stop updates');
-    stopHttpPollLoop();
-    return invoke('account.updateStatus', { offline: true });
+    if (this.emitter.started) {
+      console.log('stop updates');
+      this.emitter.stopHttpPollLoop();
+      return invoke('account.updateStatus', { offline: true });
+    }
+  }
+
+  public getDifference() {
+    invoke('updates.getDifference', { pts: this.pts, date: this.date, qts: -1 }).then(result => {
+        console.log('getDifference', result.getTypeName && result.getTypeName(), result);
+
+        if (typeof result !== 'boolean') {
+          if (result.getTypeName() === 'Telegram.type.updates.DifferenceEmpty') {
+              console.debug('apply empty diff', result);
+              this.setState({date: result.date, seq: result.seq});
+              return false;
+          }
+
+          const nextState = result.intermediate_state || result.state;
+          console.debug('apply next state', nextState);
+          this.setState(nextState);
+
+          if (result.getTypeName() === 'Telegram.type.updates.DifferenceSlice') {
+              this.getDifference();
+          }
+        }
+    }).catch(err => {
+        console.error('getDifference error: ', this, err);
+    });
   }
 
   public static getInstance() {
+    console.log('getInstance', instance);
     instance = instance || new Updates();
     return instance;
   }
