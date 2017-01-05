@@ -7,12 +7,11 @@ import { fetchMessages } from 'modules/messages';
 const s = require('./style.css');
 
 const retrieveInputPeer = (peer) => {
-  console.log(peer);
   switch (peer.getTypeName()) {
     case 'Telegram.type.Channel':
       return new client.schema.type.InputPeerChannel({
         props: {
-          channel_id: peer.id,
+          channel_id: -peer.id,
           access_hash: peer.access_hash,
         },
       });
@@ -20,7 +19,7 @@ const retrieveInputPeer = (peer) => {
     case 'Telegram.type.Chat':
       return new client.schema.type.InputPeerChat({
         props: {
-          chat_id: peer.id,
+          chat_id: -peer.id,
         },
       });
 
@@ -82,6 +81,6 @@ class ChatImpl extends React.Component<any, any> {
   }
 }
 
-const Chat = connect()(ChatImpl);
+const Chat = connect<any, any, any>(({ chatList: { chats } }) => ({ chats }))(ChatImpl);
 
 export { Chat }

@@ -16,9 +16,9 @@ class InstantMessagesImpl extends React.Component<any, any> {
       activeChatID: 0,
       activeChat: null,
     };
-    /*this.updates.start(update => {
+    this.updates.start(update => {
       console.log(update.getTypeName(), update);
-    });*/
+    });
   }
 
   public render() {

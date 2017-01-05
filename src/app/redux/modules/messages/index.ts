@@ -26,7 +26,16 @@ export const messagesReducer = combineReducers({
 
 export function fetchMessages(peer) {
   return dispatch => {
-    dispatch(MESSAGES.INIT());
-    invoke('messages.getHistory', { peer });
+    dispatch(MESSAGES.INIT(peer));
+    invoke('messages.getHistory', {
+      peer,
+      offset_id: 0,
+      max_id: 0,
+      limit: 10,
+    }).then(history => {
+      console.debug(history);
+    }, error => {
+      console.error(error);
+    });
   };
 }
