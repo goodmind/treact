@@ -3,7 +3,6 @@ import * as MTProto from '@goodmind/telegram-mt-node';
 import * as TypeLanguage from '@goodmind/telegram-tl-node';
 import { addPublicKeys } from './publickeys';
 import { config, SERVER } from './config';
-import * as isObject from 'lodash/isObject';
 
 /* tslint:disable:no-bitwise */
 
@@ -91,17 +90,6 @@ export function generateDialogIndex(date) {
     date = MTProto.time.getLocalTime();
   }
   return (date * 0x10000) + ((++dialogsNum) & 0xFFFF);
-}
-
-export function getPeerID (peerString) {
-  if (isObject(peerString)) {
-    return peerString.user_id
-      ? peerString.user_id
-      : -(peerString.channel_id || peerString.chat_id);
-  }
-  const isUser = peerString.charAt(0) === 'u';
-  const peerParams = peerString.substr(1).split('_');
-  return isUser ? peerParams[0] : -peerParams[0] || 0;
 }
 
 export function getDataCenters() {
