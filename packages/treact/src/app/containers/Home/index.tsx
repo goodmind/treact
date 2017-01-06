@@ -2,7 +2,19 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
-class HomeImpl extends React.Component<any, any> {
+interface IConnectedState {
+  currentUser: any;
+}
+
+interface IConnectedActions {
+  dispatch: any;
+}
+
+interface IOwnProps {}
+
+type IProps = IConnectedState & IConnectedActions & IOwnProps;
+
+class HomeImpl extends React.Component<IProps, any> {
   public componentDidMount() {
     const { currentUser, dispatch } = this.props;
 
@@ -19,6 +31,7 @@ class HomeImpl extends React.Component<any, any> {
   }
 }
 
-const Home = connect<any, any, any>(state => ({ currentUser: state.currentUser }))(HomeImpl);
+const mapStateToProps = state => ({ currentUser: state.currentUser });
+const Home = connect<IConnectedState, IConnectedActions, IOwnProps>(mapStateToProps)(HomeImpl);
 
 export { Home }
