@@ -1,14 +1,18 @@
 import * as React from 'react';
 
-class AutoSizeTextarea extends React.Component<any, any> {
+interface IProps {
+  className?: string;
+  placeholder?: string;
+  value?: string;
+  rows?: number;
+}
+
+class AutoSizeTextarea extends React.Component<IProps, any> {
   public render() {
-    const { placeholder, value } = this.props;
+    const { value } = this.props;
 
     return (
-      <textarea
-        className={this.props.className}
-        rows={this.props.rows}
-        placeholder={placeholder}>{value}</textarea>
+      <textarea {...this.props}>{value}</textarea>
     );
   }
 }
