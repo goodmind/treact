@@ -7,7 +7,17 @@ const s = require('./style.css');
 import { logOut } from 'modules/auth';
 import { connect } from 'react-redux';
 
-class Header extends React.Component<any, any> {
+interface IConnectedState {}
+
+interface IConnectedActions {
+  logOut(e: any): void;
+}
+
+interface IOwnProps {}
+
+type IProps = IConnectedState & IConnectedActions & IOwnProps;
+
+class HeaderImpl extends React.Component<IProps, any> {
   public render() {
     return (
       <header className={s.header}>
@@ -29,6 +39,6 @@ function dispatchToProps(dispatch) {
   };
 }
 
-const hoc = connect(null, dispatchToProps)(Header);
+const Header = connect<IConnectedState, IConnectedActions, IOwnProps>(null, dispatchToProps)(HeaderImpl);
 
-export { hoc as Header }
+export { Header }
