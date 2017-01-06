@@ -4,7 +4,29 @@ import { sendCode } from 'modules/auth';
 const s = require('./style.css');
 const t = require('../../style.css');
 
-class PhoneNumberImpl extends React.Component<any, any> {
+interface IConnectedState {
+  auth: any;
+}
+
+interface IConnectedActions {
+  dispatch: any;
+}
+
+interface IOwnProps {
+  form: any;
+  update: any;
+  nextStep: any;
+}
+
+type IProps = IConnectedState & IConnectedActions & IOwnProps;
+
+interface IState {
+  phoneCode?: string;
+  phoneNumber?: string;
+  error?: any;
+}
+
+class PhoneNumberImpl extends React.Component<IProps, IState> {
   public state = {
     phoneCode: '+7',
     phoneNumber: '',
@@ -53,6 +75,7 @@ class PhoneNumberImpl extends React.Component<any, any> {
   }
 }
 
-const PhoneNumber = connect<any, any, any>(state => ({ auth: state.auth }))(PhoneNumberImpl);
+const mapStateToProps = state => ({ auth: state.auth });
+const PhoneNumber = connect<IConnectedState, IConnectedActions, IOwnProps>(mapStateToProps)(PhoneNumberImpl);
 
 export { PhoneNumber }
