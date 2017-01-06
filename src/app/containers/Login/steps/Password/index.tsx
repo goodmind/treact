@@ -3,7 +3,28 @@ import { checkPassword } from 'modules/auth';
 import { connect } from 'react-redux';
 const t = require('../../style.css');
 
-class PasswordImpl extends React.Component<any, any> {
+interface IConnectedState {
+  auth: any;
+}
+
+interface IConnectedActions {
+  dispatch: any;
+}
+
+interface IOwnProps {
+  form: any;
+  update: any;
+  nextStep: any;
+}
+
+type IProps = IConnectedState & IConnectedActions & IOwnProps;
+
+interface IState {
+  password?: string;
+  error?: any;
+}
+
+class PasswordImpl extends React.Component<IProps, IState> {
   public state = {
     password: '',
     error: null,
@@ -46,6 +67,6 @@ class PasswordImpl extends React.Component<any, any> {
   }
 }
 
-const Password = connect<any, any, any>(state => ({ auth: state.auth }))(PasswordImpl);
+const Password = connect<IConnectedState, IConnectedActions, IOwnProps>(state => ({ auth: state.auth }))(PasswordImpl);
 
 export { Password }
