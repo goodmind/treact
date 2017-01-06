@@ -2,7 +2,17 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { toPrintable } from 'helpers/Telegram';
 
-class SuccessImpl extends React.Component<any, any> {
+interface IConnectedState {
+  currentUser: any;
+}
+
+interface IConnectedActions {}
+
+interface IOwnProps {}
+
+type IProps = IConnectedState & IConnectedActions & IOwnProps;
+
+class SuccessImpl extends React.Component<IProps, any> {
   public static defaultPhrase = 'No current user';
   public toPrintable = () => this.props.currentUser
     ? toPrintable(this.props.currentUser)
@@ -19,6 +29,7 @@ class SuccessImpl extends React.Component<any, any> {
   }
 }
 
-const Success = connect<any, any, any>(state => ({ currentUser: state.currentUser }))(SuccessImpl);
+const mapStateToProps = state => ({ currentUser: state.currentUser });
+const Success = connect<IConnectedState, IConnectedActions, IOwnProps>(mapStateToProps)(SuccessImpl);
 
 export { Success }
