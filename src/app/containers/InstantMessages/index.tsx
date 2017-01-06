@@ -7,7 +7,25 @@ import { asyncConnect } from 'redux-connect';
 import { Updates } from 'helpers/Telegram/Updates';
 const s = require('./style.css');
 
-class InstantMessagesImpl extends React.Component<any, any> {
+interface IConnectedState {
+  dialogs: any;
+  users: any;
+  messages: any;
+  chats: any;
+}
+
+interface IConnectedActions {}
+
+interface IOwnProps {}
+
+interface IState {
+  activeChatID: number;
+  activeChat: any;
+}
+
+type IProps = IConnectedState & IConnectedActions & IOwnProps;
+
+class InstantMessagesImpl extends React.Component<IProps, IState> {
   public updates = Updates.getInstance();
 
   constructor(...args) {
@@ -63,7 +81,7 @@ const areStatesEqual = ({ chatList: a }, { chatList: b }) => {
     a.chats === b.chats;
 };
 // const InstantMessages = connect(mapStateToProps, null, null, { areStatesEqual } as any)(InstantMessagesImpl);
-const InstantMessages = asyncConnect([{
+const InstantMessages = asyncConnect<IConnectedState, IConnectedActions, IOwnProps>([{
   promise: ({ store }) => store.dispatch(fetchChatList()),
 }], mapStateToProps, null, null, { areStatesEqual })(InstantMessagesImpl);
 
