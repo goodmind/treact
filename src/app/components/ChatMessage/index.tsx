@@ -2,7 +2,12 @@ import * as React from 'react';
 
 const s = require('./style.css');
 
-class ChatMessage extends React.Component<any, any> {
+interface IProps {
+  message: any;
+  activeChat: any;
+}
+
+class ChatMessage extends React.Component<IProps, any> {
   public render() {
     const { message, activeChat } = this.props;
 
