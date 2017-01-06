@@ -9,6 +9,7 @@ class ChatListItem extends React.Component<any, any> {
     const { users, chats, activeChat } = this.props.parentProps;
 
     let props = {
+      id: null,
       name: null,
       active: false,
       onClick: null,
