@@ -3,7 +3,22 @@ import * as Steps from './steps';
 import { connect } from 'react-redux';
 const s = require('./style.css');
 
-class LoginImpl extends React.Component<any, any> {
+interface IConnectedState {
+  auth: any;
+}
+
+interface IConnectedActions {}
+
+interface IOwnProps {}
+
+type IProps = IConnectedState & IConnectedActions & IOwnProps;
+
+interface IState {
+  step: number;
+  form?: any;
+}
+
+class LoginImpl extends React.Component<IProps, IState> {
   public state = {
     step: 1,
     form: {
@@ -69,6 +84,7 @@ class LoginImpl extends React.Component<any, any> {
         return <div />;
     }
   }
+
   public render() {
     return (
       <div className={s.main}>
@@ -78,6 +94,6 @@ class LoginImpl extends React.Component<any, any> {
   }
 }
 
-const Login = connect<any, any, any>(state => ({ auth: state.auth }))(LoginImpl);
+const Login = connect<IConnectedState, IConnectedActions, IOwnProps>(state => ({ auth: state.auth }))(LoginImpl);
 
 export { Login }
