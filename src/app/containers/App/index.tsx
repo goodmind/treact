@@ -2,19 +2,20 @@ const appConfig = require('../../../../config/main');
 import * as React from 'react';
 import * as Helmet from 'react-helmet';
 import { Header } from 'components';
+const s = require('./style.css');
 
-class App extends React.Component<any, any> {
-  public render() {
-    const s = require('./style.css');
-
-    return (
-      <section className={s.app}>
-        <Helmet {...appConfig.app} {...appConfig.app.head}/>
-        <Header />
-        {this.props.children}
-      </section>
-    );
-  }
+interface IProps {
+  children: React.ReactChildren;
 }
+
+const App = (props: IProps) => {
+  return (
+    <section className={s.app}>
+      <Helmet {...appConfig.app} {...appConfig.app.head}/>
+      <Header />
+      {props.children}
+    </section>
+  );
+};
 
 export { App }
