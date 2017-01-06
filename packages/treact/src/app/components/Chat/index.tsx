@@ -36,8 +36,23 @@ const retrieveInputPeer = (peer) => {
   }
 };
 
-class ChatImpl extends React.Component<any, any> {
-  public componentWillReceiveProps(nextProps) {
+interface IConnectedState {
+  chats: any;
+}
+
+interface IConnectedActions {
+  dispatch: any;
+}
+
+interface IOwnProps {
+  activeChat: any;
+  messages: any;
+}
+
+type IProps = IConnectedState & IConnectedActions & IOwnProps;
+
+class ChatImpl extends React.Component<IProps, any> {
+  public componentWillReceiveProps(nextProps: IProps) {
     const { activeChat, dispatch } = nextProps;
     const inputPeer = activeChat && retrieveInputPeer(activeChat);
 
@@ -66,7 +81,7 @@ class ChatImpl extends React.Component<any, any> {
           <div className={s.chatfooter}>
             <AutoSizeTextarea
               className={s.editText}
-              rows="1"
+              rows={1}
               placeholder="  Write a message" />
             <div className={s.sendbutton}>Send</div>
           </div>
@@ -81,6 +96,6 @@ class ChatImpl extends React.Component<any, any> {
   }
 }
 
-const Chat = connect<any, any, any>(({ chatList: { chats } }) => ({ chats }))(ChatImpl);
+const Chat = connect<IConnectedState, IConnectedActions, IOwnProps>(({ chatList: { chats } }) => ({ chats }))(ChatImpl);
 
 export { Chat }
