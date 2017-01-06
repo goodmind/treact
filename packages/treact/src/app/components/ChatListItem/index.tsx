@@ -1,9 +1,11 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
+import { PeerPhoto } from 'containers/PeerPhoto';
 
 const style = require('./style.css');
 
 interface IProps {
+  id: number;
   name: string;
   avatar?: string;
   lastMsg?: any[];
@@ -17,26 +19,23 @@ class ChatListItem extends React.Component<IProps, any> {
     avatar: require('./usercolor1.png'),
     lastMsg: [],
   };
-  public css = {
-    block: classNames({
-      [style.item]: true,
-      [style.active]: this.props.active,
-    }),
-  };
   public render() {
     const {
+      id,
       name,
-      avatar,
       lastMsg,
       unreadCount,
       onClick,
     } = this.props;
-    const { block } = this.css;
+    const block = classNames({
+      [style.item]: true,
+      [style.active]: this.props.active,
+    });
     return (
       <div
         onClick={onClick}
         className={block}>
-        <img src={avatar} />
+        <PeerPhoto peerID={id} />
         <div className={style.info}>
           <div className={style.top}>
             <div className={style.chattime}>{name}</div>
