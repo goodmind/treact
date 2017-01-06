@@ -3,7 +3,28 @@ import { connect } from 'react-redux';
 import { signIn } from 'modules/auth';
 const t = require('../../style.css');
 
-class AuthCodeImpl extends React.Component<any, any> {
+interface IConnectedState {
+  auth: any;
+}
+
+interface IConnectedActions {
+  dispatch: any;
+}
+
+interface IOwnProps {
+  update: any;
+  skipStep: any;
+  form: any;
+}
+
+type IProps = IConnectedState & IConnectedActions & IOwnProps;
+
+interface IState {
+  authCode?: string;
+  error?: any;
+}
+
+class AuthCodeImpl extends React.Component<IProps, IState> {
   public state = {
     authCode: '',
     error: null,
@@ -46,6 +67,6 @@ class AuthCodeImpl extends React.Component<any, any> {
   }
 }
 
-const AuthCode = connect<any, any, any>(state => ({ auth: state.auth }))(AuthCodeImpl);
+const AuthCode = connect<IConnectedState, IConnectedActions, IOwnProps>(state => ({ auth: state.auth }))(AuthCodeImpl);
 
 export { AuthCode }
