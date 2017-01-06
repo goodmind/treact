@@ -6,7 +6,7 @@
 .item:hover {
   background-color: #f5f5f5;
 }
-.active {
+.active, .active:hover {
   background-color: #6a91b1;
   margin-right: -1px;
 }
