@@ -2,6 +2,8 @@ import { createReducer } from 'redux-act';
 import { combineReducers } from 'redux';
 import { invoke } from 'helpers/Telegram';
 import { MESSAGES } from 'actions';
+import { IMtpMessagesSlice } from 'redux/mtproto';
+import { IDispatch } from 'redux/IStore';
 
 const id = (s) => s;
 const FALSE = () => false;
@@ -25,14 +27,14 @@ export const messagesReducer = combineReducers({
 });
 
 export function fetchMessages(peer) {
-  return dispatch => {
+  return (dispatch: IDispatch) => {
     dispatch(MESSAGES.INIT(peer));
-    invoke('messages.getHistory', {
+    invoke<IMtpMessagesSlice>('messages.getHistory', {
       peer,
       offset_id: 0,
       max_id: 0,
       limit: 10,
-    }).then(history => {
+    }).then((history: any) => {
       console.debug(history);
     }, error => {
       console.error(error);

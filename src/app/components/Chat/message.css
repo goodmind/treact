@@ -1,0 +1,21 @@
+.block {
+  // width: 100%;
+  margin-left: 0.5em;
+}
+
+.block + .block {
+  margin-top: 0.5em;
+}
+
+.message {
+  background-color: white;
+  border-radius: 3px;
+  width: 80%;
+  padding: 4px 7px;
+}
+
+.time {
+  float: right;
+  width: 15%;
+  margin-right: 1em;
+}

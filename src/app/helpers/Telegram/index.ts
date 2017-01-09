@@ -1,8 +1,10 @@
-import { Telegram } from 'telegram-js';
+import { Telegram, ITelegramClient } from 'telegram-js';
 import * as MTProto from '@goodmind/telegram-mt-node';
 import * as TypeLanguage from '@goodmind/telegram-tl-node';
 import { addPublicKeys } from './publickeys';
 import { config, SERVER } from './config';
+
+import { IMtpHelpNearestDc, IMtpHelpGetConfig } from '../../redux/mtproto';
 
 /* tslint:disable:no-bitwise */
 
@@ -13,8 +15,8 @@ telegram.useSchema(schema);
 addPublicKeys(telegram);
 
 let connection;
-let client;
-let ready;
+let client: ITelegramClient;
+let ready: Promise<ITelegramClient>;
 
 if (typeof window !== 'undefined') {
   connection = new MTProto.net.HttpConnection(SERVER);
@@ -65,7 +67,7 @@ export function makePasswordHash (salt, password) {
   return MTProto.utility.createSHAHash(buffer, 'sha256');
 }
 
-export function invoke(...args: any[]) {
+export function invoke<R>(...args: any[]): Promise<R> {
   return readyApiCall(...args)
     .then((r: any) => {
       if (typeof r !== 'boolean' && r.instanceOf('mtproto.type.Rpc_error')) {
@@ -95,8 +97,8 @@ export function generateDialogIndex(date) {
 export function getDataCenters() {
   const tl = TypeLanguage;
   const promises = Promise.all([
-    invoke('help.getConfig'),
-    invoke('help.getNearestDc'),
+    invoke<IMtpHelpGetConfig>('help.getConfig'),
+    invoke<IMtpHelpNearestDc>('help.getNearestDc'),
   ]);
   return promises
     .then(([config, nearestDc]) => {

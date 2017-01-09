@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { signIn } from 'modules/auth';
+import { signIn } from 'api/auth';
 const t = require('../../style.css');
 
 interface IConnectedState {

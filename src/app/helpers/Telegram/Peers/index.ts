@@ -24,3 +24,12 @@ export function getPeerID(peerString) {
   const peerParams = peerString.substr(1).split('_');
   return isUser ? peerParams[0] : -peerParams[0] || 0;
 }
+
+export const retrieveId = (peer): number => {
+  switch (peer.getTypeName()) {
+    case 'Telegram.type.Channel': return -peer.id;
+    case 'Telegram.type.Chat': return -peer.id;
+    case 'Telegram.type.User': return peer.id;
+    default: throw new Error('Unknown peer type' + peer.getTypeName());
+  }
+};

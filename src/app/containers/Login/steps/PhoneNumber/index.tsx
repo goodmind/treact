@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { sendCode } from 'modules/auth';
+import { sendCode } from 'api/auth';
 const s = require('./style.css');
 const t = require('../../style.css');
 

@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 const logo = require('./title-logo.png');
 const s = require('./style.css');
 
-import { logOut } from 'modules/auth';
+import { logOut } from 'api/auth';
 import { connect } from 'react-redux';
 
 interface IConnectedState {}

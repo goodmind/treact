@@ -2,6 +2,8 @@
  * Type declerations for global development variables
  */
 
+declare module ''
+
 declare module 'redux-act' {
   // Generic stuff
   interface Identity<T> {
@@ -53,12 +55,31 @@ declare module 'redux-act' {
     raw(...args: any[]): Action<P, M>;
   }
 
+  interface SimpleActionCreator<P>  {
+    (arg:P): Action<P, void>;
+
+    toString(): string;
+    getType(): string;
+
+    assignTo(arg: StoreOrDispatch): ActionCreator<P, void>;
+    bindTo(arg: StoreOrDispatch): ActionCreator<P, void>;
+
+    assigned(): boolean;
+    bound(): boolean;
+    dispatched(): boolean;
+
+    raw(arg:P): Action<P, void>;
+  }
+
   // Reducers
   type Handler<S, P, M> = (state: S, payload: P, meta?: M) => S
   type ActionCreatorOrString<P, M> = ActionCreator<P, M> | string
 
   export function createAction<P, M>(): ActionCreator<P, M> & string;
   export function createAction<P, M>(description: string, payloadReducer?: (...args: any[]) => P): ActionCreator<P, M> & string;
+
+  export function createAction<P>(description: string): SimpleActionCreator<P> & string;
+
   export function createAction<P, M>(description: string, payloadReducer: (...args: any[]) => P, metaReducer?: (...args: any[]) => M): ActionCreator<P, M>;
   export function createAction<P, M>(payloadReducer: (...args: any[]) => P, metaReducer?: (...args: any[]) => M): ActionCreator<P, M>;
 
@@ -116,7 +137,16 @@ declare module 'telegram-js' {
   export interface ITelegramStatic {
     new (mt: any, tl: any): ITelegram;
   }
-  export interface ITelegramClient {
+  export interface ITelegramSchema {
+    constructors:Array<Object>;
+    methods:Array<Object>;
+    type:any;
+  }
+  export class ITelegramClient {
+    constructor (schema:ITelegramSchema, mtProto, typeLanguage);
+    schema:ITelegramSchema;
+    channel;
+    authKey;
     setConnection(conn: any): void;
     callApi(method: string, args: any[]): void;
     callApi(...args: any[]): void;

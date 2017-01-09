@@ -104,7 +104,7 @@ class Updates {
   }
 
   public getDifference() {
-    invoke('updates.getDifference', { pts: this.pts, date: this.date, qts: -1 }).then(result => {
+    invoke<any>('updates.getDifference', { pts: this.pts, date: this.date, qts: -1 }).then(result => {
         console.log('getDifference', result.getTypeName && result.getTypeName(), result);
 
         if (typeof result !== 'boolean') {

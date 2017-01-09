@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { checkPassword } from 'modules/auth';
+import { checkPassword } from 'api/auth';
 import { connect } from 'react-redux';
 const t = require('../../style.css');
 

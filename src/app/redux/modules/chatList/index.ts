@@ -2,6 +2,7 @@ import { IChatList, IChatListAction } from 'models/chatList';
 import { TypeLanguage, invoke, client, generateDialogIndex } from 'helpers/Telegram';
 import { getFullMessageID } from 'helpers/Telegram/Messages';
 import { getPeerID } from 'helpers/Telegram/Peers';
+import { IDispatch } from 'redux/IStore';
 
 export const FETCH_CHAT_LIST = 'chatList/FETCH_CHAT_LIST';
 export const FETCH_CHAT_LIST_SUCCESS = 'chatList/FETCH_CHAT_LIST_SUCCESS';
@@ -147,14 +148,14 @@ function fetchChatListFailure(err) {
 }
 
 export function fetchChatList(limit: number = 20) {
-  return dispatch => {
+  return (dispatch: IDispatch) => {
     dispatch({type: FETCH_CHAT_LIST});
     return invoke('messages.getDialogs', {
       offset_date: 0,
       offset_id: 0,
       offset_peer: new client.schema.type.InputPeerEmpty(),
       limit,
-    }).then(result => dispatch(fetchChatListSuccess(result)))
-      .catch(err => dispatch(fetchChatListFailure(err)));
+    }).then(fetchChatListSuccess, fetchChatListFailure)
+      .then(dispatch);
   };
 }
