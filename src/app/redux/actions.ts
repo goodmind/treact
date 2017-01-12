@@ -17,5 +17,6 @@ export const MESSAGES = actionEvent('messages');
 
 export const CHATS = {
   LOAD_SLICE: actionEvent('load slice'),
+  GET_DIALOGS: actionEvent('load every dialog slice'),
   SELECT: createAction('select dialog by id'),
 };
