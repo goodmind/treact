@@ -4,6 +4,8 @@
 
 declare module ''
 
+/// <reference path="ramda.d.ts" />
+
 declare module 'redux-act' {
   // Generic stuff
   interface Identity<T> {
