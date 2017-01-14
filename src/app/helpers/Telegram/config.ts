@@ -1,4 +1,4 @@
-import { trim } from 'lodash';
+import { trim } from 'ramda';
 import { restoreAuthKey } from './helpers';
 
 export const APP_ID = 49631;
