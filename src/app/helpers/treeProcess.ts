@@ -7,7 +7,7 @@ const isObject = isType(Object);
 const isArray = isType(Array);
 const isFunc = isType(Function);
 
-const objectProcess = (...morphs) => P(
+const objectProcess = (...morphs) => P<any, any>(
   toPairs,
   ...morphs,
   fromPairs,
