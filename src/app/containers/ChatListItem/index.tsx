@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { last } from 'ramda';
+
 // tslint:disable:jsx-wrap-multiline
 
 import { getPeerData } from 'helpers/Telegram/Peers';
 import { ChatListItemEmpty, ChatListItem } from 'components/ChatListItem';
-import { IMtpDialog, IMtpUser, IMtpChat, IMtpMessage } from 'redux/mtproto';
+import { IMtpDialog, IMtpUser, IMtpChat /* IMtpMessage */ } from 'redux/mtproto';
 import { TPeersType } from 'redux/modules/peers';
 import { IStoreHistory } from 'redux/modules/histories';
 import { isEmptyList } from 'helpers/state';
@@ -13,7 +13,8 @@ import { IDispatch, IStore } from 'redux/IStore';
 import { getPeerName, getPeerShortName } from 'helpers/Telegram/Peers';
 import { selectChat } from 'redux/api/chatList';
 
-const getLastMessage = (history: IStoreHistory): IMtpMessage => history.byId[last(history.ids)];
+// const getLastMessage =
+//  (history: IStoreHistory): IMtpMessage => history.byId[last<number, typeof history.ids>(history.ids)];
 
 class ChatListItemContainer extends React.Component<IProps & IFuncs & IState, any> {
   public static displayName = 'Telegram(ChatListItem)';
@@ -29,7 +30,7 @@ class ChatListItemContainer extends React.Component<IProps & IFuncs & IState, an
   public renderItem = () => {
     const { id, selected, peer, peerData, history } = this.props;
     const shortName = getPeerShortName(peer, peerData);
-    const lastMsg = getLastMessage(history);
+    const lastMsg = history.byId[this.props.dialog.top_message] || {message: ''};
     return <ChatListItem
       id={id}
       click={this.click}
