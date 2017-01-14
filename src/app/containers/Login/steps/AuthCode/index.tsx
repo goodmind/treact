@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { signIn } from 'api/auth';
+import { IDispatch } from 'redux/IStore';
 const t = require('../../style.css');
 
 interface IConnectedState {
@@ -8,7 +9,7 @@ interface IConnectedState {
 }
 
 interface IConnectedActions {
-  dispatch: any;
+  dispatch: IDispatch;
 }
 
 interface IOwnProps {
@@ -58,7 +59,7 @@ class AuthCodeImpl extends React.Component<IProps, IState> {
             onChange={this.handleChange}
             name="authCode"
             className="col-xs-4 form-control form-control-lg"
-            placeholder="Your code" type="text" />
+            placeholder="Your code" type="text" maxLength={5} />
         </div>
         {error && <div>Error type: {error.error_message}</div>}
         <button onClick={this.handleNextStep} className={`${t.btn} ${t.primary}`}>Next</button>
