@@ -1,4 +1,4 @@
-type TMtpVectorSubType = 'User'|'Message';
+type TMtpVectorSubType = 'User'|'Message'|'Chat'|'Dialog';
 
 type TMtpVector = 'Vector';
 type TMtpMessagesSlice = 'Telegram.type.messages.MessagesSlice';
@@ -6,13 +6,15 @@ type TMtpMessage = 'Telegram.type.Message';
 type TMtpUser = 'Telegram.type.User';
 type TMtpChat = 'Telegram.type.Chat';
 type TMtpChannel = 'Telegram.type.Channel';
+type TMtpDialog = 'Telegram.type.Dialog';
 type TMtpDcOption = 'Telegram.type.DcOption';
 type TMtpType = TMtpVector|TMtpMessagesSlice|TMtpMessage|TMtpUser|
-  TMtpChat|TMtpChannel|TMtpDcOption;
+  TMtpChat|TMtpChannel|TMtpDialog|TMtpDcOption;
 
 type TMtpNearestDc = 'Telegram.type.NearestDc';
 type TMtpConfig = 'Telegram.type.Config';
-type TMtpHelpType = TMtpConfig|TMtpNearestDc;
+type TMtpGetDialogs = 'Telegram.type.messages.Dialogs';
+type TMtpHelpType = TMtpConfig|TMtpNearestDc|TMtpGetDialogs;
 
 type TMtpPeerUser = 'Telegram.type.PeerUser';
 type TMtpPeerChat = 'Telegram.type.PeerChat';
@@ -59,23 +61,37 @@ export interface IMtpMessage extends IMtpObject<TMtpMessage> {
   mentioned?: true;
   via_bot_id?: number;
   entities?: any; // Vector of message markdown if any
+  unread?: true;
+  peerID?: true;
+}
+
+export interface IMtpDialog extends IMtpObject<TMtpDialog> {
+  read_inbox_max_id: number;
+  read_outbox_max_id: number;
+  top_message: number;
+  unread_count: number;
 }
 
 export interface IMtpUser extends IMtpObject<TMtpUser> {
   access_hash: string;
-  first_name: string;
+  first_name?: string;
+  last_name?: string;
   phone: string;
-
+  username?: string;
   contact: boolean;
   verifed: boolean;
+  bot?: true;
 }
 
-export interface IMtpChat extends IMtpObject<TMtpChat> { }
+export interface IMtpChat extends IMtpObject<TMtpChat> {
+  title: string;
+}
 
 export interface IMtpMessagesSlice extends IMtpObject<TMtpMessagesSlice> {
   chats: IMtpVector<IMtpChat>;
   messages: IMtpVector<IMtpMessage>;
   users: IMtpVector<IMtpUser>;
+  count: number;
 }
 
 // PEER OBJECTS
@@ -126,5 +142,12 @@ export interface IMtpHelpGetConfig extends IMtpHelpObject<TMtpNearestDc> {
   test_mode: boolean;
   this_dc: number;
 }
+
+export interface IMtpGetDialogs extends IMtpHelpObject<TMtpGetDialogs> {
+  chats: IMtpVector<IMtpChat>;
+  messages: IMtpVector<IMtpMessage>;
+  users: IMtpVector<IMtpUser>;
+  dialogs: IMtpVector<IMtpDialog>;
+};
 
 export type TById<T> = {[id: number]: T};
