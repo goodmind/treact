@@ -45,6 +45,37 @@ export function getPeerID(peerString) {
   return isUser ? peerParams[0] : -peerParams[0] || 0;
 }
 
+/*
+export const resolveUsername = (username: string) => (dispatch): Promise<number | boolean> => {
+  const searchUserName = cleanUsername(username);
+  if (searchUserName.match(/^\d+$/)) {
+    return Promise.resolve(false);
+  }
+  const foundUserID = dispatch(Users.resolveUsername(searchUserName));
+  const foundChatID = dispatch(Chats.resolveUsername(searchUserName));
+  let foundPeerID;
+  let foundUsername;
+  if (foundUserID) {
+    foundUsername = dispatch(getUser(foundUserID)).username
+    if (cleanUsername(foundUsername) === searchUserName) {
+      return Promise.resolve(foundUserID);
+    }
+  }
+  if (foundChatID) {
+    foundUsername = dispatch(getChat(foundChatID)).username
+    if (cleanUsername(foundUsername) === searchUserName) {
+      return Promise.resolve(-foundChatID);
+    }
+  }
+
+  return invoke('contacts.resolveUsername', { username }).then(resolveResult => {
+    saveApiUsers(resolveResult.users);
+    saveApiChats(resolveResult.chats);
+    return getPeerID(resolveResult.peer);
+  });
+};
+*/
+
 export const retrieveId = (peer): number => {
   switch (peer.getTypeName()) {
     case 'Telegram.type.Channel': return -peer.id;
@@ -57,6 +88,7 @@ export const retrieveId = (peer): number => {
 export const getPeerData = (id: number, peer: TPeersType, { users, chats }: IStore) => {
   switch (peer) {
     case 'user': return users.byId[id];
+    case 'channel':
     case 'chat': return chats.byId[id];
     default: throw new TypeError(`Unknown peer type ${peer}`);
   }
@@ -70,6 +102,7 @@ export const getPeerName = (peer: TPeersType, peerData: IMtpUser|IMtpChat) => {
       const { first_name = '', username = '', last_name = '' } = (peerData as IMtpUser);
       return joinNames(first_name, last_name, username);
     }
+    case 'channel':
     case 'chat': {
       const { title = '' } = (peerData as IMtpChat);
       return title;
@@ -84,6 +117,7 @@ export const getPeerShortName = (peer: TPeersType, peerData: IMtpUser|IMtpChat) 
       const { first_name = null, username = null, last_name = null } = (peerData as IMtpUser);
       return first_name || username || last_name;
     }
+    case 'channel':
     case 'chat': {
       const { title = null } = (peerData as IMtpChat);
       return title;
