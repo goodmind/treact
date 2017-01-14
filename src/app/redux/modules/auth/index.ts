@@ -1,9 +1,22 @@
 import { REHYDRATE } from 'redux-persist/constants';
 import { AUTH } from 'actions';
-import { IAuth, IAuthError } from 'models/auth';
 
 import { createReducer } from 'redux-act';
 import { combineReducers } from 'redux';
+
+interface IAuthError {
+  error_code: number;
+  error_message: string;
+}
+export interface IAuth {
+  authenticated: boolean;
+  loading: boolean;
+  phoneNumber: string;
+  phoneCodeHash: string;
+  phoneCode: string;
+  passwordSalt: string;
+  error: IAuthError;
+}
 
 const { SEND_CODE, SIGN_IN, GET_PASSWORD, LOG_OUT } = AUTH;
 const FALSE = () => false;
