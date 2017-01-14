@@ -1,45 +1,28 @@
-import { __, contains, pluck, where, pipe, reject,
-  unless, isEmpty, concat, prop, merge } from 'ramda';
 import { createReducer } from 'redux-act';
 import { combineReducers } from 'redux';
 
 import { CHATS } from 'actions';
-
-import { getReduce, getListOf,
-  appendNew, changePayload, listToIdMap } from 'helpers/state';
-import { rejectDashAndFuncs } from 'helpers/treeProcess';
+import { IMtpGetDialogs, IMtpMessagesSlice } from 'redux/mtproto';
+import { getListOf,
+  newIdsFromList, fieldListToMap, IStoreList } from 'helpers/state';
 import { IMtpUser } from '../mtproto';
+
+export type IStoreUsers = IStoreList<IMtpUser>;
 
 const { LOAD_SLICE, GET_DIALOGS } = CHATS;
 
 const getUsers = getListOf('users');
 
-const getId = prop('id');
-
-const addNewId = changePayload(getId, appendNew);
-
-const onDialogsDone = getReduce(getUsers, addNewId);
-
-const onlyNew = ids => reject(  where( { id: contains(__, ids) } ) );
-const getNewIds = (ids, users): number[] => pipe(onlyNew(ids), pluck('id'))(users);
-
-type IPayload = { users: { list: IMtpUser[] } };
-
-const addNewIds = (ids: number[], { users: { list } }: IPayload): number[] => {
-  const newList = getNewIds(ids, list);
-  return unless(isEmpty, concat( ids ))(newList);
-};
+const onDialogsDone = newIdsFromList(getUsers);
 
 const ids = createReducer({
-  [LOAD_SLICE.DONE]: addNewIds,
+  [LOAD_SLICE.DONE]: onDialogsDone,
   [GET_DIALOGS.DONE]: onDialogsDone,
 }, []);
 
 const byId = createReducer({
-  [GET_DIALOGS.DONE]: (state, { users }) => {
-    const pure = rejectDashAndFuncs(users);
-    return merge(state, listToIdMap(pure.list));
-  },
+  [LOAD_SLICE.DONE]: fieldListToMap<IMtpUser, IMtpMessagesSlice>(getUsers),
+  [GET_DIALOGS.DONE]: fieldListToMap<IMtpUser, IMtpGetDialogs>(getUsers),
 }, {});
 
 const reducer = combineReducers({

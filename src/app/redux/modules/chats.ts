@@ -1,86 +1,32 @@
 import { createReducer } from 'redux-act';
 import { combineReducers } from 'redux';
-import { includes } from 'lodash';
 
-import { TById, IMtpMessage } from '../mtproto';
 import { CHATS } from 'actions';
+import { IMtpGetDialogs, IMtpMessagesSlice } from 'redux/mtproto';
+import { getListOf,
+  newIdsFromList, fieldListToMap, IStoreList } from 'helpers/state';
+import { IMtpChat } from '../mtproto';
 
-const { LOAD_SLICE, SELECT } = CHATS;
+export type IStoreChats = IStoreList<IMtpChat>;
 
-export interface IStoreMessage {
-  user: number;
-  date: number;
-  text: string;
-}
+const { LOAD_SLICE, GET_DIALOGS } = CHATS;
 
-export interface IStoreChat {
-  messages: TById<IStoreMessage>;
-  ids: number[];
-}
+const getChats = getListOf('chats');
 
-export interface IStoreChats {
-  ids: number[];
-  selected: number;
-  byId: TById<IStoreChat>;
-};
-
-const selected = createReducer({
-  [SELECT]: (_, payload: number) => payload,
-}, NaN); // TODO Warn!! Redux strictly incompatible with NaN values!
+const onDialogsDone = newIdsFromList(getChats);
 
 const ids = createReducer({
-  [LOAD_SLICE.INIT]: (state: number[], id) => includes(state, id)
-    ? state
-    : [...state, id],
+  [LOAD_SLICE.DONE]: onDialogsDone,
+  [GET_DIALOGS.DONE]: onDialogsDone,
 }, []);
 
-const newSlice = () => {
-  const res: any = {
-    ids: [],
-    messages: {},
-  };
-  return res;
-};
-
-const onSliceInit = (state: TById<IStoreChat>, id: number) =>
-  state[id]
-    ? state
-    : Object.assign({}, state, { [id]: newSlice() });
-
-const addMessage = (state: IStoreChat, message: IMtpMessage) =>
-  includes(state.ids, message.id)
-    ? state
-    : {
-      ids: [...state.ids, message.id],
-      messages: Object.assign({}, state.messages, {
-        [message.id]: {
-          user: message.from_id,
-          date: message.date,
-          text: message.message,
-        },
-      }),
-    };
-const addMessages = (state: IStoreChat, messages: IMtpMessage[]) =>
-  messages.reduceRight(addMessage, state);
-// NOTE reduceRight is used because of reversed new-to-old order in message window
-// And best place to reverse order is here
-
-type TMessageRecord = {
-  id: number;
-  messages: IMtpMessage[]
-};
-
-const onSliceDone = (state: TById<IStoreChat>, { id, messages }: TMessageRecord) =>
-  Object.assign({}, state, { [id]: addMessages(state[id], messages) });
-
 const byId = createReducer({
-  [LOAD_SLICE.INIT]: onSliceInit,
-  [LOAD_SLICE.DONE]: onSliceDone,
+  [LOAD_SLICE.DONE]: fieldListToMap<IMtpChat, IMtpMessagesSlice>(getChats),
+  [GET_DIALOGS.DONE]: fieldListToMap<IMtpChat, IMtpGetDialogs>(getChats),
 }, {});
 
 const reducer = combineReducers({
   ids,
-  selected,
   byId,
 });
 
