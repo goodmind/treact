@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { getPeerData } from 'helpers/Telegram/Peers';
 
 interface IConnectedState {
-  chats: any;
-  users: any;
+  peers: any;
+  peerData: any;
 }
 
 interface IConnectedActions {}
@@ -21,10 +22,10 @@ class PeerPhotoImpl extends React.Component<IProps, any> {
   };
 
   public render() {
-    const { avatar, peerID, users, chats } = this.props;
-    const peer = peerID > 0 ? users.getById(peerID) : chats.getById(-peerID);
+    const { avatar, peerData } = this.props;
+    const { photo } = peerData;
 
-    console.warn(peerID, peer.photo);
+    console.warn(peerData, photo && photo.photo_small);
 
     return (
       <div>
@@ -34,7 +35,8 @@ class PeerPhotoImpl extends React.Component<IProps, any> {
   }
 }
 
-const mapStateToProps = ({ chatList: { chats, users }}) => ({ chats, users });
+const mapStateToProps =
+  (state, { peerID }) => ({ peerData: getPeerData(peerID, state.peers.byId[peerID], state) });
 const PeerPhoto = connect<Partial<IConnectedState>, IConnectedActions, IOwnProps>(mapStateToProps)(PeerPhotoImpl);
 
 export { PeerPhoto }
