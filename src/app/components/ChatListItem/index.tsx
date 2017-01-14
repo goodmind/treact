@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
-// import { PeerPhoto } from 'containers/PeerPhoto';
+import { PeerPhoto } from 'containers/PeerPhoto';
 
 // tslint:disable:jsx-no-multiline-js
 // tslint:disable:jsx-wrap-multiline
@@ -54,6 +54,7 @@ export class ChatListItemEmpty extends React.Component<IChatListBasicProps, any>
   };
   public render() {
     const {
+      id,
       name,
       click,
       selected,
@@ -67,6 +68,7 @@ export class ChatListItemEmpty extends React.Component<IChatListBasicProps, any>
       <div
         onClick={click}
         className={block}>
+        <PeerPhoto peerID={id} />
         <div className={style.info}>
           <div className={style.top}>
             <div className={style.chattime}>{name}</div>
