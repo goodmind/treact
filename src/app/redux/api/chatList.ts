@@ -1,14 +1,13 @@
 import { CHATS } from 'actions';
-import { invoke } from 'helpers/Telegram';
+import { invoke, client } from 'helpers/Telegram';
 import { IMtpMessagesSlice, IMtpPeer } from '../mtproto';
 import { IDispatch, IAsyncAction } from 'redux/IStore';
 import { TById, IMtpMessage, IMtpUser } from 'redux/mtproto';
-import { TPeersType } from 'redux/modules/peers';
-import { client } from 'helpers/Telegram';
-import { getPeerData } from 'helpers/Telegram/Peers';
+
+import { getPeerData, retrieveInputPeer } from 'helpers/Telegram/Peers';
 import { rejectDashAndFuncs } from 'helpers/treeProcess';
 
-const { LOAD_SLICE, SELECT } = CHATS;
+const { LOAD_SLICE, SELECT, GET_DIALOGS } = CHATS;
 
 // tslint:disable:curly
 
@@ -37,39 +36,10 @@ export const loadSliceRange = (dispatch: IDispatch) =>
       limit,
     };
     dispatch(LOAD_SLICE.INIT(id));
-    return invoke('messages.getHistory', data)
+    return invoke<IMtpMessagesSlice>('messages.getHistory', data)
       .then(adapter, LOAD_SLICE.FAIL)
       .then(dispatch);
   };
-
-const retrieveInputPeer = (id: number, peer: TPeersType, peerData) => {
-  switch (peer) {
-    case 'channel':
-      return new client.schema.type.InputPeerChannel({
-        props: {
-          channel_id: id,
-          access_hash: peerData.access_hash,
-        },
-      });
-
-    case 'chat':
-      return new client.schema.type.InputPeerChat({
-        props: {
-          chat_id: id,
-        },
-      });
-
-    case 'user':
-      return new client.schema.type.InputPeerUser({
-        props: {
-          user_id: id,
-          access_hash: peerData.access_hash,
-        },
-      });
-
-    default: throw new TypeError(`Unknown peer type ${peer}`);
-  }
-};
 
 export const selectChat = (id: number): IAsyncAction<Promise<any>|void> =>
   (dispatch, getState) => {
@@ -86,3 +56,20 @@ export const selectChat = (id: number): IAsyncAction<Promise<any>|void> =>
       console.warn(err);
     }
   };
+
+export function fetchChatList(limit: number = 20) {
+  return async (dispatch: IDispatch) => {
+    dispatch(GET_DIALOGS.INIT());
+    try {
+      const result = await invoke('messages.getDialogs', {
+        offset_date: 0,
+        offset_id: 0,
+        offset_peer: new client.schema.type.InputPeerEmpty(),
+        limit,
+      });
+      return dispatch(GET_DIALOGS.DONE(result));
+    } catch (err) {
+      return dispatch(GET_DIALOGS.FAIL(err));
+    }
+  };
+}
