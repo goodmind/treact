@@ -3,6 +3,8 @@ import { push } from 'react-router-redux';
 import { IDispatch } from '../IStore';
 import { AUTH } from 'actions';
 
+import { pipe, tap } from 'ramda';
+
 const { SEND_CODE, SIGN_IN, GET_PASSWORD, LOG_OUT } = AUTH;
 
 function getPassword() {
@@ -31,9 +33,9 @@ export function checkPassword(password: string) {
 export function signIn(phoneCode) {
   return (dispatch, getState) => {
     const catchNeedPass = err => err.error_message === 'SESSION_PASSWORD_NEEDED'
-      ? dispatch(getPassword()).then(() => err)
+      ? dispatch(getPassword())
       : err;
-
+    const catchAndDispatch = pipe( tap(catchNeedPass), err => dispatch(SIGN_IN.FAIL(err)) );
     const { auth } = getState();
     dispatch(SIGN_IN.INIT());
     return invoke('auth.signIn', {
@@ -42,8 +44,7 @@ export function signIn(phoneCode) {
       phone_code: phoneCode,
     }).then(SIGN_IN.DONE)
       .then(dispatch)
-      .catch(catchNeedPass)
-      .then(err => dispatch(SIGN_IN.FAIL(err)));
+      .catch(catchAndDispatch);
   };
 }
 
@@ -63,11 +64,6 @@ export function sendCode(phoneNumber: string) {
       .then(dispatch);
   };
 }
-
-const tap = <D>(func: (data) => any) => (data: D) => {
-  func(data);
-  return data;
-};
 
 export function logOut() {
   return (dispatch: IDispatch) => {
