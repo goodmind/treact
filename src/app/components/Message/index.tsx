@@ -1,7 +1,5 @@
 import * as React from 'react';
 
-import classes from 'helpers/classes';
-
 const style = require('./style.css');
 
 interface IOwnProps {
@@ -28,16 +26,21 @@ const Time = ({ date }: { date: number }) => {
   );
 };
 
-export const Message = ({ date, text }: IOwnProps) => {
-  const { block, message } = classes({
-    block: style.block,
-    message: style.message,
-  });
+export const Message = ({ user, date, text }: IOwnProps) => {
   return (
-    <div className={block}>
-      <Time date={date} />
-      <div className={message}>
-        {text}
+    <div className={style.message}>
+      <div className={style.flexcontainer}>
+        <img
+          src={require('../ChatListItem/usercolor1.png')}
+          className={style.messageavatar} />
+        <div
+          className={style.messagebody}>
+          <div className={style.sender}>{user}</div>
+          <div className={style.textbody}>
+            <div className={style.text}>{text}</div>
+            <Time date={date} />
+          </div>
+        </div>
       </div>
     </div>
   );
