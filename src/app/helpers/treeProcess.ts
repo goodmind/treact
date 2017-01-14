@@ -1,5 +1,5 @@
 import { pipe as P, toPairs, fromPairs, head, equals, is,
-  reject, either, map, T, identity, cond, complement, both } from 'ramda';
+  reject, either, map, T, identity, cond, complement, both, ifElse } from 'ramda';
 
 const isType = type => ([_, obj]) => is(type)(obj);
 
@@ -34,7 +34,10 @@ const treeProcess = (...morphs) => {
     [isObject, reRun],
     [T, identity],
   ]));
-  return objectProcess(...morphs, treeWalk);
+
+  const objectTransform = objectProcess(...morphs, treeWalk);
+  const listTransform = map(objectProcess(...morphs, treeWalk));
+  return ifElse(is(Array), listTransform, objectTransform);
 };
 
 export const rejectDashAndFuncs = treeProcess(objFilter);
