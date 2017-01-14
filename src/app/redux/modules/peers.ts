@@ -6,7 +6,7 @@ import { getListOf, newIdsFromList, reduceSequence, changeReducer, IStoreList } 
 import { CHATS } from 'actions';
 import { props, map, pipe } from 'ramda';
 import { IIds } from 'redux/IStore';
-import { IMtpGetDialogs, TById } from 'redux/mtproto';
+import { IMtpGetDialogs, TById, IMtpPeer } from 'redux/mtproto';
 const { GET_DIALOGS } = CHATS;
 
 export type TPeersType = 'user'|'channel'|'chat';
@@ -35,7 +35,7 @@ const simplyPeerType = (typeName: string): TPeersType => {
   }
 };
 
-const selectTypeNames = map(pipe(
+const selectTypeNames = map<IMtpPeer, [number, string]>(pipe<IMtpPeer, any, [number, string]>(
   props(['id', '_typeName']),
   ([ id, typeName ]) => [id, simplyPeerType(typeName)],
 ));
