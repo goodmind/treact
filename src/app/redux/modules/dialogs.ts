@@ -31,7 +31,7 @@ const ids = createReducer({
   [GET_DIALOGS.DONE]: onDialogsDone,
 }, []);
 
-const cleanPayload = R.pick([
+const cleanPayload = R.pick<IMtpDialog, any>([
   'read_inbox_max_id',
   'read_outbox_max_id',
   'top_message',
