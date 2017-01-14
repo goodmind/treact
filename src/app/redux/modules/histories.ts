@@ -1,13 +1,11 @@
 import { createReducer } from 'redux-act';
 import { combineReducers } from 'redux';
-// import { includes } from 'lodash';
 import { assoc, contains, unless, where, evolve, append, has, pipe, unapply,
   prop, map, cond, pluck, converge, zip, lensPath, pathEq, assocPath, over, reduce, subtract, sort } from 'ramda';
 import { IStoreList, whenNot, whenNotC, getListOf, appendNew } from 'helpers/state';
 import { TById, IMtpMessage } from '../mtproto';
 import { CHATS } from 'actions';
 
-// import { IDialogPayload } from 'api/histories';
 import { IMtpGetDialogs } from 'redux/mtproto';
 
 const { LOAD_SLICE, GET_DIALOGS } = CHATS;
