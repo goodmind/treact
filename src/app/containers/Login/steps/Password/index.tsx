@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { checkPassword } from 'api/auth';
 import { connect } from 'react-redux';
+import { IDispatch } from 'redux/IStore';
 const t = require('../../style.css');
 
 interface IConnectedState {
@@ -8,7 +9,7 @@ interface IConnectedState {
 }
 
 interface IConnectedActions {
-  dispatch: any;
+  dispatch: IDispatch;
 }
 
 interface IOwnProps {
