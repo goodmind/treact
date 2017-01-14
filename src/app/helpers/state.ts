@@ -50,7 +50,7 @@ export const newIdsFromList = listGetter => getReduce(listGetter, addNewId);
 const idPair = e => [ e.id, dissoc('id', e) ];
 
 const addChangedProp = <V>(state: TById<V>, [id, val]: [number, V]): TById<V> =>
-  unless(
+  unless<typeof state, typeof state>(
     propEq(id, val),
     assoc(id, val),
   )(state);
@@ -60,10 +60,11 @@ type ITransformer = <F, G>(payload: G) => Array<[number, F]>;
 export const changeReducer = <G>(transformer: ITransformer) =>
   <F, PL>(vectorGetter: (payload: PL) => G) =>
     getReduce<TById<F>, PL, Array<[number, F]>>(
-      P(vectorGetter, transformer),
+      P<PL, G, Array<[number, F]>>(vectorGetter, transformer),
       addChangedProp);
 
-const adaptFieldVector = P(
+// TODO: strict types
+const adaptFieldVector = P<any, any, any>(
   rejectDashAndFuncs,
   map(idPair));
 
