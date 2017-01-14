@@ -11,6 +11,8 @@
     "postbuild": "webpack --config config/webpack/server.js",
     "prestart": "npm run build",
     "start": "node build/server.js",
+    "prestart:no_ssr": "npm run build",
+    "start:no_ssr": "node server.js",
     "start:prod": "cross-env NODE_ENV=production npm start",
     "test": "node_modules/.bin/karma start config/test/karma.conf.js",
     "lint": "node_modules/.bin/tslint \"src/**/**.ts*\""
@@ -151,6 +153,7 @@
     "lodash": "^4.17.3",
     "ramda": "^0.23.0",
     "react": "~15.3.2",
+    "react-autosize-textarea": "^0.3.4",
     "react-dom": "~15.3.2",
     "react-helmet": "^3.1.0",
     "react-redux": "^5.0.1",
