@@ -73,10 +73,10 @@ class Updates {
     console.log('start updates');
 
     return new Promise((resolve, reject) => {
-      invoke('account.updateStatus', { offline: false }).then(() => {
+      invoke<any>('account.updateStatus', { offline: false }).then(() => {
         this.emitter.registerOnUpdates(this.onUpdate(onUpdate));
 
-        invoke('updates.getState').then(state => {
+        invoke<any>('updates.getState').then(state => {
           this.setState(state);
 
           this.emitter.on('error', err => {
@@ -99,7 +99,7 @@ class Updates {
     if (this.emitter.started) {
       console.log('stop updates');
       this.emitter.stopHttpPollLoop();
-      return invoke('account.updateStatus', { offline: true });
+      return invoke<any>('account.updateStatus', { offline: true });
     }
   }
 
