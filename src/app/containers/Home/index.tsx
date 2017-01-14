@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
+import { IDispatch } from 'redux/IStore';
 
 interface IConnectedState {
-  currentUser: any;
+  auth: any;
 }
 
 interface IConnectedActions {
-  dispatch: any;
+  dispatch: IDispatch;
 }
 
 interface IOwnProps {}
@@ -16,9 +17,9 @@ type IProps = IConnectedState & IConnectedActions & IOwnProps;
 
 class HomeImpl extends React.Component<IProps, any> {
   public componentDidMount() {
-    const { currentUser, dispatch } = this.props;
+    const { auth, dispatch } = this.props;
 
-    if (currentUser && currentUser.id) {
+    if (auth.authenticated) {
       dispatch(push('/im'));
       return;
     }
@@ -31,7 +32,7 @@ class HomeImpl extends React.Component<IProps, any> {
   }
 }
 
-const mapStateToProps = state => ({ currentUser: state.currentUser });
+const mapStateToProps = state => ({ auth: state.auth });
 const Home = connect<IConnectedState, IConnectedActions, IOwnProps>(mapStateToProps)(HomeImpl);
 
 export { Home }
