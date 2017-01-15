@@ -1,8 +1,9 @@
 import { REHYDRATE } from 'redux-persist/constants';
-import { AUTH } from 'actions';
-
 import { createReducer } from 'redux-act';
 import { combineReducers } from 'redux';
+import { T, F } from 'ramda';
+
+import { AUTH } from 'actions';
 
 interface IAuthError {
   error_code: number;
@@ -19,8 +20,6 @@ export interface IAuth {
 }
 
 const { SEND_CODE, SIGN_IN, GET_PASSWORD, LOG_OUT } = AUTH;
-const FALSE = () => false;
-const TRUE = () => true;
 
 const passwordSalt = createReducer({
   [GET_PASSWORD.DONE]: (_, { passwordSalt }) => passwordSalt,
@@ -38,20 +37,20 @@ const error = createReducer<IAuthError>({
 });
 
 const loading = createReducer({
-  [SEND_CODE.INIT]: TRUE,
-  [SEND_CODE.DONE]: FALSE,
-  [SEND_CODE.FAIL]: FALSE,
-  [SIGN_IN.INIT]: TRUE,
-  [SIGN_IN.DONE]: FALSE,
-  [SIGN_IN.FAIL]: FALSE,
-  [GET_PASSWORD.INIT]: TRUE,
-  [GET_PASSWORD.DONE]: FALSE,
-  [GET_PASSWORD.FAIL]: FALSE,
+  [SEND_CODE.INIT]: T,
+  [SEND_CODE.DONE]: F,
+  [SEND_CODE.FAIL]: F,
+  [SIGN_IN.INIT]: T,
+  [SIGN_IN.DONE]: F,
+  [SIGN_IN.FAIL]: F,
+  [GET_PASSWORD.INIT]: T,
+  [GET_PASSWORD.DONE]: F,
+  [GET_PASSWORD.FAIL]: F,
 }, false);
 
 const authenticated = createReducer({
-  [SIGN_IN.DONE]: TRUE,
-  [LOG_OUT.DONE]: FALSE,
+  [SIGN_IN.DONE]: T,
+  [LOG_OUT.DONE]: F,
   [REHYDRATE]: (_, { authKey, currentUser }) => !!authKey && !!currentUser,
 }, false);
 
@@ -64,7 +63,7 @@ const phoneCodeHash = createReducer({
 }, '');
 
 const loggedOut = createReducer({
-  [LOG_OUT.DONE]: TRUE,
+  [LOG_OUT.DONE]: T,
 }, false);
 
 export const authReducer = combineReducers<IAuth>({
