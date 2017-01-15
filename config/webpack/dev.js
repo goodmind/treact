@@ -4,6 +4,7 @@ var postcssAssets = require('postcss-assets');
 var postcssNext = require('postcss-cssnext');
 var stylelint = require('stylelint');
 var ManifestPlugin = require('webpack-manifest-plugin');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 var config = {
   // Enable sourcemaps for debugging webpack's output.
@@ -135,7 +136,11 @@ var config = {
     }),
     new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoErrorsPlugin(),
+    new HtmlWebpackPlugin({
+      template: path.resolve('./config/index.html'),
+      inject: 'body',
+    }),
   ]
 };
 

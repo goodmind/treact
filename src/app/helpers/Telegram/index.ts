@@ -1,47 +1,24 @@
-import { Telegram } from 'telegram-js';
+import { ITelegramClient } from 'telegram-js';
 import * as MTProto from '@goodmind/telegram-mt-node';
 import * as TypeLanguage from '@goodmind/telegram-tl-node';
-import { addPublicKeys } from './publickeys';
-import { config, SERVER } from './config';
+
+import apiConnect from './connection';
+import { IMtpHelpNearestDc, IMtpHelpGetConfig } from '../../redux/mtproto';
+import { rejectDashAndFuncs } from 'helpers/treeProcess';
 
 /* tslint:disable:no-bitwise */
 
-export const schema = require('./api-tlschema-57.json');
-
-const telegram = new Telegram(MTProto, TypeLanguage);
-telegram.useSchema(schema);
-addPublicKeys(telegram);
-
-let connection;
-let client;
-let ready;
-
-if (typeof window !== 'undefined') {
-  connection = new MTProto.net.HttpConnection(SERVER);
-  client = telegram.createClient();
-  client.setConnection(connection);
-  connection.connect(() => {
-    console.log('Connected to Telegram on ', SERVER.host);
-    console.log('Client config: ');
-    console.log(client.schema, client);
-    /*invoke('messages.getDialogs', {
-      offset_date: 0,
-      offset_id: 0,
-      offset_peer: new client.schema.type.InputPeerEmpty(),
-      limit: 20,
-    }).then(config => console.log(config))
-      .catch(err => console.error(err));*/
-  });
-  ready = client.setup(config);
-  config.deviceModel = navigator.vendor;
-  config.systemVersion = navigator.userAgent;
-} else {
-  const os = require('os');
-  client = telegram.createClient();
-  ready = Promise.resolve({});
-  config.deviceModel = os.type();
-  config.systemVersion = os.platform() + '/' + os.release();
-}
+let client: ITelegramClient;
+let ready = apiConnect();
+ready.then(value => { client = value; });
+// NOTE Node connection function is deleted
+// } else {
+//   const os = require('os');
+//   client = telegram.createClient();
+//   ready = Promise.resolve({});
+//   config.deviceModel = os.type();
+//   config.systemVersion = os.platform() + '/' + os.release();
+// }
 
 export function isReady() {
   return ready;
@@ -65,13 +42,13 @@ export function makePasswordHash (salt, password) {
   return MTProto.utility.createSHAHash(buffer, 'sha256');
 }
 
-export function invoke(...args: any[]) {
+export function invoke<R>(...args: any[]): Promise<R> {
   return readyApiCall(...args)
     .then((r: any) => {
       if (typeof r !== 'boolean' && r.instanceOf('mtproto.type.Rpc_error')) {
         return Promise.reject(r);
       } else {
-        return r;
+        return rejectDashAndFuncs(r);
       }
     })
     .catch(err => {
@@ -95,8 +72,8 @@ export function generateDialogIndex(date) {
 export function getDataCenters() {
   const tl = TypeLanguage;
   const promises = Promise.all([
-    invoke('help.getConfig'),
-    invoke('help.getNearestDc'),
+    invoke<IMtpHelpGetConfig>('help.getConfig'),
+    invoke<IMtpHelpNearestDc>('help.getNearestDc'),
   ]);
   return promises
     .then(([config, nearestDc]) => {

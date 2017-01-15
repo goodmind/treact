@@ -1,18 +1,5 @@
 import { createAction } from 'redux-act';
 
-export type IAction<T> = {
-  type: string;
-  payload: T;
-};
-
-export type IActionCreator<T> = (payload: T) => IAction<T>;
-
-export type IActionEvent<I, S, F> = {
-  INIT: IActionCreator<I>,
-  DONE: IActionCreator<S>,
-  FAIL: IActionCreator<F>,
-};
-
 export const actionEvent = (reduxMessage: string) => ({
   INIT: createAction(`[begin] ${reduxMessage}`),
   DONE: createAction(`[end] ${reduxMessage}`),
@@ -27,3 +14,9 @@ export const AUTH = {
 };
 
 export const MESSAGES = actionEvent('messages');
+
+export const CHATS = {
+  LOAD_SLICE: actionEvent('load slice'),
+  GET_DIALOGS: actionEvent('load every dialog slice'),
+  SELECT: createAction('select dialog by id'),
+};

@@ -1,53 +1,81 @@
 import * as React from 'react';
-import { ChatListItem as XChatListItem } from 'components';
 
-class ChatListItem extends React.Component<any, any> {
+// tslint:disable:jsx-wrap-multiline
+
+import { getPeerData } from 'helpers/Telegram/Peers';
+import { ChatListItemEmpty, ChatListItem } from 'components/ChatListItem';
+import { IMtpDialog, IMtpUser, IMtpChat /* IMtpMessage */ } from 'redux/mtproto';
+import { TPeersType } from 'redux/modules/peers';
+import { IStoreHistory } from 'redux/modules/histories';
+import { isEmptyList } from 'helpers/state';
+import { connect } from 'react-redux';
+import { IDispatch, IStore } from 'redux/IStore';
+import { getPeerName, getPeerShortName } from 'helpers/Telegram/Peers';
+import { selectChat } from 'redux/api/chatList';
+
+// const getLastMessage =
+//  (history: IStoreHistory): IMtpMessage => history.byId[last<number, typeof history.ids>(history.ids)];
+
+class ChatListItemContainer extends React.Component<IProps & IFuncs & IState, any> {
   public static displayName = 'Telegram(ChatListItem)';
-
+  public renderEmptyItem = () => {
+    const { id, selected, peer, peerData } = this.props;
+    return <ChatListItemEmpty
+      id={id}
+      click={this.click}
+      selected={selected}
+      name={getPeerName(peer, peerData)}
+      />;
+  }
+  public renderItem = () => {
+    const { id, selected, peer, peerData, history } = this.props;
+    const shortName = getPeerShortName(peer, peerData);
+    const lastMsg = history.byId[this.props.dialog.top_message] || {message: ''};
+    return <ChatListItem
+      id={id}
+      click={this.click}
+      selected={selected}
+      name={getPeerName(peer, peerData)}
+      unreadCount={this.props.dialog.unread_count}
+      previewName={shortName}
+      text={lastMsg.message}
+      />;
+  }
+  public click = () => this.props.click(this.props.id);
   public render() {
-    const { peerID, unread_count, message } = this.props.chat;
-    const { users, chats, activeChat } = this.props.parentProps;
-
-    let props = {
-      id: null,
-      name: null,
-      active: false,
-      onClick: null,
-      unreadCount: null,
-    };
-    let peer;
-
-    if (peerID > 0) {
-      const user = users.getById(peerID);
-      props.name = user.first_name + ' ' + user.last_name;
-      peer = user;
-    } else {
-      const chat = chats.getById(-peerID);
-      props.name = chat.title;
-      peer = chat;
-    }
-
-    const fromUser = users.getById(message.from_id);
-    props = Object.assign({}, props, {
-      id: peerID,
-      active: peerID === activeChat,
-      onClick: this.props.onClick(Object.assign(peer, { id: peerID })),
-      lastMsg: [(fromUser && {
-        text: (!message.media ||
-          message.media.instanceOf('api.type.MessageMediaEmpty')) ?
-            message.message || '[none]' : '[image]',
-        fromUser: {
-          displayName: fromUser.first_name + ' ' + fromUser.last_name,
-        },
-      }) || null],
-      unreadCount: unread_count,
-    });
-
-    return (
-      <XChatListItem
-        {...props} />
-    );
+    const { history } = this.props;
+    return isEmptyList(history)
+      ? this.renderEmptyItem()
+      : this.renderItem();
   }
 }
 
-export { ChatListItem }
+interface IProps {
+  id: number;
+  dialog: IMtpDialog;
+  history: IStoreHistory;
+  peer: TPeersType;
+  selected: boolean;
+}
+
+interface IFuncs {
+  click: (id: number) => any;
+}
+
+interface IState {
+  peerData: IMtpUser|IMtpChat;
+}
+
+const mapState = (state: IStore, { id, peer }: IProps) => {
+  return {
+    peerData: getPeerData(id, peer, state),
+  };
+};
+
+const mapDispatch = (dispatch: IDispatch) => ({
+  click: (id: number) => dispatch(selectChat(id)),
+});
+
+const connected = connect<IState, IFuncs, IProps>(mapState, mapDispatch)(ChatListItemContainer);
+
+export { connected as ChatListItem };
