@@ -5,6 +5,7 @@ import { addPublicKeys } from './publickeys';
 import { config, SERVER } from './config';
 
 import { IMtpHelpNearestDc, IMtpHelpGetConfig } from '../../redux/mtproto';
+import { rejectDashAndFuncs } from 'helpers/treeProcess';
 
 /* tslint:disable:no-bitwise */
 
@@ -73,7 +74,7 @@ export function invoke<R>(...args: any[]): Promise<R> {
       if (typeof r !== 'boolean' && r.instanceOf('mtproto.type.Rpc_error')) {
         return Promise.reject(r);
       } else {
-        return r;
+        return rejectDashAndFuncs(r);
       }
     })
     .catch(err => {

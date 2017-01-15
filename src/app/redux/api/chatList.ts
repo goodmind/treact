@@ -5,7 +5,6 @@ import { IDispatch, IAsyncAction } from 'redux/IStore';
 import { TById, IMtpMessage, IMtpUser } from 'redux/mtproto';
 
 import { getPeerData, retrieveInputPeer } from 'helpers/Telegram/Peers';
-import { rejectDashAndFuncs } from 'helpers/treeProcess';
 
 const { LOAD_SLICE, SELECT, GET_DIALOGS } = CHATS;
 
@@ -19,14 +18,13 @@ export interface IDialogPayload {
 export const loadSliceRange = (dispatch: IDispatch) =>
   (id: number, peer: IMtpPeer, offset: number = 0, limit: number = 10) => {
     const adapter = (slice: IMtpMessagesSlice) => {
-      const pure = rejectDashAndFuncs(slice);
-      console.warn(`slice`, pure);
+      console.warn(`slice`, slice);
       return LOAD_SLICE.DONE({
         id,
-        count: pure.count,
-        chats: pure.chats,
-        users: pure.users,
-        messages: pure.messages.list,
+        count: slice.count,
+        chats: slice.chats,
+        users: slice.users,
+        messages: slice.messages.list,
       });
     };
     const data = {

@@ -1,6 +1,5 @@
 import { TById } from 'redux/mtproto';
 import { IReducer } from 'redux/IStore';
-import { rejectDashAndFuncs } from 'helpers/treeProcess';
 import { pipe as P, map, contains, append, path, dissoc, assoc,
   unless, reduce, prop, propEq, curry } from 'ramda';
 
@@ -47,25 +46,27 @@ const addNewId = changePayload(getId, appendNew);
 
 export const newIdsFromList = listGetter => getReduce(listGetter, addNewId);
 
-const idPair = e => [ e.id, dissoc('id', e) ];
+const idPair = (e): [number, any] => [ e.id, dissoc('id', e) ];
 
-const addChangedProp = <V>(state: TById<V>, [id, val]: [number, V]): TById<V> =>
+const addChangedProp = <V>(state: TById<V>, [id, val]: IIdPair<V>): TById<V> =>
   unless<typeof state, typeof state>(
     propEq(id, val),
     assoc(id, val),
   )(state);
 
-type ITransformer = <F, G>(payload: G) => Array<[number, F]>;
+type IIdPair<Value> = [number, Value];
+
+type IIdPairList<Value> = Array<IIdPair<Value>>;
+
+type ITransformer = <F, G>(payload: G) => IIdPairList<F>;
 
 export const changeReducer = <G>(transformer: ITransformer) =>
   <F, PL>(vectorGetter: (payload: PL) => G) =>
-    getReduce<TById<F>, PL, Array<[number, F]>>(
-      P<PL, G, Array<[number, F]>>(vectorGetter, transformer),
+    getReduce<TById<F>, PL, IIdPairList<F>>(
+      P<PL, G, IIdPairList<F>>(vectorGetter, transformer),
       addChangedProp);
 
 // TODO: strict types
-const adaptFieldVector = P<any, any, any>(
-  rejectDashAndFuncs,
-  map(idPair));
+const adaptFieldVector = map<any, IIdPair<any>>(idPair);
 
 export const fieldListToMap = changeReducer(adaptFieldVector);
