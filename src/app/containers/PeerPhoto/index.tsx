@@ -2,6 +2,9 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { getPeerData } from 'helpers/Telegram/Peers';
 
+import { Files } from 'helpers/Telegram/Files';
+import { FileManager } from 'helpers/FileManager';
+
 interface IConnectedState {
   peers: any;
   peerData: any;
@@ -12,6 +15,7 @@ interface IConnectedActions {}
 interface IOwnProps {
   avatar?: string;
   peerID: number;
+  className?: any;
 }
 
 type IProps = IConnectedState & IConnectedActions & IOwnProps;
@@ -21,17 +25,24 @@ class PeerPhotoImpl extends React.Component<IProps, any> {
     avatar: require('./usercolor1.png'),
   };
 
+  public state = {
+    avatar: this.props.avatar,
+  };
+
+  public componentDidMount() {
+    const { photo } = this.props.peerData;
+    const peerPhoto = photo && photo.photo_small;
+    const hasPhoto = peerPhoto !== undefined;
+
+    if (hasPhoto) {
+      Files.downloadSmallFile(peerPhoto).then(blob => {
+        this.setState({ avatar: FileManager.getUrl(blob, 'image/jpeg') });
+      }, err => console.error(err));
+    }
+  }
+
   public render() {
-    const { avatar, peerData } = this.props;
-    const { photo } = peerData;
-
-    console.warn(peerData, photo && photo.photo_small);
-
-    return (
-      <div>
-        <img src={avatar} />
-      </div>
-    );
+    return <img className={this.props.className} src={this.state.avatar} />;
   }
 }
 

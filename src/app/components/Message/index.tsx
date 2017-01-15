@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { PeerPhoto } from 'containers/PeerPhoto';
 
 const style = require('./style.css');
 
@@ -30,8 +31,7 @@ export const Message = ({ user, date, text }: IOwnProps) => {
   return (
     <div className={style.message}>
       <div className={style.flexcontainer}>
-        <img
-          src={require('../ChatListItem/usercolor1.png')}
+        <PeerPhoto peerID={user}
           className={style.messageavatar} />
         <div
           className={style.messagebody}>
