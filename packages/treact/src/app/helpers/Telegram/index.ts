@@ -6,10 +6,8 @@ import apiConnect from './connection';
 import { IMtpHelpNearestDc, IMtpHelpGetConfig } from '../../redux/mtproto';
 import { rejectDashAndFuncs } from 'helpers/treeProcess';
 
-/* tslint:disable:no-bitwise */
-
 let client: ITelegramClient;
-let ready = apiConnect();
+const ready = apiConnect();
 ready.then(value => { client = value; });
 // NOTE Node connection function is deleted
 // } else {
@@ -30,10 +28,10 @@ function readyApiCall(...args: any[]) {
 
 export function makePasswordHash (salt, password) {
   const passwordUTF8 = decodeURIComponent(encodeURIComponent(password));
-  let buffer = new ArrayBuffer(passwordUTF8.length);
-  const byteView = new Uint8Array(buffer);
-
-  for (let i = 0, len = passwordUTF8.length; i < len; i++) {
+  let buffer: any = new ArrayBuffer(passwordUTF8.length);
+  const byteView: any = new Uint8Array(buffer);
+  const len = passwordUTF8.length;
+  for (let i = 0; i < len; i++) {
     byteView[i] = passwordUTF8.charCodeAt(i);
   }
 

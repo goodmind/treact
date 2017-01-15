@@ -8,12 +8,12 @@ import { MemoryFileStorage } from 'helpers/FileManager/MemoryFileStorage';
 
 // let cachedFs = false;
 // let cachedFsPromise = false;
-let cachedSavePromises = {};
-let cachedDownloadPromises = {};
-let cachedDownloads = {};
+const cachedSavePromises = {};
+const cachedDownloadPromises = {};
+const cachedDownloads = {};
 
-let downloadPulls = {};
-let downloadActives = {};
+const downloadPulls = {};
+const downloadActives = {};
 
 function downloadRequest(dcID, cb, activeDelta?) {
   if (downloadPulls[dcID] === undefined) {
@@ -58,7 +58,7 @@ function downloadCheck(dcID) {
     });
 }
 
-function getFileName (location) {
+function getFileName(location) {
   let ext;
   switch (location._typeName) {
     case 'Telegram.type.InputDocumentFileLocation':
@@ -82,7 +82,7 @@ function getFileName (location) {
   }
 }
 
-function getFileStorage () {
+function getFileStorage() {
   /*if (false) {
     if (TmpfsFileStorage.isAvailable()) {
       return TmpfsFileStorage;
@@ -129,7 +129,7 @@ class Files {
 
     return cachedDownloadPromises[fileName] = fileStorage.getFile(fileName).then(blob => {
       return cachedDownloads[fileName] = blob;
-    }, async () => {
+    }, async() => {
       const downloadPromise = downloadRequest(location.dc_id, () => {
         let inputLocation = location;
         if (!inputLocation._typeName || inputLocation._typeName === 'Telegram.type.FileLocation') {

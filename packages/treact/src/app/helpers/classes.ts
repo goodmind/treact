@@ -1,10 +1,10 @@
 import * as classNames from 'classnames';
-import { mapValues } from 'lodash';
+import { map } from 'ramda';
 
 type TClassNames<S> = {
   [P in keyof S]: string;
 };
 
-const classes = <S>(styles: S): TClassNames<S> => mapValues(styles, classNames);
+const classes = <S>(styles: S): TClassNames<S> => map<any, any, S>(classNames, styles);
 
 export default classes;

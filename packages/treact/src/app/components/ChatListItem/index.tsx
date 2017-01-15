@@ -2,10 +2,6 @@ import * as React from 'react';
 import * as classNames from 'classnames';
 import { PeerPhoto } from 'containers/PeerPhoto';
 
-// tslint:disable:jsx-no-multiline-js
-// tslint:disable:jsx-wrap-multiline
-// tslint:disable:max-classes-per-file
-
 const style = require('./style.css');
 
 interface IChatListBasicProps {
