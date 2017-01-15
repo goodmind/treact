@@ -5,7 +5,47 @@ const buggyUnknownBlob = navigator.userAgent.indexOf('Safari') !== -1 &&
 
 let blobSupported = true;
 
-function blobConstruct (blobParts, mimeType) {
+/* tslint:disable:no-bitwise */
+
+function uint6ToBase64(nUint6) {
+  return nUint6 < 26
+    ? nUint6 + 65
+    : nUint6 < 52
+      ? nUint6 + 71
+      : nUint6 < 62
+        ? nUint6 - 4
+        : nUint6 === 62
+          ? 43
+          : nUint6 === 63
+            ? 47
+            : 65;
+}
+
+function bytesToBase64(bytes) {
+  let mod3;
+  let result = '';
+  for (let nLen = bytes.length, nUint24 = 0, nIdx = 0; nIdx < nLen; nIdx++) {
+    mod3 = nIdx % 3;
+    nUint24 |= bytes[nIdx] << (16 >>> mod3 & 24);
+    if (mod3 === 2 || nLen - nIdx === 1) {
+      result += String.fromCharCode(
+        uint6ToBase64(nUint24 >>> 18 & 63),
+        uint6ToBase64(nUint24 >>> 12 & 63),
+        uint6ToBase64(nUint24 >>> 6 & 63),
+        uint6ToBase64(nUint24 & 63),
+      );
+      nUint24 = 0;
+    }
+  }
+
+  return result.replace(/A(?=A$|$)/g, '=');
+}
+
+function bytesToArrayBuffer(b) {
+  return (new Uint8Array(b)).buffer;
+}
+
+function blobConstruct(blobParts: any[], mimeType?) {
   let blob;
   try {
     blob = new Blob(blobParts, {type: mimeType});
@@ -23,7 +63,6 @@ try {
   blobSupported = false;
 }
 
-/*
 class FileManager {
   public isBlobAvailable() {
     return blobSupported;
@@ -37,7 +76,9 @@ class FileManager {
     } catch (e) {
       try {
         fileWriter.truncate(0);
-      } catch (e) {}
+      } catch (e) {
+        console.error(e);
+      }
       throw e;
     }
   }
@@ -89,7 +130,7 @@ class FileManager {
           return false;
         }
         blobParts.push(blob);
-        setZeroTimeout(() => {
+        setImmediate(() => {
           if (fakeFileWriter.onwriteend) {
             fakeFileWriter.onwriteend();
           }
@@ -158,7 +199,7 @@ class FileManager {
     return this.getUrl(blob, mimeType);
   }
 
-  public downloadFile(blob, mimeType, fileName) {
+  /*public downloadFile(blob, mimeType, fileName) {
     if (window.navigator && navigator.msSaveBlob !== undefined) {
       window.navigator.msSaveBlob(blob, fileName);
       return false;
@@ -186,7 +227,9 @@ class FileManager {
       request.onsuccess = function () {
         console.log('Device storage save result', this.result);
       };
-      request.onerror = () => {};
+      request.onerror = () => {
+        console.log('');
+      };
       return;
     }
 
@@ -202,7 +245,9 @@ class FileManager {
         try {
           popup.location.href = url;
           return;
-        } catch (e) {}
+        } catch (e) {
+          console.error(e);
+        }
       }
       let anchor: any = document.createElementNS('http://www.w3.org/1999/xhtml', 'a');
       anchor.href = url;
@@ -232,14 +277,15 @@ class FileManager {
         $(anchor).remove();
       }, 100);
     });
-  }
+  }*/
 
   public isAvailable = this.isBlobAvailable;
   public copy = this.fileCopyTo;
   public write = this.fileWriteData;
   public chooseSave = this.chooseSaveFile;
-  public download = this.downloadFile;
+  // public download = this.downloadFile;
 }
 
-export { FileManager }
-*/
+const singleton = new FileManager();
+
+export { singleton as FileManager }
