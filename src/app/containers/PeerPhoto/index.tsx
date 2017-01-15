@@ -35,6 +35,14 @@ class PeerPhotoImpl extends React.Component<IProps, any> {
     const hasPhoto = peerPhoto !== undefined;
 
     if (hasPhoto) {
+      const cachedBlob = Files.getCachedFile(peerPhoto);
+      if (cachedBlob) {
+        this.setState({ avatar: FileManager.getUrl(cachedBlob, 'image/jpeg') });
+        return;
+      }
+    }
+
+    if (hasPhoto) {
       Files.downloadSmallFile(peerPhoto).then(blob => {
         this.setState({ avatar: FileManager.getUrl(blob, 'image/jpeg') });
       }, err => console.error(err));
