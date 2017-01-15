@@ -1,5 +1,6 @@
 import { pipe as P, toPairs, fromPairs, head, equals, is,
-  reject, either, map, T, identity, cond, complement, both, ifElse } from 'ramda';
+  reject, either, map, T, identity, cond, complement, both,
+  ifElse, any, flip } from 'ramda';
 
 const isType = type => ([_, obj]) => is(type)(obj);
 
@@ -26,11 +27,28 @@ const objFilter = reject(either(
   isFunc,
 ));
 
+const flipIs = flip(is);
+
+const checkTypes = types => ([_, obj]) => any(flipIs(obj), types);
+
+const isBypassType = checkTypes([
+  Int8Array,
+  Uint8Array,
+  Uint8ClampedArray,
+  Int16Array,
+  Uint16Array,
+  Int32Array,
+  Uint32Array,
+  Float32Array,
+  Float64Array,
+]);
+
 const treeProcess = (...morphs) => {
   const reRun = ([name, obj]) => [name, treeProcess(...morphs)(obj)];
   const reRunMap = ([name, obj]) => [ name, map( treeProcess(...morphs), obj ) ];
   const treeWalk = map(cond([
     [isArray, reRunMap],
+    [isBypassType, identity],
     [isObject, reRun],
     [T, identity],
   ]));

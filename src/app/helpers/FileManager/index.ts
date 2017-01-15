@@ -5,8 +5,6 @@ const buggyUnknownBlob = navigator.userAgent.indexOf('Safari') !== -1 &&
 
 let blobSupported = true;
 
-/* tslint:disable:no-bitwise */
-
 function uint6ToBase64(nUint6) {
   return nUint6 < 26
     ? nUint6 + 65
@@ -24,7 +22,8 @@ function uint6ToBase64(nUint6) {
 function bytesToBase64(bytes) {
   let mod3;
   let result = '';
-  for (let nLen = bytes.length, nUint24 = 0, nIdx = 0; nIdx < nLen; nIdx++) {
+  const nLen = bytes.length;
+  for (let nUint24 = 0, nIdx = 0; nIdx < nLen; nIdx++) {
     mod3 = nIdx % 3;
     nUint24 |= bytes[nIdx] << (16 >>> mod3 & 24);
     if (mod3 === 2 || nLen - nIdx === 1) {

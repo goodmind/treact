@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { ChatListSearch } from 'components';
 
-// tslint:disable:jsx-no-multiline-js
-
 const style = require('./style.css');
 
 interface IProps {
