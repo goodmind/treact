@@ -95,7 +95,7 @@ function getFileStorage () {
 }
 
 class Files {
-  /*public getCachedFile(location) {
+  public getCachedFile(location) {
     if (!location) {
       return false;
     }
@@ -104,6 +104,7 @@ class Files {
     return cachedDownloads[fileName] || false;
   }
 
+  /*
   public getDownloadedFile(location, size) {
     const fileStorage = getFileStorage();
     const fileName = getFileName(location);
