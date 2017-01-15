@@ -1,15 +1,25 @@
-import { invoke, APP_HASH, APP_ID, makePasswordHash } from 'helpers/Telegram';
 import { REHYDRATE } from 'redux-persist/constants';
-import { push } from 'react-router-redux';
-import { AUTH } from 'actions';
-import { IAuth, IAuthError } from 'models/auth';
-
 import { createReducer } from 'redux-act';
 import { combineReducers } from 'redux';
+import { T, F } from 'ramda';
+
+import { AUTH } from 'actions';
+
+interface IAuthError {
+  error_code: number;
+  error_message: string;
+}
+export interface IAuth {
+  authenticated: boolean;
+  loading: boolean;
+  phoneNumber: string;
+  phoneCodeHash: string;
+  phoneCode: string;
+  passwordSalt: string;
+  error: IAuthError;
+}
 
 const { SEND_CODE, SIGN_IN, GET_PASSWORD, LOG_OUT } = AUTH;
-const FALSE = () => false;
-const TRUE = () => true;
 
 const passwordSalt = createReducer({
   [GET_PASSWORD.DONE]: (_, { passwordSalt }) => passwordSalt,
@@ -27,20 +37,20 @@ const error = createReducer<IAuthError>({
 });
 
 const loading = createReducer({
-  [SEND_CODE.INIT]: TRUE,
-  [SEND_CODE.DONE]: FALSE,
-  [SEND_CODE.FAIL]: FALSE,
-  [SIGN_IN.INIT]: TRUE,
-  [SIGN_IN.DONE]: FALSE,
-  [SIGN_IN.FAIL]: FALSE,
-  [GET_PASSWORD.INIT]: TRUE,
-  [GET_PASSWORD.DONE]: FALSE,
-  [GET_PASSWORD.FAIL]: FALSE,
+  [SEND_CODE.INIT]: T,
+  [SEND_CODE.DONE]: F,
+  [SEND_CODE.FAIL]: F,
+  [SIGN_IN.INIT]: T,
+  [SIGN_IN.DONE]: F,
+  [SIGN_IN.FAIL]: F,
+  [GET_PASSWORD.INIT]: T,
+  [GET_PASSWORD.DONE]: F,
+  [GET_PASSWORD.FAIL]: F,
 }, false);
 
 const authenticated = createReducer({
-  [SIGN_IN.DONE]: TRUE,
-  [LOG_OUT.DONE]: FALSE,
+  [SIGN_IN.DONE]: T,
+  [LOG_OUT.DONE]: F,
   [REHYDRATE]: (_, { authKey, currentUser }) => !!authKey && !!currentUser,
 }, false);
 
@@ -53,7 +63,7 @@ const phoneCodeHash = createReducer({
 }, '');
 
 const loggedOut = createReducer({
-  [LOG_OUT.DONE]: TRUE,
+  [LOG_OUT.DONE]: T,
 }, false);
 
 export const authReducer = combineReducers<IAuth>({
@@ -65,73 +75,3 @@ export const authReducer = combineReducers<IAuth>({
   phoneNumber,
   phoneCodeHash,
 });
-
-export function getPassword() {
-  const onDone = ({ current_salt }) => GET_PASSWORD.DONE({
-    passwordSalt: current_salt,
-  });
-  return dispatch => {
-    dispatch(GET_PASSWORD.INIT());
-    return invoke('account.getPassword')
-      .then(onDone, GET_PASSWORD.FAIL)
-      .then(dispatch);
-  };
-}
-
-export function checkPassword(password: string) {
-  return (dispatch, getState) => {
-    const { auth } = getState();
-    const hash = makePasswordHash(auth.passwordSalt, password);
-    return invoke('auth.checkPassword', {
-      password_hash: hash,
-    }).then(SIGN_IN.DONE, SIGN_IN.FAIL)
-      .then(dispatch);
-  };
-}
-
-export function signIn(phoneCode) {
-  return (dispatch, getState) => {
-    const catchNeedPass = err => err.error_message === 'SESSION_PASSWORD_NEEDED'
-      ? dispatch(getPassword()).then(() => err)
-      : err;
-
-    const { auth } = getState();
-    dispatch(SIGN_IN.INIT());
-    return invoke('auth.signIn', {
-      phone_number: auth.phoneNumber,
-      phone_code_hash: auth.phoneCodeHash,
-      phone_code: phoneCode,
-    }).then(SIGN_IN.DONE)
-      .then(dispatch)
-      .catch(catchNeedPass)
-      .then(err => dispatch(SIGN_IN.FAIL(err)));
-  };
-}
-
-export function sendCode(phoneNumber: string) {
-  const onDone = ({ phone_code_hash }) => SEND_CODE.DONE({
-    phoneCodeHash: phone_code_hash,
-    phoneNumber,
-  });
-  return dispatch => {
-    dispatch(SEND_CODE.INIT());
-    return invoke('auth.sendCode', {
-      phone_number: phoneNumber,
-      current_number: false,
-      api_id: APP_ID,
-      api_hash: APP_HASH,
-    }).then(onDone, SEND_CODE.FAIL)
-      .then(dispatch);
-  };
-}
-
-export function logOut() {
-  return dispatch => {
-    dispatch(LOG_OUT.INIT());
-    return invoke('auth.logOut')
-      .then(LOG_OUT.DONE, LOG_OUT.FAIL)
-      .then(dispatch)
-      .then(r => (r.payload === false && localStorage.clear(), r))
-      .then(r => (dispatch(push('/')), r));
-  };
-}

@@ -1,88 +1,33 @@
 import * as React from 'react';
-import { Chat } from 'components';
+import { Chat } from 'containers/Chat';
 import { ChatList } from 'containers';
-// import { connect } from 'react-redux';
-import { fetchChatList } from 'modules/chatList';
+import { fetchChatList } from 'api/chatList';
 import { asyncConnect } from 'redux-connect';
 import { Updates } from 'helpers/Telegram/Updates';
 const s = require('./style.css');
 
-interface IConnectedState {
-  dialogs: any;
-  users: any;
-  messages: any;
-  chats: any;
-}
-
-interface IConnectedActions {}
-
-interface IOwnProps {}
-
-interface IState {
-  activeChatID: number;
-  activeChat: any;
-}
-
-type IProps = IConnectedState & IConnectedActions & IOwnProps;
-
-class InstantMessagesImpl extends React.Component<IProps, IState> {
+class InstantMessagesImpl extends React.Component<{}, {}> {
   public updates = Updates.getInstance();
 
   constructor(...args) {
     super(...args);
-    this.state = {
-      activeChatID: 0,
-      activeChat: null,
-    };
     this.updates.start(update => {
       console.log(update.getTypeName(), update);
     });
   }
 
   public render() {
-    const { dialogs, users, messages, chats } = this.props;
-    const onChatClick = (e, chat) => {
-      console.log(e, this, chat);
-      this.setState({
-        activeChatID: chat.id,
-        activeChat: chat,
-      });
-    };
-
-    if (dialogs && users && messages) {
-      console.log(dialogs.getById, dialogs.list);
-      console.log(users.getById);
-      console.log(messages.getById);
-      console.log(chats.getById, chats.list);
-    }
-
     return (
       <div className={s.main}>
-        <ChatList
-          activeChat={this.state.activeChatID}
-          dialogs={dialogs}
-          users={users}
-          messages={messages}
-          chats={chats}
-          onChatClick={onChatClick} />
-        <Chat
-          messages={[]}
-          activeChat={this.state.activeChat} />
+        <ChatList />
+        <Chat />
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ chatList: { dialogs, messages, users, chats } }) => ({ dialogs, messages, users, chats });
-const areStatesEqual = ({ chatList: a }, { chatList: b }) => {
-  return a.dialogs === b.dialogs &&
-    a.messages === b.messages &&
-    a.users === b.users &&
-    a.chats === b.chats;
-};
-// const InstantMessages = connect(mapStateToProps, null, null, { areStatesEqual } as any)(InstantMessagesImpl);
 const InstantMessages = asyncConnect<IConnectedState, IConnectedActions, IOwnProps>([{
   promise: ({ store }) => store.dispatch(fetchChatList()),
-}], mapStateToProps, null, null, { areStatesEqual })(InstantMessagesImpl);
+}])(InstantMessagesImpl);
 
 export { InstantMessages }

@@ -2,51 +2,79 @@ import * as React from 'react';
 import * as classNames from 'classnames';
 import { PeerPhoto } from 'containers/PeerPhoto';
 
+// tslint:disable:jsx-no-multiline-js
+// tslint:disable:jsx-wrap-multiline
+// tslint:disable:max-classes-per-file
+
 const style = require('./style.css');
 
-interface IProps {
+interface IChatListBasicProps {
   id: number;
   name: string;
   avatar?: string;
-  lastMsg?: any[];
-  unreadCount: number;
-  active: boolean;
-  onClick: React.EventHandler<React.MouseEvent<any>>;
+  selected: boolean;
+  click: React.EventHandler<React.MouseEvent<any>>;
 }
 
-class ChatListItem extends React.Component<IProps, any> {
+interface IChatListFullProps extends IChatListBasicProps {
+  previewName: string;
+  text: string;
+  unreadCount: number;
+}
+
+type UnreadProps = { unread: number };
+const UnreadBadge = ({ unread }: UnreadProps) => {
+  const block = classNames({
+    [style.unread]: true,
+    [style.hidden]: unread === 0,
+  });
+  return (
+    <div className={block}>
+      <div className={style.counter}>{unread}</div>
+    </div>
+  );
+};
+
+type MessageProps = { text: string, userName: string };
+const MessagePreview = ({ text, userName }: MessageProps) => (
+  <div className={style.message}>
+    <div className={style.sender}>
+      <span>{userName}</span>
+      <span>:</span>
+    </div>
+    <span>{text}</span>
+  </div>
+);
+
+// <PeerPhoto peerID={id} />
+
+export class ChatListItemEmpty extends React.Component<IChatListBasicProps, any> {
   public static defaultProps = {
     avatar: require('./usercolor1.png'),
-    lastMsg: [],
   };
   public render() {
     const {
       id,
       name,
-      lastMsg,
-      unreadCount,
-      onClick,
+      click,
+      selected,
+      children,
     } = this.props;
     const block = classNames({
       [style.item]: true,
-      [style.active]: this.props.active,
+      [style.active]: selected,
     });
     return (
       <div
-        onClick={onClick}
+        onClick={click}
         className={block}>
         <PeerPhoto peerID={id} />
         <div className={style.info}>
           <div className={style.top}>
             <div className={style.chattime}>{name}</div>
-            {lastMsg[0] && <div className={style.time}>{lastMsg[0].sent}</div>}
           </div>
           <div className={style.bottom}>
-            <div className={style.message}>
-              {lastMsg[0] && <div className={style.sender}>{lastMsg[0].fromUser.displayName.split(' ')[0] + ':'}</div>}
-              {(lastMsg[0] && lastMsg[0].text) || ''}
-            </div>
-            {unreadCount > 0 && <div className={style.unread}><div className={style.counter}>{unreadCount}</div></div>}
+            {children}
           </div>
         </div>
       </div>
@@ -54,4 +82,9 @@ class ChatListItem extends React.Component<IProps, any> {
   }
 }
 
-export { ChatListItem }
+export const ChatListItem = ({ id, name, click, selected, previewName, text, unreadCount }: IChatListFullProps) => (
+  <ChatListItemEmpty id={id} name={name} click={click} selected={selected}>
+    <MessagePreview text={text} userName={previewName}/>
+    <UnreadBadge unread={unreadCount}/>
+  </ChatListItemEmpty>
+);
