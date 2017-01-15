@@ -8,8 +8,6 @@ import { getPeerData, retrieveInputPeer } from 'helpers/Telegram/Peers';
 
 const { LOAD_SLICE, SELECT, GET_DIALOGS } = CHATS;
 
-// tslint:disable:curly
-
 export interface IDialogPayload {
   messages: TById<IMtpMessage>;
   users: IMtpUser[];

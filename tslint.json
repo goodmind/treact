@@ -14,7 +14,7 @@
       "jsx-double"
     ],
     "no-var-requires": false,
-    "ordered-imports": false,
+    "ordered-imports": [],
     "arrow-parens": false,
     "member-ordering": [
       false
@@ -26,6 +26,23 @@
     ],
     "jsx-alignment": [
       false
-    ]
+    ],
+    "no-empty-interface": [
+      false
+    ],
+    "space-before-function-paren": [
+      false
+    ],
+    "interface-over-type-literal":  false,
+    "prefer-const": ["warn"],
+    "curly": false,
+    "semicolon": [
+      false
+    ],
+    "no-bitwise": false,
+    "no-consecutive-blank-lines": [false],
+    "jsx-no-multiline-js": false,
+    "jsx-wrap-multiline": false,
+    "max-classes-per-file": [false]
   }
 }

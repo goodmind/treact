@@ -1,25 +1,21 @@
 import { FileManager } from 'helpers/FileManager';
 
-const storage = {};
-
-class MemoryFileStorage {
+class MemoryFileStorage extends Map {
   public name = 'Memory';
   public isAvailable() {
     return true;
   }
 
-  public async saveFile(fileName, blob) {
-    return storage[fileName] = blob;
-  }
+  public saveFile = async (fileName, blob) => this.set(fileName, blob);
 
-  public async getFile(fileName) {
-    if (storage[fileName]) {
-      return storage[fileName];
+  public getFile = async fileName => {
+    if (this.has(fileName)) {
+      return this.get(fileName);
     }
     throw new Error('FILE_NOT_FOUND');
   }
 
-  public async getFileWriter(fileName, mimeType) {
+  public getFileWriter = async (fileName, mimeType) => {
     const fakeWriter = FileManager.getFakeFileWriter(mimeType, blob => {
       this.saveFile(fileName, blob);
     });

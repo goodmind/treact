@@ -9,7 +9,7 @@
     },
     "outDir": "build",
     "module": "commonjs",
-    "target": "es5",
+    "target": "es6",
     "sourceMap": true,
     "inlineSourceMap": false,
     "inlineSources": false,
@@ -17,7 +17,11 @@
     "noUnusedParameters": true,
     "noUnusedLocals": true,
     "jsx": "react",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "lib": [
+      "es2015",
+      "dom"
+    ]
   },
   "exclude": [
     "node_modules",

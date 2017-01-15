@@ -9,7 +9,7 @@ const createLogger = require('redux-logger');
 
 export function configureStore(history, initialState?: IStore): Redux.Store<IStore> {
 
-  let middlewares: Redux.Middleware[] = [
+  const middlewares: Redux.Middleware[] = [
     routerMiddleware(history),
     thunk,
   ];

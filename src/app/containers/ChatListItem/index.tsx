@@ -1,7 +1,5 @@
 import * as React from 'react';
 
-// tslint:disable:jsx-wrap-multiline
-
 import { getPeerData } from 'helpers/Telegram/Peers';
 import { ChatListItemEmpty, ChatListItem } from 'components/ChatListItem';
 import { IMtpDialog, IMtpUser, IMtpChat /* IMtpMessage */ } from 'redux/mtproto';

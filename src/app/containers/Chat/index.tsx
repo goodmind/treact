@@ -11,9 +11,6 @@ import { selectChat } from 'redux/api/chatList';
 import { getPeerName } from 'helpers/Telegram/Peers';
 import { TPeersType } from 'redux/modules/peers';
 
-// tslint:disable:jsx-wrap-multiline
-// tslint:disable:curly
-
 const onChatSelect = async (currentId: number, nextId: number) => {
   if (nextId && nextId !== currentId) {
     await selectChat(nextId);
