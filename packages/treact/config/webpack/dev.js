@@ -35,12 +35,15 @@ var config = {
       'react-redux',
       'react-router',
       'react-router-redux',
+      'react-helmet',
       'redux',
-      'lodash',
+      'ramda',
       'redux-connect',
       'redux-persist',
       'redux-thunk',
       'jsbn',
+      '@goodmind/telegram-tl-node',
+      '@goodmind/telegram-mt-node',
       'telegram-js'
     ]
   },
