@@ -43,7 +43,7 @@ class Updates {
       seqStart: update.seq_start,
     };
 
-    switch (update.getTypeName()) {
+    switch (update._typeName) {
       case 'Telegram.type.UpdatesTooLong':
       case 'mtproto.type.New_session_created':
         this.getDifference();
@@ -105,10 +105,10 @@ class Updates {
 
   public getDifference() {
     invoke<any>('updates.getDifference', { pts: this.pts, date: this.date, qts: -1 }).then(result => {
-        console.log('getDifference', result.getTypeName && result.getTypeName(), result);
+        console.log('getDifference', result._typeName, result);
 
         if (typeof result !== 'boolean') {
-          if (result.getTypeName() === 'Telegram.type.updates.DifferenceEmpty') {
+          if (result._typeName === 'Telegram.type.updates.DifferenceEmpty') {
               console.debug('apply empty diff', result);
               this.setState({date: result.date, seq: result.seq});
               return false;
@@ -118,7 +118,7 @@ class Updates {
           console.debug('apply next state', nextState);
           this.setState(nextState);
 
-          if (result.getTypeName() === 'Telegram.type.updates.DifferenceSlice') {
+          if (result._typeName === 'Telegram.type.updates.DifferenceSlice') {
               this.getDifference();
           }
         }
