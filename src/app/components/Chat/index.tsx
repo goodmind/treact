@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { /*ChatMessage,*/ AutoSizeTextarea } from 'components';
+import { ChatFooter } from 'containers';
 
 const s = require('./style.css');
 
@@ -21,16 +21,6 @@ const ChatHeader = ({ name, userCount }) => (
       <div className={s.bottom}>{userCount} members</div>
     </div>
     <div className={s.right} />
-  </div>
-);
-
-const ChatFooter = () => (
-  <div className={s.chatfooter}>
-    <AutoSizeTextarea
-      className={s.editText}
-      rows={1}
-      placeholder="  Write a message" />
-    <div className={s.sendbutton}>Send</div>
   </div>
 );
 
