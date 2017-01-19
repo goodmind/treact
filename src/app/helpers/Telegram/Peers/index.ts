@@ -85,6 +85,16 @@ export const retrieveId = (peer): number => {
   }
 };
 
+export const getInputPeerById = (id: number) => {
+  return (_, getState) => {
+    const state = getState();
+    const peerType = state.peers.byId[id];
+    const peerData = getPeerData(id, peerType, state);
+
+    return retrieveInputPeer(id, peerType, peerData);
+  }
+}
+
 export const getPeerData = (id: number, peer: TPeersType, { users, chats }: IStore) => {
   switch (peer) {
     case 'user': return users.byId[id];
