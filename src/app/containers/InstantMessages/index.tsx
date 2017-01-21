@@ -4,6 +4,7 @@ import { ChatList } from 'containers';
 import { fetchChatList } from 'api/chatList';
 import { asyncConnect } from 'redux-connect';
 import { Updates } from 'helpers/Telegram/Updates';
+import DownloadAssistant from './downloadAssistant'
 const s = require('./style.css');
 
 class InstantMessagesImpl extends React.Component<{}, {}> {
@@ -12,7 +13,7 @@ class InstantMessagesImpl extends React.Component<{}, {}> {
   constructor(...args) {
     super(...args);
     this.updates.start(update => {
-      console.log(update.getTypeName(), update);
+      console.log(update._typeName, update);
     });
   }
 
@@ -21,6 +22,7 @@ class InstantMessagesImpl extends React.Component<{}, {}> {
       <div className={s.main}>
         <ChatList />
         <Chat />
+        <DownloadAssistant />
       </div>
     );
   }

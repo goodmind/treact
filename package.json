@@ -148,6 +148,7 @@
     "history": "^4.3.0",
     "isomorphic-fetch": "^2.2.1",
     "jsbn": "0.0.0",
+    "knack": "0.0.1",
     "lodash": "^4.17.3",
     "ramda": "^0.23.0",
     "react": "^15.4.2",
