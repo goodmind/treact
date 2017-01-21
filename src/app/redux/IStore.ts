@@ -9,6 +9,7 @@ import { IStorePeers } from './modules/peers';
 import { IStoreChats } from './modules/chats';
 import { IStoreLoadings } from './modules/loadings';
 import { IStoreSelected } from './modules/selected';
+import { IStorePhotoCache } from './modules/photoCache';
 
 export interface IStore {
   authKey: any;
@@ -22,6 +23,7 @@ export interface IStore {
   chats: IStoreChats;
   loadings: IStoreLoadings;
   selected: IStoreSelected;
+  photoCache: IStorePhotoCache;
 };
 
 export type IThunkAction<R, S, E> = (dispatch: Dispatch<S>, getState?: () => S, extraArgument?: E) => R;

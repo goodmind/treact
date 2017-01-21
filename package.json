@@ -149,6 +149,7 @@
     "isomorphic-fetch": "^2.2.1",
     "jsbn": "0.0.0",
     "lodash": "^4.17.4",
+    "knack": "0.0.1",
     "ramda": "^0.23.0",
     "react": "^15.4.2",
     "react-autosize-textarea": "^0.3.4",

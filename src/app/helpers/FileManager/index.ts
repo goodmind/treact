@@ -5,21 +5,18 @@ const buggyUnknownBlob = navigator.userAgent.indexOf('Safari') !== -1 &&
 
 let blobSupported = true;
 
-function uint6ToBase64(nUint6) {
-  return nUint6 < 26
-    ? nUint6 + 65
-    : nUint6 < 52
-      ? nUint6 + 71
-      : nUint6 < 62
-        ? nUint6 - 4
-        : nUint6 === 62
-          ? 43
-          : nUint6 === 63
-            ? 47
-            : 65;
+export function uint6ToBase64(nUint6) {
+  switch (true) {
+    case nUint6 < 26: return nUint6 + 65
+    case nUint6 < 52: return nUint6 + 71
+    case nUint6 < 62: return nUint6 - 4
+    case nUint6 === 62: return 43
+    case nUint6 === 63: return 47
+    default: return 65
+  }
 }
 
-function bytesToBase64(bytes) {
+export function bytesToBase64(bytes) {
   let mod3;
   let result = '';
   const nLen = bytes.length;
