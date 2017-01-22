@@ -11,7 +11,7 @@ import { client, invoke } from 'helpers/Telegram';
 import picStore from 'helpers/FileManager/picStore'
 
 import * as Knack from 'knack'
-const knack = Knack({ concurrency: 5, interval: 100 })
+const knack = Knack({ concurrency: 5, interval: 1000 })
 const kInvoke = knack(invoke, { onTimeout: Knack.timeouts.reject })
 
 const { LOAD, DONE } = CACHE

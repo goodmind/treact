@@ -117,6 +117,7 @@ class Updates {
           const nextState = result.intermediate_state || result.state;
           // console.debug('apply next state', nextState);
           this.setState(nextState);
+
           if (result._typeName === 'Telegram.type.updates.DifferenceSlice') {
               this.getDifference();
           }

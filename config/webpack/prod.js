@@ -5,6 +5,7 @@ var postcssNext = require('postcss-cssnext');
 var stylelint = require('stylelint');
 var ManifestPlugin = require('webpack-manifest-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 var config = {
   bail: true,
@@ -26,13 +27,19 @@ var config = {
       './src/vendor/main.ts',
       'react',
       'react-dom',
-      'react-router',
-      'react-helmet',
       'react-redux',
+      'react-router',
       'react-router-redux',
+      'react-helmet',
       'redux',
+      'ramda',
       'redux-connect',
-      'redux-thunk'
+      'redux-persist',
+      'redux-thunk',
+      'jsbn',
+      '@goodmind/telegram-tl-node',
+      '@goodmind/telegram-mt-node',
+      'telegram-js'
     ]
   },
 
@@ -123,6 +130,7 @@ var config = {
       minChunks: Infinity
     }),
     new webpack.optimize.UglifyJsPlugin({
+      minimize: true,
       compress: {
         warnings: false
       }
@@ -134,9 +142,14 @@ var config = {
     new webpack.DefinePlugin({
       'process.env': {
         BROWSER: JSON.stringify(true),
-        NODE_ENV: JSON.stringify('production')
+        NODE_ENV: JSON.stringify('production'),
+        DC_SERVER: JSON.stringify(process.env.DC_SERVER),
       }
-    })
+    }),
+    new HtmlWebpackPlugin({
+      template: path.resolve('./config/index.html'),
+      inject: 'body',
+    }),
   ]
 };
 
