@@ -21,6 +21,9 @@ var config = {
     root: path.resolve(__dirname),
     extensions: ['', '.ts', '.tsx', '.js', '.jsx'],
     modulesDirectories: ['node_modules', 'app', 'app/redux'],
+    alias: {
+      'browserify-zlib': 'browserify-zlib-next'
+    }
   },
 
   entry: {

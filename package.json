@@ -89,6 +89,8 @@
     "babel-core": "^6.17.0",
     "babel-loader": "^6.2.5",
     "babel-preset-es2015": "^6.16.0",
+    "browserify-zlib": "^0.1.4",
+    "browserify-zlib-next": "^1.0.0",
     "chai": "^3.5.0",
     "chalk": "^1.1.3",
     "compression": "^1.6.2",
