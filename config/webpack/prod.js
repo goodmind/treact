@@ -37,9 +37,7 @@ var config = {
       'redux-persist',
       'redux-thunk',
       'jsbn',
-      '@goodmind/telegram-tl-node',
-      '@goodmind/telegram-mt-node',
-      'telegram-js'
+      'telegram-mtproto'
     ]
   },
 

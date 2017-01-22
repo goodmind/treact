@@ -1,4 +1,4 @@
-import * as MTProto from '@goodmind/telegram-mt-node';
+import { mtproto } from 'telegram-mtproto'
 
 export function restoreAuthKey() {
   if (typeof window === 'undefined') {
@@ -13,7 +13,7 @@ export function restoreAuthKey() {
   const [id, value] = restoreAuthKeyWithSaltFromStorableBuffer(
     Buffer.from(storageKey));
 
-  return new MTProto.auth.AuthKey(id, value);
+  return new mtproto.auth.AuthKey(id, value);
 }
 
 export function authKeyWithSaltToStorableBuffer(authKey, serverSalt) {

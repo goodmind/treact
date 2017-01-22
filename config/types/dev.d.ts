@@ -134,11 +134,13 @@ declare module 'redux-act' {
   }
 }
 
-declare module 'telegram-js' {
+declare module 'telegram-mtproto' {
   export const Telegram: ITelegramStatic
   export interface ITelegramStatic {
-    new (mt: any, tl: any): ITelegram;
+    new (schema: ITelegramSchema): ITelegram;
   }
+  export const mtproto: any;
+  export const tl: any;
   export interface ITelegramSchema {
     constructors:Array<Object>;
     methods:Array<Object>;

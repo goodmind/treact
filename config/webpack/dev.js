@@ -20,10 +20,7 @@ var config = {
   resolve: {
     root: path.resolve(__dirname),
     extensions: ['', '.ts', '.tsx', '.js', '.jsx'],
-    modulesDirectories: ['node_modules', 'app', 'app/redux'],
-    alias: {
-      'browserify-zlib': 'browserify-zlib-next'
-    }
+    modulesDirectories: ['node_modules', 'app', 'app/redux']
   },
 
   entry: {
@@ -45,9 +42,7 @@ var config = {
       'redux-persist',
       'redux-thunk',
       'jsbn',
-      '@goodmind/telegram-tl-node',
-      '@goodmind/telegram-mt-node',
-      'telegram-js'
+      'telegram-mtproto'
     ]
   },
 

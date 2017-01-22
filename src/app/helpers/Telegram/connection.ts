@@ -1,7 +1,4 @@
 import { Telegram, mtproto } from 'telegram-mtproto'
-// import * as MTProto from '@goodmind/telegram-mt-node';
-// import * as TypeLanguage from '@goodmind/telegram-tl-node';
-// import { clone } from 'ramda';
 
 import { addPublicKeys } from './publickeys';
 import { config, SERVER } from './config';

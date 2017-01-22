@@ -1,6 +1,4 @@
-import { ITelegramClient } from 'telegram-js';
-import * as MTProto from '@goodmind/telegram-mt-node';
-import * as TypeLanguage from '@goodmind/telegram-tl-node';
+import { tl, mtproto, ITelegramClient } from 'telegram-mtproto'
 
 import apiConnect from './connection';
 import { IMtpHelpNearestDc, IMtpHelpGetConfig } from '../../redux/mtproto';
@@ -37,7 +35,7 @@ export function makePasswordHash (salt, password) {
 
   buffer = Buffer.concat([Buffer.concat([salt, Buffer.from(byteView)]), salt]);
 
-  return MTProto.utility.createSHAHash(buffer, 'sha256');
+  return mtproto.utility.createSHAHash(buffer, 'sha256');
 }
 
 let stopTime;
@@ -55,7 +53,7 @@ export function invoke<R>(...args: any[]): Promise<R> {
       console.debug('Errored args', ...args);
 
       if (err.error_message === 'MSG_WAIT_FAILED') {
-        const now = MTProto.time.getLocalTime();
+        const now = mtproto.time.getLocalTime();
         if (stopTime) {
           if (now >= stopTime) {
             return Promise.reject(err);
@@ -73,19 +71,18 @@ export function invoke<R>(...args: any[]): Promise<R> {
 }
 
 export const toPrintable =
-  (type, ...args) => TypeLanguage.utility.toPrintable.bind(type)(...args);
+  (type, ...args) => tl.utility.toPrintable.bind(type)(...args);
 
 let dialogsNum = 0;
 export function generateDialogIndex(date) {
   console.log('dialogsNum', dialogsNum);
   if (date === undefined) {
-    date = MTProto.time.getLocalTime();
+    date = mtproto.time.getLocalTime();
   }
   return (date * 0x10000) + ((++dialogsNum) & 0xFFFF);
 }
 
 export function getDataCenters() {
-  const tl = TypeLanguage;
   const promises = Promise.all([
     invoke<IMtpHelpGetConfig>('help.getConfig'),
     invoke<IMtpHelpNearestDc>('help.getNearestDc'),
@@ -111,4 +108,4 @@ export function getDataCenters() {
 
 export { APP_ID, APP_HASH } from './config';
 export { authKeyWithSaltToStorableBuffer } from './helpers';
-export { client, MTProto, TypeLanguage }
+export { client }
