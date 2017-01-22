@@ -32,9 +32,9 @@ export const Message = ({ user, date, text }: IOwnProps) => {
   return (
     <div className={style.message}>
       <div className={style.flexcontainer}>
+        <PeerPhoto peerID={user} className={style.messageavatar}/>
         <div
           className={style.messagebody}>
-          <PeerPhoto peerID={user} />
           <div className={style.sender}>{user}</div>
           <div className={style.textbody}>
             <div className={style.text}>{text}</div>

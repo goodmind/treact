@@ -15,8 +15,6 @@ import { complement, isNil, pathSatisfies, filter, prop, pipe,
 const { LOAD_SLICE, GET_DIALOGS } = CHATS;
 const { LOAD, DONE } = CACHE
 
-const getUsers = getListOf('users');
-const getChats = getListOf('chats');
 const exists = complement(isNil)
 const hasPhoto = pathSatisfies(exists, ['photo', 'photo_small', 'local_id'])
 const hasPhotoFilter = filter(hasPhoto)
@@ -49,8 +47,10 @@ const cacheSave: any = (state: IStoreCache, id: string ) => {
     })(state)
 }
 
+const getUsersChats = getListOf<IMtpUser>('users', 'chats')
+
 const cacheDialogs = modelHandler<IMtpUser, string, IMtpGetDialogs>({
-  get: converge<IMtpUser[]>(concat, [getChats, getUsers]),
+  get: getUsersChats,
   filter: hasPhotoFilter,
   edit: idPath,
   save: cacheSave,
@@ -78,7 +78,7 @@ const cache = createReducer<any>({
 });
 
 const idsDialogs = modelHandler<IMtpUser, string, IMtpGetDialogs>({
-  get: converge<IMtpUser[]>(concat, [getChats, getUsers]),
+  get: getUsersChats,
   filter: hasPhotoFilter,
   edit: idPath,
   save: appendNew,
@@ -97,7 +97,7 @@ const byIdEdit: any = model => conPair(
   pipe(prop('photo'), dissoc('photo_id')))(model)
 
 const byIdDialogs = modelHandler<IMtpUser, IMtpPhoto, IMtpGetDialogs>({
-  get: converge<IMtpUser[]>(concat, [getChats, getUsers]),
+  get: getUsersChats,
   filter: hasPhotoFilter,
   edit: byIdEdit,
   save: addChangedProp,
@@ -130,7 +130,7 @@ const peerEdit = (state, [ id, photoId ]) => {
 }
 
 const peerByIdDialogs = modelHandler<any, any, any>({
-  get: converge<IMtpUser[]>(concat, [getChats, getUsers]),
+  get: getUsersChats,
   filter: hasPhotoFilter,
   edit: conPair(prop('id') , idPath),
   save: peerEdit,

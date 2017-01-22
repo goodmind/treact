@@ -1,7 +1,7 @@
-import { TById, IMtpVector, IMtpObjectGeneric } from 'redux/mtproto';
+import { TById } from 'redux/mtproto';
 import { IReducer } from 'redux/IStore';
-import { pipe as P, map, contains, append, path, dissoc, assoc,
-  unless, reduce, prop, propEq, curry, identity } from 'ramda';
+import { pipe as P, map, contains, append, props, pluck, dissoc, assoc,
+  unless, reduce, prop, propEq, curry, identity, unnest } from 'ramda';
 
 const convolveReducers = payload => (state, reducer) => reducer(state, payload);
 
@@ -33,10 +33,7 @@ type IGetReduce = <S, PL, G>(getter: (pl: PL) => G, reducer: IReducer<S, G>) => 
 export const getReduce: IGetReduce = (getter, reducer) => (state, payload) =>
   P(getter, reduce(reducer, state))(payload);
 
-type IListOf = <Key extends string>(field: Key) =>
-  <Obj extends IMtpObjectGeneric,
-   K extends IMtpVector<Obj>>(obj: { [S in Key]: IMtpVector<Obj> }) => K['list']
-export const getListOf: IListOf = (field) => path([field, 'list']);
+export const getListOf = <T>(...fields) => P<any, any, any, T[]>(props(fields), pluck('list'), unnest)
 
 export const appendNew: <T>(state: T[], element: T) => T[] = (whenNot(contains, append) as any);
 

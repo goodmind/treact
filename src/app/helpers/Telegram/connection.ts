@@ -1,6 +1,6 @@
-import { Telegram } from 'telegram-js';
-import * as MTProto from '@goodmind/telegram-mt-node';
-import * as TypeLanguage from '@goodmind/telegram-tl-node';
+import { Telegram, mtproto } from 'telegram-mtproto'
+// import * as MTProto from '@goodmind/telegram-mt-node';
+// import * as TypeLanguage from '@goodmind/telegram-tl-node';
 // import { clone } from 'ramda';
 
 import { addPublicKeys } from './publickeys';
@@ -8,8 +8,7 @@ import { config, SERVER } from './config';
 
 const schema = require('./api-tlschema-57.json');
 
-const telegram = new Telegram(MTProto, TypeLanguage);
-telegram.useSchema(schema);
+const telegram = new Telegram(schema)
 addPublicKeys(telegram);
 
 interface IServer {
@@ -18,7 +17,7 @@ interface IServer {
 }
 
 const apiConnect = async (server: IServer = SERVER) => {
-  const connection = new MTProto.net.HttpConnection(server);
+  const connection = new mtproto.net.HttpConnection(server);
   const setupClient = telegram.createClient();
   setupClient.setConnection(connection);
   await new Promise(rs => connection.connect(rs));

@@ -4,14 +4,13 @@ import { isEmpty, unless, any } from 'ramda';
 
 import { IStorePhotoCache } from 'redux/modules/photoCache';
 import { IStore, IDispatch } from 'redux/IStore';
-// import { Queued } from 'helpers/Telegram/Files/queue'
 import { CACHE } from 'redux/actions';
 import { IMtpFileLocation } from 'redux/mtproto';
 import { client, invoke } from 'helpers/Telegram';
 import picStore from 'helpers/FileManager/picStore'
 
 import * as Knack from 'knack'
-const knack = Knack({ concurrency: 5, interval: 1000 })
+const knack = Knack({ concurrency: 4, interval: 100 })
 const kInvoke = knack(invoke, { onTimeout: Knack.timeouts.reject })
 
 const { LOAD, DONE } = CACHE
@@ -44,8 +43,7 @@ const beginLoad = (id: string, loc: IMtpFileLocation) => {
     createNetworker: true,
     noErrorBox: true,
   })
-  loader.then((data: any) => picStore.addPic(id, data.bytes))
-  loader.then(console.warn, console.warn)
+  loader.then((data: any) => picStore.addPic(id, data.bytes), () => ({}))
   return loader
 }
 // tslint:disable:no-debugger
@@ -64,14 +62,12 @@ const DownloadAssistant = ({ photoCache, load, done }: IPropsStore & IPropsDispa
       return
     }
     return beginLoad(id, photo.photo_small)
-    .then(() => done(id))
+    .then(() => done(id), () => ({}))
   }
   idle.map(mapLoad)
   unless(isEmpty, load)(idle)
 
-  return isEmpty(downloaded)
-    ? <span />
-    : <img src={picStore.get(downloaded[0])} />
+  return <span />
 }
 
 const stateProps = ({ photoCache }: IStore) => ({ photoCache })

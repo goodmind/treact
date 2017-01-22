@@ -166,6 +166,6 @@
     "redux-connect": "^5.0.0",
     "redux-persist": "^4.0.1",
     "redux-thunk": "^2.1.0",
-    "telegram-js": "^0.2.4"
+    "telegram-mtproto": "^1.0.1"
   }
 }
