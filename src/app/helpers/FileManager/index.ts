@@ -37,11 +37,11 @@ export function bytesToBase64(bytes) {
   return result.replace(/A(?=A$|$)/g, '=');
 }
 
-function bytesToArrayBuffer(b) {
+export function bytesToArrayBuffer(b) {
   return (new Uint8Array(b)).buffer;
 }
 
-function blobConstruct(blobParts: any[], mimeType?) {
+export function blobConstruct(blobParts: any[], mimeType?) {
   let blob;
   try {
     blob = new Blob(blobParts, {type: mimeType});
