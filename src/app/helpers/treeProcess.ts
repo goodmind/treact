@@ -16,7 +16,7 @@ const objectProcess = (...morphs) => P<any, any>(
 
 const notTypename = complement(equals('_typeName'));
 
-const isDash = P(head, equals('_'));
+const isDash = P<any, any, boolean>(head, equals('_'));
 
 const dashFilter = both(isDash, notTypename);
 

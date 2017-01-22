@@ -2,19 +2,23 @@ type TMtpVectorSubType = 'User'|'Message'|'Chat'|'Dialog';
 
 type TMtpVector = 'Vector';
 type TMtpMessagesSlice = 'Telegram.type.messages.MessagesSlice';
+type TMtpDialogsSlice = 'Telegram.type.messages.DialogsSlice';
 type TMtpMessage = 'Telegram.type.Message';
 type TMtpUser = 'Telegram.type.User';
 type TMtpChat = 'Telegram.type.Chat';
 type TMtpChannel = 'Telegram.type.Channel';
 type TMtpDialog = 'Telegram.type.Dialog';
+type TMtpPhoto = 'Telegram.type.UserProfilePhoto'
+type TMtpFileLocation = 'Telegram.type.FileLocation'
 type TMtpDcOption = 'Telegram.type.DcOption';
-type TMtpType = TMtpVector|TMtpMessagesSlice|TMtpMessage|TMtpUser|
-  TMtpChat|TMtpChannel|TMtpDialog|TMtpDcOption;
+export type TMtpType = TMtpVector|TMtpMessagesSlice|TMtpMessage|TMtpUser|
+  TMtpChat|TMtpChannel|TMtpDialog|TMtpDcOption|TMtpPhoto|TMtpFileLocation|
+  TMtpDialogsSlice|TMtpGetDialogs;
 
 type TMtpNearestDc = 'Telegram.type.NearestDc';
 type TMtpConfig = 'Telegram.type.Config';
 type TMtpGetDialogs = 'Telegram.type.messages.Dialogs';
-type TMtpHelpType = TMtpConfig|TMtpNearestDc|TMtpGetDialogs;
+type TMtpHelpType = TMtpConfig|TMtpNearestDc;
 
 type TMtpPeerUser = 'Telegram.type.PeerUser';
 type TMtpPeerChat = 'Telegram.type.PeerChat';
@@ -72,6 +76,19 @@ export interface IMtpDialog extends IMtpObject<TMtpDialog> {
   unread_count: number;
 }
 
+export interface IMtpFileLocation extends IMtpObject<TMtpFileLocation> {
+  dc_id: number;
+  volume_id: string;
+  local_id: number;
+  secret: string;
+}
+
+export interface IMtpPhoto extends IMtpObject<TMtpPhoto> {
+  photo_id: string;
+  photo_small: IMtpFileLocation;
+  photo_big: IMtpFileLocation;
+}
+
 export interface IMtpUser extends IMtpObject<TMtpUser> {
   access_hash: string;
   first_name?: string;
@@ -94,6 +111,16 @@ export interface IMtpMessagesSlice extends IMtpObject<TMtpMessagesSlice> {
   count: number;
 }
 
+export interface IMtpGetDialogs extends IMtpObject<TMtpGetDialogs> {
+  chats: IMtpVector<IMtpChat>;
+  messages: IMtpVector<IMtpMessage>;
+  users: IMtpVector<IMtpUser>;
+  dialogs: IMtpVector<IMtpDialog>;
+  count: number;
+};
+
+export type IMtpObjectGeneric = IMtpDcOption|IMtpMessage|IMtpDialog|
+  IMtpFileLocation|IMtpPhoto|IMtpUser|IMtpChat|IMtpMessagesSlice|IMtpGetDialogs
 // PEER OBJECTS
 
 export type IMtpPeer = IMtpPeerUser|IMtpPeerChat|IMtpPeerChannel;
@@ -142,12 +169,5 @@ export interface IMtpHelpGetConfig extends IMtpHelpObject<TMtpNearestDc> {
   test_mode: boolean;
   this_dc: number;
 }
-
-export interface IMtpGetDialogs extends IMtpHelpObject<TMtpGetDialogs> {
-  chats: IMtpVector<IMtpChat>;
-  messages: IMtpVector<IMtpMessage>;
-  users: IMtpVector<IMtpUser>;
-  dialogs: IMtpVector<IMtpDialog>;
-};
 
 export type TById<T> = {[id: number]: T};

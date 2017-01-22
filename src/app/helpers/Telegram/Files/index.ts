@@ -2,7 +2,7 @@ import { WebpManager } from 'helpers/WebpManager';
 import { FileManager } from 'helpers/FileManager';
 import { client, invoke } from 'helpers/Telegram';
 
-import { MemoryFileStorage } from 'helpers/FileManager/MemoryFileStorage';
+import { MemoryFileStorage, MemoryFileStorageConstructor } from 'helpers/FileManager/MemoryFileStorage';
 // import { TmpfsFileStorage } from 'helpers/FileManager/TmpfsFileStorage';
 // import { IdbFileStorage } from 'helpers/FileManager/IdbFileStorage';
 
@@ -95,6 +95,7 @@ function getFileStorage() {
 }
 
 class Files {
+  public memory = new MemoryFileStorageConstructor()
   public getCachedFile(location) {
     if (!location) {
       return false;
@@ -115,7 +116,7 @@ class Files {
   // public downloadFile() {}
   public downloadSmallFile(location: any) {
     if (!FileManager.isAvailable()) {
-      throw {type: 'BROWSER_BLOB_NOT_SUPPORTED'};
+      throw new Error('BROWSER_BLOB_NOT_SUPPORTED');
     }
     const fileName = getFileName(location);
     const mimeType = location.sticker ? 'image/webp' : 'image/jpeg';

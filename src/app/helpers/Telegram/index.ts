@@ -40,6 +40,7 @@ export function makePasswordHash (salt, password) {
   return MTProto.utility.createSHAHash(buffer, 'sha256');
 }
 
+let stopTime;
 export function invoke<R>(...args: any[]): Promise<R> {
   return readyApiCall(...args)
     .then((r: any) => {
@@ -51,6 +52,22 @@ export function invoke<R>(...args: any[]): Promise<R> {
     })
     .catch(err => {
       console.error('Got networker error', err, err.stack);
+      console.debug('Errored args', ...args);
+
+      if (err.error_message === 'MSG_WAIT_FAILED') {
+        const now = MTProto.time.getLocalTime();
+        if (stopTime) {
+          if (now >= stopTime) {
+            return Promise.reject(err);
+          }
+        } else {
+          stopTime = now + 10 * 1000;
+        }
+        return new Promise((r, j) =>
+          setTimeout(() =>
+            invoke<R>(...args).then(r, j), 1000));
+      }
+
       return Promise.reject(err);
     });
 }

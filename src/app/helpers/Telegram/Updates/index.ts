@@ -37,30 +37,30 @@ class Updates {
   }
 
   public onUpdate = (onUpdate) => (update) => {
-    const processOpts = {
-      date: update.date,
-      seq: update.seq,
-      seqStart: update.seq_start,
-    };
+    // const processOpts = {
+    //   date: update.date,
+    //   seq: update.seq,
+    //   seqStart: update.seq_start,
+    // };
 
-    switch (update.getTypeName()) {
+    switch (update._typeName) {
       case 'Telegram.type.UpdatesTooLong':
       case 'mtproto.type.New_session_created':
         this.getDifference();
         break;
 
       case 'Telegram.type.UpdateShort':
-        console.log(processOpts);
+        // console.log(processOpts);
         break;
 
       case 'Telegram.type.UpdateShortMessage':
       case 'Telegram.type.UpdateShortChatMessage':
-        console.log(processOpts);
+        // console.log(processOpts);
         break;
 
       case 'Telegram.type.UpdatesCombined':
       case 'Telegram.type.Updates':
-        console.log(update.users.list, update.chats.list, update.updates.list, processOpts);
+        // console.log(update.users.list, update.chats.list, update.updates.list, processOpts);
         break;
 
       default:
@@ -70,7 +70,7 @@ class Updates {
   }
 
   public start(onUpdate) {
-    console.log('start updates');
+    // console.log('start updates');
 
     return new Promise((resolve, reject) => {
       invoke<any>('account.updateStatus', { offline: false }).then(() => {
@@ -97,7 +97,7 @@ class Updates {
 
   public stop() {
     if (this.emitter.started) {
-      console.log('stop updates');
+      // console.log('stop updates');
       this.emitter.stopHttpPollLoop();
       return invoke<any>('account.updateStatus', { offline: true });
     }
@@ -105,20 +105,20 @@ class Updates {
 
   public getDifference() {
     invoke<any>('updates.getDifference', { pts: this.pts, date: this.date, qts: -1 }).then(result => {
-        console.log('getDifference', result.getTypeName && result.getTypeName(), result);
+        // console.log('getDifference', result._typeName);
 
         if (typeof result !== 'boolean') {
-          if (result.getTypeName() === 'Telegram.type.updates.DifferenceEmpty') {
-              console.debug('apply empty diff', result);
+          if (result._typeName === 'Telegram.type.updates.DifferenceEmpty') {
+              // console.debug('apply empty diff', result);
               this.setState({date: result.date, seq: result.seq});
               return false;
           }
 
           const nextState = result.intermediate_state || result.state;
-          console.debug('apply next state', nextState);
+          // console.debug('apply next state', nextState);
           this.setState(nextState);
 
-          if (result.getTypeName() === 'Telegram.type.updates.DifferenceSlice') {
+          if (result._typeName === 'Telegram.type.updates.DifferenceSlice') {
               this.getDifference();
           }
         }
