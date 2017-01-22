@@ -7,7 +7,7 @@ import { IMtpGetDialogs, IMtpUser, IMtpPhoto } from 'redux/mtproto';
 import { getListOf, modelHandler, addChangedProp, appendNew } from 'helpers/state';
 // import { Files } from 'helpers/Telegram/Files'
 
-import { identity, complement, isNil, pathSatisfies, filter, prop, pipe,
+import { complement, isNil, pathSatisfies, filter, prop, pipe,
   pair, converge, path, dissoc, contains, evolve, append, any, difference,
   flip, concat, uniq, without, assoc, propOr, propSatisfies, equals,
   assocPath, reduce, toPairs } from 'ramda';
@@ -16,10 +16,11 @@ const { LOAD_SLICE, GET_DIALOGS } = CHATS;
 const { LOAD, DONE } = CACHE
 
 const getUsers = getListOf('users');
+const getChats = getListOf('chats');
 const exists = complement(isNil)
-const hasPhoto = pathSatisfies(exists, ['photo', 'photo_id'])
+const hasPhoto = pathSatisfies(exists, ['photo', 'photo_small', 'local_id'])
 const hasPhotoFilter = filter(hasPhoto)
-const idPath = path(['photo', 'photo_id'])
+const idPath = path(['photo', 'photo_small', 'local_id'])
 
 interface IStoreCache {
   downloaded: string[],
@@ -49,7 +50,7 @@ const cacheSave: any = (state: IStoreCache, id: string ) => {
 }
 
 const cacheDialogs = modelHandler<IMtpUser, string, IMtpGetDialogs>({
-  get: getUsers,
+  get: converge<IMtpUser[]>(concat, [getChats, getUsers]),
   filter: hasPhotoFilter,
   edit: idPath,
   save: cacheSave,
@@ -77,14 +78,14 @@ const cache = createReducer<any>({
 });
 
 const idsDialogs = modelHandler<IMtpUser, string, IMtpGetDialogs>({
-  get: getUsers,
+  get: converge<IMtpUser[]>(concat, [getChats, getUsers]),
   filter: hasPhotoFilter,
   edit: idPath,
   save: appendNew,
 })
 
 const ids = createReducer({
-  [LOAD_SLICE.DONE]: identity,
+  [LOAD_SLICE.DONE]: idsDialogs,
   [GET_DIALOGS.DONE]: idsDialogs,
 }, [])
 
@@ -96,17 +97,15 @@ const byIdEdit: any = model => conPair(
   pipe(prop('photo'), dissoc('photo_id')))(model)
 
 const byIdDialogs = modelHandler<IMtpUser, IMtpPhoto, IMtpGetDialogs>({
-  get: getUsers,
+  get: converge<IMtpUser[]>(concat, [getChats, getUsers]),
   filter: hasPhotoFilter,
   edit: byIdEdit,
   save: addChangedProp,
 })
 const byId = createReducer({
-  [LOAD_SLICE.DONE]: identity,
+  [LOAD_SLICE.DONE]: byIdDialogs,
   [GET_DIALOGS.DONE]: byIdDialogs,
 }, {})
-
-
 
 const photos = combineReducers({
   ids,
@@ -131,7 +130,7 @@ const peerEdit = (state, [ id, photoId ]) => {
 }
 
 const peerByIdDialogs = modelHandler<any, any, any>({
-  get: getUsers,
+  get: converge<IMtpUser[]>(concat, [getChats, getUsers]),
   filter: hasPhotoFilter,
   edit: conPair(prop('id') , idPath),
   save: peerEdit,
@@ -158,7 +157,7 @@ const peerByIdDone = (state, photoId) => pipe(
 
 
 const peer = createReducer({
-  [LOAD_SLICE.DONE]: identity,
+  [LOAD_SLICE.DONE]: peerByIdDialogs,
   [GET_DIALOGS.DONE]: peerByIdDialogs,
   [DONE]: peerByIdDone,
 }, {})
