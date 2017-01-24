@@ -2,6 +2,8 @@ import 'isomorphic-fetch';
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import { AppContainer } from 'react-hot-loader';
+
 import { Provider } from 'react-redux';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { configureStore } from './app/redux/store';
@@ -41,12 +43,24 @@ class AppProvider extends React.Component<any, any> {
   }
 }
 
-ReactDOM.render((
-  <AppProvider>
-    <Router
-      history={history}
-      render={connectedCmp}>
-      {routes}
-    </Router>
-  </AppProvider>
-), document.getElementById('app'));
+const render = Component =>
+  ReactDOM.render((
+    <AppContainer>
+      <AppProvider>
+        <Router
+          history={history}
+          render={connectedCmp}>
+          {Component}
+        </Router>
+      </AppProvider>
+    </AppContainer>
+  ), document.getElementById('app'));
+
+render(routes)
+
+if ((module as any).hot) {
+  (module as any).hot.accept('./app/routes', () => {
+    const NewApp = require('./app/routes').default
+    render(NewApp)
+  });
+}
