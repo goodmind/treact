@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { isNil, isEmpty, tap, unless, when, any } from 'ramda';
+import { isNil, isEmpty, unless, when, any } from 'ramda';
 
 import { IStorePhotoCache } from 'redux/modules/photoCache';
 import { IStore, IDispatch } from 'redux/IStore';
