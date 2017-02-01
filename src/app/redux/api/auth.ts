@@ -1,4 +1,5 @@
-import { invoke, APP_HASH, APP_ID, makePasswordHash } from 'helpers/Telegram';
+import { APP_HASH, APP_ID, DEFAULT_DC_ID } from 'helpers/Telegram/config';
+import { invoke, makePasswordHash } from 'helpers/Telegram';
 import { push } from 'react-router-redux';
 import { IDispatch } from '../IStore';
 import { AUTH } from 'actions';
@@ -6,6 +7,8 @@ import { AUTH } from 'actions';
 import { pipe, tap } from 'ramda';
 
 const { SEND_CODE, SIGN_IN, GET_PASSWORD, LOG_OUT } = AUTH;
+
+const addDc = x => Object.assign({}, x, { dcID: DEFAULT_DC_ID });
 
 function getPassword() {
   const onDone = ({ current_salt }) => GET_PASSWORD.DONE({
@@ -25,7 +28,8 @@ export function checkPassword(password: string) {
     const hash = makePasswordHash(auth.passwordSalt, password);
     return invoke('auth.checkPassword', {
       password_hash: hash,
-    }).then(SIGN_IN.DONE, SIGN_IN.FAIL)
+    }).then(addDc)
+      .then(SIGN_IN.DONE, SIGN_IN.FAIL)
       .then(dispatch);
   };
 }
@@ -42,7 +46,8 @@ export function signIn(phoneCode) {
       phone_number: auth.phoneNumber,
       phone_code_hash: auth.phoneCodeHash,
       phone_code: phoneCode,
-    }).then(SIGN_IN.DONE)
+    }).then(addDc)
+      .then(SIGN_IN.DONE)
       .then(dispatch)
       .catch(catchAndDispatch);
   };
