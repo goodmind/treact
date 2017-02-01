@@ -3,12 +3,20 @@ import * as MTProto from '@goodmind/telegram-mt-node';
 import * as TypeLanguage from '@goodmind/telegram-tl-node';
 
 import apiConnect from './connection';
-import { IMtpHelpNearestDc, IMtpHelpGetConfig } from '../../redux/mtproto';
+import { getFromStore, byIdGetter, restoreAuthKey } from './helpers';
+import { config } from './config';
+import { DC_OPTIONS } from './constants';
+import { IMtpHelpNearestDc } from 'redux/mtproto';
 import { rejectDashAndFuncs } from 'helpers/treeProcess';
+
+const baseDcID = getFromStore('currentDc');
 
 let client: ITelegramClient;
 const ready = apiConnect();
-ready.then(value => { client = value; });
+ready.then(value => {
+  value._mainClient = true;
+  client = value;
+});
 // NOTE Node connection function is deleted
 // } else {
 //   const os = require('os');
@@ -22,8 +30,9 @@ export function isReady() {
   return ready;
 }
 
-function readyApiCall(...args: any[]) {
-  return ready.then(client => client.callApi(...args));
+function readyApiCall(method, params, networker) {
+  console.debug('Passed networker', networker.then, !!networker._mainClient);
+  return networker.callApi(method, params);
 }
 
 export function makePasswordHash (salt, password) {
@@ -41,18 +50,19 @@ export function makePasswordHash (salt, password) {
 }
 
 let stopTime;
-export function invoke<R>(...args: any[]): Promise<R> {
-  return readyApiCall(...args)
+const performRequest = <R>(method, params?, options?) => (networker): Promise<R> => {
+  return readyApiCall(method, params, networker)
     .then((r: any) => {
-      if (typeof r !== 'boolean' && r.instanceOf('mtproto.type.Rpc_error')) {
+      console.debug('Got response', r);
+      if (typeof r !== 'boolean' && r._typeName === 'mtproto.type.Rpc_error') {
         return Promise.reject(r);
       } else {
         return rejectDashAndFuncs(r);
       }
     })
     .catch(err => {
-      console.error('Got networker error', err, err.stack);
-      console.debug('Errored args', ...args);
+      console.error('Got networker error', err, Buffer.from(err).toString());
+      console.debug('Errored args', method, params, options);
 
       if (err.error_message === 'MSG_WAIT_FAILED') {
         const now = MTProto.time.getLocalTime();
@@ -65,11 +75,19 @@ export function invoke<R>(...args: any[]): Promise<R> {
         }
         return new Promise((r, j) =>
           setTimeout(() =>
-            invoke<R>(...args).then(r, j), 1000));
+            performRequest<R>(method, params, options)(networker).then(r, j), 1000));
       }
 
       return Promise.reject(err);
     });
+}
+
+export function invoke<R>(method, params?, options: any = {}): Promise<R> {
+  const dcID = options.dcID || baseDcID;
+  if (dcID) {
+    return getNetworker(dcID, options)
+      .then(performRequest<R>(method, params, options));
+  }
 }
 
 export const toPrintable =
@@ -84,11 +102,52 @@ export function generateDialogIndex(date) {
   return (date * 0x10000) + ((++dialogsNum) & 0xFFFF);
 }
 
+const cachedUploadNetworkers = {};
+const cachedNetworkers = {};
+
+const connectToDc = async (dcID: number, authKey?: any) => {
+  const dcOptions = await getDataCenters();
+  const server = dcOptions[`DC_${dcID}`];
+
+  console.debug('connectToDc', dcID, authKey);
+
+  return apiConnect(server, authKey ? { ...config, authKey: restoreAuthKey(authKey) } : config);
+};
+
+export const getNetworker = async (dcID, options: any = {}) => {
+  const cache = (options.fileUpload || options.fileDownload)
+    ? cachedUploadNetworkers
+    : cachedNetworkers;
+  if (!dcID) {
+    throw new Error('getNetworker without dcID')
+  }
+  if (cache[dcID] !== undefined) {
+    return cache[dcID];
+  }
+  const authKey = byIdGetter(dcID)<any>(getFromStore('authKey'));
+  if (authKey) {
+    cache[dcID] = connectToDc(dcID, authKey);
+    return cache[dcID];
+  }
+  if (!options.createNetworker) {
+    throw {type: 'AUTH_KEY_EMPTY', code: 401};
+  }
+  cache[dcID] = connectToDc(dcID);
+  cache[dcID].then(client => {
+    console.log(client.authKey);
+  });
+  return cache[dcID];
+};
+
 export function getDataCenters() {
   const tl = TypeLanguage;
   const promises = Promise.all([
-    invoke<IMtpHelpGetConfig>('help.getConfig'),
-    invoke<IMtpHelpNearestDc>('help.getNearestDc'),
+    {
+      dc_options: {
+        list: DC_OPTIONS,
+      },
+    },
+    performRequest<IMtpHelpNearestDc>('help.getNearestDc')(client),
   ]);
   return promises
     .then(([config, nearestDc]) => {
@@ -109,6 +168,6 @@ export function getDataCenters() {
     });
 }
 
-export { APP_ID, APP_HASH } from './config';
+export { APP_ID, APP_HASH } from './constants';
 export { authKeyWithSaltToStorableBuffer } from './helpers';
 export { client, MTProto, TypeLanguage }
