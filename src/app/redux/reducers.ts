@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 import { authReducer } from './modules/auth';
 import { currentUserReducer } from './modules/currentUser';
+import { currentDcReducer } from './modules/currentDc';
 import { authKeyReducer } from './modules/authKey';
 import histories from './modules/histories';
 import users from './modules/users';
@@ -20,6 +21,7 @@ const rootReducer: Redux.Reducer<IStore> = combineReducers<IStore>({
   authKey: authKeyReducer,
   auth: authReducer,
   currentUser: currentUserReducer,
+  currentDc: currentDcReducer,
   reduxAsyncConnect: reducer,
   histories,
   users,
