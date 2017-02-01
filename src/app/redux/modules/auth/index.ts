@@ -2,6 +2,7 @@ import { REHYDRATE } from 'redux-persist/constants';
 import { createReducer } from 'redux-act';
 import { combineReducers } from 'redux';
 import { T, F } from 'ramda';
+import { byIdGetter } from 'helpers/Telegram/helpers';
 
 import { AUTH } from 'actions';
 
@@ -51,7 +52,7 @@ const loading = createReducer({
 const authenticated = createReducer({
   [SIGN_IN.DONE]: T,
   [LOG_OUT.DONE]: F,
-  [REHYDRATE]: (_, { authKey, currentUser }) => !!authKey && !!currentUser,
+  [REHYDRATE]: (_, { authKey, currentUser, currentDc }) => !!byIdGetter(currentDc)(authKey) && !!currentUser,
 }, false);
 
 const phoneNumber = createReducer({
