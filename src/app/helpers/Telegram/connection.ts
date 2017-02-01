@@ -7,8 +7,7 @@ import { addPublicKeys } from './publickeys';
 import { config, SERVER } from './config';
 
 const schema = require('./api-tlschema-57.json');
-
-const telegram = new Telegram(schema)
+const telegram = new Telegram(schema);
 addPublicKeys(telegram);
 
 interface IServer {
@@ -16,12 +15,12 @@ interface IServer {
   port: string;
 }
 
-const apiConnect = async (server: IServer = SERVER) => {
+const apiConnect = async (server: IServer = SERVER, apiConfig = config) => {
   const connection = new mtproto.net.HttpConnection(server);
   const setupClient = telegram.createClient();
   setupClient.setConnection(connection);
   await new Promise(rs => connection.connect(rs));
-  const client = await setupClient.setup(config);
+  const client = await setupClient.setup(apiConfig);
 
   console.log(`Connected to Telegram on ${server.host}`);
   console.log(`Client config:\n`, client.schema, client);
