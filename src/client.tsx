@@ -24,7 +24,7 @@ class AppProvider extends React.Component<any, any> {
   }
 
   public componentWillMount() {
-    persistStore(store, {whitelist: ['authKey', 'currentUser']}, () => {
+    persistStore(store, {whitelist: ['authKey', 'currentUser', 'currentDc']}, () => {
       this.setState({ rehydrated: true });
     });
   }
