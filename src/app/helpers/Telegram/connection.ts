@@ -1,4 +1,4 @@
-import { Telegram, mtproto } from 'telegram-mtproto'
+import { Telegram, network } from 'telegram-mtproto'
 
 import { addPublicKeys } from './publickeys';
 import { config, SERVER } from './config';
@@ -14,10 +14,10 @@ interface IServer {
 }
 
 const apiConnect = async (server: IServer = SERVER) => {
-  const connection = new mtproto.net.HttpConnection(server);
+  const connection = new network.http(server);
   const setupClient = telegram.createClient();
   setupClient.setConnection(connection);
-  await new Promise(rs => connection.connect(rs));
+  await connection.connect();
   const client = await setupClient.setup(config);
 
   console.log(`Connected to Telegram on ${server.host}`);

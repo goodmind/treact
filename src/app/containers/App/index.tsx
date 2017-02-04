@@ -8,14 +8,10 @@ interface IProps {
   children: React.ReactChildren;
 }
 
-const App = (props: IProps) => {
-  return (
-    <section className={s.app}>
-      <Helmet {...appConfig.app} {...appConfig.app.head}/>
-      <Header />
-      {props.children}
-    </section>
-  );
-};
-
+const App = (props: IProps) =>
+  <section className={s.app}>
+    <Helmet {...appConfig.app} {...appConfig.app.head}/>
+    <Header />
+    {props.children}
+  </section>
 export { App }

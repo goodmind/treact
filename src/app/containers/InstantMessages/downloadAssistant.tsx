@@ -6,12 +6,12 @@ import { IStorePhotoCache } from 'redux/modules/photoCache';
 import { IStore, IDispatch } from 'redux/IStore';
 import { CACHE } from 'redux/actions';
 import { IMtpFileLocation } from 'redux/mtproto';
-import { client, invoke } from 'helpers/Telegram';
+import pool, { api } from 'helpers/pool';
 import picStore from 'helpers/FileManager/picStore'
 
-import * as Knack from 'knack'
-const knack = Knack({ concurrency: 4, interval: 100 })
-const kInvoke = knack(invoke, { onTimeout: Knack.timeouts.reject })
+// import * as Knack from 'knack'
+// const knack = Knack({ concurrency: 6, interval: 100 })
+// const invoke = knack(api, { onTimeout: Knack.timeouts.reject })
 
 const { LOAD, DONE } = CACHE
 
@@ -29,18 +29,17 @@ interface IPropsDispatch {
 const beginLoad = (id: string, loc: IMtpFileLocation) => {
   const { dc_id, volume_id, secret, local_id } = loc;
   const inputLocation = Object.assign(
-    new client.schema.type.InputFileLocation(),
+    new pool.client.schema.type.InputFileLocation(),
     { dc_id, volume_id, secret, local_id },
   )
   console.warn(`idle`, loc)
-  const loader = kInvoke('upload.getFile', {
+  const loader = api('upload.getFile', {
     location: inputLocation,
     offset: 0,
     limit: 1024 * 1024,
-  }, {
     dcID: loc.dc_id,
     fileDownload: true,
-    createNetworker: true,
+    createNetworker: false,
     noErrorBox: true,
   })
   loader.then((data: any) => picStore.addPic(id, data.bytes), () => ({}))

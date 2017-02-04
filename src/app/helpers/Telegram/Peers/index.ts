@@ -1,6 +1,6 @@
 import { is, pipe, join, trim } from 'ramda';
 
-import { client } from 'helpers/Telegram';
+import pool from 'helpers/pool'
 import { IStore } from 'redux/IStore';
 import { TPeersType } from 'redux/modules/peers';
 import { IMtpUser, IMtpChat } from 'redux/mtproto';
@@ -8,7 +8,7 @@ import { IMtpUser, IMtpChat } from 'redux/mtproto';
 export const retrieveInputPeer = (id: number, peer: TPeersType, peerData) => {
   switch (peer) {
     case 'channel':
-      return new client.schema.type.InputPeerChannel({
+      return new pool.client.schema.type.InputPeerChannel({
         props: {
           channel_id: id,
           access_hash: peerData.access_hash,
@@ -16,14 +16,14 @@ export const retrieveInputPeer = (id: number, peer: TPeersType, peerData) => {
       });
 
     case 'chat':
-      return new client.schema.type.InputPeerChat({
+      return new pool.client.schema.type.InputPeerChat({
         props: {
           chat_id: id,
         },
       });
 
     case 'user':
-      return new client.schema.type.InputPeerUser({
+      return new pool.client.schema.type.InputPeerUser({
         props: {
           user_id: id,
           access_hash: peerData.access_hash,

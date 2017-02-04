@@ -146,6 +146,11 @@ declare module 'telegram-mtproto' {
     methods:Array<Object>;
     type:any;
   }
+  export const network: {
+    http: any,
+    tcp: any,
+    wc: any
+  }
   export class ITelegramClient {
     constructor (schema:ITelegramSchema, mtProto, typeLanguage);
     schema:ITelegramSchema;
@@ -154,6 +159,7 @@ declare module 'telegram-mtproto' {
     setConnection(conn: any): void;
     callApi(method: string, args: any[]): void;
     callApi(...args: any[]): void;
+    callApi<R>(method: string, args?: Object): Promise<R>;
     setup(config: any): Promise<ITelegramClient>;
   }
   export interface ITelegram {
