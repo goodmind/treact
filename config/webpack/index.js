@@ -30,7 +30,7 @@ const rules = [
     // loader: 'react-hot-loader!ts'
     exclude: /node_modules/,
     use: [
-      // 'babel-loader',
+      'babel-loader',
       'ts-loader'
     ]
   }, {

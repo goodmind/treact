@@ -31,14 +31,18 @@ const config = {
       'redux-act',
       'redux-connect',
       'redux-persist',
-      'redux-thunk'
+      'redux-thunk',
+      'recompose',
+      'reselect',
+      'reselect-map'
     ],
     Vendor: [
       'ramda',
       'jsbn',
       'history',
-      'classnames'
-      // 'telegram-mtproto'
+      'classnames',
+      // 'telegram-mtproto',
+      'knack'
     ]
   },
 

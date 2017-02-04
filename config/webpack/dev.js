@@ -11,6 +11,7 @@ const config = {
   cache: true,
   devServer: {
     hot: true,
+    historyApiFallback: true,
     contentBase: build,
     publicPath: '/',
     port: 8889
@@ -50,9 +51,11 @@ const config = {
     //   name: 'vendor',
     //   filename: 'vendor.bundle.js'
     // }),
+    new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
-    new webpack.NamedModulesPlugin()
+    new webpack.NoEmitOnErrorsPlugin()
+    // new webpack.ProgressPlugin((percentage, msg) =>
+    //   console.log((percentage * 100).toFixed(), msg))
     // new HtmlWebpackPlugin({
     //   template: resolve('./config/index.html'),
     //   inject: 'body',

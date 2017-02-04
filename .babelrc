@@ -1,9 +1,10 @@
 {
   "presets": [
-    ["es2015", {"modules": false}]
+    //["es2015", {"modules": false}]
   ],
   "plugins": [
-    "transform-async-to-generator",
-    "react-hot-loader/babel"
+    "react-hot-loader/babel",
+    // "dynamic-import-webpack",
+    "transform-async-to-generator"
   ]
 }
