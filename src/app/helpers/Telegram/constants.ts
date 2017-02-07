@@ -15,7 +15,8 @@ export const DC_OPTIONS = [
   ip_address: `https://${subdomain}.web.telegram.org`,
   port: 443,
 }));*/
+const dc = DC_OPTIONS[DEFAULT_DC_ID - 1];
 export const SERVER = {
-  host: trim(process.env.DC_SERVER || '149.154.167.51'),
-  port: '443',
+  host: trim(process.env.DC_SERVER || dc.ip_address),
+  port: `${dc.port}`,
 };
