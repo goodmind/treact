@@ -14,8 +14,7 @@ import { selectChat } from 'redux/api/chatList';
 // const getLastMessage =
 //  (history: IStoreHistory): IMtpMessage => history.byId[last<number, typeof history.ids>(history.ids)];
 
-class ChatListItemContainer extends React.Component<IProps & IFuncs & IState, any> {
-  public static displayName = 'Telegram(ChatListItem)';
+class ChatListItemContainer extends React.Component<IProps & IFuncs & IState, {}> {
   public renderEmptyItem = () => {
     const { id, selected, peer, peerData } = this.props;
     return <ChatListItemEmpty
@@ -57,7 +56,7 @@ interface IProps {
 }
 
 interface IFuncs {
-  click: (id: number) => any;
+  click(id: number): any;
 }
 
 interface IState {
