@@ -1,6 +1,6 @@
 import { WebpManager } from 'helpers/WebpManager';
 import { FileManager } from 'helpers/FileManager';
-import { client, invoke } from 'helpers/Telegram';
+import pool, { api } from 'helpers/Telegram/pool';
 
 import { MemoryFileStorage, MemoryFileStorageConstructor } from 'helpers/FileManager/MemoryFileStorage';
 // import { TmpfsFileStorage } from 'helpers/FileManager/TmpfsFileStorage';
@@ -95,7 +95,7 @@ function getFileStorage() {
 }
 
 class Files {
-  public memory = new MemoryFileStorageConstructor()
+  public memory = new MemoryFileStorageConstructor();
   public getCachedFile(location) {
     if (!location) {
       return false;
@@ -136,15 +136,14 @@ class Files {
         if (!inputLocation._typeName || inputLocation._typeName === 'Telegram.type.FileLocation') {
           const { dc_id, volume_id, secret, local_id } = location;
           inputLocation = Object.assign(
-            new client.schema.type.InputFileLocation(),
+            new pool.client.schema.type.InputFileLocation(),
             { dc_id, volume_id, secret, local_id },
           );
         }
-        return invoke('upload.getFile', {
+        return api('upload.getFile', {
           location: inputLocation,
           offset: 0,
           limit: 1024 * 1024,
-        }, {
           dcID: location.dc_id,
           fileDownload: true,
           createNetworker: true,
