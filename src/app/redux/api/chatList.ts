@@ -1,5 +1,5 @@
 import { CHATS } from 'actions';
-import pool, { api } from 'helpers/pool'
+import pool, { api } from 'helpers/Telegram/pool';
 import { IMtpMessagesSlice, IMtpPeer } from '../mtproto';
 import { IDispatch, IAsyncAction } from 'redux/IStore';
 import { TById, IMtpMessage, IMtpUser } from 'redux/mtproto';
