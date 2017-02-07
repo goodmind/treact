@@ -1,32 +1,21 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { signIn } from 'api/auth';
-import { IDispatch } from 'redux/IStore';
+import { IStore, IDispatch } from 'redux/IStore';
+import { IStepSkip as IOwnProps } from '../..';
+import { IAuthError } from 'redux/modules/auth';
 const t = require('../../style.css');
 
-interface IConnectedState {
-  auth: any;
-}
-
-interface IConnectedActions {
-  dispatch: IDispatch;
-}
-
-interface IOwnProps {
-  update: any;
-  skipStep: any;
-  form: any;
-}
-
+type IConnectedState = Pick<IStore, 'auth'>;
+type IConnectedActions = { dispatch: IDispatch };
 type IProps = IConnectedState & IConnectedActions & IOwnProps;
-
-interface IState {
-  authCode?: string;
-  error?: any;
-}
+type IState = {
+  authCode: string;
+  error: IAuthError;
+};
 
 class AuthCodeImpl extends React.Component<IProps, IState> {
-  public state = {
+  public state: IState = {
     authCode: '',
     error: null,
   };
