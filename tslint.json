@@ -37,7 +37,7 @@
     "prefer-const": ["warn"],
     "curly": false,
     "semicolon": [
-      false
+      true
     ],
     "no-bitwise": false,
     "no-consecutive-blank-lines": [false],
