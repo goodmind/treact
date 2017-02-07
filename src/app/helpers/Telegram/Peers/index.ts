@@ -1,6 +1,6 @@
 import { is, pipe, join, trim } from 'ramda';
 
-import pool from 'helpers/pool'
+import pool from 'helpers/Telegram/pool';
 import { IStore } from 'redux/IStore';
 import { TPeersType } from 'redux/modules/peers';
 import { IMtpUser, IMtpChat } from 'redux/mtproto';
