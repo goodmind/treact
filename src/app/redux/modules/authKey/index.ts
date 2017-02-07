@@ -15,7 +15,7 @@ const onSignInIds = (s, { dcID }) => s.concat([dcID]);
 const ids = createReducer({
   [AUTH.LOG_OUT.DONE]: onLogOutIds,
   [AUTH.SIGN_IN.DONE]: onSignInIds,
-}, [])
+}, []);
 
 const byId = createReducer({
   [AUTH.LOG_OUT.DONE]: onLogOut,
