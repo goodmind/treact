@@ -1,42 +1,30 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { sendCode } from 'api/auth';
-import { IDispatch } from 'redux/IStore';
+import { IDispatch, IStore } from 'redux/IStore';
+import { IStepNext as IOwnProps } from '../..';
+import { IAuthError } from 'redux/modules/auth';
 const s = require('./style.css');
 const t = require('../../style.css');
 
-interface IConnectedState {
-  auth: any;
-}
-
-interface IConnectedActions {
-  dispatch: IDispatch;
-}
-
-interface IOwnProps {
-  form: any;
-  update: any;
-  nextStep: any;
-}
-
+type IConnectedState = Pick<IStore, 'auth'>;
+type IConnectedActions = { dispatch: IDispatch };
 type IProps = IConnectedState & IConnectedActions & IOwnProps;
-
-interface IState {
-  phoneCode?: string;
-  phoneNumber?: string;
-  error?: any;
-}
+type IState = {
+  phoneCode: string;
+  phoneNumber: string;
+  error: IAuthError;
+};
 
 class PhoneNumberImpl extends React.Component<IProps, IState> {
-  public state = {
+  public state: IState = {
     phoneCode: '+7',
     phoneNumber: '',
     error: null,
   };
 
-  private handleChange = event => {
+  private handleChange = event =>
     this.setState({ [event.target.name]: event.target.value });
-  }
 
   public handleNextStep = () => {
     const { dispatch, nextStep, update } = this.props;
