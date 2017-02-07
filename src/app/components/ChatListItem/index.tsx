@@ -7,7 +7,6 @@ const style = require('./style.css');
 interface IChatListBasicProps {
   id: number;
   name: string;
-  avatar?: string;
   selected: boolean;
   click: React.EventHandler<React.MouseEvent<any>>;
 }
@@ -44,10 +43,7 @@ const MessagePreview = ({ text, userName }: MessageProps) => (
 
 // <PeerPhoto peerID={id} />
 
-export class ChatListItemEmpty extends React.Component<IChatListBasicProps, any> {
-  public static defaultProps = {
-    avatar: require('./usercolor1.png'),
-  };
+export class ChatListItemEmpty extends React.Component<IChatListBasicProps, {}> {
   public render() {
     const {
       id,
