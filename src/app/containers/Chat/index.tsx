@@ -28,9 +28,9 @@ import { /*flip, prop, pipe,*/ pathOr } from 'ramda';
 // })
 
 const PlainMessage = ({ author, id, date, message }) =>
-  <Message key={id} id={id} date={date} user={author} text={message} />
+  <Message key={id} id={id} date={date} user={author} text={message} />;
 
-const PlainMessageMapper = ({...props}: any) => <PlainMessage {...props}/>
+const PlainMessageMapper = ({...props}: any) => <PlainMessage {...props}/>;
 
 const onChatSelect = async (currentId: number, nextId: number) => {
   if (nextId && nextId !== currentId) {
@@ -38,9 +38,9 @@ const onChatSelect = async (currentId: number, nextId: number) => {
   }
 };
 
-const byIdGetter = obj => id => pathOr({}, ['props', 'history', 'byId', id])(obj)
+const byIdGetter = obj => id => pathOr({}, ['props', 'history', 'byId', id])(obj);
 
-class ChatContainer extends React.Component<IConnectedState, any> {
+class ChatContainer extends React.Component<IConnectedState, {}> {
   public componentWillReceiveProps(nextProps: IConnectedState) {
     const { selected } = this.props;
     onChatSelect(selected, nextProps.selected);
@@ -52,7 +52,7 @@ class ChatContainer extends React.Component<IConnectedState, any> {
   public render() {
     if (!this.props.selected) return <DefaultScreen />;
     const { history, peerName } = this.props;
-    const byId = byIdGetter(this)
+    const byId = byIdGetter(this);
     return (
       <Chat name={peerName} userCount={0}>
         {history.ids.map(id =>
