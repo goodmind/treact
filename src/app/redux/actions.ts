@@ -25,4 +25,4 @@ export const CACHE = {
   QUEUE: createAction('add imgs to download queue'),
   LOAD: createAction('load next img'),
   DONE: createAction('complete downloading img'),
-}
+};
