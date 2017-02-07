@@ -2,6 +2,7 @@
 const { resolve, join } = require('path')
 
 const source = resolve(process.cwd(), 'src')
+const vendor = resolve(source, 'vendor');
 const build = resolve(process.cwd(), 'build')
 
 const reactDll = require(join(build, 'React.json'))
@@ -35,18 +36,18 @@ const rules = [
     ]
   }, {
     test: /\.css$/,
-    exclude: source,
-    loaders: [
-      'style-loader',
-      'css-loader'
-    ]
-  }, {
-    test: /\.css$/,
-    include: source,
+    exclude: vendor,
     use: [
       'style-loader',
       'css-loader?modules&importLoaders=2&localIdentName=[local]___[hash:base64:5]',
       'postcss-loader'
+    ]
+  }, {
+    test: /\.css$/,
+    include: vendor,
+    loaders: [
+      'style-loader',
+      'css-loader'
     ]
   },
   {
