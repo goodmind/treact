@@ -11,11 +11,34 @@ import { selectChat } from 'redux/api/chatList';
 import { getPeerName } from 'helpers/Telegram/Peers';
 import { TPeersType } from 'redux/modules/peers';
 
+// import { renameProp, mapProps } from 'recompose'
+import { /*flip, prop, pipe,*/ pathOr } from 'ramda';
+
+
+
+// const matcher = flip(prop)
+// const matchPeerMessage = matcher({
+//   user: renameProp('from_id', 'author'),
+//   channel: mapProps(({ to_id: { channel_id }, id, date, message }) => ({
+//     author: channel_id,
+//     id,
+//     date,
+//     message,
+//   })),
+// })
+
+const PlainMessage = ({ author, id, date, message }) =>
+  <Message key={id} id={id} date={date} user={author} text={message} />
+
+const PlainMessageMapper = ({...props}: any) => <PlainMessage {...props}/>
+
 const onChatSelect = async (currentId: number, nextId: number) => {
   if (nextId && nextId !== currentId) {
     await selectChat(nextId);
   }
 };
+
+const byIdGetter = obj => id => pathOr({}, ['props', 'history', 'byId', id])(obj)
 
 class ChatContainer extends React.Component<IConnectedState, any> {
   public componentWillReceiveProps(nextProps: IConnectedState) {
@@ -29,9 +52,11 @@ class ChatContainer extends React.Component<IConnectedState, any> {
   public render() {
     if (!this.props.selected) return <DefaultScreen />;
     const { history, peerName } = this.props;
+    const byId = byIdGetter(this)
     return (
       <Chat name={peerName} userCount={0}>
-        {history.ids.map(this.renderMessage)}
+        {history.ids.map(id =>
+          <PlainMessageMapper {...byId(id)} />)}
       </Chat>
     );
   }

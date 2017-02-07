@@ -1,4 +1,4 @@
-import * as MTProto from '@goodmind/telegram-mt-node';
+import { mtproto } from 'telegram-mtproto';
 import { DEFAULT_DC_ID } from './constants';
 import { path } from 'ramda';
 
@@ -23,7 +23,7 @@ export function restoreAuthKey(storageKey) {
   const [id, value] = restoreAuthKeyWithSaltFromStorableBuffer(
     Buffer.from(storageKey));
 
-  return new MTProto.auth.AuthKey(id, value);
+  return new mtproto.auth.AuthKey(id, value);
 }
 
 export function authKeyWithSaltToStorableBuffer(authKey, serverSalt) {

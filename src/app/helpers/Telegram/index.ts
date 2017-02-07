@@ -1,22 +1,20 @@
-import { ITelegramClient } from 'telegram-js';
-import * as MTProto from '@goodmind/telegram-mt-node';
-import * as TypeLanguage from '@goodmind/telegram-tl-node';
+import { tl, mtproto } from 'telegram-mtproto';
 
-import apiConnect from './connection';
-import { getFromStore, byIdGetter, restoreAuthKey } from './helpers';
-import { config } from './config';
-import { DC_OPTIONS } from './constants';
-import { IMtpHelpNearestDc } from 'redux/mtproto';
-import { rejectDashAndFuncs } from 'helpers/treeProcess';
+// import apiConnect from './connection';
+// import { getFromStore, byIdGetter, restoreAuthKey } from './helpers';
+// import { config } from './config';
+// import { DC_OPTIONS } from './constants';
+// import { IMtpHelpNearestDc } from 'redux/mtproto';
+// import { rejectDashAndFuncs } from 'helpers/treeProcess';
 
-const baseDcID = getFromStore('currentDc');
+// const baseDcID = getFromStore('currentDc');
 
-let client: ITelegramClient;
-const ready = apiConnect();
-ready.then(value => {
-  value._mainClient = true;
-  client = value;
-});
+// let client: ITelegramClient;
+const ready = null; // apiConnect();
+// ready.then(value => {
+//  value._mainClient = true;
+//  client = value;
+// });
 // NOTE Node connection function is deleted
 // } else {
 //   const os = require('os');
@@ -30,12 +28,12 @@ export function isReady() {
   return ready;
 }
 
-function readyApiCall(method, params, networker) {
-  console.debug('Passed networker', networker.then, !!networker._mainClient);
-  return networker.callApi(method, params);
-}
+// function readyApiCall(method, params, networker) {
+//  console.debug('Passed networker', networker.then, !!networker._mainClient);
+//  return networker.callApi(method, params);
+// }
 
-export function makePasswordHash (salt, password) {
+export function makePasswordHash(salt, password) {
   const passwordUTF8 = decodeURIComponent(encodeURIComponent(password));
   let buffer: any = new ArrayBuffer(passwordUTF8.length);
   const byteView: any = new Uint8Array(buffer);
@@ -46,9 +44,10 @@ export function makePasswordHash (salt, password) {
 
   buffer = Buffer.concat([Buffer.concat([salt, Buffer.from(byteView)]), salt]);
 
-  return MTProto.utility.createSHAHash(buffer, 'sha256');
+  return mtproto.utility.createSHAHash(buffer, 'sha256');
 }
 
+/*
 let stopTime;
 const performRequest = <R>(method, params?, options?) => (networker): Promise<R> => {
   return readyApiCall(method, params, networker)
@@ -65,7 +64,7 @@ const performRequest = <R>(method, params?, options?) => (networker): Promise<R>
       console.debug('Errored args', method, params, options);
 
       if (err.error_message === 'MSG_WAIT_FAILED') {
-        const now = MTProto.time.getLocalTime();
+        const now = mtproto.time.getLocalTime();
         if (stopTime) {
           if (now >= stopTime) {
             return Promise.reject(err);
@@ -89,18 +88,18 @@ export function invoke<R>(method, params?, options: any = {}): Promise<R> {
       .then(performRequest<R>(method, params, options));
   }
 }
-
+*/
 export const toPrintable =
-  (type, ...args) => TypeLanguage.utility.toPrintable.bind(type)(...args);
-
-let dialogsNum = 0;
-export function generateDialogIndex(date) {
-  console.log('dialogsNum', dialogsNum);
-  if (date === undefined) {
-    date = MTProto.time.getLocalTime();
-  }
-  return (date * 0x10000) + ((++dialogsNum) & 0xFFFF);
-}
+  (type, ...args) => tl.utility.toPrintable.bind(type)(...args);
+/*
+// let dialogsNum = 0;
+// export function generateDialogIndex(date) {
+//   console.log('dialogsNum', dialogsNum);
+//   if (date === undefined) {
+//     date = mtproto.time.getLocalTime();
+//   }
+//   return (date * 0x10000) + ((++dialogsNum) & 0xFFFF);
+// }
 
 const cachedUploadNetworkers = {};
 const cachedNetworkers = {};
@@ -138,36 +137,8 @@ export const getNetworker = async (dcID, options: any = {}) => {
   });
   return cache[dcID];
 };
-
-export function getDataCenters() {
-  const tl = TypeLanguage;
-  const promises = Promise.all([
-    {
-      dc_options: {
-        list: DC_OPTIONS,
-      },
-    },
-    performRequest<IMtpHelpNearestDc>('help.getNearestDc')(client),
-  ]);
-  return promises
-    .then(([config, nearestDc]) => {
-      const dcs = {
-        current: `DC_${nearestDc.this_dc}`,
-        nearestDc: `DC_${nearestDc.nearest_dc}`,
-        toPrintable: tl.utility.toPrintable,
-      };
-      const dcList = config.dc_options.list;
-      dcList.forEach(dc => {
-        dcs[`DC_${dc.id}`] = {
-          host: dc.ip_address,
-          port: dc.port,
-          toPrintable: tl.utility.toPrintable,
-        };
-      });
-      return dcs;
-    });
-}
+*/
 
 export { APP_ID, APP_HASH } from './constants';
 export { authKeyWithSaltToStorableBuffer } from './helpers';
-export { client, MTProto, TypeLanguage }
+export { ready as client }

@@ -134,15 +134,22 @@ declare module 'redux-act' {
   }
 }
 
-declare module 'telegram-js' {
+declare module 'telegram-mtproto' {
   export const Telegram: ITelegramStatic
   export interface ITelegramStatic {
-    new (mt: any, tl: any): ITelegram;
+    new (schema: ITelegramSchema): ITelegram;
   }
+  export const mtproto: any;
+  export const tl: any;
   export interface ITelegramSchema {
     constructors:Array<Object>;
     methods:Array<Object>;
     type:any;
+  }
+  export const network: {
+    http: any,
+    tcp: any,
+    wc: any
   }
   export class ITelegramClient {
     constructor (schema:ITelegramSchema, mtProto, typeLanguage);
@@ -152,6 +159,7 @@ declare module 'telegram-js' {
     setConnection(conn: any): void;
     callApi(method: string, args: any[]): void;
     callApi(...args: any[]): void;
+    callApi<R>(method: string, args?: Object): Promise<R>;
     setup(config: any): Promise<ITelegramClient>;
   }
   export interface ITelegram {

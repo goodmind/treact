@@ -2,51 +2,36 @@ import 'isomorphic-fetch';
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
+import { AppContainer } from 'react-hot-loader';
 import { syncHistoryWithStore } from 'react-router-redux';
-import { configureStore } from './app/redux/store';
-import { persistStore } from 'redux-persist';
+
+import AppProvider, { store } from './AppProvider';
+
 const { Router, browserHistory } = require('react-router');
 const { ReduxAsyncConnect } = require('redux-connect');
 import routes from './app/routes';
 
-const store = configureStore(
-  browserHistory,
-  window.__INITIAL_STATE__,
-);
 const history = syncHistoryWithStore(browserHistory, store);
 const connectedCmp = (props) => <ReduxAsyncConnect {...props} />;
 
-class AppProvider extends React.Component<any, any> {
-  constructor() {
-    super();
-    this.state = { rehydrated: false };
-  }
+const render = Component =>
+  ReactDOM.render((
+    <AppContainer>
+      <AppProvider>
+        <Router
+          history={history}
+          render={connectedCmp}>
+          {Component}
+        </Router>
+      </AppProvider>
+    </AppContainer>
+  ), document.getElementById('app'));
 
-  public componentWillMount() {
-    persistStore(store, {whitelist: ['authKey', 'currentUser', 'currentDc']}, () => {
-      this.setState({ rehydrated: true });
-    });
-  }
+render(routes);
 
-  public render() {
-    if (!this.state.rehydrated) {
-      return <div>Loading...</div>;
-    }
-    return (
-      <Provider store={store} key="provider">
-        {this.props.children}
-      </Provider>
-    );
-  }
+if ((module as any).hot) {
+  (module as any).hot.accept('./app/routes', () => {
+    const NewApp = require('./app/routes').default;
+    render(NewApp);
+  });
 }
-
-ReactDOM.render((
-  <AppProvider>
-    <Router
-      history={history}
-      render={connectedCmp}>
-      {routes}
-    </Router>
-  </AppProvider>
-), document.getElementById('app'));

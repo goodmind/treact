@@ -1,10 +1,10 @@
+import { pipe, tap } from 'ramda';
+import { api } from 'helpers/Telegram/pool';
 import { APP_HASH, APP_ID, DEFAULT_DC_ID } from 'helpers/Telegram/config';
-import { invoke, makePasswordHash } from 'helpers/Telegram';
+import { makePasswordHash } from 'helpers/Telegram';
 import { push } from 'react-router-redux';
 import { IDispatch } from '../IStore';
 import { AUTH } from 'actions';
-
-import { pipe, tap } from 'ramda';
 
 const { SEND_CODE, SIGN_IN, GET_PASSWORD, LOG_OUT } = AUTH;
 
@@ -16,7 +16,7 @@ function getPassword() {
   });
   return dispatch => {
     dispatch(GET_PASSWORD.INIT());
-    return invoke('account.getPassword')
+    return api('account.getPassword')
       .then(onDone, GET_PASSWORD.FAIL)
       .then(dispatch);
   };
@@ -26,7 +26,7 @@ export function checkPassword(password: string) {
   return (dispatch, getState) => {
     const { auth } = getState();
     const hash = makePasswordHash(auth.passwordSalt, password);
-    return invoke('auth.checkPassword', {
+    return api('auth.checkPassword', {
       password_hash: hash,
     }).then(addDc)
       .then(SIGN_IN.DONE, SIGN_IN.FAIL)
@@ -42,7 +42,7 @@ export function signIn(phoneCode) {
     const catchAndDispatch = pipe( tap(catchNeedPass), err => dispatch(SIGN_IN.FAIL(err)) );
     const { auth } = getState();
     dispatch(SIGN_IN.INIT());
-    return invoke('auth.signIn', {
+    return api('auth.signIn', {
       phone_number: auth.phoneNumber,
       phone_code_hash: auth.phoneCodeHash,
       phone_code: phoneCode,
@@ -60,7 +60,7 @@ export function sendCode(phoneNumber: string) {
   });
   return dispatch => {
     dispatch(SEND_CODE.INIT());
-    return invoke('auth.sendCode', {
+    return api('auth.sendCode', {
       phone_number: phoneNumber,
       current_number: false,
       api_id: APP_ID,
@@ -79,7 +79,7 @@ export function logOut() {
       dispatch(push('/'));
     };
     dispatch(LOG_OUT.INIT());
-    return invoke<boolean>('auth.logOut')
+    return api<boolean>('auth.logOut')
       .then(LOG_OUT.DONE, LOG_OUT.FAIL)
       .then(dispatch)
       .then(tap(cleanAndRedirect));

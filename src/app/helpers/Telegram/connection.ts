@@ -1,7 +1,4 @@
-import { Telegram, mtproto } from 'telegram-mtproto'
-// import * as MTProto from '@goodmind/telegram-mt-node';
-// import * as TypeLanguage from '@goodmind/telegram-tl-node';
-// import { clone } from 'ramda';
+import { Telegram, network } from 'telegram-mtproto';
 
 import { addPublicKeys } from './publickeys';
 import { config, SERVER } from './config';
@@ -16,10 +13,10 @@ interface IServer {
 }
 
 const apiConnect = async (server: IServer = SERVER, apiConfig = config) => {
-  const connection = new mtproto.net.HttpConnection(server);
+  const connection = new network.http(server);
   const setupClient = telegram.createClient();
   setupClient.setConnection(connection);
-  await new Promise(rs => connection.connect(rs));
+  await connection.connect();
   const client = await setupClient.setup(apiConfig);
 
   console.log(`Connected to Telegram on ${server.host}`);
