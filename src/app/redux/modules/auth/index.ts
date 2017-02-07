@@ -6,7 +6,7 @@ import { byIdGetter } from 'helpers/Telegram/helpers';
 
 import { AUTH } from 'actions';
 
-interface IAuthError {
+export interface IAuthError {
   error_code: number;
   error_message: string;
 }
