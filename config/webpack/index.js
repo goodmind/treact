@@ -2,7 +2,7 @@
 const { resolve, join } = require('path')
 
 const source = resolve(process.cwd(), 'src')
-const vendor = resolve(source, 'vendor');
+const app = resolve(source, 'app');
 const build = resolve(process.cwd(), 'build')
 
 const reactDll = require(join(build, 'React.json'))
@@ -36,7 +36,7 @@ const rules = [
     ]
   }, {
     test: /\.css$/,
-    exclude: vendor,
+    include: app,
     use: [
       'style-loader',
       'css-loader?modules&importLoaders=2&localIdentName=[local]___[hash:base64:5]',
@@ -44,7 +44,7 @@ const rules = [
     ]
   }, {
     test: /\.css$/,
-    include: vendor,
+    exclude: app,
     loaders: [
       'style-loader',
       'css-loader'
