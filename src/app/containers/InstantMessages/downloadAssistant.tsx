@@ -7,7 +7,7 @@ import { IStorePhotoCache } from 'redux/modules/photoCache';
 import { IStore, IDispatch } from 'redux/IStore';
 import { CACHE } from 'redux/actions';
 import { IMtpFileLocation, IMtpUploadFile } from 'redux/mtproto';
-import pool, { api } from 'helpers/Telegram/pool';
+import { api } from 'helpers/Telegram/pool';
 import picStore from 'helpers/FileManager/picStore';
 
 import * as localForage from 'localforage';
@@ -36,10 +36,7 @@ interface IPropsDispatch {
 
 const beginLoad = async (id: string, loc: IMtpFileLocation) => {
   const { dc_id, volume_id, secret, local_id } = loc;
-  const inputLocation = Object.assign(
-    new pool.client.schema.type.InputFileLocation(),
-    { dc_id, volume_id, secret, local_id },
-  );
+  const inputLocation = { _: 'inputFileLocation', dc_id, volume_id, secret, local_id };
   console.warn(`idle`, loc);
   const cached = picStorage.getItem<Blob>(id.toString())
     .then(when(isNil, Promise.reject))
