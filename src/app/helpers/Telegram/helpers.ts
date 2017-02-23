@@ -1,4 +1,3 @@
-import { mtproto } from 'telegram-mtproto';
 import { DEFAULT_DC_ID } from './constants';
 import { path } from 'ramda';
 
@@ -20,10 +19,10 @@ export function restoreAuthKeyFromLocalStorage() {
 }
 
 export function restoreAuthKey(storageKey) {
-  const [id, value] = restoreAuthKeyWithSaltFromStorableBuffer(
-    Buffer.from(storageKey));
+  // const [id, value] = restoreAuthKeyWithSaltFromStorableBuffer(
+  //  Buffer.from(storageKey));
 
-  return new mtproto.auth.AuthKey(id, value);
+  return storageKey; // new mtproto.auth.AuthKey(id, value);
 }
 
 export function authKeyWithSaltToStorableBuffer(authKey, serverSalt) {
