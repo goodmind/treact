@@ -3,7 +3,7 @@
     //["es2015", {"modules": false}]
   ],
   "plugins": [
-    "react-hot-loader/babel",
+    // "react-hot-loader/babel",
     // "dynamic-import-webpack",
     "transform-async-to-generator"
   ]
