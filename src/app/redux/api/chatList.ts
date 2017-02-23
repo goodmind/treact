@@ -37,7 +37,7 @@ export const loadSliceRange = (dispatch: IDispatch) =>
       .then(dispatch);
   };
 
-export const loadOffset = (id: number, offset: number = 10): IAsyncAction<Promise<any>|void> =>
+export const loadOffset = (id: number, offset: number): IAsyncAction<Promise<any>|void> =>
   async (dispatch, getState) => {
     const store = getState();
     const peer = store.peers.byId[id];
@@ -50,7 +50,7 @@ export const loadOffset = (id: number, offset: number = 10): IAsyncAction<Promis
     } catch (err) {
       console.warn(err);
     }
-  }
+  };
 
 export const selectChat = (id: number): IAsyncAction<Promise<any>|void> =>
   (dispatch, getState) => {
