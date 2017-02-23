@@ -8,8 +8,9 @@
       ]
     },
     "outDir": "build",
-    "module": "commonjs",
+    "module": "es2015",
     "target": "es6",
+    "pretty": true,
     "sourceMap": true,
     "inlineSourceMap": false,
     "inlineSources": false,

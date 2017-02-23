@@ -1,5 +1,5 @@
-let channelLocals = {};
-let channelsByLocals = {};
+const channelLocals = {};
+const channelsByLocals = {};
 let channelCurLocal = 0;
 const fullMsgIDModulus = 4294967296;
 

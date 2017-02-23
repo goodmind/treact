@@ -23,7 +23,7 @@ interface IProps {
   // onChatClick: (event: React.MouseEvent<any>, chatId: number) => any;
 }
 
-class ChatListContainer extends React.Component<IProps, any> {
+class ChatListContainer extends React.Component<IProps, {}> {
   public renderChat = (id: number) => (
     <ChatListItem
       id={id}

@@ -1,17 +1,24 @@
-import { authKeyWithSaltToStorableBuffer, client } from 'helpers/Telegram';
-
+import { combineReducers } from 'redux';
 import { createReducer } from 'redux-act';
-
 import { AUTH } from 'actions';
 
-const onLogOut = () => null;
+const onLogOut = () => ({});
+const onSignIn = (s, { dcID, authKey }) => Object.assign({}, s, { [dcID]: authKey });
 
-const onSignIn = () => {
-  const { key, serverSalt } = client.authKey;
-  return authKeyWithSaltToStorableBuffer(key, serverSalt);
-};
+const onLogOutIds = () => ([]);
+const onSignInIds = (s, { dcID }) => s.concat([dcID]);
 
-export const authKeyReducer = createReducer({
+const ids = createReducer({
+  [AUTH.LOG_OUT.DONE]: onLogOutIds,
+  [AUTH.SIGN_IN.DONE]: onSignInIds,
+}, []);
+
+const byId = createReducer({
   [AUTH.LOG_OUT.DONE]: onLogOut,
   [AUTH.SIGN_IN.DONE]: onSignIn,
-}, null);
+}, {});
+
+export const authKeyReducer = combineReducers({
+  ids,
+  byId,
+});

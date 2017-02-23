@@ -20,3 +20,9 @@ export const CHATS = {
   GET_DIALOGS: actionEvent('load every dialog slice'),
   SELECT: createAction('select dialog by id'),
 };
+
+export const CACHE = {
+  QUEUE: createAction('add imgs to download queue'),
+  LOAD: createAction('load next img'),
+  DONE: createAction('complete downloading img'),
+};

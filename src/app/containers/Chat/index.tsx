@@ -17,7 +17,7 @@ const onChatSelect = async (currentId: number, nextId: number) => {
   }
 };
 
-class ChatContainer extends React.Component<IProps, any> {
+class ChatContainer extends React.Component<IConnectedState, {}> {
   public componentWillReceiveProps(nextProps: IConnectedState) {
     const { selected } = this.props;
     onChatSelect(selected, nextProps.selected);

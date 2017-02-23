@@ -1,25 +1,27 @@
 import * as React from 'react';
 import * as Steps from './steps';
 import { connect } from 'react-redux';
+import { IStore } from 'redux/IStore';
 const s = require('./style.css');
 
-interface IConnectedState {
-  auth: any;
-}
-
-interface IConnectedActions {}
-
-interface IOwnProps {}
-
+type IConnectedState = Pick<IStore, 'auth'>;
+type IConnectedActions = {};
+type IOwnProps = {};
 type IProps = IConnectedState & IConnectedActions & IOwnProps;
+
+export interface IFormState {
+  phoneNumber: string;
+  authCode: string;
+  password: string;
+}
 
 interface IState {
   step: number;
-  form?: any;
+  form: IFormState;
 }
 
 class LoginImpl extends React.Component<IProps, IState> {
-  public state = {
+  public state: IState = {
     step: 1,
     form: {
       phoneNumber: '',
@@ -40,17 +42,13 @@ class LoginImpl extends React.Component<IProps, IState> {
     });
   }
 
-  public updateForm = state => {
-    this.state.form = Object.assign({}, this.state.form, state);
+  public updateForm = <K extends keyof IFormState>(state: Pick<IFormState, K>) => {
+    this.setState({
+      form: Object.assign({}, this.state.form, state),
+    });
   }
 
-  public form = () => {
-    const { auth } = this.props;
-    let step = this.state.step;
-    if (auth.authenticated) {
-      step = 5;
-    }
-
+  public form = step => {
     switch (step) {
       case 1:
         return (
@@ -86,12 +84,27 @@ class LoginImpl extends React.Component<IProps, IState> {
   }
 
   public render() {
+    const { auth } = this.props;
+
     return (
       <div className={s.main}>
-        {this.form()}
+        {this.form(auth.authenticated ? 5 : this.state.step)}
       </div>
     );
   }
+}
+
+interface IStep {
+  update: LoginImpl['updateForm'];
+  form: IFormState;
+}
+
+export interface IStepNext extends IStep {
+  nextStep: LoginImpl['nextStep'];
+}
+
+export interface IStepSkip extends IStep {
+  skipStep: LoginImpl['skipStep'];
 }
 
 const Login = connect<IConnectedState, IConnectedActions, IOwnProps>(state => ({ auth: state.auth }))(LoginImpl);

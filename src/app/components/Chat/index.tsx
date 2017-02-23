@@ -36,7 +36,7 @@ const ChatFooter = () => (
   </div>
 );
 
-class Chat extends React.Component<IProps, any> {
+class Chat extends React.Component<IProps, {}> {
   public render() {
     const { name, userCount, children, loadMore } = this.props;
     return (

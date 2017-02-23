@@ -7,7 +7,7 @@ interface IProps {
   activeChat: any;
 }
 
-class ChatMessage extends React.Component<IProps, any> {
+class ChatMessage extends React.Component<IProps, {}> {
   public render() {
     const { message, activeChat } = this.props;
 
