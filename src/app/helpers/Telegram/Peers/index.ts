@@ -72,11 +72,11 @@ export const resolveUsername = (username: string) => (dispatch): Promise<number 
 */
 
 export const retrieveId = (peer): number => {
-  switch (peer._typeName) {
-    case 'Telegram.type.Channel': return -peer.id;
-    case 'Telegram.type.Chat': return -peer.id;
-    case 'Telegram.type.User': return peer.id;
-    default: throw new Error('Unknown peer type' + peer._typeName);
+  switch (peer._) {
+    case 'channel': return -peer.id;
+    case 'chat': return -peer.id;
+    case 'user': return peer.id;
+    default: throw new Error('Unknown peer type' + peer._);
   }
 };
 
