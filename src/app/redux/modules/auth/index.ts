@@ -7,8 +7,9 @@ import { byIdGetter } from 'helpers/Telegram/helpers';
 import { AUTH } from 'actions';
 
 export interface IAuthError {
-  error_code: number;
-  error_message: string;
+  code: number;
+  type: string;
+  description?: string;
 }
 export interface IAuth {
   authenticated: boolean;
@@ -26,15 +27,15 @@ const passwordSalt = createReducer({
   [GET_PASSWORD.DONE]: (_, { passwordSalt }) => passwordSalt,
 }, '');
 
-const saveError = (_, { error_code, error_message }: IAuthError): IAuthError => ({ error_code, error_message });
+const saveError = (_, { code, type }: IAuthError): IAuthError => ({ code, type });
 
 const error = createReducer<IAuthError>({
   [SEND_CODE.FAIL]: saveError,
   [SIGN_IN.FAIL]: saveError,
   [GET_PASSWORD.FAIL]: saveError,
 }, {
-  error_code: null,
-  error_message: null,
+  code: null,
+  type: null,
 });
 
 const loading = createReducer({
