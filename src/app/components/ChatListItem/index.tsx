@@ -43,7 +43,7 @@ const SenderPreview = ({ userName }: SenderProps) => {
         <span>:</span>
     </div>
   );
-}
+};
 
 type MessageProps = { text: string, userName: string, isYou: boolean };
 const MessagePreview = ({ text, userName, isYou }: MessageProps) => (

@@ -80,8 +80,8 @@ const preview = (state, message, peer) => {
     isYou,
     fromData,
     from: isNotChat ? peer : from,
-  }
-}
+  };
+};
 
 const mapState = (state: IStore, { id, peer, history, dialog }: IProps): IState => {
   const message = history.byId[dialog.top_message];
