@@ -1,4 +1,6 @@
 # Telegram React
+
+[![Join the chat at https://gitter.im/treact/Lobby](https://badges.gitter.im/treact/Lobby.svg)](https://gitter.im/treact/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://travis-ci.org/barbar/vortigern.svg?branch=master)](https://travis-ci.org/barbar/vortigern)
 [![Dependency Status](https://david-dm.org/barbar/vortigern.svg)]()
 [![devDependency Status](https://david-dm.org/barbar/vortigern/dev-status.svg)]()
