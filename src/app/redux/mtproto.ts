@@ -1,47 +1,47 @@
 type TMtpVectorSubType = 'User'|'Message'|'Chat'|'Dialog';
 
 type TMtpVector = 'Vector';
-type TMtpMessagesSlice = 'Telegram.type.messages.MessagesSlice';
-type TMtpDialogsSlice = 'Telegram.type.messages.DialogsSlice';
-type TMtpMessage = 'Telegram.type.Message';
-type TMtpUser = 'Telegram.type.User';
-type TMtpChat = 'Telegram.type.Chat';
-type TMtpChannel = 'Telegram.type.Channel';
-type TMtpDialog = 'Telegram.type.Dialog';
-type TMtpPhoto = 'Telegram.type.UserProfilePhoto';
-type TMtpFileLocation = 'Telegram.type.FileLocation';
-type TMtpDcOption = 'Telegram.type.DcOption';
+type TMtpMessagesSlice = 'messages.MessagesSlice';
+type TMtpDialogsSlice = 'messages.DialogsSlice';
+type TMtpMessage = 'Message';
+type TMtpUser = 'User';
+type TMtpChat = 'Chat';
+type TMtpChannel = 'Channel';
+type TMtpDialog = 'Dialog';
+type TMtpPhoto = 'UserProfilePhoto';
+type TMtpFileLocation = 'FileLocation';
+type TMtpDcOption = 'DcOption';
 export type TMtpType = TMtpVector|TMtpMessagesSlice|TMtpMessage|TMtpUser|
   TMtpChat|TMtpChannel|TMtpDialog|TMtpDcOption|TMtpPhoto|TMtpFileLocation|
   TMtpDialogsSlice|TMtpGetDialogs;
 
-type TMtpNearestDc = 'Telegram.type.NearestDc';
-type TMtpConfig = 'Telegram.type.Config';
-type TMtpGetDialogs = 'Telegram.type.messages.Dialogs';
+type TMtpNearestDc = 'NearestDc';
+type TMtpConfig = 'Config';
+type TMtpGetDialogs = 'messages.Dialogs';
 type TMtpHelpType = TMtpConfig|TMtpNearestDc;
 
-type TMtpPeerUser = 'Telegram.type.PeerUser';
-type TMtpPeerChat = 'Telegram.type.PeerChat';
-type TMtpPeerChannel = 'Telegram.type.PeerChannel';
-type TMtpInputPeerUser = 'Telegram.type.InputPeerUser';
-type TMtpInputPeerChat = 'Telegram.type.InputPeerChat';
-type TMtpInputPeerChannel = 'Telegram.type.InputPeerChannel';
+type TMtpPeerUser = 'PeerUser';
+type TMtpPeerChat = 'PeerChat';
+type TMtpPeerChannel = 'PeerChannel';
+type TMtpInputPeerUser = 'inputPeerUser';
+type TMtpInputPeerChat = 'inputPeerChat';
+type TMtpInputPeerChannel = 'inputPeerChannel';
 type TMtpPeerType = TMtpPeerUser|TMtpInputPeerUser|TMtpPeerChat|TMtpInputPeerChat|
   TMtpPeerChannel|TMtpInputPeerChannel;
 
-type TMtpFile = 'Telegram.type.upload.File';
+type TMtpFile = 'upload.File';
 type TMtpUploadType = TMtpFile;
 
-type TMtpFileUnknown = 'Telegram.type.storage.FileUnknown';
-type TMtpFileJpeg = 'Telegram.type.storage.FileJpeg';
-type TMtpFileGif = 'Telegram.type.storage.FileGif';
-type TMtpFilePng = 'Telegram.type.storage.FilePng';
-type TMtpFilePdf = 'Telegram.type.storage.FilePdf';
-type TMtpFileMp3 = 'Telegram.type.storage.FileMp3';
-type TMtpFileMov = 'Telegram.type.storage.FileMov';
-type TMtpFilePartial = 'Telegram.type.storage.FilePartial';
-type TMtpFileMp4 = 'Telegram.type.storage.FileMp4';
-type TMtpFileWebp = 'Telegram.type.storage.FileWebp';
+type TMtpFileUnknown = 'storage.FileUnknown';
+type TMtpFileJpeg = 'storage.FileJpeg';
+type TMtpFileGif = 'storage.FileGif';
+type TMtpFilePng = 'storage.FilePng';
+type TMtpFilePdf = 'storage.FilePdf';
+type TMtpFileMp3 = 'storage.FileMp3';
+type TMtpFileMov = 'storage.FileMov';
+type TMtpFilePartial = 'storage.FilePartial';
+type TMtpFileMp4 = 'storage.FileMp4';
+type TMtpFileWebp = 'storage.FileWebp';
 type TMtpStorageType =
   | TMtpFileUnknown
   | TMtpFileJpeg
@@ -55,7 +55,7 @@ type TMtpStorageType =
   | TMtpFileWebp;
 
 interface IMtpPrimitive<T> {
-  _typeName: T;
+  _: T;
 }
 
 type Bytes = Uint8Array;
