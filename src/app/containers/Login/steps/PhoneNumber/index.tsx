@@ -32,7 +32,7 @@ class PhoneNumberImpl extends React.Component<IProps, IState> {
 
     update({ phoneNumber });
     dispatch(sendCode(phoneNumber))
-      .then(({payload: error}) => error.error_code ? this.setState({ error }) : this.setState({error: null}))
+      .then(({payload: error}) => error.code ? this.setState({ error }) : this.setState({error: null}))
       .then(() => this.state.error || nextStep());
   }
 
@@ -57,7 +57,7 @@ class PhoneNumberImpl extends React.Component<IProps, IState> {
             className="col-xs-10 form-control form-control-lg"
             placeholder="--- --- -- --" type="tel" />
         </div>
-        {error && <div>Error type: {error.error_message}</div>}
+        {error && <div>Error type: {error.description}</div>}
         <button onClick={this.handleNextStep} className={`${t.btn} ${t.primary}`}>Next</button>
       </div>
     );

@@ -30,7 +30,7 @@ class PasswordImpl extends React.Component<IProps, IState> {
     update({ password });
     console.log(this.state, this.props);
     dispatch(checkPassword(this.state.password))
-      .then(({payload: error}) => error.error_code ? this.setState({ error }) : this.setState({error: null}))
+      .then(({payload: error}) => error.code ? this.setState({ error }) : this.setState({error: null}))
       .then(() => this.state.error || nextStep());
   }
 
@@ -50,7 +50,7 @@ class PasswordImpl extends React.Component<IProps, IState> {
             className="form-control form-control-lg"
             placeholder="Your cloud password" type="password" />
         </div>
-        {error && <div>Error type: {error.error_message}</div>}
+        {error && <div>Error type: {error.description}</div>}
         <button onClick={this.handleNextStep} className={`${t.btn} ${t.primary}`}>Submit</button>
       </div>
     );

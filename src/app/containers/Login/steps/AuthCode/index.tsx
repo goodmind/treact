@@ -29,8 +29,8 @@ class AuthCodeImpl extends React.Component<IProps, IState> {
 
     update({ authCode });
     dispatch(signIn(this.state.authCode))
-      .then(({payload: error}) => (error && error.error_code) ? this.setState({ error }) : this.setState({error: null}))
-      .then(() => skipStep(this.props.auth.error.error_message === 'SESSION_PASSWORD_NEEDED' ? 1 : 2));
+      .then(({payload: error}) => (error && error.code) ? this.setState({ error }) : this.setState({error: null}))
+      .then(() => skipStep(this.props.auth.error.type === 'SESSION_PASSWORD_NEEDED' ? 1 : 2));
   }
 
   public render() {
@@ -50,7 +50,7 @@ class AuthCodeImpl extends React.Component<IProps, IState> {
             className="col-xs-4 form-control form-control-lg"
             placeholder="Your code" type="text" maxLength={5} />
         </div>
-        {error && <div>Error type: {error.error_message}</div>}
+        {error && <div>Error type: {error.description}</div>}
         <button onClick={this.handleNextStep} className={`${t.btn} ${t.primary}`}>Next</button>
       </div>
     );
