@@ -97,6 +97,7 @@ export interface IMtpMessage extends IMtpObject<TMtpMessage> {
   entities?: IMtpVector<IMtpMessageEntity>; // Vector of message markdown if any
   unread?: true;
   peerID?: true;
+  out?: true;
 }
 
 export interface IMtpDialog extends IMtpObject<TMtpDialog> {

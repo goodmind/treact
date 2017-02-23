@@ -12,6 +12,7 @@ interface IChatListBasicProps {
 }
 
 interface IChatListFullProps extends IChatListBasicProps {
+  isYou: boolean;
   previewName: string;
   text: string;
   unreadCount: number;
@@ -30,13 +31,24 @@ const UnreadBadge = ({ unread }: UnreadProps) => {
   );
 };
 
-type MessageProps = { text: string, userName: string };
-const MessagePreview = ({ text, userName }: MessageProps) => (
-  <div className={style.message}>
-    <div className={style.sender}>
-      <span>{userName}</span>
-      <span>:</span>
+type SenderProps = { userName: string };
+const SenderPreview = ({ userName }: SenderProps) => {
+  const sender = classNames({
+    [style.sender]: true,
+    [style.hidden]: !userName,
+  });
+  return (
+    <div className={sender}>
+        <span>{userName}</span>
+        <span>:</span>
     </div>
+  );
+}
+
+type MessageProps = { text: string, userName: string, isYou: boolean };
+const MessagePreview = ({ text, userName, isYou }: MessageProps) => (
+  <div className={style.message}>
+    <SenderPreview userName={isYou ? 'You' : userName} />
     <span>{text}</span>
   </div>
 );
@@ -74,9 +86,11 @@ export class ChatListItemEmpty extends React.Component<IChatListBasicProps, {}> 
   }
 }
 
-export const ChatListItem = ({ id, name, click, selected, previewName, text, unreadCount }: IChatListFullProps) => (
+export const ChatListItem = ({
+  id, name, click, selected,
+  previewName, text, unreadCount, isYou }: IChatListFullProps) => (
   <ChatListItemEmpty id={id} name={name} click={click} selected={selected}>
-    <MessagePreview text={text} userName={previewName}/>
+    <MessagePreview text={text} userName={previewName} isYou={isYou} />
     <UnreadBadge unread={unreadCount}/>
   </ChatListItemEmpty>
 );

@@ -25,8 +25,7 @@ class ChatListItemContainer extends React.Component<IProps & IFuncs & IState, {}
       />;
   }
   public renderItem = () => {
-    const { id, selected, peer, peerData, history } = this.props;
-    const shortName = getPeerShortName(peer, peerData);
+    const { id, selected, peer, peerData, from, fromData, isNotChat, isYou, history } = this.props;
     const lastMsg = history.byId[this.props.dialog.top_message] || {message: ''};
     return <ChatListItem
       id={id}
@@ -34,7 +33,8 @@ class ChatListItemContainer extends React.Component<IProps & IFuncs & IState, {}
       selected={selected}
       name={getPeerName(peer, peerData)}
       unreadCount={this.props.dialog.unread_count}
-      previewName={shortName}
+      previewName={isNotChat ? undefined : getPeerShortName(from, fromData)}
+      isYou={isYou}
       text={lastMsg.message}
       />;
   }
@@ -61,11 +61,35 @@ interface IFuncs {
 
 interface IState {
   peerData: IMtpUser|IMtpChat;
+  fromData: IMtpUser|IMtpChat;
+  from: TPeersType;
+  isNotChat: boolean;
+  isYou: boolean;
 }
 
-const mapState = (state: IStore, { id, peer }: IProps) => {
+const preview = (state, message, peer) => {
+  const fromId = message.from_id || -1;
+  const from = state.peers.byId[fromId];
+
+  const isNotChat = peer === 'user' || from !== 'user';
+  const isYou = !!message.out;
+  const fromData = !isNotChat && getPeerData(fromId, from, state);
+
   return {
-    peerData: getPeerData(id, peer, state),
+    isNotChat,
+    isYou,
+    fromData,
+    from: isNotChat ? peer : from,
+  }
+}
+
+const mapState = (state: IStore, { id, peer, history, dialog }: IProps): IState => {
+  const message = history.byId[dialog.top_message];
+  const peerData = getPeerData(id, peer, state);
+
+  return {
+    peerData,
+    ...preview(state, message, peer),
   };
 };
 
