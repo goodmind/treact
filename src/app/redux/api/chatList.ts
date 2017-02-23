@@ -1,5 +1,5 @@
 import { CHATS } from 'actions';
-import pool, { api } from 'helpers/Telegram/pool';
+import { api } from 'helpers/Telegram/pool';
 import { IMtpMessagesSlice, IMtpPeer } from '../mtproto';
 import { IDispatch, IAsyncAction } from 'redux/IStore';
 import { TById, IMtpMessage, IMtpUser } from 'redux/mtproto';
@@ -60,7 +60,7 @@ export function fetchChatList(limit: number = 20) {
       const result = await api('messages.getDialogs', {
         offset_date: 0,
         offset_id: 0,
-        offset_peer: new pool.client.schema.type.InputPeerEmpty(),
+        offset_peer: { _: 'inputPeerEmpty' },
         limit,
       });
       return dispatch(GET_DIALOGS.DONE(result));
