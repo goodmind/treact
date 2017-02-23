@@ -37,6 +37,21 @@ export const loadSliceRange = (dispatch: IDispatch) =>
       .then(dispatch);
   };
 
+export const loadOffset = (id: number, offset: number): IAsyncAction<Promise<any>|void> =>
+  async (dispatch, getState) => {
+    const store = getState();
+    const peer = store.peers.byId[id];
+    const peerData = getPeerData(id, peer, store);
+    const inputPeer = retrieveInputPeer(id, peer, peerData);
+    const currentActive = store.selected.dialog;
+    try {
+      if (currentActive === id)
+        return loadSliceRange(dispatch)(id, inputPeer, offset);
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+
 export const selectChat = (id: number): IAsyncAction<Promise<any>|void> =>
   (dispatch, getState) => {
     const store = getState();

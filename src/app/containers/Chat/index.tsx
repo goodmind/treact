@@ -2,12 +2,12 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import { Chat, DefaultScreen } from 'components/Chat';
-import { IStore } from 'redux/IStore';
+import { IStore, IDispatch } from 'redux/IStore';
 import { IStoreHistory } from 'redux/modules/histories';
 import { getPeerData } from 'helpers/Telegram/Peers';
 import { IMtpUser, IMtpChat } from 'redux/mtproto';
 import { Message } from 'components/Message';
-import { selectChat } from 'redux/api/chatList';
+import { selectChat, loadOffset } from 'redux/api/chatList';
 import { getPeerName } from 'helpers/Telegram/Peers';
 import { TPeersType } from 'redux/modules/peers';
 
@@ -17,10 +17,16 @@ const onChatSelect = async (currentId: number, nextId: number) => {
   }
 };
 
-class ChatContainer extends React.Component<IConnectedState, {}> {
+class ChatContainer extends React.Component<IProps, {}> {
   public componentWillReceiveProps(nextProps: IConnectedState) {
     const { selected } = this.props;
     onChatSelect(selected, nextProps.selected);
+  }
+  public loadSliceRange = () => {
+    const { loadOffset, selected, history: { ids } } = this.props;
+    const maxID = ids[0];
+    loadOffset(selected, maxID)
+      .then(console.log.bind(console));
   }
   public renderMessage = (id: number) => {
     const { from_id, date, message } = this.props.history.byId[id];
@@ -30,7 +36,10 @@ class ChatContainer extends React.Component<IConnectedState, {}> {
     if (!this.props.selected) return <DefaultScreen />;
     const { history, peerName } = this.props;
     return (
-      <Chat name={peerName} userCount={0}>
+      <Chat
+        name={peerName}
+        userCount={0}
+        loadMore={this.loadSliceRange}>
         {history.ids.map(this.renderMessage)}
       </Chat>
     );
@@ -44,6 +53,12 @@ interface IConnectedState {
   peerData?: IMtpUser | IMtpChat;
   peerName?: string;
 }
+
+interface IConnectedActions {
+  loadOffset: (id: number, offset?: number) => any;
+}
+
+type IProps = IConnectedState & IConnectedActions;
 
 const defaultDialog: IStoreHistory = {
   ids: [],
@@ -70,6 +85,10 @@ const stateMap = (state: IStore) => {
   };
 };
 
-const connected = connect<IConnectedState, {}, {}>(stateMap, null)(ChatContainer);
+const dispatchMap = (dispatch: IDispatch) => ({
+  loadOffset: (id: number, offset: number) => dispatch(loadOffset(id, offset)),
+});
+
+const connected = connect<IConnectedState, IConnectedActions, {}>(stateMap, dispatchMap)(ChatContainer);
 
 export { connected as Chat };
