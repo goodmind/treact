@@ -1,3 +1,4 @@
+/*
 import { client } from '..';
 import { mtproto } from 'telegram-mtproto';
 import { EventEmitter } from 'events';
@@ -65,3 +66,4 @@ class HttpLoopEmitter extends EventEmitter {
 }
 
 export { HttpLoopEmitter }
+*/

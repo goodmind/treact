@@ -1,3 +1,4 @@
+/*
 import { Telegram, network } from 'telegram-mtproto';
 
 import { addPublicKeys } from './publickeys';
@@ -26,3 +27,4 @@ const apiConnect = async (server: IServer = SERVER, apiConfig = config) => {
 };
 
 export default apiConnect;
+*/

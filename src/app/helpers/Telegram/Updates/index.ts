@@ -1,3 +1,4 @@
+/*
 import { api } from 'helpers/Telegram/pool';
 import { HttpLoopEmitter } from './HttpLoopEmitter';
 
@@ -135,3 +136,4 @@ class Updates {
 }
 
 export { Updates }
+*/

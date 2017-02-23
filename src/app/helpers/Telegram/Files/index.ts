@@ -1,6 +1,7 @@
+/*
 import { WebpManager } from 'helpers/WebpManager';
 import { FileManager } from 'helpers/FileManager';
-import pool, { api } from 'helpers/Telegram/pool';
+import { api } from 'helpers/Telegram/pool';
 
 import { MemoryFileStorage, MemoryFileStorageConstructor } from 'helpers/FileManager/MemoryFileStorage';
 // import { TmpfsFileStorage } from 'helpers/FileManager/TmpfsFileStorage';
@@ -83,14 +84,14 @@ function getFileName(location) {
 }
 
 function getFileStorage() {
-  /*if (false) {
+  if (false) {
     if (TmpfsFileStorage.isAvailable()) {
       return TmpfsFileStorage;
     }
     if (IdbFileStorage.isAvailable()) {
       return IdbFileStorage;
     }
-  }*/
+  }
   return MemoryFileStorage;
 }
 
@@ -105,13 +106,12 @@ class Files {
     return cachedDownloads[fileName] || false;
   }
 
-  /*
   public getDownloadedFile(location, size) {
     const fileStorage = getFileStorage();
     const fileName = getFileName(location);
 
     return fileStorage.getFile(fileName, size);
-  }*/
+  }
 
   // public downloadFile() {}
   public downloadSmallFile(location: any) {
@@ -166,7 +166,7 @@ class Files {
     });
   }
 
-  /*public saveSmallFile(location, bytes) {
+  public saveSmallFile(location, bytes) {
     const fileName = getFileName(location);
 
     if (!cachedSavePromises[fileName]) {
@@ -179,9 +179,10 @@ class Files {
     return cachedSavePromises[fileName];
   }
 
-  public uploadFile() {}*/
+  public uploadFile() {}
 }
 
 const singleton = new Files();
 
 export { singleton as Files }
+*/
