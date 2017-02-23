@@ -48,13 +48,7 @@ class LoginImpl extends React.Component<IProps, IState> {
     });
   }
 
-  public form = () => {
-    const { auth } = this.props;
-    let step = this.state.step;
-    if (auth.authenticated) {
-      step = 5;
-    }
-
+  public form = step => {
     switch (step) {
       case 1:
         return (
@@ -90,9 +84,11 @@ class LoginImpl extends React.Component<IProps, IState> {
   }
 
   public render() {
+    const { auth } = this.props;
+
     return (
       <div className={s.main}>
-        {this.form()}
+        {this.form(auth.authenticated ? 5 : this.state.step)}
       </div>
     );
   }
