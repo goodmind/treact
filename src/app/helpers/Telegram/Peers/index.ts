@@ -1,6 +1,4 @@
 import { is, pipe, join, trim } from 'ramda';
-
-import pool from 'helpers/Telegram/pool';
 import { IStore } from 'redux/IStore';
 import { TPeersType } from 'redux/modules/peers';
 import { IMtpUser, IMtpChat } from 'redux/mtproto';
@@ -8,27 +6,24 @@ import { IMtpUser, IMtpChat } from 'redux/mtproto';
 export const retrieveInputPeer = (id: number, peer: TPeersType, peerData) => {
   switch (peer) {
     case 'channel':
-      return new pool.client.schema.type.InputPeerChannel({
-        props: {
-          channel_id: id,
-          access_hash: peerData.access_hash,
-        },
-      });
+      return {
+        _: 'inputPeerChannel' as 'inputPeerChannel',
+        channel_id: id,
+        access_hash: peerData.access_hash,
+      };
 
     case 'chat':
-      return new pool.client.schema.type.InputPeerChat({
-        props: {
-          chat_id: id,
-        },
-      });
+      return {
+        _: 'inputPeerChat' as 'inputPeerChat',
+        chat_id: id,
+      };
 
     case 'user':
-      return new pool.client.schema.type.InputPeerUser({
-        props: {
-          user_id: id,
-          access_hash: peerData.access_hash,
-        },
-      });
+      return {
+        _: 'inputPeerUser' as 'inputPeerUser',
+        user_id: id,
+        access_hash: peerData.access_hash,
+      };
 
     default: throw new TypeError(`Unknown peer type ${peer}`);
   }
