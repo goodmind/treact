@@ -1,5 +1,5 @@
 {
-  "name": "vortigern",
+  "name": "treact",
   "version": "0.1.0",
   "description": "A universal boilerplate for building web applications w/ TypeScript, React, Redux and more.",
   "main": "build/server.js",
@@ -14,42 +14,30 @@
     "test": "node_modules/.bin/karma start config/test/karma.conf.js",
     "lint": "node_modules/.bin/tslint \"src/**/**.ts*\""
   },
-  "author": "Barbar Startup Factory <hey@barbar.com.tr>",
+  "author": "goodmind <andwebar@gmail.com>",
   "contributors": [
     {
-      "name": "Altay Aydemir",
-      "email": "altay@peergust.com",
-      "url": "http://altayaydemir.com/"
+      "name": "goodmind",
+      "email": "andwebar@gmail.com"
     },
     {
-      "name": "Batuhan Icoz",
-      "email": "hey@batuhanicoz.com",
-      "url": "http://batuhanicoz.com/"
-    },
-    {
-      "name": "Omer Ufuk Efendioglu",
-      "email": "ufukomer@gmail.com",
-      "url": "http://ufukomer.com/"
+      "name": "Zero Bias",
+      "email": "ribkatt@gmail.com"
     }
   ],
-  "homepage": "https://github.com/barbar/vortigern.git",
+  "homepage": "https://github.com/goodmind/treact.git",
   "repository": {
     "type": "git",
-    "url": "https://github.com/barbar/vortigern.git"
+    "url": "https://github.com/goodmind/treact.git"
   },
   "bugs": {
-    "url": "https://github.com/barbar/vortigern/issues"
+    "url": "https://github.com/goodmind/treact/issues"
   },
   "keywords": [
     "react",
     "redux",
     "typescript",
     "webpack",
-    "universal",
-    "isomorphic",
-    "starter",
-    "kit",
-    "boilerplate",
     "hot reload",
     "react-hot-loader",
     "enzyme",
@@ -146,7 +134,7 @@
     "flexboxgrid": "^6.3.1",
     "history": "^4.5.1",
     "isomorphic-fetch": "^2.2.1",
-    "jsbn": "0.0.0",
+    "jsbn": "^1.1.0",
     "knack": "0.0.1",
     "localforage": "^1.4.3",
     "lodash": "^4.17.4",
@@ -167,6 +155,6 @@
     "redux-thunk": "^2.1.0",
     "reselect": "^2.5.4",
     "reselect-map": "^1.0.0",
-    "telegram-mtproto": "^1.0.6"
+    "telegram-mtproto": "zerobias/telegram-mtproto#mtproto2"
   }
 }
