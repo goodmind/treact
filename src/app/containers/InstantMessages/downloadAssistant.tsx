@@ -45,6 +45,7 @@ const beginLoad = async (id: string, loc: IMtpFileLocation) => {
     location: inputLocation,
     offset: 0,
     limit: 1024 * 1024,
+  }, {
     dcID: loc.dc_id,
     fileDownload: true,
     createNetworker: true,
