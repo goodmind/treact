@@ -1,6 +1,6 @@
 import { appSettings } from './config';
 import { ApiManager, AsyncStorage } from 'telegram-mtproto';
-import { pipe, map, apply, toPairs } from 'ramda';
+import { pipe, map, apply, toPairs, mapObjIndexed } from 'ramda';
 import * as localforage from 'localforage';
 
 export const storage = localforage.createInstance({
@@ -24,5 +24,10 @@ const pool = new ApiManager({
   app,
 });
 
-export const api = pool.mtpInvokeApi;
+// TODO: remove this hack
+const wrapVectors = value => Array.isArray(value)
+  ? { list: value }
+  : value;
+export const api = async <T>(method: string, params?: Object, options?: Object): Promise<T> =>
+  mapObjIndexed(wrapVectors, await pool.mtpInvokeApi<T>(method, params, options));
 export default pool;
