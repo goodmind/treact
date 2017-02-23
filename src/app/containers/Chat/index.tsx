@@ -17,15 +17,15 @@ const onChatSelect = async (currentId: number, nextId: number) => {
   }
 };
 
-class ChatContainer extends React.Component<IConnectedState, {}> {
+class ChatContainer extends React.Component<IProps, {}> {
   public componentWillReceiveProps(nextProps: IConnectedState) {
     const { selected } = this.props;
     onChatSelect(selected, nextProps.selected);
   }
-  public loadSliceRange = page => {
-    console.debug('loadSliceRange', page);
-    const { loadOffset, selected } = this.props;
-    loadOffset(selected)
+  public loadSliceRange = () => {
+    const { loadOffset, selected, history: { ids } } = this.props;
+    const maxID = ids[0];
+    loadOffset(selected, maxID)
       .then(console.log.bind(console));
   }
   public renderMessage = (id: number) => {
