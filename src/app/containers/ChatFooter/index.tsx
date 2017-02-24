@@ -7,7 +7,7 @@ import { sendText } from 'redux/api/messages';
 
 type IState = {
   message: string;
-}
+};
 
 class ChatFooterContainer extends React.Component<any, IState> {
   public state = {
@@ -19,7 +19,7 @@ class ChatFooterContainer extends React.Component<any, IState> {
     const { sendMessage, selected } = this.props;
     await sendMessage(selected, this.state.message);
     this.setState({ message: '' });
-  };
+  }
 
   public render() {
     return (
