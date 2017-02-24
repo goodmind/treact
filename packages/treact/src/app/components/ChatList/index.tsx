@@ -21,11 +21,9 @@ class ChatList extends React.Component<IProps, {}> {
       <div className={style.chatlist}>
         <ChatListSearch />
         <div className={style.chatbox}>
-          <div className={style.chatpane}>
-            {loading
-              ? <LoadingPane />
-              : children}
-          </div>
+          {loading
+            ? <LoadingPane />
+            : children}
         </div>
       </div>
     );
