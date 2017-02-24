@@ -85,15 +85,28 @@ export const retrieveId = (peer): number => {
   }
 };
 
-export const getInputPeerById = (id: number) => {
-  return (_, getState) => {
-    const state = getState();
-    const peerType = state.peers.byId[id];
-    const peerData = getPeerData(id, peerType, state);
+export const getInputPeerById = (id: number) => (_, getState) => {
+  const state = getState();
+  const peerType = state.peers.byId[id];
+  const peerData = getPeerData(id, peerType, state);
 
-    return retrieveInputPeer(id, peerType, peerData);
+  return retrieveInputPeer(id, peerType, peerData);
+};
+
+export const getOutputPeer = (id: number) => (_, getState) => {
+  const state = getState();
+  const peer = state.peers.byId[id];
+  switch (peer) {
+    case 'user':
+      return { _: 'peerUser', user_id: id };
+    case 'channel':
+      return { _: 'peerChannel', channel_id: -id };
+    case 'chat':
+      return { _: 'peerChat', chat_id: -id };
+    default:
+      throw new TypeError(`Unknown peer type ${peer}`);
   }
-}
+};
 
 export const getPeerData = (id: number, peer: TPeersType, { users, chats }: IStore) => {
   switch (peer) {
