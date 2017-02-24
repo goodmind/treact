@@ -1,4 +1,6 @@
-import { client, MTProto } from '..';
+/*
+import { client } from '..';
+import { mtproto } from 'telegram-mtproto';
 import { EventEmitter } from 'events';
 
 function manageUpdatesListener(func, callback) {
@@ -42,7 +44,7 @@ class HttpLoopEmitter extends EventEmitter {
       this.once('httpPoll', callback);
     }
 
-    MTProto.service.http_wait({
+    mtproto.service.http_wait({
         props: {
           max_delay: maxDelay,
           wait_after: waitAfter,
@@ -64,3 +66,4 @@ class HttpLoopEmitter extends EventEmitter {
 }
 
 export { HttpLoopEmitter }
+*/

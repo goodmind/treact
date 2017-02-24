@@ -3,17 +3,18 @@ import { Chat } from 'containers/Chat';
 import { ChatList } from 'containers';
 import { fetchChatList } from 'api/chatList';
 import { asyncConnect } from 'redux-connect';
-import { Updates } from 'helpers/Telegram/Updates';
+// import { Updates } from 'helpers/Telegram/Updates';
+import DownloadAssistant from './downloadAssistant';
 const s = require('./style.css');
 
 class InstantMessagesImpl extends React.Component<{}, {}> {
-  public updates = Updates.getInstance();
+  // public updates = Updates.getInstance();
 
-  constructor(...args) {
-    super(...args);
-    this.updates.start(update => {
-      console.log(update.getTypeName(), update);
-    });
+  constructor(props, context) {
+    super(props, context);
+    // this.updates.start(update => {
+    //   console.log(update._typeName, update);
+    // });
   }
 
   public render() {
@@ -21,6 +22,7 @@ class InstantMessagesImpl extends React.Component<{}, {}> {
       <div className={s.main}>
         <ChatList />
         <Chat />
+        <DownloadAssistant />
       </div>
     );
   }

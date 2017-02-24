@@ -1,5 +1,5 @@
 import { CHATS } from 'actions';
-import { invoke, client } from 'helpers/Telegram';
+import { api } from 'helpers/Telegram/pool';
 import { IMtpMessagesSlice, IMtpPeer } from '../mtproto';
 import { IDispatch, IAsyncAction } from 'redux/IStore';
 import { TById, IMtpMessage, IMtpUser } from 'redux/mtproto';
@@ -32,9 +32,24 @@ export const loadSliceRange = (dispatch: IDispatch) =>
       limit,
     };
     dispatch(LOAD_SLICE.INIT(id));
-    return invoke<IMtpMessagesSlice>('messages.getHistory', data)
+    return api<IMtpMessagesSlice>('messages.getHistory', data)
       .then(adapter, LOAD_SLICE.FAIL)
       .then(dispatch);
+  };
+
+export const loadOffset = (id: number, offset: number): IAsyncAction<Promise<any>|void> =>
+  async (dispatch, getState) => {
+    const store = getState();
+    const peer = store.peers.byId[id];
+    const peerData = getPeerData(id, peer, store);
+    const inputPeer = retrieveInputPeer(id, peer, peerData);
+    const currentActive = store.selected.dialog;
+    try {
+      if (currentActive === id)
+        return loadSliceRange(dispatch)(id, inputPeer, offset);
+    } catch (err) {
+      console.warn(err);
+    }
   };
 
 export const selectChat = (id: number): IAsyncAction<Promise<any>|void> =>
@@ -57,10 +72,10 @@ export function fetchChatList(limit: number = 20) {
   return async (dispatch: IDispatch) => {
     dispatch(GET_DIALOGS.INIT());
     try {
-      const result = await invoke('messages.getDialogs', {
+      const result = await api('messages.getDialogs', {
         offset_date: 0,
         offset_id: 0,
-        offset_peer: new client.schema.type.InputPeerEmpty(),
+        offset_peer: { _: 'inputPeerEmpty' },
         limit,
       });
       return dispatch(GET_DIALOGS.DONE(result));

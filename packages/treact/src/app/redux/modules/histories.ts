@@ -4,11 +4,11 @@ import { head, assoc, contains, unless, where, evolve, append, has, pipe, unappl
   prop, map, cond, pair, converge, lensPath, pathEq, assocPath, over, reduce, subtract, sort } from 'ramda';
 import { IStoreList, whenNot, whenNotC, getListOf, appendNew } from 'helpers/state';
 import { TById, IMtpMessage } from '../mtproto';
-import { CHATS } from 'actions';
-
+import { CHATS, MESSAGES } from 'actions';
 import { IMtpGetDialogs } from 'redux/mtproto';
 
 const { LOAD_SLICE, GET_DIALOGS } = CHATS;
+const { SEND_TEXT } = MESSAGES;
 
 export type IStoreHistory = IStoreList<IMtpMessage>;
 
@@ -94,6 +94,7 @@ const byId = createReducer({
   [LOAD_SLICE.INIT]: onSliceInit,
   [LOAD_SLICE.DONE]: onSliceDone,
   [GET_DIALOGS.DONE]: onGetDialog,
+  [SEND_TEXT.DONE]: onSliceDone,
 }, {});
 
 const reducer = combineReducers({

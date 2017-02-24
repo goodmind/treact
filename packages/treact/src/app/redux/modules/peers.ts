@@ -26,18 +26,10 @@ const ids = createReducer({
   [GET_DIALOGS.DONE]: idsGetDialogs,
 }, []);
 
-const simplyPeerType = (typeName: string): TPeersType => {
-  switch (typeName) {
-    case 'Telegram.type.Chat': return 'chat';
-    case 'Telegram.type.User': return 'user';
-    case 'Telegram.type.Channel': return 'channel';
-    default: throw new Error(`Unknown peer type ${typeName}`);
-  }
-};
 
 const selectTypeNames = map<IMtpPeer, [number, string]>(pipe<IMtpPeer, any, [number, string]>(
-  props(['id', '_typeName']),
-  ([ id, typeName ]) => [id, simplyPeerType(typeName)],
+  props(['id', '_']),
+  ([id, typeName]) => [id, typeName],
 ));
 
 const peerReducer = changeReducer(selectTypeNames);
