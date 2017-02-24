@@ -6,16 +6,16 @@ class MemoryFileStorage extends Map {
     return true;
   }
 
-  public saveFile = async (fileName, blob) => this.set(fileName, blob);
+  public saveFile = (fileName, blob) => this.set(fileName, blob);
 
-  public getFile = async fileName => {
+  public getFile = fileName => {
     if (this.has(fileName)) {
       return this.get(fileName);
     }
     throw new Error('FILE_NOT_FOUND');
   }
 
-  public getFileWriter = async (fileName, mimeType) => {
+  public getFileWriter = (fileName, mimeType) => {
     const fakeWriter = FileManager.getFakeFileWriter(mimeType, blob => {
       this.saveFile(fileName, blob);
     });
@@ -25,4 +25,4 @@ class MemoryFileStorage extends Map {
 
 const singleton = new MemoryFileStorage();
 
-export { singleton as MemoryFileStorage }
+export { singleton as MemoryFileStorage, MemoryFileStorage as MemoryFileStorageConstructor }

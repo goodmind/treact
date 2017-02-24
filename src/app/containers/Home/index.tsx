@@ -1,30 +1,20 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import { IDispatch } from 'redux/IStore';
+import { IStore, IDispatch } from 'redux/IStore';
 
-interface IConnectedState {
-  auth: any;
-}
-
-interface IConnectedActions {
-  dispatch: IDispatch;
-}
-
-interface IOwnProps {}
-
+type IConnectedState = Pick<IStore, 'auth'>;
+type IConnectedActions = { dispatch: IDispatch };
+type IOwnProps = {};
 type IProps = IConnectedState & IConnectedActions & IOwnProps;
 
-class HomeImpl extends React.Component<IProps, any> {
+class HomeImpl extends React.Component<IProps, {}> {
   public componentDidMount() {
     const { auth, dispatch } = this.props;
-
-    if (auth.authenticated) {
-      dispatch(push('/im'));
-      return;
-    }
-
-    dispatch(push('/login'));
+    const route = auth.authenticated
+      ? '/im'
+      : '/login';
+    return dispatch(push(route));
   }
 
   public render() {

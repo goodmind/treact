@@ -64,6 +64,7 @@
 .sender {
   color: #538bb4;
   display: inline-block;
+  padding-right: 4px;
 }
 .unread {
   color: #fff;

@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { ChatFooter } from 'containers';
+import * as InfiniteScroll from 'react-infinite-scroller';
+import { /*ChatMessage,*/ AutoSizeTextarea } from 'components';
 
 const s = require('./style.css');
 
@@ -12,6 +14,7 @@ export const DefaultScreen = () => (
 type IProps = {
   name: string;
   userCount: number;
+  loadMore: Function;
 };
 
 const ChatHeader = ({ name, userCount }) => (
@@ -24,17 +27,24 @@ const ChatHeader = ({ name, userCount }) => (
   </div>
 );
 
-class Chat extends React.Component<IProps, any> {
+class Chat extends React.Component<IProps, {}> {
   public render() {
-    const { name, userCount, children } = this.props;
+    const { name, userCount, children, loadMore } = this.props;
     return (
       <div className={s.chat}>
         <div className={s.chatcontainer}>
           <ChatHeader name={name} userCount={userCount} />
           <div className={s.chatbody}>
-            <div className={s.box}>
+            <InfiniteScroll
+              className={s.box}
+              pageStart={0}
+              loadMore={loadMore}
+              initialLoad={false}
+              hasMore={true}
+              isReverse={true}
+              useWindow={false}>
               {children}
-            </div>
+            </InfiniteScroll>
           </div>
           <ChatFooter />
         </div>
