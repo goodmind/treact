@@ -1,11 +1,10 @@
 import * as React from 'react';
+import { IStepNext } from '../..';
 const t = require('../../style.css');
 
-interface IProps {
-  nextStep: any;
-}
+type IProps = Pick<IStepNext, 'nextStep'>;
 
-const Intro = (props: IProps) => {
+const Intro = ({ nextStep }: IProps) => {
   return (
     <div className={t.loginStep}>
       <img
@@ -19,7 +18,7 @@ const Intro = (props: IProps) => {
       <p>
         It's <strong>fast</strong> and <strong>secure</strong>.
       </p>
-      <button onClick={props.nextStep} className={`${t.btn} ${t.primary}`}>Start messaging</button>
+      <button onClick={nextStep} className={`${t.btn} ${t.primary}`}>Start messaging</button>
     </div>
   );
 };

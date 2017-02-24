@@ -7,14 +7,9 @@ interface IProps {
   rows?: number;
 }
 
-class AutoSizeTextarea extends React.Component<IProps, any> {
-  public render() {
-    const { value } = this.props;
-
-    return (
-      <textarea {...this.props}>{value}</textarea>
-    );
-  }
-}
+const AutoSizeTextarea = (props: IProps) => {
+  const { value } = props;
+  return <textarea {...props}>{value}</textarea>;
+};
 
 export { AutoSizeTextarea }

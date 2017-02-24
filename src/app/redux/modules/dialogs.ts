@@ -11,10 +11,10 @@ const { GET_DIALOGS } = CHATS;
 export type IStoreDialogs = IStoreList<IMtpDialog>;
 
 const peerId = (peer): number => {
-  switch (peer._typeName) {
-    case 'Telegram.type.PeerUser': return peer.user_id;
-    case 'Telegram.type.PeerChat': return peer.chat_id;
-    case 'Telegram.type.PeerChannel': return peer.channel_id;
+  switch (peer._) {
+    case 'peerUser': return peer.user_id;
+    case 'peerChat': return peer.chat_id;
+    case 'peerChannel': return peer.channel_id;
     default: return null;
   }
 };

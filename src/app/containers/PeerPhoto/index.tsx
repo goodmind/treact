@@ -1,61 +1,38 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { getPeerData } from 'helpers/Telegram/Peers';
-
-import { Files } from 'helpers/Telegram/Files';
-import { FileManager } from 'helpers/FileManager';
+import { IStore } from 'redux/IStore';
+import { pathOr } from 'ramda';
+import { PeerPhotoEmpty, PeerPhoto } from 'components/PeerPhoto';
+import picStore from 'helpers/FileManager/picStore';
+import * as classNames from 'classnames';
 
 interface IConnectedState {
-  peers: any;
-  peerData: any;
+  photoId: number;
 }
-
-interface IConnectedActions {}
 
 interface IOwnProps {
-  avatar?: string;
   peerID: number;
-  className?: any;
+  withPhoto?: boolean;
+  className?: string;
 }
 
-type IProps = IConnectedState & IConnectedActions & IOwnProps;
+type IProps = IConnectedState & IOwnProps;
 
-class PeerPhotoImpl extends React.Component<IProps, any> {
-  public static defaultProps = {
-    avatar: require('./usercolor1.png'),
-  };
+const PeerPhotoContainer = ({ photoId, className = '' }: IProps) => {
+  const css = classNames('avatar', className);
+  return picStore.has(photoId)
+    ? <PeerPhoto id={photoId} className={css} />
+    : <PeerPhotoEmpty className={css}/>;
+};
 
-  public state = {
-    avatar: this.props.avatar,
-  };
 
-  public componentDidMount() {
-    const { photo } = this.props.peerData;
-    const peerPhoto = photo && photo.photo_small;
-    const hasPhoto = peerPhoto !== undefined;
+const photoFromState = (state: IStore, peerID: number) => pathOr('default',
+  ['photoCache', 'peer', peerID, 'current'])(state);
 
-    if (hasPhoto) {
-      const cachedBlob = Files.getCachedFile(peerPhoto);
-      if (cachedBlob) {
-        this.setState({ avatar: FileManager.getUrl(cachedBlob, 'image/jpeg') });
-        return;
-      }
-    }
+const propsState = (state: IStore, { peerID }: IOwnProps) => ({
+  photoId: photoFromState(state, peerID),
+});
 
-    if (hasPhoto) {
-      Files.downloadSmallFile(peerPhoto).then(blob => {
-        this.setState({ avatar: FileManager.getUrl(blob, 'image/jpeg') });
-      }, err => console.error(err));
-    }
-  }
+const connected = connect<IConnectedState, {}, IOwnProps>(propsState)(PeerPhotoContainer);
 
-  public render() {
-    return <img className={this.props.className} src={this.state.avatar} />;
-  }
-}
-
-const mapStateToProps =
-  (state, { peerID }) => ({ peerData: getPeerData(peerID, state.peers.byId[peerID], state) });
-const PeerPhoto = connect<Partial<IConnectedState>, IConnectedActions, IOwnProps>(mapStateToProps)(PeerPhotoImpl);
-
-export { PeerPhoto }
+export { connected as PeerPhoto }

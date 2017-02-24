@@ -1,12 +1,16 @@
-import { trim } from 'ramda';
-import { restoreAuthKey } from './helpers';
+// import { restoreAuthKeyFromLocalStorage } from './helpers';
+import { APP_ID, APP_HASH, SERVER, DEFAULT_DC_ID } from './constants';
 
-export const APP_ID = 49631;
-export const APP_HASH = 'fb050b8f6771e15bfda5df2409931569';
-export const SERVER = {
-  host: trim(process.env.DC_SERVER || '149.154.167.50'),
-  port: '443',
+export const appSettings = {
+  invokeWithLayer: 0xda9b0d0d,
+  layer          : 57,
+  initConnection : 0x69796de9,
+  api_id         : APP_ID,
+  app_version    : '1.0.1',
+  lang_code      : 'en',
 };
+
+export const serverConfig = {};
 
 export const config = {
   // NOTE: if you FORK the project you MUST use your APP ID.
@@ -14,9 +18,7 @@ export const config = {
   // You can obtain your own APP ID for your application here: https://my.telegram.org
   id: APP_ID,
   hash: APP_HASH,
-  version: '1.0.1',
-  langCode: 'en',
-  deviceModel: '',
-  systemVersion: '',
-  authKey: restoreAuthKey(),
+  // authKey: restoreAuthKeyFromLocalStorage(),
 };
+
+export { SERVER, APP_ID, APP_HASH, DEFAULT_DC_ID }

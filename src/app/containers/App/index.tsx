@@ -5,17 +5,13 @@ import { Header } from 'components';
 const s = require('./style.css');
 
 interface IProps {
-  children: React.ReactChildren;
+  children: React.ReactNode;
 }
 
-const App = (props: IProps) => {
-  return (
-    <section className={s.app}>
-      <Helmet {...appConfig.app} {...appConfig.app.head}/>
-      <Header />
-      {props.children}
-    </section>
-  );
-};
-
+const App = ({ children }: IProps) =>
+  <section className={s.app}>
+    <Helmet {...appConfig.app} {...appConfig.app.head}/>
+    <Header />
+    {children}
+  </section>;
 export { App }
