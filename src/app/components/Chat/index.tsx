@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { ChatFooter } from 'containers';
 import * as InfiniteScroll from 'react-infinite-scroller';
-import { /*ChatMessage,*/ AutoSizeTextarea } from 'components';
 
 const s = require('./style.css');
 
