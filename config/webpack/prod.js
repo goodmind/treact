@@ -5,8 +5,9 @@ const ManifestPlugin = require('webpack-manifest-plugin')
 // var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const source = resolve(process.cwd(), 'src')
+const build = resolve(process.cwd(), 'build')
 
-const BabiliPlugin = require("babili-webpack-plugin")
+const BabiliPlugin = require('babili-webpack-plugin')
 
 const reactDll = require(join(build, 'React.json'))
 const vendorDll = require(join(build, 'Vendor.json'))
