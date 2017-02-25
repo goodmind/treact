@@ -22,7 +22,6 @@ const Header = ({ logOut }: IConnectedActions) => (
 const dispatchToProps = (dispatch: IDispatch) => ({
   logOut() {
     dispatch(logOut());
-    setTimeout(dispatch, 500, logOut());
   },
 });
 
