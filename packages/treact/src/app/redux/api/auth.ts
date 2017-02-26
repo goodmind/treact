@@ -80,10 +80,8 @@ export function sendCode(phoneNumber: string) {
 
 export function logOut() {
   return (dispatch: IDispatch) => {
-    const cleanAndRedirect = r => {
-      if (r.payload === false) {
-        localStorage.clear();
-      }
+    const cleanAndRedirect = () => {
+      localStorage.clear();
       dispatch(push('/'));
     };
     dispatch(LOG_OUT.INIT());
