@@ -10,7 +10,9 @@ export const appSettings = {
   lang_code      : 'en',
 };
 
-export const serverConfig = {};
+export const serverConfig = {
+  webogram: location.protocol === 'https:',
+};
 
 export const config = {
   // NOTE: if you FORK the project you MUST use your APP ID.
