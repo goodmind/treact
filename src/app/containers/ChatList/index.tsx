@@ -35,13 +35,17 @@ class ChatListContainer extends React.Component<IProps, {}> {
       />
   )
 
+  public loadSliceRange = () => {
+    console.log('loadSliceRange');
+  }
+
   public render() {
     const {
       dialogsIds,
       loading,
     } = this.props;
     return (
-      <ChatList loading={loading}>
+      <ChatList loading={loading} loadMore={this.loadSliceRange}>
         {dialogsIds.map(this.renderChat)}
       </ChatList>
     );
