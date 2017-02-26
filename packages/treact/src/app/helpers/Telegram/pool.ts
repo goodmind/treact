@@ -1,4 +1,4 @@
-import { appSettings } from './config';
+import { serverConfig, appSettings } from './config';
 import { ApiManager, AsyncStorage } from 'telegram-mtproto';
 import { pipe, map, apply, toPairs, mapObjIndexed } from 'ramda';
 import * as localforage from 'localforage';
@@ -20,6 +20,7 @@ const app = {
 };
 
 const pool = new ApiManager({
+  server: serverConfig,
   api: appSettings,
   app,
 });
