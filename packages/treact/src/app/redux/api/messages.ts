@@ -28,12 +28,14 @@ const buildMessage = (id: number, text: string, randomId: any, self: any) => (me
     from_id: fromID,
     to_id: getOutputPeer(id),
     flags,
-    pFlags,
+    ...pFlags,
     date: tsNow(true),
     message: text,
     random_id: randomIds,
     pending: true,
-  }, message._ === 'updateShortSentMessage' ? pick(['flags', 'date', 'id', 'media', 'entities'], message) : {});
+  }, message._ === 'updateShortSentMessage'
+    ? pick(['flags', 'date', 'id', 'media', 'entities'], message)
+    : {});
 
   return {
     id,
