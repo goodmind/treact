@@ -30,5 +30,5 @@ const wrapVectors = value => Array.isArray(value)
   ? { list: value }
   : value;
 export const api = async <T>(method: string, params?: Object, options?: Object): Promise<T> =>
-  mapObjIndexed(wrapVectors, await pool.mtpInvokeApi<T>(method, params, options));
+  mapObjIndexed(wrapVectors, await pool<T>(method, params, options));
 export default pool;
