@@ -13,7 +13,9 @@ export const AUTH = {
   LOG_OUT: actionEvent('user log out'),
 };
 
-export const MESSAGES = actionEvent('messages');
+export const MESSAGES = {
+  SEND_TEXT: actionEvent('send text'),
+};
 
 export const CHATS = {
   LOAD_SLICE: actionEvent('load slice'),
@@ -25,4 +27,4 @@ export const CACHE = {
   QUEUE: createAction('add imgs to download queue'),
   LOAD: createAction('load next img'),
   DONE: createAction('complete downloading img'),
-}
+};

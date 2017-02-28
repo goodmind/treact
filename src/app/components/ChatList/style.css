@@ -1,9 +1,12 @@
 .chatlist {
   border-right: 1px solid rgba(0, 0, 0, .1);
   flex: 35;
-  height: 100%;
   min-width: 260px;
-  overflow-y: scroll;
+}
+
+.chatbox {
+  height: 92%;
+  overflow-y: auto;
 }
 
 .loading {

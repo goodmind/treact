@@ -7,12 +7,12 @@ let blobSupported = true;
 
 export function uint6ToBase64(nUint6) {
   switch (true) {
-    case nUint6 < 26: return nUint6 + 65
-    case nUint6 < 52: return nUint6 + 71
-    case nUint6 < 62: return nUint6 - 4
-    case nUint6 === 62: return 43
-    case nUint6 === 63: return 47
-    default: return 65
+    case nUint6 < 26: return nUint6 + 65;
+    case nUint6 < 52: return nUint6 + 71;
+    case nUint6 < 62: return nUint6 - 4;
+    case nUint6 === 62: return 43;
+    case nUint6 === 63: return 47;
+    default: return 65;
   }
 }
 

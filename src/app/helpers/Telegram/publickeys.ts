@@ -1,5 +1,5 @@
 /* tslint:disable:max-line-length */
-
+/*
 import { ITelegram } from 'telegram-mtproto';
 
 export function addPublicKeys(telegram: ITelegram) {
@@ -26,3 +26,4 @@ export function addPublicKeys(telegram: ITelegram) {
 
   publicKeys.forEach(key => telegram.addPublicKey(key));
 }
+*/

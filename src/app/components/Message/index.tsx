@@ -28,7 +28,7 @@ const Time = ({ date }: { date: number }) => {
 };
 
 export const Message = ({ user, date, text }: IOwnProps) => {
-  console.debug(`Message`, user, text)
+  console.debug(`Message`, user, text);
   return (
     <div className={style.message}>
       <div className={style.flexcontainer}>

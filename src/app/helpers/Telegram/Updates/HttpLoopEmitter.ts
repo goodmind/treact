@@ -1,5 +1,6 @@
+/*
 import { client } from '..';
-import { mtproto } from 'telegram-mtproto'
+import { mtproto } from 'telegram-mtproto';
 import { EventEmitter } from 'events';
 
 function manageUpdatesListener(func, callback) {
@@ -65,3 +66,4 @@ class HttpLoopEmitter extends EventEmitter {
 }
 
 export { HttpLoopEmitter }
+*/

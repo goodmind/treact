@@ -1,42 +1,30 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { sendCode } from 'api/auth';
-import { IDispatch } from 'redux/IStore';
+import { IDispatch, IStore } from 'redux/IStore';
+import { IStepNext as IOwnProps } from '../..';
+import { IAuthError } from 'redux/modules/auth';
 const s = require('./style.css');
 const t = require('../../style.css');
 
-interface IConnectedState {
-  auth: any;
-}
-
-interface IConnectedActions {
-  dispatch: IDispatch;
-}
-
-interface IOwnProps {
-  form: any;
-  update: any;
-  nextStep: any;
-}
-
+type IConnectedState = Pick<IStore, 'auth'>;
+type IConnectedActions = { dispatch: IDispatch };
 type IProps = IConnectedState & IConnectedActions & IOwnProps;
-
-interface IState {
-  phoneCode?: string;
-  phoneNumber?: string;
-  error?: any;
-}
+type IState = {
+  phoneCode: string;
+  phoneNumber: string;
+  error: IAuthError;
+};
 
 class PhoneNumberImpl extends React.Component<IProps, IState> {
-  public state = {
+  public state: IState = {
     phoneCode: '+7',
     phoneNumber: '',
     error: null,
   };
 
-  private handleChange = event => {
+  private handleChange = event =>
     this.setState({ [event.target.name]: event.target.value });
-  }
 
   public handleNextStep = () => {
     const { dispatch, nextStep, update } = this.props;
@@ -44,7 +32,7 @@ class PhoneNumberImpl extends React.Component<IProps, IState> {
 
     update({ phoneNumber });
     dispatch(sendCode(phoneNumber))
-      .then(({payload: error}) => error.error_code ? this.setState({ error }) : this.setState({error: null}))
+      .then(({payload: error}) => error.code ? this.setState({ error }) : this.setState({error: null}))
       .then(() => this.state.error || nextStep());
   }
 
@@ -69,7 +57,7 @@ class PhoneNumberImpl extends React.Component<IProps, IState> {
             className="col-xs-10 form-control form-control-lg"
             placeholder="--- --- -- --" type="tel" />
         </div>
-        {error && <div>Error type: {error.error_message}</div>}
+        {error && <div>Error type: {error.description}</div>}
         <button onClick={this.handleNextStep} className={`${t.btn} ${t.primary}`}>Next</button>
       </div>
     );

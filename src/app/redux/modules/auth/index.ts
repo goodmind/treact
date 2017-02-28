@@ -2,12 +2,14 @@ import { REHYDRATE } from 'redux-persist/constants';
 import { createReducer } from 'redux-act';
 import { combineReducers } from 'redux';
 import { T, F } from 'ramda';
+import { byIdGetter } from 'helpers/Telegram/helpers';
 
 import { AUTH } from 'actions';
 
-interface IAuthError {
-  error_code: number;
-  error_message: string;
+export interface IAuthError {
+  code: number;
+  type: string;
+  description?: string;
 }
 export interface IAuth {
   authenticated: boolean;
@@ -25,15 +27,15 @@ const passwordSalt = createReducer({
   [GET_PASSWORD.DONE]: (_, { passwordSalt }) => passwordSalt,
 }, '');
 
-const saveError = (_, { error_code, error_message }: IAuthError): IAuthError => ({ error_code, error_message });
+const saveError = (_, { code, type }: IAuthError): IAuthError => ({ code, type });
 
 const error = createReducer<IAuthError>({
   [SEND_CODE.FAIL]: saveError,
   [SIGN_IN.FAIL]: saveError,
   [GET_PASSWORD.FAIL]: saveError,
 }, {
-  error_code: null,
-  error_message: null,
+  code: null,
+  type: null,
 });
 
 const loading = createReducer({
@@ -51,7 +53,7 @@ const loading = createReducer({
 const authenticated = createReducer({
   [SIGN_IN.DONE]: T,
   [LOG_OUT.DONE]: F,
-  [REHYDRATE]: (_, { authKey, currentUser }) => !!authKey && !!currentUser,
+  [REHYDRATE]: (_, { authKey, currentUser, currentDc }) => !!byIdGetter(currentDc)(authKey) && !!currentUser,
 }, false);
 
 const phoneNumber = createReducer({

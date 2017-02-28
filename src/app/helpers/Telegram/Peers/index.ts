@@ -1,6 +1,4 @@
 import { is, pipe, join, trim } from 'ramda';
-
-import { client } from 'helpers/Telegram';
 import { IStore } from 'redux/IStore';
 import { TPeersType } from 'redux/modules/peers';
 import { IMtpUser, IMtpChat } from 'redux/mtproto';
@@ -8,27 +6,24 @@ import { IMtpUser, IMtpChat } from 'redux/mtproto';
 export const retrieveInputPeer = (id: number, peer: TPeersType, peerData) => {
   switch (peer) {
     case 'channel':
-      return new client.schema.type.InputPeerChannel({
-        props: {
-          channel_id: id,
-          access_hash: peerData.access_hash,
-        },
-      });
+      return {
+        _: 'inputPeerChannel' as 'inputPeerChannel',
+        channel_id: id,
+        access_hash: peerData.access_hash,
+      };
 
     case 'chat':
-      return new client.schema.type.InputPeerChat({
-        props: {
-          chat_id: id,
-        },
-      });
+      return {
+        _: 'inputPeerChat' as 'inputPeerChat',
+        chat_id: id,
+      };
 
     case 'user':
-      return new client.schema.type.InputPeerUser({
-        props: {
-          user_id: id,
-          access_hash: peerData.access_hash,
-        },
-      });
+      return {
+        _: 'inputPeerUser' as 'inputPeerUser',
+        user_id: id,
+        access_hash: peerData.access_hash,
+      };
 
     default: throw new TypeError(`Unknown peer type ${peer}`);
   }
@@ -77,11 +72,34 @@ export const resolveUsername = (username: string) => (dispatch): Promise<number 
 */
 
 export const retrieveId = (peer): number => {
-  switch (peer._typeName) {
-    case 'Telegram.type.Channel': return -peer.id;
-    case 'Telegram.type.Chat': return -peer.id;
-    case 'Telegram.type.User': return peer.id;
-    default: throw new Error('Unknown peer type' + peer._typeName);
+  switch (peer._) {
+    case 'channel': return -peer.id;
+    case 'chat': return -peer.id;
+    case 'user': return peer.id;
+    default: throw new Error('Unknown peer type' + peer._);
+  }
+};
+
+export const getInputPeerById = (id: number) => (_, getState) => {
+  const state = getState();
+  const peerType = state.peers.byId[id];
+  const peerData = getPeerData(id, peerType, state);
+
+  return retrieveInputPeer(id, peerType, peerData);
+};
+
+export const getOutputPeer = (id: number) => (_, getState) => {
+  const state = getState();
+  const peer = state.peers.byId[id];
+  switch (peer) {
+    case 'user':
+      return { _: 'peerUser', user_id: id };
+    case 'channel':
+      return { _: 'peerChannel', channel_id: -id };
+    case 'chat':
+      return { _: 'peerChat', chat_id: -id };
+    default:
+      throw new TypeError(`Unknown peer type ${peer}`);
   }
 };
 

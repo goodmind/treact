@@ -33,7 +33,7 @@ type IGetReduce = <S, PL, G>(getter: (pl: PL) => G, reducer: IReducer<S, G>) => 
 export const getReduce: IGetReduce = (getter, reducer) => (state, payload) =>
   P(getter, reduce(reducer, state))(payload);
 
-export const getListOf = <T>(...fields) => P<any, any, any, T[]>(props(fields), pluck('list'), unnest)
+export const getListOf = <T>(...fields) => P<any, any, any, T[]>(props(fields), pluck('list'), unnest);
 
 export const appendNew: <T>(state: T[], element: T) => T[] = (whenNot(contains, append) as any);
 
@@ -66,8 +66,8 @@ export const changeReducer = <G>(transformer: ITransformer) =>
       P<PL, G, IIdPairList<F>>(vectorGetter, transformer),
       addChangedProp);
 
-type IState<Field> = TById<Field>|Field[]
-type IMapped<Field> = Field | [number, Field]
+type IState<Field> = TById<Field>|Field[];
+type IMapped<Field> = Field | [number, Field];
 interface IStoreModelUni<Model, Field, Payload> {
   get: (payload: Payload) => Model[];
   filter?: (model: Model[]) => Model[];
@@ -77,18 +77,18 @@ interface IStoreModelUni<Model, Field, Payload> {
 }
 
 
-type IReducerList<Field, Payload> = (state: Field[], payload: Payload) => Field[]
-type IReducerMap<Field, Payload> = (state: TById<Field>, payload: Payload) => TById<Field>
-type IReducerUni<Field, Payload> = IReducerList<Field, Payload>|IReducerMap<Field, Payload>
+type IReducerList<Field, Payload> = (state: Field[], payload: Payload) => Field[];
+type IReducerMap<Field, Payload> = (state: TById<Field>, payload: Payload) => TById<Field>;
+type IReducerUni<Field, Payload> = IReducerList<Field, Payload>|IReducerMap<Field, Payload>;
 
 export const modelHandler = <Model, Field, Payload>
   ({ get, edit, save, filter = identity }: IStoreModelUni<Model, Field, Payload>): IReducerUni<Field, Payload> => {
-    type ICurrent = IMapped<Field>
-    const convolve = reduce<ICurrent, IState<Field>, ICurrent[]>(save)
+    type ICurrent = IMapped<Field>;
+    const convolve = reduce<ICurrent, IState<Field>, ICurrent[]>(save);
     const reducer = (state, payload) =>
       P(get, filter, map(edit), convolve(state))(payload);
-    return reducer
-  }
+    return reducer;
+  };
 
 // TODO: strict types
 const adaptFieldVector = map<any, IIdPair<any>>(idPair);

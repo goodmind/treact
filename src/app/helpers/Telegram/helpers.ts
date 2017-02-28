@@ -1,19 +1,28 @@
-import { mtproto } from 'telegram-mtproto'
+import { DEFAULT_DC_ID } from './constants';
+import { path } from 'ramda';
 
-export function restoreAuthKey() {
+export const getFromStore = key => JSON.parse(localStorage.getItem(`reduxPersist:${key}`));
+export const byIdGetter = id => path(['byId', id]);
+
+export function restoreAuthKeyFromLocalStorage() {
   if (typeof window === 'undefined') {
     return undefined;
   }
 
-  const storageKey = JSON.parse(localStorage.getItem('reduxPersist:authKey'));
+  const currentDc = getFromStore('currentDc') || DEFAULT_DC_ID;
+  const storageKey = byIdGetter(currentDc)<any>(getFromStore('authKey'));
   if (!storageKey) {
     return undefined;
   }
 
-  const [id, value] = restoreAuthKeyWithSaltFromStorableBuffer(
-    Buffer.from(storageKey));
+  return restoreAuthKey(storageKey);
+}
 
-  return new mtproto.auth.AuthKey(id, value);
+export function restoreAuthKey(storageKey) {
+  // const [id, value] = restoreAuthKeyWithSaltFromStorableBuffer(
+  //  Buffer.from(storageKey));
+
+  return storageKey; // new mtproto.auth.AuthKey(id, value);
 }
 
 export function authKeyWithSaltToStorableBuffer(authKey, serverSalt) {
@@ -26,3 +35,4 @@ export function authKeyWithSaltToStorableBuffer(authKey, serverSalt) {
 export function restoreAuthKeyWithSaltFromStorableBuffer(buffer) {
   return [buffer.slice(0, 8), buffer.slice(8, 264), buffer.slice(264, 272)];
 }
+

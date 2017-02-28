@@ -7,3 +7,4 @@ export { Login } from './Login';
 
 export { ChatList } from './ChatList';
 export { ChatListItem } from './ChatListItem';
+export { ChatFooter } from './ChatFooter';

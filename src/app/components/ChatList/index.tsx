@@ -13,9 +13,7 @@ const LoadingPane = () => (
   </div>
 );
 
-class ChatList extends React.Component<IProps, any> {
-  public static displayName = 'Telegram(ChatList)';
-
+class ChatList extends React.Component<IProps, {}> {
   public render() {
     const { loading, children } = this.props;
 
@@ -23,11 +21,9 @@ class ChatList extends React.Component<IProps, any> {
       <div className={style.chatlist}>
         <ChatListSearch />
         <div className={style.chatbox}>
-          <div className={style.chatpane}>
-            {loading
-              ? <LoadingPane />
-              : children}
-          </div>
+          {loading
+            ? <LoadingPane />
+            : children}
         </div>
       </div>
     );

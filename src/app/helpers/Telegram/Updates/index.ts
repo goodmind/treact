@@ -1,4 +1,5 @@
-import { invoke } from '..';
+/*
+import { api } from 'helpers/Telegram/pool';
 import { HttpLoopEmitter } from './HttpLoopEmitter';
 
 // const UPDATE_INTERVAL = 1000;
@@ -73,10 +74,10 @@ class Updates {
     // console.log('start updates');
 
     return new Promise((resolve, reject) => {
-      invoke<any>('account.updateStatus', { offline: false }).then(() => {
+      api<any>('account.updateStatus', { offline: false }).then(() => {
         this.emitter.registerOnUpdates(this.onUpdate(onUpdate));
 
-        invoke<any>('updates.getState').then(state => {
+        api<any>('updates.getState').then(state => {
           this.setState(state);
 
           this.emitter.on('error', err => {
@@ -99,12 +100,12 @@ class Updates {
     if (this.emitter.started) {
       // console.log('stop updates');
       this.emitter.stopHttpPollLoop();
-      return invoke<any>('account.updateStatus', { offline: true });
+      return api<any>('account.updateStatus', { offline: true });
     }
   }
 
   public getDifference() {
-    invoke<any>('updates.getDifference', { pts: this.pts, date: this.date, qts: -1 }).then(result => {
+    api<any>('updates.getDifference', { pts: this.pts, date: this.date, qts: -1 }).then(result => {
         // console.log('getDifference', result._typeName);
 
         if (typeof result !== 'boolean') {
@@ -135,3 +136,4 @@ class Updates {
 }
 
 export { Updates }
+*/

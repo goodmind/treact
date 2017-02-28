@@ -1,41 +1,69 @@
 type TMtpVectorSubType = 'User'|'Message'|'Chat'|'Dialog';
 
 type TMtpVector = 'Vector';
-type TMtpMessagesSlice = 'Telegram.type.messages.MessagesSlice';
-type TMtpDialogsSlice = 'Telegram.type.messages.DialogsSlice';
-type TMtpMessage = 'Telegram.type.Message';
-type TMtpUser = 'Telegram.type.User';
-type TMtpChat = 'Telegram.type.Chat';
-type TMtpChannel = 'Telegram.type.Channel';
-type TMtpDialog = 'Telegram.type.Dialog';
-type TMtpPhoto = 'Telegram.type.UserProfilePhoto'
-type TMtpFileLocation = 'Telegram.type.FileLocation'
-type TMtpDcOption = 'Telegram.type.DcOption';
+type TMtpMessagesSlice = 'messages.MessagesSlice';
+type TMtpDialogsSlice = 'messages.DialogsSlice';
+type TMtpMessage = 'Message';
+type TMtpUser = 'User';
+type TMtpChat = 'Chat';
+type TMtpChannel = 'Channel';
+type TMtpDialog = 'Dialog';
+type TMtpPhoto = 'UserProfilePhoto';
+type TMtpFileLocation = 'FileLocation';
+type TMtpDcOption = 'DcOption';
 export type TMtpType = TMtpVector|TMtpMessagesSlice|TMtpMessage|TMtpUser|
   TMtpChat|TMtpChannel|TMtpDialog|TMtpDcOption|TMtpPhoto|TMtpFileLocation|
   TMtpDialogsSlice|TMtpGetDialogs;
 
-type TMtpNearestDc = 'Telegram.type.NearestDc';
-type TMtpConfig = 'Telegram.type.Config';
-type TMtpGetDialogs = 'Telegram.type.messages.Dialogs';
+type TMtpNearestDc = 'NearestDc';
+type TMtpConfig = 'Config';
+type TMtpGetDialogs = 'messages.Dialogs';
 type TMtpHelpType = TMtpConfig|TMtpNearestDc;
 
-type TMtpPeerUser = 'Telegram.type.PeerUser';
-type TMtpPeerChat = 'Telegram.type.PeerChat';
-type TMtpPeerChannel = 'Telegram.type.PeerChannel';
-type TMtpInputPeerUser = 'Telegram.type.InputPeerUser';
-type TMtpInputPeerChat = 'Telegram.type.InputPeerChat';
-type TMtpInputPeerChannel = 'Telegram.type.InputPeerChannel';
+type TMtpPeerUser = 'PeerUser';
+type TMtpPeerChat = 'PeerChat';
+type TMtpPeerChannel = 'PeerChannel';
+type TMtpInputPeerUser = 'inputPeerUser';
+type TMtpInputPeerChat = 'inputPeerChat';
+type TMtpInputPeerChannel = 'inputPeerChannel';
 type TMtpPeerType = TMtpPeerUser|TMtpInputPeerUser|TMtpPeerChat|TMtpInputPeerChat|
   TMtpPeerChannel|TMtpInputPeerChannel;
 
+type TMtpFile = 'upload.File';
+type TMtpUploadType = TMtpFile;
+
+type TMtpFileUnknown = 'storage.FileUnknown';
+type TMtpFileJpeg = 'storage.FileJpeg';
+type TMtpFileGif = 'storage.FileGif';
+type TMtpFilePng = 'storage.FilePng';
+type TMtpFilePdf = 'storage.FilePdf';
+type TMtpFileMp3 = 'storage.FileMp3';
+type TMtpFileMov = 'storage.FileMov';
+type TMtpFilePartial = 'storage.FilePartial';
+type TMtpFileMp4 = 'storage.FileMp4';
+type TMtpFileWebp = 'storage.FileWebp';
+type TMtpStorageType =
+  | TMtpFileUnknown
+  | TMtpFileJpeg
+  | TMtpFileGif
+  | TMtpFilePng
+  | TMtpFilePdf
+  | TMtpFileMp3
+  | TMtpFileMov
+  | TMtpFilePartial
+  | TMtpFileMp4
+  | TMtpFileWebp;
+
 interface IMtpPrimitive<T> {
-  _typeName: T;
+  _: T;
 }
 
-export interface IMtpHelpObject<T extends TMtpHelpType> extends IMtpPrimitive<T> { }
+type Bytes = Uint8Array;
 
+export interface IMtpHelpObject<T extends TMtpHelpType> extends IMtpPrimitive<T> { }
 export interface IMtpPeerObject<T extends TMtpPeerType> extends IMtpPrimitive<T> { }
+export interface IMtpUploadObject<T extends TMtpUploadType> extends IMtpPrimitive<T> { }
+export interface IMtpStorageObject<T extends TMtpStorageType> extends IMtpPrimitive<T> { }
 
 export interface IMtpObject<T extends TMtpType> extends IMtpPrimitive<T> {
   id: number;
@@ -57,6 +85,8 @@ export interface IMtpDcOption extends IMtpObject<TMtpDcOption> {
   port: number;
 }
 
+type IMtpMessageEntity = any;
+
 export interface IMtpMessage extends IMtpObject<TMtpMessage> {
   from_id: number;
   date: number; // Unix time
@@ -64,9 +94,10 @@ export interface IMtpMessage extends IMtpObject<TMtpMessage> {
   to_id: IMtpPeerUser;
   mentioned?: true;
   via_bot_id?: number;
-  entities?: any; // Vector of message markdown if any
+  entities?: IMtpVector<IMtpMessageEntity>; // Vector of message markdown if any
   unread?: true;
   peerID?: true;
+  out?: true;
 }
 
 export interface IMtpDialog extends IMtpObject<TMtpDialog> {
@@ -120,7 +151,7 @@ export interface IMtpGetDialogs extends IMtpObject<TMtpGetDialogs> {
 };
 
 export type IMtpObjectGeneric = IMtpDcOption|IMtpMessage|IMtpDialog|
-  IMtpFileLocation|IMtpPhoto|IMtpUser|IMtpChat|IMtpMessagesSlice|IMtpGetDialogs
+  IMtpFileLocation|IMtpPhoto|IMtpUser|IMtpChat|IMtpMessagesSlice|IMtpGetDialogs;
 // PEER OBJECTS
 
 export type IMtpPeer = IMtpPeerUser|IMtpPeerChat|IMtpPeerChannel;
@@ -168,6 +199,14 @@ export interface IMtpHelpGetConfig extends IMtpHelpObject<TMtpNearestDc> {
   stickers_recent_limit: number;
   test_mode: boolean;
   this_dc: number;
+}
+
+// UPLOAD OBJECTS
+
+export interface IMtpUploadFile extends IMtpUploadObject<TMtpFile> {
+  type: IMtpStorageObject<TMtpStorageType>;
+  mtime: number;
+  bytes: Bytes;
 }
 
 export type TById<T> = {[id: number]: T};
