@@ -9,7 +9,9 @@ import { IIds } from 'redux/IStore';
 import { IMtpGetDialogs, TById, IMtpPeer } from 'redux/mtproto';
 const { GET_DIALOGS } = CHATS;
 
-export type TPeersType = 'user'|'channel'|'chat';
+// TODO: reintegrate into selectTypeNames func
+// respresent chatForbidden as chat
+export type TPeersType = 'user'|'channel'|'chat'|'chatForbidden';
 export type IStorePeers = IStoreList<TPeersType>;
 
 const fieldsGetters = {
