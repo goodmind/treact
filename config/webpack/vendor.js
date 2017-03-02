@@ -34,7 +34,8 @@ const config = {
       'redux-thunk',
       'recompose',
       'reselect',
-      'reselect-map'
+      'reselect-map',
+      'normalizr'
     ],
     Vendor: [
       'ramda',

@@ -1,7 +1,7 @@
 import { TById } from 'redux/mtproto';
 import { IReducer } from 'redux/IStore';
 import { pipe as P, map, contains, append, props, pluck, dissoc, assoc,
-  unless, reduce, prop, propEq, curry, identity, unnest } from 'ramda';
+  unless, reduce, prop, propEq, curry, identity, unnest, flip, difference, isEmpty, union } from 'ramda';
 
 const convolveReducers = payload => (state, reducer) => reducer(state, payload);
 
@@ -25,6 +25,15 @@ export interface IStoreList<T> {
   ids: number[];
   byId: TById<T>;
 }
+
+const noDiff: <T>(a: T[], b: T[]) => boolean = P( flip(difference), isEmpty );
+
+type PlainListReducer = <T>(state: T[], payload: T[]) => T[];
+
+export const addNew: PlainListReducer =
+  (state, payload) => noDiff(state, payload)
+    ? state
+    : union(state, payload);
 
 export const isEmptyList = <T>(storeField: IStoreList<T>) => storeField.ids.length === 0;
 

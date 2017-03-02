@@ -1,3 +1,7 @@
+import { normalize, schema } from 'normalizr';
+import { map, when, has, prop, props, isNil, complement, find, pipe,
+  applySpec, of, path, __ } from 'ramda';
+
 import { CHATS } from 'actions';
 import { api } from 'helpers/Telegram/pool';
 import { IMtpMessagesSlice, IMtpPeer } from '../mtproto';
@@ -13,17 +17,74 @@ export interface IDialogPayload {
   users: IMtpUser[];
 }
 
+const unnestLists = map(when(
+  has('list'),
+  prop('list')));
+
+const idProps = [
+  'user_id',
+  'chat_id',
+  'channel_id',
+];
+
+const notNil = complement(isNil);
+
+const invariantGetId: (obj: any) => string = pipe(
+  props(idProps),
+  find(notNil),
+);
+
+const dialogNormalize = list => normalize(list, [ histories ]);
+
+const unnestMessages = applySpec({
+  byId: path(['entities', 'histories']),
+  ids: prop('result'),
+});
+
+const groupMessages = ({ entities: { messages, dialogs } }) => {
+  const mapMessageId = pipe(
+    prop('top_message'),
+    prop(__, messages),
+    of,
+    dialogNormalize,
+    unnestMessages,
+  );
+  const mappedMessages = map(mapMessageId, dialogs);
+  return mappedMessages;
+};
+
+const users = new schema.Entity('users');
+const messages = new schema.Entity('messages');
+const chats = new schema.Entity('chats');
+const histories  = new schema.Entity('histories');
+const dialogs = new schema.Entity('dialogs', {}, {
+  idAttribute: pipe( prop('peer'), invariantGetId ),
+});
+
+const sliceSchema = {
+  chats: [ chats ],
+  users: [ users ],
+  messages: [ messages ],
+  dialogs: [ dialogs ],
+};
+
 export const loadSliceRange = (dispatch: IDispatch) =>
   (id: number, peer: IMtpPeer, offset: number = 0, limit: number = 10) => {
     const adapter = (slice: IMtpMessagesSlice) => {
-      console.warn(`slice`, slice);
-      return LOAD_SLICE.DONE({
+      const unnested = unnestLists(slice as any);
+      const normalized = normalize(unnested, sliceSchema);
+      (normalized as any).messages = slice.messages.list;
+      (normalized as any).count = slice.count;
+      (normalized as any).id = id;
+      console.warn(`slice`, slice, normalized);
+      return LOAD_SLICE.DONE(normalized);
+      /*return LOAD_SLICE.DONE({
         id,
         count: slice.count,
         chats: slice.chats,
         users: slice.users,
         messages: slice.messages.list,
-      });
+      });*/
     };
     const data = {
       peer,
@@ -78,7 +139,16 @@ export function fetchChatList(limit: number = 20) {
         offset_peer: { _: 'inputPeerEmpty' },
         limit,
       });
-      return dispatch(GET_DIALOGS.DONE(result));
+      const unnested = unnestLists(result as any);
+      const normalized = normalize(unnested, sliceSchema);
+      (normalized as any).messages = (result as any).messages;
+      (normalized as any).users = (result as any).users;
+      (normalized as any).chats = (result as any).chats;
+      (normalized as any).dialogs = (result as any).dialogs;
+      const histList = groupMessages(normalized);
+      normalized.entities.histories = histList;
+      normalized.result.histories = Object.keys(histList).map(e => +e);
+      return dispatch(GET_DIALOGS.DONE(normalized));
     } catch (err) {
       return dispatch(GET_DIALOGS.FAIL(err));
     }

@@ -1,11 +1,14 @@
 import { createReducer } from 'redux-act';
 import { combineReducers } from 'redux';
 import { head, assoc, contains, unless, where, evolve, append, has, pipe, unapply, propEq, filter,
-  prop, map, cond, pair, converge, lensPath, pathEq, assocPath, over, reduce, subtract, sort } from 'ramda';
+  prop, map, cond, pair, converge, lensPath, pathEq, assocPath, over, reduce,
+  subtract, sort } from 'ramda';
 import { IStoreList, whenNot, whenNotC, getListOf, appendNew } from 'helpers/state';
 import { TById, IMtpMessage } from '../mtproto';
 import { CHATS, MESSAGES } from 'actions';
 import { IMtpGetDialogs } from 'redux/mtproto';
+
+import { updateStoreList, modelDefaults } from 'helpers/reselector';
 
 const { LOAD_SLICE, GET_DIALOGS } = CHATS;
 const { SEND_TEXT } = MESSAGES;
@@ -92,7 +95,7 @@ const onGetDialog = (state: TById<IStoreHistory>, payload: IMtpGetDialogs) => pi
 
 const byId = createReducer({
   [LOAD_SLICE.INIT]: onSliceInit,
-  [LOAD_SLICE.DONE]: onSliceDone,
+  // [LOAD_SLICE.DONE]: onSliceDone,
   [GET_DIALOGS.DONE]: onGetDialog,
   [SEND_TEXT.DONE]: onSliceDone,
 }, {});
@@ -102,4 +105,11 @@ const reducer = combineReducers({
   byId,
 });
 
-export default reducer;
+const updater = updateStoreList('histories');
+
+const newReducer = createReducer({
+  [LOAD_SLICE.DONE]: reducer,
+  [GET_DIALOGS.DONE]: updater,
+}, modelDefaults);
+
+export default newReducer;
