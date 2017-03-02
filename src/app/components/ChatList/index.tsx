@@ -6,6 +6,7 @@ const style = require('./style.css');
 
 interface IProps {
   loading: boolean;
+  hasMore: boolean;
   loadMore: Function;
 }
 
@@ -17,9 +18,7 @@ const LoadingPane = () => (
 
 class ChatList extends React.Component<IProps, {}> {
   public render() {
-    const { loading, children, loadMore } = this.props;
-
-    console.debug('ChatList', loadMore.toString());
+    const { loading, children, loadMore, hasMore } = this.props;
 
     return (
       <div className={style.chatlist}>
@@ -30,11 +29,10 @@ class ChatList extends React.Component<IProps, {}> {
             pageStart={0}
             loadMore={loadMore}
             initialLoad={false}
-            hasMore={true}
+            hasMore={hasMore}
             useWindow={false}>
-            {loading
-              ? <LoadingPane />
-              : children}
+            {children}
+            {loading && <LoadingPane />}
           </InfiniteScroll>
         </div>
       </div>
