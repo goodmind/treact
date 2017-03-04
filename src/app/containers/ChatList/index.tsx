@@ -7,7 +7,8 @@ import { TById, IMtpDialog } from 'redux/mtproto';
 import { IStoreHistory } from 'redux/modules/histories';
 import { TPeersType } from 'redux/modules/peers';
 import { fetchChatList } from 'api/chatList';
-import { sort } from 'ramda';
+import { createSelector } from 'reselect';
+import { path, sort } from 'ramda';
 
 interface IProps {
   offsetDate: number;
@@ -73,12 +74,25 @@ class ChatListContainer extends React.Component<IProps, IState> {
   }
 }
 
+/*
 const sortByDate = ({
   histories: { byId: historiesMap },
   dialogs: { byId: dialogsMap },
 }) => (a, b) => {
   return historiesMap[b].byId[dialogsMap[b].top_message].date - historiesMap[a].byId[dialogsMap[a].top_message].date;
 };
+*/
+
+const sortDialogs = createSelector<IStore, IStore['dialogs']['ids'], IStore['dialogs']['ids'], any, any>(
+  path(['dialogs', 'ids']),
+  path(['histories', 'byId']),
+  path(['dialogs', 'byId']),
+  (dialogs, hmap, dmap) => sort(
+    (a, b) =>
+      hmap[b].byId[dmap[b].top_message].date - hmap[a].byId[dmap[a].top_message].date,
+    dialogs,
+  ),
+);
 
 /*
 const addSortedId = ({
@@ -96,6 +110,7 @@ const addSortedId = ({
 };
 */
 
+/*
 const offsetDate = ({
   dialogs: { ids, byId: dialogsMap },
   histories: { byId: historiesMap },
@@ -104,6 +119,22 @@ const offsetDate = ({
   const msgId = dialogsMap[id].top_message;
   return historiesMap[id].byId[msgId].date;
 };
+*/
+const offsetDate = createSelector<
+  IStore,
+  number,
+  IStore['dialogs']['ids'],
+  IStore['dialogs']['byId'],
+  IStore['histories']['byId']
+>(
+  path(['dialogs', 'ids']),
+  path(['dialogs', 'byId']),
+  path(['histories', 'byId']),
+  (ids, dialogsMap, historiesMap) => {
+    const id = ids[ids.length - 1];
+    const msgId = dialogsMap[id].top_message;
+    return historiesMap[id].byId[msgId].date;
+  });
 
 const mapDispatchToProps = dispatch => ({
   loadAtDate: (date: number) => dispatch(fetchChatList(undefined, date)),
@@ -112,7 +143,7 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = (state: IStore) => ({
   // offsetDate: reduce(addSortedId(state), 0, state.dialogs.ids),
   offsetDate: offsetDate(state),
-  sortedDialogsIds: sort(sortByDate(state), state.dialogs.ids),
+  sortedDialogsIds: sortDialogs(state),
   dialogsIds: state.dialogs.ids,
   dialogsMap: state.dialogs.byId,
   historiesMap: state.histories.byId,
