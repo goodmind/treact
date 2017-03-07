@@ -25,6 +25,7 @@ const pool = new ApiManager({
   app,
 });
 
-export const api = async <T>(method: string, params?: Object, options?: Object): Promise<T> =>
+// TODO: use generic params and options
+export const api = async <T>(method: string, params?: object, options?: object): Promise<T> =>
   pool<T>(method, params, options);
 export default pool;

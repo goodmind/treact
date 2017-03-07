@@ -3,11 +3,12 @@ import * as React from 'react';
 import * as Helmet from 'react-helmet';
 
 interface IHtmlProps {
-  manifest?: Object;
+  manifest?: object;
   markup?: string;
   store?: Redux.Store<IStore>;
 }
 
+// TODO: remove this component ?
 class Html extends React.Component<IHtmlProps, {}> {
   private resolve(files) {
     return files.map(src => {
