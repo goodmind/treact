@@ -9,8 +9,10 @@ import { IStorePeers } from './modules/peers';
 import { IStoreChats } from './modules/chats';
 import { IStoreLoadings } from './modules/loadings';
 import { IStoreSelected } from './modules/selected';
-import { IStorePhotoCache } from './modules/photoCache';
+import { StatusStore } from './modules/files';
 
+import { IStoreList } from 'helpers/state';
+import { IMtpFileLocation } from 'redux/mtproto';
 export interface IStore {
   authKey: any;
   auth: IAuth;
@@ -23,7 +25,10 @@ export interface IStore {
   chats: IStoreChats;
   loadings: IStoreLoadings;
   selected: IStoreSelected;
-  photoCache: IStorePhotoCache;
+  files: {
+    status: StatusStore;
+    locations: IStoreList<IMtpFileLocation>;
+  };
 };
 
 export type IThunkAction<R, S, E> = (dispatch: Dispatch<S>, getState?: () => S, extraArgument?: E) => R;

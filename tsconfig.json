@@ -14,7 +14,7 @@
     "sourceMap": true,
     "inlineSourceMap": false,
     "inlineSources": false,
-    "experimentalDecorators": true,
+    "experimentalDecorators": false,
     "noUnusedParameters": true,
     "noUnusedLocals": true,
     "jsx": "react",

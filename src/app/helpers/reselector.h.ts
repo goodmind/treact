@@ -1,13 +1,29 @@
-type Payload = {
+import { IMtpFileLocation } from 'redux/mtproto';
+export interface IPayload <T>{
   entities: {
-    [key: string]: {
-      [key: number]: any,
-    },
-  },
+    [K in keyof T]: {
+      [key: number]: T[K];
+    };
+  };
   result: {
-    [key: string]: number[],
-  },
+    [K in keyof T]: number[];
+  };
 };
+
+export type TLPhoto = {
+  photo_id?: string;
+  photo_small: number;
+  photo_big: number;
+};
+
+export type SlicePayload = IPayload<{
+  chats: {},
+  users: {},
+  messages: {},
+  dialogs: {},
+  photos: TLPhoto,
+  fileLocations: IMtpFileLocation,
+}>;
 
 type SelectedPayload = {
   entities: {
@@ -24,9 +40,9 @@ type StoredPayload = {
 };
 
 export type SelectModel = (modelName: string) =>
-  (payload: Payload) =>
+  (payload: IPayload<any>) =>
     SelectedPayload;
 
 export type ReducerCreator = (modelName: string) =>
-  (store: StoredPayload, payload: Payload) =>
+  (store: StoredPayload, payload: IPayload<any>) =>
     StoredPayload;

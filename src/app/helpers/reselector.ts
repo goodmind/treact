@@ -1,27 +1,40 @@
-import { pluck, isEmpty, equals, evolve, concat, merge, pick, __ } from 'ramda';
+import { pluck, isEmpty, equals, evolve, merge, pick,
+  mergeWith, union, flip } from 'ramda';
 
 import { SelectModel, ReducerCreator } from './reselector.h';
 
 const selectModel: SelectModel = pluck as any;
 
-export const updateStoreList: ReducerCreator = (modelName: string) => {
+type FlipMergeLists = <T>(b: T[]) => (a: T[]) => T[];
+const mergeLists: FlipMergeLists = flip(mergeWith(union)) as any;
+
+const unionf = flip(union);
+const mergef = flip(merge);
+
+const updateStore = (mergeFunc): ReducerCreator => (modelName: string) => {
   const selector = selectModel(modelName);
   return (store, payload) => {
-    const changed = [];
-    const unnested = selector(payload);
+    const selected = selector(payload);
 
-    for (const key of unnested.result)
-      if (!equals(store.byId[key], unnested.entities[key]))
+    const data = selected.entities;
+
+    const changed = [];
+    for (const key of selected.result)
+      if (!equals(store.byId[key], data[key]))
         changed.push(key);
 
     return isEmpty(changed)
       ? store
       : evolve({
-        ids: concat(__, changed),
-        byId: merge(__, pick(changed as any, unnested.entities)),
+        ids: unionf(changed),
+        byId: mergeFunc(pick(changed as any, data)),
       }, store);
   };
 };
+
+export const updateStoreMap: ReducerCreator = updateStore(mergef);
+
+export const updateStoreList: ReducerCreator = updateStore(mergeLists);
 
 export const modelDefaults = {
   ids: [],

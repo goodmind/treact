@@ -1,12 +1,15 @@
 import { normalize, schema } from 'normalizr';
-import { map, when, has, prop, props, isNil, complement, find, pipe,
-  applySpec, of, path, __ } from 'ramda';
+import { map, when, prop, isNil, pipe,
+  of, nthArg, pathOr,
+  keys, assocPath, pathSatisfies, converge, identity,
+  flip, reduce } from 'ramda';
 
 import { CHATS } from 'actions';
 import { api } from 'helpers/Telegram/pool';
+import { unifiedGetId } from 'helpers/state';
 import { IMtpMessagesSlice, IMtpPeer } from '../mtproto';
 import { IDispatch, IAsyncAction } from 'redux/IStore';
-import { TById, IMtpMessage, IMtpUser } from 'redux/mtproto';
+import { TById, IMtpMessage, IMtpUser, IMtpDialog } from 'redux/mtproto';
 
 import { getPeerData, retrieveInputPeer } from 'helpers/Telegram/Peers';
 
@@ -17,48 +20,21 @@ export interface IDialogPayload {
   users: IMtpUser[];
 }
 
-const unnestLists = map(when(
-  has('list'),
-  prop('list')));
-
-const idProps = [
-  'user_id',
-  'chat_id',
-  'channel_id',
-];
-
-const notNil = complement(isNil);
-
-const invariantGetId: (obj: any) => string = pipe(
-  props(idProps),
-  find(notNil),
-);
-
-const dialogNormalize = list => normalize(list, [ histories ]);
-
-const unnestMessages = applySpec({
-  byId: path(['entities', 'histories']),
-  ids: prop('result'),
+const fileLocations  = new schema.Entity('fileLocations', {}, {
+  idAttribute: 'local_id',
 });
-
-const groupMessages = ({ entities: { messages, dialogs } }) => {
-  const mapMessageId = pipe(
-    prop('top_message'),
-    prop(__, messages),
-    of,
-    dialogNormalize,
-    unnestMessages,
-  );
-  const mappedMessages = map(mapMessageId, dialogs);
-  return mappedMessages;
-};
-
-const users = new schema.Entity('users');
+const photos = new schema.Entity('photos', {
+  photo_small: fileLocations,
+  photo_big: fileLocations,
+}, {
+  idAttribute: pipe<any, any>(nthArg(1), prop('id'), e => +e),
+});
+const users = new schema.Entity('users', { photo: photos });
 const messages = new schema.Entity('messages');
-const chats = new schema.Entity('chats');
-const histories  = new schema.Entity('histories');
+const chats = new schema.Entity('chats', { photo: photos });
+
 const dialogs = new schema.Entity('dialogs', {}, {
-  idAttribute: pipe( prop('peer'), invariantGetId ),
+  idAttribute: pipe<IMtpPeer, string>( prop('peer'), unifiedGetId ),
 });
 
 const sliceSchema = {
@@ -68,23 +44,39 @@ const sliceSchema = {
   dialogs: [ dialogs ],
 };
 
+
+
+/**
+ * Add index list in `result` for model values in `entities`
+ * @function addModelIndex
+ */
+const addModelIndex = (obj: any, modelName: string) =>
+  when(
+    pathSatisfies(isNil, ['result', modelName]),
+    converge(
+      assocPath(['result', modelName]), [
+      pipe(pathOr({}, ['entities', modelName]), keys, map(e => +e)),
+      identity,
+    ]),
+  )(obj);
+
+const modelsIndexation = flip(reduce(addModelIndex));
+
+const indexation = modelsIndexation(['photos', 'fileLocations']);
+
+const fullNormalize = (obj: any) => indexation(normalize(obj, sliceSchema));
+
+const mapTopMessage = map(pipe<IMtpDialog, number[]>(prop('top_message'), of));
+
+
 export const loadSliceRange = (dispatch: IDispatch) =>
   (id: number, peer: IMtpPeer, offset: number = 0, limit: number = 10) => {
     const adapter = (slice: IMtpMessagesSlice) => {
-      const unnested = unnestLists(slice as any);
-      const normalized = normalize(unnested, sliceSchema);
-      (normalized as any).messages = slice.messages.list;
-      (normalized as any).count = slice.count;
-      (normalized as any).id = id;
-      console.warn(`slice`, slice, normalized);
+      const normalized = fullNormalize(slice);
+      normalized.result.histories = [id];
+      normalized.entities.histories = { [id]: normalized.result.messages };
+      (normalized as any).id = id; //NOTE This needs because we cant infer id later
       return LOAD_SLICE.DONE(normalized);
-      /*return LOAD_SLICE.DONE({
-        id,
-        count: slice.count,
-        chats: slice.chats,
-        users: slice.users,
-        messages: slice.messages.list,
-      });*/
     };
     const data = {
       peer,
@@ -139,15 +131,10 @@ export function fetchChatList(limit: number = 20) {
         offset_peer: { _: 'inputPeerEmpty' },
         limit,
       });
-      const unnested = unnestLists(result as any);
-      const normalized = normalize(unnested, sliceSchema);
-      (normalized as any).messages = (result as any).messages;
-      (normalized as any).users = (result as any).users;
-      (normalized as any).chats = (result as any).chats;
-      (normalized as any).dialogs = (result as any).dialogs;
-      const histList = groupMessages(normalized);
-      normalized.entities.histories = histList;
-      normalized.result.histories = Object.keys(histList).map(e => +e);
+      const normalized = fullNormalize(result);
+      const histories = mapTopMessage(normalized.entities.dialogs);
+      normalized.entities.histories = histories;
+      normalized.result.histories = normalized.result.dialogs;
       return dispatch(GET_DIALOGS.DONE(normalized));
     } catch (err) {
       return dispatch(GET_DIALOGS.FAIL(err));

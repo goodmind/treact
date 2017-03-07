@@ -91,7 +91,7 @@ export interface IMtpMessage extends IMtpObject<TMtpMessage> {
   from_id: number;
   date: number; // Unix time
   message: string;
-  to_id: IMtpPeerUser;
+  to_id: IMtpPeer;
   mentioned?: true;
   via_bot_id?: number;
   entities?: IMtpVector<IMtpMessageEntity>; // Vector of message markdown if any
