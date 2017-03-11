@@ -4,9 +4,19 @@
   min-width: 260px;
 }
 
-.chatbox {
-  height: 92%;
+.chatbody {
+  display: flex;
+  flex: 1;
+  height: 92%; /* TODO: remove this hack */
   overflow-y: auto;
+}
+
+.box {
+  width: 100%;
+  min-height: -webkit-min-content;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .loading {
