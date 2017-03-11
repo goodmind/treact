@@ -53,9 +53,9 @@ class ChatListContainer extends React.Component<IProps, IState> {
     const { dialogsIds, offsetDate, loadAtDate } = this.props;
     const offsetId = dialogsIds[dialogsIds.length - 1];
     console.log('loadSliceRange', offsetId, offsetDate, loadAtDate);
-    console.log(loadAtDate(offsetDate)
+    loadAtDate(offsetDate)
       .then(({ payload: { dialogs } }) => this.setState({ hasMore: dialogs.list.length !== 0 }))
-      .catch(e => console.error(e)));
+      .catch(e => console.error(e));
   }
 
   public render() {
@@ -74,66 +74,35 @@ class ChatListContainer extends React.Component<IProps, IState> {
   }
 }
 
-/*
-const sortByDate = ({
-  histories: { byId: historiesMap },
-  dialogs: { byId: dialogsMap },
-}) => (a, b) => {
-  return historiesMap[b].byId[dialogsMap[b].top_message].date - historiesMap[a].byId[dialogsMap[a].top_message].date;
-};
-*/
-
-const sortDialogs = createSelector<IStore, IStore['dialogs']['ids'], IStore['dialogs']['ids'], any, any>(
+const sortDialogs = createSelector<
+  IStore,
+  IStore['dialogs']['ids'],
+  IStore['dialogs']['ids'],
+  IStore['messages']['byId'],
+  IStore['dialogs']['byId']>(
   path(['dialogs', 'ids']),
-  path(['histories', 'byId']),
+  path(['messages', 'byId']),
   path(['dialogs', 'byId']),
-  (dialogs, hmap, dmap) => sort(
-    (a, b) =>
-      hmap[b].byId[dmap[b].top_message].date - hmap[a].byId[dmap[a].top_message].date,
+  (dialogs, msgs, dmap) => sort(
+    (a, b) => msgs[dmap[b].top_message].date - msgs[dmap[a].top_message].date,
     dialogs,
   ),
 );
 
-/*
-const addSortedId = ({
-  dialogs: { byId: dialogsMap },
-  histories: { byId: historiesMap },
-}) => (offsetDate, id) => {
-  const msg = historiesMap[id].byId[dialogsMap[id].top_message];
-  const { date } = msg;
-  // console.count('addSortedId');
-  // console.log(msg, offsetDate, date, !offsetDate, offsetDate < date);
-  if (date && (!offsetDate || offsetDate < date)) {
-    return date;
-  }
-  return offsetDate;
-};
-*/
-
-/*
-const offsetDate = ({
-  dialogs: { ids, byId: dialogsMap },
-  histories: { byId: historiesMap },
-}) => {
-  const id = ids[ids.length - 1];
-  const msgId = dialogsMap[id].top_message;
-  return historiesMap[id].byId[msgId].date;
-};
-*/
 const offsetDate = createSelector<
   IStore,
   number,
   IStore['dialogs']['ids'],
   IStore['dialogs']['byId'],
-  IStore['histories']['byId']
+  IStore['messages']['byId']
 >(
   path(['dialogs', 'ids']),
   path(['dialogs', 'byId']),
-  path(['histories', 'byId']),
-  (ids, dialogsMap, historiesMap) => {
+  path(['messages', 'byId']),
+  (ids, dialogsMap, messages) => {
     const id = ids[ids.length - 1];
     const msgId = dialogsMap[id].top_message;
-    return historiesMap[id].byId[msgId].date;
+    return messages[msgId].date;
   });
 
 const mapDispatchToProps = dispatch => ({
