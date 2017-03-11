@@ -127,7 +127,6 @@
     "webpack-manifest-plugin": "^1.0.1"
   },
   "dependencies": {
-    "@types/normalizr": "^2.0.18",
     "classnames": "^2.2.5",
     "express": "^4.15.2",
     "flexboxgrid": "^6.3.1",
