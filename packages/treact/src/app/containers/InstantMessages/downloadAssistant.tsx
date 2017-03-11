@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Action } from 'redux-act';
-import { isNil, isEmpty, unless, when, any } from 'ramda';
+import { isNil, isEmpty, unless, when, pipe, filter,
+  equals, keys, map, pick } from 'ramda';
 
-import { IStorePhotoCache } from 'redux/modules/photoCache';
 import { IStore, IDispatch } from 'redux/IStore';
 import { CACHE } from 'redux/actions';
 import { IMtpFileLocation, IMtpUploadFile } from 'redux/mtproto';
@@ -26,16 +26,19 @@ const picStorage = localForage.createInstance({
 });
 
 interface IPropsStore {
-  photoCache: IStorePhotoCache;
-}
+  photoCache: number[];
+  files: {
+    [key: number]: IMtpFileLocation;
+  };
+};
 
 interface IPropsDispatch {
-  load(list: string[]): Action<{}, {}>;
-  done(id: string): Action<{}, {}>;
+  load(list: number[]): Action<{}, {}>;
+  done(id: number): Action<{}, {}>;
 }
 
-const beginLoad = async (id: string, loc: IMtpFileLocation) => {
-  const { dc_id, volume_id, secret, local_id } = loc;
+const beginLoad = async (id: number, loc: IMtpFileLocation) => {
+  const { dc_id = 2, volume_id, secret, local_id } = loc;
   const inputLocation = { _: 'inputFileLocation', dc_id, volume_id, secret, local_id };
   console.warn(`idle`, loc);
   const cached = picStorage.getItem<Blob>(id.toString())
@@ -46,7 +49,7 @@ const beginLoad = async (id: string, loc: IMtpFileLocation) => {
     offset: 0,
     limit: 1024 * 1024,
   }, {
-    dcID: loc.dc_id,
+    dcID: loc.dc_id || 2,
     fileDownload: true,
     createNetworker: true,
     noErrorBox: true,
@@ -54,33 +57,39 @@ const beginLoad = async (id: string, loc: IMtpFileLocation) => {
   return unless(isNil, loader, await cached);
 };
 // tslint:disable:no-debugger
-const DownloadAssistant = ({ photoCache, load, done }: IPropsStore & IPropsDispatch) => {
-  const { idle, downloaded } = photoCache.cache;
+const DownloadAssistant = ({ photoCache, files, load, done }: IPropsStore & IPropsDispatch) => {
   console.count('DownloadAssistant');
-  console.log(idle.length);
-  if (any(e => !picStore.has(e), downloaded)) {
-    console.warn('no in picStore!');
-  }
-  const mapLoad = (id: string) => {
-    let ab = 0;
-    ab++;
-    const photo = photoCache.photos.byId[id];
-    if (!photo) {
-      return;
-    }
-    return beginLoad(id, photo.photo_small)
+  if (isEmpty(photoCache)) return <span />;
+  const mapLoad = (id: number) => {
+    const file = files[id];
+    return beginLoad(id, file)
     .then(() => done(id), () => ({}));
   };
-  idle.map(mapLoad);
-  unless(isEmpty, load)(idle);
-
+  const run = () => {
+    load(photoCache);
+    photoCache.map(mapLoad);
+  };
+  setTimeout(run, 10);
   return <span />;
 };
 
-const stateProps = ({ photoCache }: IStore) => ({ photoCache });
+const queueList = pipe(
+  filter(equals('queue')) as any,
+  keys,
+  map(e => +e),
+);
+
+const stateProps = ({ files: { status, locations } }: IStore) => {
+  const photoCache = queueList(status);
+  const files = pick(photoCache as any, locations.byId);
+  return {
+    photoCache,
+    files,
+  };
+};
 const dispatchProps = (dispatch: IDispatch) => ({
-  load: (list: string[]) => dispatch(LOAD(list)),
-  done: (id: string) => dispatch(DONE(id)),
+  load: (list: number[]) => dispatch(LOAD(list)),
+  done: (id: number) => dispatch(DONE(id)),
 });
 
 const connected = connect(stateProps, dispatchProps)(DownloadAssistant);

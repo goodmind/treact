@@ -13,7 +13,7 @@ export const DefaultScreen = () => (
 type IProps = {
   name: string;
   userCount: number;
-  loadMore: Function;
+  loadMore: () => void;
 };
 
 const ChatHeader = ({ name, userCount }) => (

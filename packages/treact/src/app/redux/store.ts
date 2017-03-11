@@ -7,10 +7,34 @@ import { IStore } from './IStore';
 import { autoRehydrate } from 'redux-persist';
 const createLogger = require('redux-logger');
 
+import { CACHE } from 'actions';
+const { DONE } = CACHE;
+
+const doneType = DONE.toString();
+
+const batchUpdate = ({ dispatch }) => next => {
+  let pool = [];
+  const flush = () => {
+    if (pool.length === 0) return;
+    const action = { type: doneType, payload: [...pool] };
+    pool = [];
+    return dispatch(action);
+  };
+  setInterval(flush, 300);
+  return action => {
+    if (action.type === doneType && typeof action.payload === 'number') {
+      pool.push(action.payload);
+      return;
+    }
+
+    return next(action);
+  };
+};
 export function configureStore(history, initialState?: IStore): Redux.Store<IStore> {
 
   const middlewares: Redux.Middleware[] = [
     routerMiddleware(history),
+    batchUpdate,
     thunk,
   ];
 

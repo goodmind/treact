@@ -1,11 +1,12 @@
 import * as React from 'react';
 
+import { path, isEmpty } from 'ramda';
+
 import { getPeerData } from 'helpers/Telegram/Peers';
 import { ChatListItemEmpty, ChatListItem } from 'components/ChatListItem';
-import { IMtpDialog, IMtpUser, IMtpChat /* IMtpMessage */ } from 'redux/mtproto';
+import { IMtpDialog, IMtpUser, IMtpChat /* IMtpMessage */, IMtpMessage } from 'redux/mtproto';
 import { TPeersType } from 'redux/modules/peers';
 import { IStoreHistory } from 'redux/modules/histories';
-import { isEmptyList } from 'helpers/state';
 import { connect } from 'react-redux';
 import { IDispatch, IStore } from 'redux/IStore';
 import { getPeerName, getPeerShortName } from 'helpers/Telegram/Peers';
@@ -25,8 +26,8 @@ class ChatListItemContainer extends React.Component<IProps & IFuncs & IState, {}
       />;
   }
   public renderItem = () => {
-    const { id, selected, peer, peerData, from, fromData, isNotChat, isYou, history } = this.props;
-    const lastMsg = history.byId[this.props.dialog.top_message] || {message: ''};
+    const { id, selected, peer, peerData, from, fromData, isNotChat, isYou, message } = this.props;
+    const lastMsg = message || {message: ''};
     return <ChatListItem
       id={id}
       click={this.click}
@@ -35,13 +36,13 @@ class ChatListItemContainer extends React.Component<IProps & IFuncs & IState, {}
       unreadCount={this.props.dialog.unread_count}
       previewName={isNotChat ? undefined : getPeerShortName(from, fromData)}
       isYou={isYou}
-      text={lastMsg.message}
+      text={lastMsg.message || ''}
       />;
   }
   public click = () => this.props.click(this.props.id);
   public render() {
     const { history } = this.props;
-    return isEmptyList(history)
+    return isEmpty(history)
       ? this.renderEmptyItem()
       : this.renderItem();
   }
@@ -65,6 +66,7 @@ interface IState {
   from: TPeersType;
   isNotChat: boolean;
   isYou: boolean;
+  message?: IMtpMessage;
 }
 
 const preview = (state, message, peer) => {
@@ -83,12 +85,15 @@ const preview = (state, message, peer) => {
   };
 };
 
-const mapState = (state: IStore, { id, peer, history, dialog }: IProps): IState => {
-  const message = history.byId[dialog.top_message];
+const messagesPath = path(['messages', 'byId']);
+
+const mapState = (state: IStore, { id, peer, dialog }: IProps): IState => {
+  const message = messagesPath(state)[dialog.top_message];
   const peerData = getPeerData(id, peer, state);
 
   return {
     peerData,
+    message,
     ...preview(state, message, peer),
   };
 };

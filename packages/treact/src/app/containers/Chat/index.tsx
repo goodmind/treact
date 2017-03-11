@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 
 import { Chat, DefaultScreen } from 'components/Chat';
 import { IStore, IDispatch } from 'redux/IStore';
-import { IStoreHistory } from 'redux/modules/histories';
 import { getPeerData } from 'helpers/Telegram/Peers';
-import { IMtpUser, IMtpChat } from 'redux/mtproto';
+import { IMtpUser, IMtpChat, IMtpMessage } from 'redux/mtproto';
 import { Message } from 'components/Message';
 import { selectChat, loadOffset } from 'redux/api/chatList';
 import { getPeerName } from 'helpers/Telegram/Peers';
 import { TPeersType } from 'redux/modules/peers';
+import { path, props, Obj } from 'ramda';
 
 const onChatSelect = async (currentId: number, nextId: number) => {
   if (nextId && nextId !== currentId) {
@@ -17,30 +17,34 @@ const onChatSelect = async (currentId: number, nextId: number) => {
   }
 };
 
+const MessageItem = ({ id, from_id, date, message }: IMtpMessage) =>
+  <Message
+    key={id}
+    id={id}
+    date={date}
+    user={from_id}
+    text={message} />;
+
 class ChatContainer extends React.Component<IProps, {}> {
   public componentWillReceiveProps(nextProps: IConnectedState) {
     const { selected } = this.props;
     onChatSelect(selected, nextProps.selected);
   }
   public loadSliceRange = () => {
-    const { loadOffset, selected, history: { ids } } = this.props;
-    const maxID = ids[0];
+    const { loadOffset, selected, history } = this.props;
+    const maxID = history[0];
     loadOffset(selected, maxID)
       .then(console.log.bind(console));
   }
-  public renderMessage = (id: number) => {
-    const { from_id, date, message } = this.props.history.byId[id];
-    return <Message key={id} id={id} date={date} user={from_id} text={message} />;
-  }
   public render() {
     if (!this.props.selected) return <DefaultScreen />;
-    const { history, peerName } = this.props;
+    const { messages, peerName } = this.props;
     return (
       <Chat
         name={peerName}
         userCount={0}
         loadMore={this.loadSliceRange}>
-        {history.ids.map(this.renderMessage)}
+        {messages.map(MessageItem)}
       </Chat>
     );
   }
@@ -48,7 +52,8 @@ class ChatContainer extends React.Component<IProps, {}> {
 
 interface IConnectedState {
   selected: number;
-  history?: IStoreHistory;
+  history: number[];
+  messages: IMtpMessage[];
   peer?: TPeersType;
   peerData?: IMtpUser | IMtpChat;
   peerName?: string;
@@ -60,25 +65,27 @@ interface IConnectedActions {
 
 type IProps = IConnectedState & IConnectedActions;
 
-const defaultDialog: IStoreHistory = {
-  ids: [],
-  byId: {},
-};
+type MessagesPath = (obj: IStore) => Obj<IMtpMessage>;
+const messagesPath: MessagesPath = path(['messages', 'byId']);
 
-const stateMap = (state: IStore) => {
+const stateMap = (state: IStore): IConnectedState => {
   const selected = state.selected.dialog;
   if (!selected) return {
     selected,
-    history: defaultDialog,
+    history: [],
+    messages: [],
   };
 
-  const history = state.histories.byId[selected] || defaultDialog;
+  const history = state.histories.byId[selected] || [];
+  const messagesStore = messagesPath(state);
+  const messages = props(history, messagesStore);
   const peer = state.peers.byId[selected];
   const peerData = getPeerData(selected, peer, state);
   const peerName = getPeerName(peer, peerData);
   return {
     selected,
     history,
+    messages,
     peer,
     peerData,
     peerName,

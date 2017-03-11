@@ -1,16 +1,16 @@
-const { resolve, join } = require('path')
-const webpack = require('webpack')
-const ManifestPlugin = require('webpack-manifest-plugin')
+const { resolve, join } = require('path');
+const webpack = require('webpack');
+const ManifestPlugin = require('webpack-manifest-plugin');
 // var ExtractTextPlugin = require('extract-text-webpack-plugin');
 // var HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const source = resolve(process.cwd(), 'src')
-const build = resolve(process.cwd(), 'build')
+const source = resolve(process.cwd(), 'src');
+const build = resolve(process.cwd(), 'build');
 
-const BabiliPlugin = require('babili-webpack-plugin')
+const BabiliPlugin = require('babili-webpack-plugin');
 
-const reactDll = require(join(build, 'React.json'))
-const vendorDll = require(join(build, 'Vendor.json'))
+const reactDll = require(join(build, 'React.json'));
+const vendorDll = require(join(build, 'Vendor.json'));
 
 const config = {
   bail: true,
@@ -45,6 +45,6 @@ const config = {
       comments: false
     })
   ]
-}
+};
 
-module.exports = config
+module.exports = config;

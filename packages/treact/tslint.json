@@ -43,6 +43,7 @@
     "no-consecutive-blank-lines": [false],
     "jsx-no-multiline-js": false,
     "jsx-wrap-multiline": false,
-    "max-classes-per-file": [false]
+    "max-classes-per-file": [false],
+    "comment-format": [false]
   }
 }

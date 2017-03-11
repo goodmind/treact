@@ -1,8 +1,15 @@
+import { normalize, schema } from 'normalizr';
+import { map, when, prop, isNil, pipe,
+  of, nthArg, pathOr,
+  keys, assocPath, pathSatisfies, converge, identity,
+  flip, reduce } from 'ramda';
+
 import { CHATS } from 'actions';
 import { api } from 'helpers/Telegram/pool';
+import { unifiedGetId } from 'helpers/state';
 import { IMtpMessagesSlice, IMtpPeer } from '../mtproto';
 import { IDispatch, IAsyncAction } from 'redux/IStore';
-import { TById, IMtpMessage, IMtpUser } from 'redux/mtproto';
+import { TById, IMtpMessage, IMtpUser, IMtpDialog } from 'redux/mtproto';
 
 import { getPeerData, retrieveInputPeer } from 'helpers/Telegram/Peers';
 
@@ -13,17 +20,63 @@ export interface IDialogPayload {
   users: IMtpUser[];
 }
 
+const fileLocations  = new schema.Entity('fileLocations', {}, {
+  idAttribute: 'local_id',
+});
+const photos = new schema.Entity('photos', {
+  photo_small: fileLocations,
+  photo_big: fileLocations,
+}, {
+  idAttribute: pipe<any, any>(nthArg(1), prop('id'), e => +e),
+});
+const users = new schema.Entity('users', { photo: photos });
+const messages = new schema.Entity('messages');
+const chats = new schema.Entity('chats', { photo: photos });
+
+const dialogs = new schema.Entity('dialogs', {}, {
+  idAttribute: pipe<IMtpPeer, string>( prop('peer'), unifiedGetId ),
+});
+
+const sliceSchema = {
+  chats: [ chats ],
+  users: [ users ],
+  messages: [ messages ],
+  dialogs: [ dialogs ],
+};
+
+
+
+/**
+ * Add index list in `result` for model values in `entities`
+ * @function addModelIndex
+ */
+const addModelIndex = (obj: any, modelName: string) =>
+  when(
+    pathSatisfies(isNil, ['result', modelName]),
+    converge(
+      assocPath(['result', modelName]), [
+      pipe(pathOr({}, ['entities', modelName]), keys, map(e => +e)),
+      identity,
+    ]),
+  )(obj);
+
+const modelsIndexation = flip(reduce(addModelIndex));
+
+const indexation = modelsIndexation(['photos', 'fileLocations']);
+
+const fullNormalize = (obj: any) => indexation(normalize(obj, sliceSchema));
+
+const mapTopMessage = map(pipe<IMtpDialog, number[]>(prop('top_message'), of));
+
+
 export const loadSliceRange = (dispatch: IDispatch) =>
   (id: number, peer: IMtpPeer, offset: number = 0, limit: number = 10) => {
     const adapter = (slice: IMtpMessagesSlice) => {
-      console.warn(`slice`, slice);
-      return LOAD_SLICE.DONE({
-        id,
-        count: slice.count,
-        chats: slice.chats,
-        users: slice.users,
-        messages: slice.messages.list,
-      });
+      const normalized = fullNormalize(slice);
+      normalized.result.histories = [id];
+      normalized.entities.histories = { [id]: normalized.result.messages };
+      (normalized as any).id = id; //NOTE This needs because we cant infer id later
+      return LOAD_SLICE.DONE(normalized);
     };
     const data = {
       peer,
@@ -78,7 +131,11 @@ export function fetchChatList(limit: number = 20) {
         offset_peer: { _: 'inputPeerEmpty' },
         limit,
       });
-      return dispatch(GET_DIALOGS.DONE(result));
+      const normalized = fullNormalize(result);
+      const histories = mapTopMessage(normalized.entities.dialogs);
+      normalized.entities.histories = histories;
+      normalized.result.histories = normalized.result.dialogs;
+      return dispatch(GET_DIALOGS.DONE(normalized));
     } catch (err) {
       return dispatch(GET_DIALOGS.FAIL(err));
     }

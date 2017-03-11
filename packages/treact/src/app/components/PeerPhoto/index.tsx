@@ -5,7 +5,7 @@ import picStore from 'helpers/FileManager/picStore';
 const defPhoto = require('./usercolor1.png');
 
 interface IProps {
-  id?: number;
+  id?: number | 'default';
   className?: string;
 }
 
