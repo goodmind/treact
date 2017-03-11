@@ -9,7 +9,7 @@ import { Message } from 'components/Message';
 import { selectChat, loadOffset } from 'redux/api/chatList';
 import { getPeerName } from 'helpers/Telegram/Peers';
 import { TPeersType } from 'redux/modules/peers';
-import { path, props, ascend, prop, sort, last, Obj } from 'ramda';
+import { path, props, Obj } from 'ramda';
 
 const onChatSelect = async (currentId: number, nextId: number) => {
   if (nextId && nextId !== currentId) {
@@ -32,7 +32,7 @@ class ChatContainer extends React.Component<IProps, {}> {
   }
   public loadSliceRange = () => {
     const { loadOffset, selected, history } = this.props;
-    const maxID = last<number, number[]>(history);
+    const maxID = history[0];
     loadOffset(selected, maxID)
       .then(console.log.bind(console));
   }
@@ -65,9 +65,6 @@ interface IConnectedActions {
 
 type IProps = IConnectedState & IConnectedActions;
 
-// TODO: move into reducer
-const sortMessages = sort(ascend<IMtpMessage>(prop('date')));
-
 type MessagesPath = (obj: IStore) => Obj<IMtpMessage>;
 const messagesPath: MessagesPath = path(['messages', 'byId']);
 
@@ -81,7 +78,7 @@ const stateMap = (state: IStore): IConnectedState => {
 
   const history = state.histories.byId[selected] || [];
   const messagesStore = messagesPath(state);
-  const messages = sortMessages(props(history, messagesStore));
+  const messages = props(history, messagesStore);
   const peer = state.peers.byId[selected];
   const peerData = getPeerData(selected, peer, state);
   const peerName = getPeerName(peer, peerData);

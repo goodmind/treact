@@ -1,5 +1,5 @@
 import { pluck, isEmpty, equals, evolve, merge, pick,
-  mergeWith, union, flip } from 'ramda';
+  mergeWith, union, flip, pipe, sort, subtract } from 'ramda';
 
 import { SelectModel, ReducerCreator } from './reselector.h';
 
@@ -35,6 +35,11 @@ const updateStore = (mergeFunc): ReducerCreator => (modelName: string) => {
 export const updateStoreMap: ReducerCreator = updateStore(mergef);
 
 export const updateStoreList: ReducerCreator = updateStore(mergeLists);
+
+export const updateStoreListSorted: ReducerCreator = updateStore(
+  flip(mergeWith(pipe<any, any>(
+    union,
+    sort(subtract)))));
 
 export const modelDefaults = {
   ids: [],
