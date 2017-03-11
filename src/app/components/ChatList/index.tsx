@@ -7,7 +7,7 @@ const style = require('./style.css');
 interface IProps {
   loading: boolean;
   hasMore: boolean;
-  loadMore: Function;
+  loadMore: () => void;
 }
 
 const LoadingPane = () => (
