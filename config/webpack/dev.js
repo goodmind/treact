@@ -1,10 +1,10 @@
-const { resolve, join } = require('path')
-const webpack = require('webpack')
-const source = resolve(process.cwd(), 'src')
-const build = resolve(process.cwd(), 'build')
+const { resolve, join } = require('path');
+const webpack = require('webpack');
+const source = resolve(process.cwd(), 'src');
+const build = resolve(process.cwd(), 'build');
 
-const reactDll = require(join(build, 'React.json'))
-const vendorDll = require(join(build, 'Vendor.json'))
+const reactDll = require(join(build, 'React.json'));
+const vendorDll = require(join(build, 'Vendor.json'));
 
 const config = {
   devtool: 'source-map',
@@ -18,9 +18,9 @@ const config = {
   },
   entry: [
     'babel-polyfill',
-    'react-hot-loader/patch',
     'webpack-dev-server/client?http://localhost:8889',
     'webpack/hot/only-dev-server',
+    'react-hot-loader/patch',
     './client.tsx',
     './vendor/main.ts'
   ],
@@ -53,7 +53,7 @@ const config = {
     // }),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
+    // new webpack.NoEmitOnErrorsPlugin()
     // new webpack.ProgressPlugin((percentage, msg) =>
     //   console.log((percentage * 100).toFixed(), msg))
     // new HtmlWebpackPlugin({
@@ -61,6 +61,6 @@ const config = {
     //   inject: 'body',
     // }),
   ]
-}
+};
 
-module.exports = config
+module.exports = config;

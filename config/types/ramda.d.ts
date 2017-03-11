@@ -246,6 +246,8 @@ declare namespace R {
     // pretty much requires being able to express the separate functions as a single curried function...
     // until that moment handling this would mean having to handle each possible combination for each function. :(
 
+    ascend<T>(comp: (val: T) => number): (a: T, b: T) => number;
+
     /**
      * Adds two numbers. Equivalent to a + b but curried.
      */

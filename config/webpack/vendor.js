@@ -1,21 +1,21 @@
-const { resolve, join } = require('path')
-const webpack = require('webpack')
-const source = resolve(process.cwd(), 'src')
-const build = resolve(process.cwd(), 'build')
+const { resolve, join } = require('path');
+const webpack = require('webpack');
+const source = resolve(process.cwd(), 'src');
+const build = resolve(process.cwd(), 'build');
 
-const BabiliPlugin = require("babili-webpack-plugin")
+const BabiliPlugin = require("babili-webpack-plugin");
 
 const plugins = [
   new webpack.DllPlugin({
     name: '[name]',
     path: join(build, '[name].json')
   })
-]
+];
 
 if (process.env.NODE_ENV === 'production')
   plugins.push(new BabiliPlugin({
     comments: false
-  }))
+  }));
 
 const config = {
   context: source,
@@ -34,7 +34,8 @@ const config = {
       'redux-thunk',
       'recompose',
       'reselect',
-      'reselect-map'
+      'reselect-map',
+      'normalizr'
     ],
     Vendor: [
       'ramda',
@@ -52,6 +53,6 @@ const config = {
     library: '[name]'
   },
   plugins
-}
+};
 
-module.exports = config
+module.exports = config;
