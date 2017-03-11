@@ -68,7 +68,7 @@ export const selectChat = (id: number): IAsyncAction<Promise<any>|void> =>
     }
   };
 
-export function fetchChatList(limit: number = 20, date: Number = 0) {
+export function fetchChatList(limit: number = 20, date: number = 0) {
   return async (dispatch: IDispatch) => {
     dispatch(GET_DIALOGS.INIT());
     try {
