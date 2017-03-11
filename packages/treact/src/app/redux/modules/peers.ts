@@ -8,7 +8,9 @@ import { props, map, pipe, prop, merge, apply, omit, isEmpty,
 import { modelDefaults } from 'helpers/reselector';
 const { GET_DIALOGS, LOAD_SLICE } = CHATS;
 
-export type TPeersType = 'user'|'channel'|'chat';
+// TODO: reintegrate into selectTypeNames func
+// respresent chatForbidden as chat
+export type TPeersType = 'user'|'channel'|'chat'|'chatForbidden';
 export type IStorePeers = IStoreList<TPeersType>;
 
 

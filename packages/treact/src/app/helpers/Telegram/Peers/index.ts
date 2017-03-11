@@ -106,6 +106,7 @@ export const getOutputPeer = (id: number) => (_, getState) => {
 export const getPeerData = (id: number, peer: TPeersType, { users, chats }: IStore) => {
   switch (peer) {
     case 'user': return users.byId[id];
+    case 'chatForbidden':
     case 'channel':
     case 'chat': return chats.byId[id];
     default: throw new TypeError(`Unknown peer type ${peer}`);
@@ -120,6 +121,7 @@ export const getPeerName = (peer: TPeersType, peerData: IMtpUser|IMtpChat) => {
       const { first_name = '', username = '', last_name = '' } = (peerData as IMtpUser);
       return joinNames(first_name, last_name, username);
     }
+    case 'chatForbidden':
     case 'channel':
     case 'chat': {
       const { title = '' } = (peerData as IMtpChat);
@@ -135,6 +137,7 @@ export const getPeerShortName = (peer: TPeersType, peerData: IMtpUser|IMtpChat) 
       const { first_name = null, username = null, last_name = null } = (peerData as IMtpUser);
       return first_name || username || last_name;
     }
+    case 'chatForbidden':
     case 'channel':
     case 'chat': {
       const { title = null } = (peerData as IMtpChat);

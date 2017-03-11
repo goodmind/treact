@@ -121,12 +121,12 @@ export const selectChat = (id: number): IAsyncAction<Promise<any>|void> =>
     }
   };
 
-export function fetchChatList(limit: number = 20) {
+export function fetchChatList(limit: number = 20, date: number = 0) {
   return async (dispatch: IDispatch) => {
     dispatch(GET_DIALOGS.INIT());
     try {
       const result = await api('messages.getDialogs', {
-        offset_date: 0,
+        offset_date: date,
         offset_id: 0,
         offset_peer: { _: 'inputPeerEmpty' },
         limit,
