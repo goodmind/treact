@@ -1,24 +1,24 @@
 'use strict';
-const { resolve, join } = require('path')
+const { resolve, join } = require('path');
 
-const source = resolve(process.cwd(), 'src')
+const source = resolve(process.cwd(), 'src');
 const app = resolve(source, 'app');
-const build = resolve(process.cwd(), 'build')
+const build = resolve(process.cwd(), 'build');
 
-const reactDll = require(join(build, 'React.json'))
-const vendorDll = require(join(build, 'Vendor.json'))
+const reactDll = require(join(build, 'React.json'));
+const vendorDll = require(join(build, 'Vendor.json'));
 
-const isProd = process.env.NODE_ENV === 'production'
+const isProd = process.env.NODE_ENV === 'production';
 
 const rules = [
-  {
+  /*{
     test: /\.tsx?$/,
     enforce: "pre",
     loader: 'tslint-loader',
     options: {
-      failOnHint: true
+      failOnHint: false
     }
-  }, {
+  }, */{
     enforce: 'pre',
     test: /\.js$/,
     loader: "source-map-loader"
@@ -66,7 +66,7 @@ const rules = [
     test: /\.(jpe?g|png|gif)$/i,
     loader: 'url-loader?limit=1000&name=images/[hash].[ext]'
   }
-]
+];
 
 const unifiedConfig = {
   node: {
@@ -94,10 +94,8 @@ const unifiedConfig = {
   module: {
     rules
   }
-}
+};
 
-const getConfig = () => isProd
-  ? require('./prod')
-  : require('./dev')
+const getConfig = () => isProd ? require('./prod') : require('./dev');
 
-module.exports = Object.assign(unifiedConfig, getConfig())
+module.exports = Object.assign(unifiedConfig, getConfig());
