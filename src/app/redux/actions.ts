@@ -17,6 +17,10 @@ export const MESSAGES = {
   SEND_TEXT: actionEvent('send text'),
 };
 
+export const UPDATES = {
+  NEW_UPDATE: createAction('new update'),
+};
+
 export const CHATS = {
   LOAD_SLICE: actionEvent('load slice'),
   GET_DIALOGS: actionEvent('load every dialog slice'),
