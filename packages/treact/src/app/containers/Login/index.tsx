@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as Steps from './steps';
 import { connect } from 'react-redux';
 import { IStore } from 'redux/IStore';
-const s = require('./style.css');
+import { Login } from 'components/Login';
 
 type IConnectedState = Pick<IStore, 'auth'>;
 type IConnectedActions = {};
@@ -87,9 +87,9 @@ class LoginImpl extends React.Component<IProps, IState> {
     const { auth } = this.props;
 
     return (
-      <div className={s.main}>
+      <Login>
         {this.form(auth.authenticated ? 5 : this.state.step)}
-      </div>
+      </Login>
     );
   }
 }
@@ -107,6 +107,8 @@ export interface IStepSkip extends IStep {
   skipStep: LoginImpl['skipStep'];
 }
 
-const Login = connect<IConnectedState, IConnectedActions, IOwnProps>(state => ({ auth: state.auth }))(LoginImpl);
+const LoginContainer = connect<IConnectedState, IConnectedActions, IOwnProps>(
+  state => ({ auth: state.auth }),
+)(LoginImpl);
 
-export { Login }
+export { LoginContainer as Login }
