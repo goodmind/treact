@@ -4,7 +4,7 @@ import { signIn } from 'api/auth';
 import { IStore, IDispatch } from 'redux/IStore';
 import { IStepSkip as IOwnProps } from '../..';
 import { IAuthError } from 'redux/modules/auth';
-const t = require('../../style.css');
+import { AuthCode } from 'components/Login/steps';
 
 type IConnectedState = Pick<IStore, 'auth'>;
 type IConnectedActions = { dispatch: IDispatch };
@@ -38,25 +38,17 @@ class AuthCodeImpl extends React.Component<IProps, IState> {
     const { error } = this.state;
 
     return (
-      <div className={t.loginStep}>
-        <h1>{form.phoneNumber}</h1>
-        <p>
-          Please enter the code you've just received in the previous <strong>Telegram</strong> app.
-        </p>
-        <div className={`row center-xs ${t.formGroupLogin}`}>
-          <input
-            onChange={this.handleChange}
-            name="authCode"
-            className="col-xs-4 form-control form-control-lg"
-            placeholder="Your code" type="text" maxLength={5} />
-        </div>
-        {error && <div>Error type: {error.description}</div>}
-        <button onClick={this.handleNextStep} className={`${t.btn} ${t.primary}`}>Next</button>
-      </div>
+      <AuthCode
+        form={form}
+        error={error}
+        nextStep={this.handleNextStep}
+        change={this.handleChange} />
     );
   }
 }
 
-const AuthCode = connect<IConnectedState, IConnectedActions, IOwnProps>(state => ({ auth: state.auth }))(AuthCodeImpl);
+const AuthCodeContainer = connect<IConnectedState, IConnectedActions, IOwnProps>(
+  state => ({ auth: state.auth }),
+)(AuthCodeImpl);
 
-export { AuthCode }
+export { AuthCodeContainer as AuthCode }
