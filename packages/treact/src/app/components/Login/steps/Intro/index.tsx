@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IStepNext } from '../..';
+import { IStepNext } from 'containers/Login';
 const t = require('../../style.css');
 
 type IProps = Pick<IStepNext, 'nextStep'>;

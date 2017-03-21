@@ -1,4 +1,4 @@
-export { Intro } from './Intro';
+export { Intro } from 'components/Login/steps';
 export { PhoneNumber } from './PhoneNumber';
 export { AuthCode } from './AuthCode';
 export { Password } from './Password';
