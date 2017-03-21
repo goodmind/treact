@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { IStore, IDispatch } from 'redux/IStore';
 import { IStepNext as IOwnProps } from '../..';
 import { IAuthError } from 'redux/modules/auth';
-const t = require('../../style.css');
+import { Password } from 'components/Login/steps';
 
 type IConnectedState = Pick<IStore, 'auth'>;
 type IConnectedActions = { dispatch: IDispatch };
@@ -38,25 +38,16 @@ class PasswordImpl extends React.Component<IProps, IState> {
     const { error } = this.state;
 
     return (
-      <div className={t.loginStep}>
-        <h1>Cloud password check</h1>
-        <p>
-          Please enter your cloud password.
-        </p>
-        <div className={t.formGroupLogin}>
-          <input
-            onChange={this.handleChange}
-            name="password"
-            className="form-control form-control-lg"
-            placeholder="Your cloud password" type="password" />
-        </div>
-        {error && <div>Error type: {error.description}</div>}
-        <button onClick={this.handleNextStep} className={`${t.btn} ${t.primary}`}>Submit</button>
-      </div>
+      <Password
+        error={error}
+        change={this.handleChange}
+        nextStep={this.handleNextStep} />
     );
   }
 }
 
-const Password = connect<IConnectedState, IConnectedActions, IOwnProps>(state => ({ auth: state.auth }))(PasswordImpl);
+const PasswordContainer = connect<IConnectedState, IConnectedActions, IOwnProps>(
+  state => ({ auth: state.auth }),
+)(PasswordImpl);
 
-export { Password }
+export { PasswordContainer as Password }
