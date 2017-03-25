@@ -1,35 +1,36 @@
 import * as React from 'react';
-import { Chat } from 'containers/Chat';
-import { ChatList } from 'containers';
+import { InstantMessages } from 'components';
+import { Chat, ChatList } from 'containers';
 import { fetchChatList } from 'api/chatList';
-import { asyncConnect } from 'redux-connect';
-// import { Updates } from 'helpers/Telegram/Updates';
+import pool from 'helpers/Telegram/pool';
 import DownloadAssistant from './downloadAssistant';
-const s = require('./style.css');
+import { asyncConnect } from 'redux-connect';
 
 class InstantMessagesImpl extends React.Component<{}, {}> {
   // public updates = Updates.getInstance();
 
   constructor(props, context) {
     super(props, context);
-    // this.updates.start(update => {
-    //   console.log(update._typeName, update);
-    // });
+    pool.updates.attach();
+    pool.on('*', msg => console.debug('updates', msg._, msg));
+    pool.on('apiUpdate', msg => console.debug('apiUpdate', msg._, msg));
+    pool.on('difference', msg => console.debug('difference', msg._, msg));
   }
 
   public render() {
     return (
-      <div className={s.main}>
+      <InstantMessages>
         <ChatList />
         <Chat />
         <DownloadAssistant />
-      </div>
+      </InstantMessages>
     );
   }
 }
 
-const InstantMessages = asyncConnect<IConnectedState, IConnectedActions, IOwnProps>([{
-  promise: ({ store }) => store.dispatch(fetchChatList()),
-}])(InstantMessagesImpl);
+const InstantMessagesContainer =
+  asyncConnect<IConnectedState, IConnectedActions, IOwnProps>([{
+    promise: ({ store }) => store.dispatch(fetchChatList()),
+  }])(InstantMessagesImpl);
 
-export { InstantMessages }
+export { InstantMessagesContainer as InstantMessages }
