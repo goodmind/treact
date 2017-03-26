@@ -1,5 +1,5 @@
 import * as React from 'react';
-const t = require('../../style.css');
+const t = require('../style.css');
 
 const AuthCode = ({ form, error, nextStep, change }) => (
   <div className={t.loginStep}>
