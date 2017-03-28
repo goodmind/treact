@@ -1,5 +1,5 @@
 import * as React from 'react';
-const t = require('../../style.css');
+const t = require('../style.css');
 
 const Password = ({ error, change, nextStep }) => (
   <div className={t.loginStep}>

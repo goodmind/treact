@@ -1,7 +1,11 @@
 import * as React from 'react';
 const s = require('./style.css');
 
-const Login = ({ children }) => (
+interface IProps {
+  children?: React.ReactNode;
+}
+
+const Login = ({ children }: IProps) => (
   <div className={s.main}>
     {children}
   </div>
