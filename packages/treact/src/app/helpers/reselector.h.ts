@@ -1,12 +1,12 @@
-import { IMtpFileLocation } from 'redux/mtproto';
-export interface IPayload <T>{
+import { IMtpFileLocation, IMtpChat, IMtpUser, IMtpMessage, IMtpDialog } from 'redux/mtproto';
+export interface IPayload<T> {
   entities: {
     [K in keyof T]: {
       [key: number]: T[K];
-    };
+    }
   };
   result: {
-    [K in keyof T]: number[];
+    [K in keyof T]: number[]
   };
 };
 
@@ -16,33 +16,36 @@ export type TLPhoto = {
   photo_big: number;
 };
 
-export type SlicePayload = IPayload<{
-  chats: {},
-  users: {},
-  messages: {},
-  dialogs: {},
+export type Slice = {
+  histories: number,
+  chats: IMtpChat,
+  users: IMtpUser,
+  messages: IMtpMessage,
+  dialogs: IMtpDialog,
   photos: TLPhoto,
   fileLocations: IMtpFileLocation,
-}>;
+};
 
-type SelectedPayload = {
+export type SlicePayload = IPayload<Slice>;
+
+export type SelectedPayload<T> = {
   entities: {
-    [key: number]: any,
-  },
-  result: number[],
+    [key: number]: T;
+  }
+  result: number[];
 };
 
-type StoredPayload = {
+export type StoredPayload<T> = {
   byId: {
-    [key: number]: any,
-  },
-  ids: number[],
+    [key: number]: T;
+  }
+  ids: number[];
 };
 
-export type SelectModel = (modelName: string) =>
-  (payload: IPayload<any>) =>
-    SelectedPayload;
+export type SelectModel = <T, P>(modelName: string) =>
+  (payload: IPayload<P>) =>
+    SelectedPayload<T>;
 
-export type ReducerCreator = (modelName: string) =>
-  (store: StoredPayload, payload: IPayload<any>) =>
-    StoredPayload;
+export type ReducerCreator = <T, P>(modelName: string) =>
+  (store: StoredPayload<T>, payload: IPayload<P>) =>
+    StoredPayload<T>;
