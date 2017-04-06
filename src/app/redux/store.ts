@@ -53,8 +53,8 @@ export function configureStore(history, initialState?: IStore): Redux.Store<ISto
     autoRehydrate(),
   ));
 
-  if (appConfig.env === 'development' && (module as any).hot) {
-    (module as any).hot.accept('./reducers', () => {
+  if (appConfig.env === 'development' && module.hot) {
+    module.hot.accept('./reducers', () => {
       store.replaceReducer((require('./reducers')));
     });
   }
