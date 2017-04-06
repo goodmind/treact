@@ -1,4 +1,5 @@
 import { createReducer } from 'redux-act';
+import { Slice } from 'helpers/reselector.h';
 
 import { CHATS } from 'actions';
 import { IStoreList } from 'helpers/state';
@@ -10,7 +11,7 @@ import { updateStoreMap, modelDefaults } from 'helpers/reselector';
 
 const { LOAD_SLICE, GET_DIALOGS } = CHATS;
 
-const updater = updateStoreMap('chats');
+const updater = updateStoreMap<Slice, 'chats'>('chats');
 
 const newReducer = createReducer({
   [LOAD_SLICE.DONE]: updater,

@@ -28,8 +28,8 @@ const render = Component =>
 
 render(routes);
 
-if ((module as any).hot) {
-  (module as any).hot.accept('./app/routes', () => {
+if (module.hot) {
+  module.hot.accept('./app/routes', () => {
     const NewApp = require('./app/routes').default;
     render(NewApp);
   });

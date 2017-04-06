@@ -5,8 +5,9 @@ const { GET_DIALOGS, LOAD_SLICE } = CHATS;
 const { SEND_TEXT } = MESSAGES;
 
 import { updateStoreMap, modelDefaults } from 'helpers/reselector';
+import { Slice } from 'helpers/reselector.h';
 
-const updater = updateStoreMap('messages');
+const updater = updateStoreMap<Slice, 'messages'>('messages');
 
 const reducer = createReducer({
   [SEND_TEXT.DONE]: updater,

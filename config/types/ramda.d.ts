@@ -1507,11 +1507,23 @@ declare namespace R {
      * the value associated with the key in the returned object. The key will be excluded from the returned object if the
      * resulting value is undefined.
      */
-    mergeWith<U,V>(fn: (x: any, z: any) => any, a: U, b: V): U & V;
-    mergeWith<U>(fn: (x: any, z: any) => any, a: U): <V>(b: V) => U & V;
-    // mergeWith(fn: (x: any, z: any) => any): <U,V>(a: U, b: V) => U & V;
-    mergeWith<U,V>(fn: (x: any, z: any) => any): CurriedFunction2<U,V,U&V>;
-    // mergeWith<U,V>: CurriedFunction3<(x: any, z: any) => any, U, V, U & V>;
+    // mergeWith<U,V>(fn: (x: any, z: any) => any, a: U, b: V): U & V;
+    // mergeWith<U>(fn: (x: any, z: any) => any, a: U): <V>(b: V) => U & V;
+    // // mergeWith(fn: (x: any, z: any) => any): <U,V>(a: U, b: V) => U & V;
+    // mergeWith<U,V>(fn: (x: any, z: any) => any): CurriedFunction2<U,V,U&V>;
+    // // mergeWith<U,V>: CurriedFunction3<(x: any, z: any) => any, U, V, U & V>;
+
+    // base
+    mergeWith<U, V>(fn: (x: any, z: any) => any, a: U, b: V): U & V;
+    mergeWith<U>(fn: (x: any, z: any) => any, a: U): {
+      <V>(b: V): U & V;
+    };
+    mergeWith(fn: (x: any, z: any) => any): {
+      <U, V>(a: U, b: V): U & V;
+      <U>(a: U):{
+        <V>(b: V): U & V;
+      };
+    };
 
     /**
      * Creates a new object with the own properties of the two provided objects. If a key exists in both objects,
@@ -1928,6 +1940,10 @@ declare namespace R {
     pick<T, K extends keyof T>(names: List<K>, obj: T): Pick<T, K>;
     pick<T, K extends keyof T>(names: List<K>): (obj: T) => Pick<T, K>;
     // pick<T, K extends keyof T>: CurriedFunction2<List<K>, T, Pick<T, K>>;
+
+    pick<T>(names: List<Prop>, obj: T): Partial<T>;
+    pick<T>(names: List<Prop>): (obj: T) => Partial<T>;
+    // pick<T>: CurriedFunction2<List<Prop>, T, Partial<T>>;
 
 
     /**
