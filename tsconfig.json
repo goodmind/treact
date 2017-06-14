@@ -17,8 +17,10 @@
     "experimentalDecorators": true,
     "noUnusedParameters": true,
     "noUnusedLocals": true,
+    "strict": true,
     "jsx": "react",
     "moduleResolution": "node",
+    "allowJs": true,
     "lib": [
       "es2015",
       "dom"
@@ -26,6 +28,7 @@
   },
   "exclude": [
     "node_modules",
+    "gh-pages",
     "build",
     "typings/main",
     "typings/main.d.ts"
