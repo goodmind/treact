@@ -20,8 +20,8 @@ class PasswordImpl extends React.Component<IProps, IState> {
     error: null,
   };
 
-  public handleChange = event =>
-    this.setState({ [event.target.name]: event.target.value });
+  public handleChange = (e: any) =>
+    this.setState({ [e.target.name]: e.target.value })
 
   public handleNextStep = () => {
     const { update, nextStep, dispatch } = this.props;
@@ -50,6 +50,6 @@ class PasswordImpl extends React.Component<IProps, IState> {
 
 const PasswordContainer = connect<IConnectedState, IConnectedActions, IOwnProps>(
   state => ({ auth: state.auth }),
-)(PasswordImpl);
+)<IOwnProps>(PasswordImpl);
 
-export { PasswordContainer as Password }
+export { PasswordContainer as Password };
