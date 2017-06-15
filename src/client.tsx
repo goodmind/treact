@@ -1,20 +1,19 @@
-// TODO: remove fetch
-import 'isomorphic-fetch';
-
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
+import { browserHistory, Router } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
-import AppProvider, { store } from './AppProvider';
-import { Router, browserHistory } from 'react-router';
 import { ReduxAsyncConnect } from 'redux-connect';
 import routes from './app/routes';
+import AppProvider, { store } from './AppProvider';
 
 const history = syncHistoryWithStore(browserHistory, store);
-const connectedCmp = (props) => <ReduxAsyncConnect {...props} />;
+const connectedCmp = function <T>(props: T) {
+  return <ReduxAsyncConnect {...props} />;
+};
 
-const render = Component =>
-  ReactDOM.render((
+const render = function <T extends JSX.Element>(Component: T) {
+  return ReactDOM.render((
     <AppContainer>
       <AppProvider>
         <Router
@@ -25,6 +24,7 @@ const render = Component =>
       </AppProvider>
     </AppContainer>
   ), document.getElementById('app'));
+};
 
 render(routes);
 
