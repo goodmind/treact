@@ -48,7 +48,7 @@ class LoginImpl extends React.Component<IProps, IState> {
     });
   }
 
-  public form = step => {
+  public form = (step: number) => {
     switch (step) {
       case 1:
         return (
