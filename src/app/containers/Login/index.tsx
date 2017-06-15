@@ -1,8 +1,8 @@
+import { Login } from 'components/Login';
 import * as React from 'react';
-import * as Steps from './steps';
 import { connect } from 'react-redux';
 import { IStore } from 'redux/IStore';
-import { Login } from 'components/Login';
+import * as Steps from './steps';
 
 type IConnectedState = Pick<IStore, 'auth'>;
 type IConnectedActions = {};
