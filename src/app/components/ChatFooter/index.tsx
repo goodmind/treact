@@ -1,6 +1,6 @@
 import * as React from 'react';
 import AutoSizeTextarea from 'react-autosize-textarea';
-const s = require('../Chat/style.css');
+import * as s from '../Chat/style.css';
 
 export const ChatFooter = ({ value, change, submit }) => (
   <div className={s.chatfooter}>
