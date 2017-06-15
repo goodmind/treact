@@ -20,8 +20,8 @@ class AuthCodeImpl extends React.Component<IProps, IState> {
     error: null,
   };
 
-  public handleChange = event =>
-    this.setState({ [event.target.name]: event.target.value });
+  public handleChange = (e: any) =>
+    this.setState({ [e.target.name]: e.target.value })
 
   public handleNextStep = () => {
     const { update, skipStep, dispatch } = this.props;
@@ -51,6 +51,6 @@ class AuthCodeImpl extends React.Component<IProps, IState> {
 
 const AuthCodeContainer = connect<IConnectedState, IConnectedActions, IOwnProps>(
   state => ({ auth: state.auth }),
-)(AuthCodeImpl);
+)<IOwnProps>(AuthCodeImpl);
 
-export { AuthCodeContainer as AuthCode }
+export { AuthCodeContainer as AuthCode };
