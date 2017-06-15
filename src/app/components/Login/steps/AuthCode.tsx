@@ -3,7 +3,11 @@ import * as React from 'react';
 import * as t from '../style.css';
 import { ICommonProps } from './';
 
-const AuthCode = ({ form, error, nextStep, change }) => (
+type IProps = ICommonProps & {
+  form: IFormState,
+};
+
+const AuthCode = ({ form, error, nextStep, change }: IProps) => (
   <div className={t.loginStep}>
     <h1>{form.phoneNumber}</h1>
     <p>
@@ -21,4 +25,4 @@ const AuthCode = ({ form, error, nextStep, change }) => (
   </div>
 );
 
-export { AuthCode }
+export { AuthCode };
