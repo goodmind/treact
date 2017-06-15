@@ -16,10 +16,11 @@ import { IStoreUsers } from './modules/users';
 import { IStoreList } from 'helpers/state';
 import { IMtpFileLocation, IMtpUser } from 'redux/mtproto';
 export interface IStore {
-  authKey: any;
+  currentDc: number;
+  authKey: {};
   auth: IAuth;
-  currentUser: any;
-  messages: any;
+  currentUser: IMtpUser;
+  messages: IStoreMessages;
   histories: IStoreHistories;
   dialogs: IStoreDialogs;
   users: IStoreUsers;
@@ -31,9 +32,10 @@ export interface IStore {
     status: StatusStore;
     locations: IStoreList<IMtpFileLocation>;
   };
-};
+  photos: IStorePhotos;
+}
 
-export type IThunkAction<R, S, E> = (dispatch: Dispatch<S>, getState?: () => S, extraArgument?: E) => R;
+export type IThunkAction<R, S, E> = (dispatch: Dispatch<S>, getState: () => S, extraArgument?: E) => R;
 
 export type IAsyncAction<R> = IThunkAction<R, IStore, undefined>;
 
