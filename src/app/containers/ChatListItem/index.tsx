@@ -57,12 +57,13 @@ interface IProps {
 }
 
 interface IFuncs {
-  click(id: number): any;
+  click(id: number): Promise<void>;
 }
 
 interface IState {
-  peerData: IMtpUser|IMtpChat;
-  fromData: IMtpUser|IMtpChat;
+  peerData: IMtpUser | IMtpChat;
+  // TODO: This is arguable (shouldn't be nullable)
+  fromData: IMtpUser | IMtpChat | null;
   from: TPeersType;
   isNotChat: boolean;
   isYou: boolean;
