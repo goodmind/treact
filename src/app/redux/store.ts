@@ -24,14 +24,16 @@ export function configureStore(history: History) {
     middlewares.push(logger);
   }
 
-  const composeEnhancers = (appConfig.env !== 'production' &&
+  const composeEnhancers: typeof compose = (appConfig.env !== 'production' &&
     typeof window === 'object' &&
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
-  const store = createStore(rootReducer, initialState, composeEnhancers(
+  const storeEnhancer = composeEnhancers<Enhancer, Enhancer, Enhancer>(
     applyMiddleware(...middlewares),
     autoRehydrate(),
-  ));
+  );
+
+  const store = createStore<IStore>(rootReducer, storeEnhancer);
 
   if (appConfig.env === 'development' && module.hot) {
     module.hot.accept('./reducers', () => {
