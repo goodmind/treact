@@ -1,10 +1,10 @@
+import { signIn } from 'api/auth';
+import { AuthCode } from 'components/Login/steps';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { signIn } from 'api/auth';
-import { IStore, IDispatch } from 'redux/IStore';
+import { IDispatch, IStore } from 'redux/IStore';
+import { IAuthError, isAuthError } from 'redux/modules/auth';
 import { IStepSkip as IOwnProps } from '../..';
-import { IAuthError } from 'redux/modules/auth';
-import { AuthCode } from 'components/Login/steps';
 
 type IConnectedState = Pick<IStore, 'auth'>;
 type IConnectedActions = { dispatch: IDispatch };
