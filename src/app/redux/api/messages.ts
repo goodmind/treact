@@ -1,11 +1,11 @@
+import { getInputPeerById, getOutputPeer } from 'helpers/Telegram/Peers';
+import { api } from 'helpers/Telegram/pool';
 import { normalize, schema } from 'normalizr';
 import { pick } from 'ramda';
-import { api } from 'helpers/Telegram/pool';
-import { getInputPeerById, getOutputPeer } from 'helpers/Telegram/Peers';
-import { nextRandomInt, bigint } from 'telegram-mtproto/lib/bin';
+import { bigint, nextRandomInt } from 'telegram-mtproto/lib/bin';
 import { tsNow } from 'telegram-mtproto/lib/service/time-manager';
 
-import { IDispatch } from 'redux/IStore';
+import { IDispatch, IStore } from 'redux/IStore';
 import { MESSAGES } from '../actions';
 const { SEND_TEXT } = MESSAGES;
 
