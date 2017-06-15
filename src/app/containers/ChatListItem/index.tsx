@@ -34,7 +34,7 @@ class ChatListItemContainer extends React.Component<IProps & IFuncs & IState, {}
       selected={selected}
       name={getPeerName(peer, peerData)}
       unreadCount={this.props.dialog.unread_count}
-      previewName={isNotChat ? undefined : getPeerShortName(from, fromData)}
+      previewName={isNotChat ? '' : (getPeerShortName(from, fromData) || '')}
       isYou={isYou}
       text={lastMsg.message || ''}
       />;
