@@ -1,4 +1,7 @@
 import * as React from 'react';
+import { ICommonProps } from '../';
+import * as t from '../../style.css';
+import * as s from './style.css';
 
 const s = require('./style.css');
 const t = require('../../style.css');
