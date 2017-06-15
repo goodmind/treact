@@ -1,4 +1,6 @@
+import { logOut } from 'api/auth';
 import * as React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { IDispatch } from 'redux/IStore';
 import { logOut } from 'api/auth';
