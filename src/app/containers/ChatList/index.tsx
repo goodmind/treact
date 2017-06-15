@@ -21,7 +21,7 @@ interface IProps {
   peersMap: TById<TPeersType>;
   selected: number;
   loading: boolean;
-  loadAtDate: (date: number) => any;
+  loadAtDate: (date: number) => Promise<Action<IPayload<Slice>, {}>>;
   // item?: any;
   // activeChat?: any;
   // dialogs: any;
@@ -109,7 +109,7 @@ const offsetDate = createSelector<
     return messages[msgId].date;
   });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch: IDispatch) => ({
   loadAtDate: (date: number) => dispatch(fetchChatList(undefined, date)),
 });
 
@@ -125,6 +125,6 @@ const mapStateToProps = (state: IStore) => ({
   loading: state.loadings.chatList,
 });
 
-const connected = connect(mapStateToProps, mapDispatchToProps)(ChatListContainer);
+const connected = connect(mapStateToProps, mapDispatchToProps)<{}>(ChatListContainer);
 
-export { connected as ChatList }
+export { connected as ChatList };
