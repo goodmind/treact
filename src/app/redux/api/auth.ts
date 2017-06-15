@@ -12,12 +12,14 @@ const { SEND_CODE, SIGN_IN, GET_PASSWORD, LOG_OUT } = AUTH;
 
 const options = {dcID: DEFAULT_DC_ID, createNetworker: true, noErrorBox: true};
 
-const addDc = r => {
+const addDc = <T extends { user: IMtpUser }>(r: T) => {
   const dcID = DEFAULT_DC_ID;
   pool.setUserAuth(dcID, {
     id: r.user.id,
   });
-  return storage.getItem(`dc${dcID}_auth_key`).then(authKey => Object.assign({}, r, { dcID, authKey }));
+  return storage
+    .getItem<string>(`dc${dcID}_auth_key`)
+    .then(authKey => Object.assign({}, r, {dcID, authKey}));
 };
 
 function getPassword() {
