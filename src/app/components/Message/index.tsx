@@ -1,7 +1,6 @@
-import * as React from 'react';
 import { PeerPhoto } from 'containers/PeerPhoto';
-
-const style = require('./style.css');
+import * as React from 'react';
+import * as style from './style.css';
 
 interface IOwnProps {
   id: number;
