@@ -22,7 +22,7 @@ class HomeImpl extends React.Component<IProps, {}> {
   }
 }
 
-const mapStateToProps = state => ({ auth: state.auth });
+const mapStateToProps = (state: IStore) => ({ auth: state.auth });
 const Home = connect<IConnectedState, IConnectedActions, IOwnProps>(mapStateToProps)(HomeImpl);
 
-export { Home }
+export { Home };
