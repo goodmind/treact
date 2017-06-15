@@ -2,14 +2,14 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import { Chat, DefaultScreen } from 'components/Chat';
-import { IStore, IDispatch } from 'redux/IStore';
-import { getPeerData } from 'helpers/Telegram/Peers';
-import { IMtpUser, IMtpChat, IMtpMessage } from 'redux/mtproto';
 import { Message } from 'components/Message';
-import { selectChat, loadOffset } from 'redux/api/chatList';
+import { getPeerData } from 'helpers/Telegram/Peers';
 import { getPeerName } from 'helpers/Telegram/Peers';
+import { Obj, path, props } from 'ramda';
+import { loadOffset, selectChat } from 'redux/api/chatList';
+import { IDispatch, IStore } from 'redux/IStore';
 import { TPeersType } from 'redux/modules/peers';
-import { path, props, Obj } from 'ramda';
+import { IMtpChat, IMtpMessage, IMtpUser } from 'redux/mtproto';
 
 const onChatSelect = async (currentId: number, nextId: number) => {
   if (nextId && nextId !== currentId) {
