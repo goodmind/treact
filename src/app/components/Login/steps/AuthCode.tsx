@@ -1,5 +1,7 @@
+import { IFormState } from 'containers/Login';
 import * as React from 'react';
-const t = require('../style.css');
+import * as t from '../style.css';
+import { ICommonProps } from './';
 
 const AuthCode = ({ form, error, nextStep, change }) => (
   <div className={t.loginStep}>
