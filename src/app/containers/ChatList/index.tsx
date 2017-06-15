@@ -81,9 +81,9 @@ class ChatListContainer extends React.Component<IProps, IState> {
 const sortDialogs = createSelector<
   IStore,
   IStore['dialogs']['ids'],
-  IStore['dialogs']['ids'],
   IStore['messages']['byId'],
-  IStore['dialogs']['byId']>(
+  IStore['dialogs']['byId'],
+  IStore['dialogs']['ids']>(
   path(['dialogs', 'ids']),
   path(['messages', 'byId']),
   path(['dialogs', 'byId']),
@@ -95,10 +95,10 @@ const sortDialogs = createSelector<
 
 const offsetDate = createSelector<
   IStore,
-  number,
   IStore['dialogs']['ids'],
   IStore['dialogs']['byId'],
-  IStore['messages']['byId']
+  IStore['messages']['byId'],
+  number
 >(
   path(['dialogs', 'ids']),
   path(['dialogs', 'byId']),
