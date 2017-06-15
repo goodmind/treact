@@ -1,5 +1,6 @@
 import * as React from 'react';
-const t = require('../style.css');
+import * as t from '../style.css';
+import { ICommonProps } from './';
 
 const Password = ({ error, change, nextStep }) => (
   <div className={t.loginStep}>
