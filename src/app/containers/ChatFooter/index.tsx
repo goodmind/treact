@@ -6,10 +6,15 @@ import { sendText } from 'redux/api/messages';
 import { IDispatch, IStore } from 'redux/IStore';
 
 type IState = {
-  message: string;
+  message: string,
 };
 
-class ChatFooterContainer extends React.Component<any, IState> {
+type IProps = {
+  selected: number,
+  sendMessage(id: number, text: string): Promise<void>,
+};
+
+class ChatFooterContainer extends React.Component<IProps, IState> {
   public state = {
     message: '',
   };
@@ -35,6 +40,6 @@ const mapState = (state: IStore) => ({ selected: state.selected.dialog });
 const mapDispatch = (dispatch: IDispatch) => ({
   sendMessage: (id: number, text: string) => dispatch(sendText(id, text)),
 });
-const connected = connect(mapState, mapDispatch)(ChatFooterContainer);
+const connected = connect(mapState, mapDispatch)<{}>(ChatFooterContainer);
 
-export { connected as ChatFooter }
+export { connected as ChatFooter };
