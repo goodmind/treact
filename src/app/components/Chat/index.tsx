@@ -9,13 +9,12 @@ export const DefaultScreen = () => (
   </div>
 );
 
-type IProps = {
+type IBasicProps = {
   name: string;
   userCount: number;
-  loadMore: () => void;
 };
 
-const ChatHeader = ({ name, userCount }) => (
+const ChatHeader = ({ name, userCount }: IBasicProps) => (
   <div className={s.chatheader}>
     <div className={s.left}>
       <div className={s.top}>{name}</div>
@@ -24,6 +23,10 @@ const ChatHeader = ({ name, userCount }) => (
     <div className={s.right} />
   </div>
 );
+
+type IProps = IBasicProps & {
+  loadMore(): void,
+};
 
 class Chat extends React.Component<IProps, {}> {
   public render() {
@@ -51,4 +54,4 @@ class Chat extends React.Component<IProps, {}> {
   }
 }
 
-export { Chat }
+export { Chat };
