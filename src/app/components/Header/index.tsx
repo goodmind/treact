@@ -7,7 +7,7 @@ import * as s from './style.css';
 import * as logo from './title-logo.png';
 
 interface IConnectedActions {
-  logOut: React.EventHandler<React.MouseEvent<HTMLAnchorElement>>;
+  logOut: React.MouseEventHandler<HTMLAnchorElement>;
 }
 
 const Header = ({ logOut }: IConnectedActions) => (
