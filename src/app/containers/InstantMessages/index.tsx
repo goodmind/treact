@@ -1,10 +1,11 @@
-import * as React from 'react';
+import { fetchChatList } from 'api/chatList';
 import { InstantMessages } from 'components';
 import { Chat, ChatList } from 'containers';
-import { fetchChatList } from 'api/chatList';
 import pool from 'helpers/Telegram/pool';
+import * as React from 'react';
+import { asyncConnect /*, AsyncOptions*/ } from 'redux-connect';
+// import { IStore } from 'redux/IStore';
 import DownloadAssistant from './downloadAssistant';
-import { asyncConnect } from 'redux-connect';
 
 class InstantMessagesImpl extends React.Component<{}, {}> {
   // public updates = Updates.getInstance();
