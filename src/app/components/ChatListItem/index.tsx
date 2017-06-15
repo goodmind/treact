@@ -7,7 +7,7 @@ interface IChatListBasicProps {
   id: number;
   name: string;
   selected: boolean;
-  click: React.EventHandler<React.MouseEvent<any>>;
+  click: React.MouseEventHandler<{}>;
 }
 
 interface IChatListFullProps extends IChatListBasicProps {
