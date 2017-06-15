@@ -1,14 +1,14 @@
+import { equals, filter, isEmpty, isNil, keys, map,
+  pick, pipe, unless, when } from 'ramda';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Action } from 'redux-act';
-import { isNil, isEmpty, unless, when, pipe, filter,
-  equals, keys, map, pick } from 'ramda';
 
-import { IStore, IDispatch } from 'redux/IStore';
-import { CACHE } from 'redux/actions';
-import { IMtpFileLocation, IMtpUploadFile } from 'redux/mtproto';
-import { api } from 'helpers/Telegram/pool';
 import picStore from 'helpers/FileManager/picStore';
+import { api } from 'helpers/Telegram/pool';
+import { CACHE } from 'redux/actions';
+import { IDispatch, IStore } from 'redux/IStore';
+import { IMtpFileLocation, IMtpUploadFile } from 'redux/mtproto';
 
 import * as localForage from 'localforage';
 // import * as Knack from 'knack';
