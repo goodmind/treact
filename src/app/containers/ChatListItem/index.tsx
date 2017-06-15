@@ -1,16 +1,16 @@
 import * as React from 'react';
 
-import { path, isEmpty } from 'ramda';
+import { isEmpty, path } from 'ramda';
 
+import { ChatListItem, ChatListItemEmpty } from 'components/ChatListItem';
 import { getPeerData } from 'helpers/Telegram/Peers';
-import { ChatListItemEmpty, ChatListItem } from 'components/ChatListItem';
-import { IMtpDialog, IMtpUser, IMtpChat /* IMtpMessage */, IMtpMessage } from 'redux/mtproto';
-import { TPeersType } from 'redux/modules/peers';
-import { IStoreHistory } from 'redux/modules/histories';
-import { connect } from 'react-redux';
-import { IDispatch, IStore } from 'redux/IStore';
 import { getPeerName, getPeerShortName } from 'helpers/Telegram/Peers';
+import { connect } from 'react-redux';
 import { selectChat } from 'redux/api/chatList';
+import { IDispatch, IStore } from 'redux/IStore';
+import { IStoreHistory } from 'redux/modules/histories';
+import { TPeersType } from 'redux/modules/peers';
+import { IMtpChat, IMtpDialog, IMtpMessage /* IMtpMessage */, IMtpUser } from 'redux/mtproto';
 
 // const getLastMessage =
 //  (history: IStoreHistory): IMtpMessage => history.byId[last<number, typeof history.ids>(history.ids)];
