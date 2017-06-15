@@ -48,4 +48,4 @@ const propsState = (state: IStore, { peerID }: IOwnProps) => ({
 
 const connected = connect<IConnectedState, {}, IOwnProps>(propsState)(PeerPhotoContainer);
 
-export { connected as PeerPhoto }
+export { connected as PeerPhoto };
