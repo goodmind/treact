@@ -11,7 +11,7 @@ type IConnectedActions = { dispatch: IDispatch };
 type IProps = IConnectedState & IConnectedActions & IOwnProps;
 type IState = {
   authCode: string;
-  error: IAuthError;
+  error: IAuthError | null;
 };
 
 class AuthCodeImpl extends React.Component<IProps, IState> {
@@ -29,7 +29,9 @@ class AuthCodeImpl extends React.Component<IProps, IState> {
 
     update({ authCode });
     dispatch(signIn(this.state.authCode))
-      .then(({payload: error}) => (error && error.code) ? this.setState({ error }) : this.setState({error: null}))
+      .then(({payload: error}) => isAuthError(error)
+        ? this.setState({ error })
+        : this.setState({ error: null }))
       .then(() => skipStep(this.props.auth.error.type === 'SESSION_PASSWORD_NEEDED' ? 1 : 2));
   }
 
