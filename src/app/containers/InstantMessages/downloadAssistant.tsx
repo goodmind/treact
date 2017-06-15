@@ -30,11 +30,11 @@ interface IPropsStore {
   files: {
     [key: number]: IMtpFileLocation;
   };
-};
+}
 
 interface IPropsDispatch {
-  load(list: number[]): Action<{}, {}>;
-  done(id: number): Action<{}, {}>;
+  load(list: number[]): Action<number[], {}>;
+  done(id: number): Action<number, {}>;
 }
 
 const beginLoad = async (id: number, loc: IMtpFileLocation) => {
@@ -74,14 +74,14 @@ const DownloadAssistant = ({ photoCache, files, load, done }: IPropsStore & IPro
 };
 
 const queueList = pipe(
-  filter(equals('queue')) as any,
+  filter(equals('queue')) as <T>(arr: { [key: number]: T }) => T[],
   keys,
   map(e => +e),
 );
 
 const stateProps = ({ files: { status, locations } }: IStore) => {
   const photoCache = queueList(status);
-  const files = pick(photoCache as any, locations.byId);
+  const files = pick(photoCache, locations.byId);
   return {
     photoCache,
     files,
@@ -92,6 +92,6 @@ const dispatchProps = (dispatch: IDispatch) => ({
   done: (id: number) => dispatch(DONE(id)),
 });
 
-const connected = connect(stateProps, dispatchProps)(DownloadAssistant);
+const connected = connect(stateProps, dispatchProps)<{}>(DownloadAssistant);
 
 export default connected;
