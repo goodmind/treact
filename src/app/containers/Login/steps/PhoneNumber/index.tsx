@@ -12,7 +12,7 @@ type IProps = IConnectedState & IConnectedActions & IOwnProps;
 type IState = {
   phoneCode: string;
   phoneNumber: string;
-  error: IAuthError;
+  error: IAuthError | null;
 };
 
 class PhoneNumberImpl extends React.Component<IProps, IState> {
@@ -31,7 +31,9 @@ class PhoneNumberImpl extends React.Component<IProps, IState> {
 
     update({ phoneNumber });
     dispatch(sendCode(phoneNumber))
-      .then(({payload: error}) => error.code ? this.setState({ error }) : this.setState({error: null}))
+      .then(({ payload: error }) => isAuthError(error)
+        ? this.setState({ error })
+        : this.setState({ error: null }))
       .then(() => this.state.error || nextStep());
   }
 
