@@ -111,4 +111,4 @@ const LoginContainer = connect<IConnectedState, IConnectedActions, IOwnProps>(
   state => ({ auth: state.auth }),
 )(LoginImpl);
 
-export { LoginContainer as Login }
+export { LoginContainer as Login };
