@@ -1,10 +1,10 @@
+import * as classNames from 'classnames';
+import { PeerPhoto, PeerPhotoEmpty } from 'components/PeerPhoto';
+import picStore from 'helpers/FileManager/picStore';
+import { pathOr } from 'ramda';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { IStore } from 'redux/IStore';
-import { pathOr } from 'ramda';
-import { PeerPhotoEmpty, PeerPhoto } from 'components/PeerPhoto';
-import picStore from 'helpers/FileManager/picStore';
-import * as classNames from 'classnames';
 import { FileStatus } from 'redux/modules/files';
 
 interface IConnectedState {
