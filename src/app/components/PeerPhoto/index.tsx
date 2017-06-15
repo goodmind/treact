@@ -1,8 +1,6 @@
-import * as React from 'react';
-
 import picStore from 'helpers/FileManager/picStore';
-
-const defPhoto = require('./usercolor1.png');
+import * as React from 'react';
+import * as defPhoto from './usercolor1.png';
 
 interface IProps {
   id?: number | 'default';
