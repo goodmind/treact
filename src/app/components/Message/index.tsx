@@ -7,7 +7,7 @@ interface IOwnProps {
   date: number;
   user: number;
   text: string;
-};
+}
 
 const formatTime = (date: number) => {
   const dateObject = new Date(date * 1000);
