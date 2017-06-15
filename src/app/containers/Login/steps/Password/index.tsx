@@ -11,7 +11,7 @@ type IConnectedActions = { dispatch: IDispatch };
 type IProps = IConnectedState & IConnectedActions & IOwnProps;
 type IState = {
   password: string;
-  error: IAuthError;
+  error: IAuthError | null;
 };
 
 class PasswordImpl extends React.Component<IProps, IState> {
@@ -30,7 +30,9 @@ class PasswordImpl extends React.Component<IProps, IState> {
     update({ password });
     console.log(this.state, this.props);
     dispatch(checkPassword(this.state.password))
-      .then(({payload: error}) => error.code ? this.setState({ error }) : this.setState({error: null}))
+      .then(({ payload: error }) => isAuthError(error)
+        ? this.setState({ error })
+        : this.setState({ error: null }))
       .then(() => this.state.error || nextStep());
   }
 
