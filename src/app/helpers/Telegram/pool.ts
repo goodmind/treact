@@ -1,7 +1,7 @@
-import { serverConfig, appSettings } from './config';
-import MTProto, { AsyncStorage } from 'telegram-mtproto';
-import { /* pipe, */ map /*, apply, toPairs*/ } from 'ramda';
 import * as localforage from 'localforage';
+import { /* pipe, */ map /*, apply, toPairs*/ } from 'ramda';
+import MTProto, { AsyncStorage } from 'telegram-mtproto';
+import { appSettings, serverConfig } from './config';
 
 export const storage = localforage.createInstance({
   driver: localforage.LOCALSTORAGE,
