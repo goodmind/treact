@@ -1,5 +1,5 @@
 import { /*bytesToBase64, */blobConstruct, bytesToArrayBuffer } from './index';
-const defaultPic = require('./usercolor1.png');
+import * as defaultPic from './usercolor1.png';
 
 // const createBlobString = (data, mime) => `data:${mime};base64,${data}`
 
