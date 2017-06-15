@@ -10,7 +10,7 @@ import DownloadAssistant from './downloadAssistant';
 class InstantMessagesImpl extends React.Component<{}, {}> {
   // public updates = Updates.getInstance();
 
-  constructor(props, context) {
+  constructor(props: {}, context: {}) {
     super(props, context);
     pool.updates.attach();
     pool.on('*', msg => console.debug('updates', msg._, msg));
@@ -29,9 +29,10 @@ class InstantMessagesImpl extends React.Component<{}, {}> {
   }
 }
 
+// TODO: remove redux-connect
 const InstantMessagesContainer =
-  asyncConnect<IConnectedState, IConnectedActions, IOwnProps>([{
-    promise: ({ store }) => store.dispatch(fetchChatList()),
+  asyncConnect([{
+    promise: o => o.store.dispatch(fetchChatList()),
   }])(InstantMessagesImpl);
 
-export { InstantMessagesContainer as InstantMessages }
+export { InstantMessagesContainer as InstantMessages };
