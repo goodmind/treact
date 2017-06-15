@@ -1,8 +1,7 @@
-import * as React from 'react';
 import { ChatFooter } from 'containers';
-import * as InfiniteScroll from 'react-infinite-scroller';
-
-const s = require('./style.css');
+import * as React from 'react';
+import InfiniteScroll from 'react-infinite-scroller';
+import * as s from './style.css';
 
 export const DefaultScreen = () => (
   <div className={s.chat}>
