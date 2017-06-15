@@ -50,18 +50,18 @@ class ChatContainer extends React.Component<IProps, {}> {
   }
 }
 
-interface IConnectedState {
+type IConnectedState =  {
   selected: number;
   history: number[];
   messages: IMtpMessage[];
   peer?: TPeersType;
   peerData?: IMtpUser | IMtpChat;
-  peerName?: string;
-}
+  peerName: string;
+};
 
-interface IConnectedActions {
-  loadOffset: (id: number, offset?: number) => any;
-}
+type IConnectedActions = {
+  loadOffset<T>(id: number, offset?: number): Promise<T>;
+};
 
 type IProps = IConnectedState & IConnectedActions;
 
@@ -74,6 +74,8 @@ const stateMap = (state: IStore): IConnectedState => {
     selected,
     history: [],
     messages: [],
+    // TODO: This is arguable
+    peerName: '',
   };
 
   const history = state.histories.byId[selected] || [];
