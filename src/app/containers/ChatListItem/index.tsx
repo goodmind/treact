@@ -70,13 +70,13 @@ interface IState {
   message?: IMtpMessage;
 }
 
-const preview = (state, message, peer) => {
+const preview = (state: IStore, message: IMtpMessage, peer: TPeersType) => {
   const fromId = message.from_id || -1;
   const from = state.peers.byId[fromId];
 
   const isNotChat = peer === 'user' || from !== 'user';
   const isYou = !!message.out;
-  const fromData = !isNotChat && getPeerData(fromId, from, state);
+  const fromData = !isNotChat ? getPeerData(fromId, from, state) : null;
 
   return {
     isNotChat,
@@ -89,7 +89,7 @@ const preview = (state, message, peer) => {
 const messagesPath = path(['messages', 'byId']);
 
 const mapState = (state: IStore, { id, peer, dialog }: IProps): IState => {
-  const message = messagesPath(state)[dialog.top_message];
+  const message = messagesPath<IStore['messages']['byId']>(state)[dialog.top_message];
   const peerData = getPeerData(id, peer, state);
 
   return {
