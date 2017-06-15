@@ -9,11 +9,11 @@ export class PicStore extends Map<number | string, string> {
     this.set('default', defaultPic);
   }
 
-  public addBlob = (id, blob: Blob) => {
+  public addBlob = (id: number, blob: Blob) => {
     this.set(id, URL.createObjectURL(blob));
   }
 
-  public addPic = (id, fileData, mime = 'image/jpeg') => {
+  public addPic = (id: number, fileData: Iterable<number>, mime = 'image/jpeg') => {
     const blob = blobConstruct([bytesToArrayBuffer(fileData)], mime);
     // const based = bytesToBase64(fileData)
     // const res = createBlobString(based, mime)
