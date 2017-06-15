@@ -9,9 +9,11 @@ export const storage = localforage.createInstance({
 
 const LocalStorage: AsyncStorage = {
   get: storage.getItem, // (...keys) => Promise.all(map<string, Promise<any>>(storage.getItem.bind(storage), keys)),
-  remove: (...keys) => Promise.all(map<string, Promise<any>>(storage.removeItem.bind(storage), keys)),
+  remove: async <T>(...keys: string[]) => {
+    await Promise.all(map<string, Promise<T>>(storage.removeItem.bind(storage), keys));
+  },
   set: storage.setItem, // pipe<any, any>(toPairs, map(apply(storage.setItem.bind(storage)))),
-  clear: (): Promise<any> => storage.clear(),
+  clear: (): Promise<void> => storage.clear(),
 };
 
 const app = {
