@@ -4,8 +4,10 @@ import { CHATS, MESSAGES } from 'actions';
 const { GET_DIALOGS, LOAD_SLICE } = CHATS;
 const { SEND_TEXT } = MESSAGES;
 
-import { updateStoreMap, modelDefaults } from 'helpers/reselector';
-import { Slice } from 'helpers/reselector.h';
+import { modelDefaults, updateStoreMap } from 'helpers/reselector';
+import { Slice, StoredPayload } from 'helpers/reselector.h';
+
+export type IStoreMessages = StoredPayload<Slice['messages']>;
 
 const updater = updateStoreMap<Slice, 'messages'>('messages');
 
