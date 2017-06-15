@@ -19,7 +19,9 @@ class ChatFooterContainer extends React.Component<IProps, IState> {
     message: '',
   };
 
-  public onChange = e => this.setState({ message: e.target.value });
+  public onChange: React.ChangeEventHandler<HTMLInputElement> =
+    e => this.setState({ message: e.target.value })
+
   public onSubmit = async () => {
     const { sendMessage, selected } = this.props;
     await sendMessage(selected, this.state.message);
