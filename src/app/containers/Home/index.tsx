@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import { IStore, IDispatch } from 'redux/IStore';
+import { IDispatch, IStore } from 'redux/IStore';
 
 type IConnectedState = Pick<IStore, 'auth'>;
 type IConnectedActions = { dispatch: IDispatch };
