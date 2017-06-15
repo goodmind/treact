@@ -25,6 +25,6 @@ const dispatchToProps = (dispatch: IDispatch) => ({
   },
 });
 
-const connected = connect<{}, IConnectedActions, {}>(null, dispatchToProps)(Header);
+const connected = connect<{}, IConnectedActions, {}>(null, dispatchToProps)<{}>(Header);
 
-export { connected as Header }
+export { connected as Header };
