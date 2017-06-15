@@ -1,10 +1,12 @@
-import { pipe, tap } from 'ramda';
-import pool, { api, storage } from 'helpers/Telegram/pool';
-import { APP_HASH, APP_ID, DEFAULT_DC_ID } from 'helpers/Telegram/config';
-import { makePasswordHash } from 'helpers/Telegram';
-import { push } from 'react-router-redux';
-import { IDispatch } from '../IStore';
 import { AUTH } from 'actions';
+import { makePasswordHash } from 'helpers/Telegram';
+import { APP_HASH, APP_ID, DEFAULT_DC_ID } from 'helpers/Telegram/config';
+import pool, { api, storage } from 'helpers/Telegram/pool';
+import { pipe, tap } from 'ramda';
+import { push } from 'react-router-redux';
+import { IAuthError } from 'redux/modules/auth';
+import { IMtpUser } from 'redux/mtproto';
+import { IDispatch, IStore } from '../IStore';
 
 const { SEND_CODE, SIGN_IN, GET_PASSWORD, LOG_OUT } = AUTH;
 
