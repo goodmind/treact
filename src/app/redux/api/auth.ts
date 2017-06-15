@@ -23,32 +23,32 @@ const addDc = <T extends { user: IMtpUser }>(r: T) => {
 };
 
 function getPassword() {
-  const onDone = ({ current_salt }) => GET_PASSWORD.DONE({
+  const onDone = <T extends { current_salt: string }>({ current_salt }: T) => GET_PASSWORD.DONE({
     passwordSalt: current_salt,
   });
-  return dispatch => {
+  return (dispatch: IDispatch) => {
     dispatch(GET_PASSWORD.INIT());
     return api('account.getPassword', {}, options)
       .then(onDone, GET_PASSWORD.FAIL)
-      .then(dispatch);
+      .then(dispatch as any);
   };
 }
 
 export function checkPassword(password: string) {
-  return (dispatch, getState) => {
+  return (dispatch: IDispatch, getState: () => IStore) => {
     const { auth } = getState();
     const hash = makePasswordHash(auth.passwordSalt, password);
     return api('auth.checkPassword', {
       password_hash: hash,
     }, options).then(addDc)
       .then(SIGN_IN.DONE, SIGN_IN.FAIL)
-      .then(dispatch);
+      .then(dispatch as any);
   };
 }
 
-export function signIn(phoneCode) {
-  return (dispatch, getState) => {
-    const catchNeedPass = err => err.type === 'SESSION_PASSWORD_NEEDED'
+export function signIn(phoneCode: string) {
+  return (dispatch: IDispatch, getState: () => IStore) => {
+    const catchNeedPass = (err: IAuthError) => err.type === 'SESSION_PASSWORD_NEEDED'
       ? dispatch(getPassword())
       : err;
     const catchAndDispatch = pipe( tap(catchNeedPass), err => dispatch(SIGN_IN.FAIL(err)) );
@@ -60,17 +60,17 @@ export function signIn(phoneCode) {
       phone_code: phoneCode,
     }, options).then(addDc)
       .then(SIGN_IN.DONE)
-      .then(dispatch)
+      .then(dispatch as any)
       .catch(catchAndDispatch);
   };
 }
 
 export function sendCode(phoneNumber: string) {
-  const onDone = ({ phone_code_hash }) => SEND_CODE.DONE({
+  const onDone = ({ phone_code_hash }: { phone_code_hash: string }) => SEND_CODE.DONE({
     phoneCodeHash: phone_code_hash,
     phoneNumber,
   });
-  return dispatch => {
+  return (dispatch: IDispatch) => {
     dispatch(SEND_CODE.INIT());
     return api('auth.sendCode', {
       phone_number: phoneNumber,
@@ -91,7 +91,7 @@ export function logOut() {
     dispatch(LOG_OUT.INIT());
     return api<boolean>('auth.logOut')
       .then(LOG_OUT.DONE, LOG_OUT.FAIL)
-      .then(dispatch)
+      .then(dispatch as any)
       .then(tap(cleanAndRedirect));
   };
 }
