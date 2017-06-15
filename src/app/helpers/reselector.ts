@@ -25,7 +25,7 @@ const updateStore =
         return (store: S1, payload: T1): S1 => {
           const selected = selector(payload);
           const data = selected.entities;
-          const changed = []
+          const changed = [];
           for (const key of selected.result) {
             if (!equals(store.byId[key], data[key])) {
               changed.push(key);
