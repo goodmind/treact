@@ -4,9 +4,7 @@ import { Slice, TLPhoto } from 'helpers/reselector.h';
 import { IStoreList } from 'helpers/state';
 import { createReducer } from 'redux-act';
 
-import { CHATS } from 'actions';
-import { updateStoreMap, modelDefaults } from 'helpers/reselector';
-import { Slice } from 'helpers/reselector.h';
+export type IStorePhotos = IStoreList<TLPhoto>;
 
 const { LOAD_SLICE, GET_DIALOGS } = CHATS;
 
