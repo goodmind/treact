@@ -22,8 +22,8 @@ class PhoneNumberImpl extends React.Component<IProps, IState> {
     error: null,
   };
 
-  private handleChange = event =>
-    this.setState({ [event.target.name]: event.target.value });
+  private handleChange = (e: any) =>
+    this.setState({ [e.target.name]: e.target.value })
 
   public handleNextStep = () => {
     const { dispatch, nextStep, update } = this.props;
@@ -50,7 +50,8 @@ class PhoneNumberImpl extends React.Component<IProps, IState> {
   }
 }
 
-const mapStateToProps = state => ({ auth: state.auth });
-const PhoneNumberContainer = connect<IConnectedState, IConnectedActions, IOwnProps>(mapStateToProps)(PhoneNumberImpl);
+const mapStateToProps = (state: IStore) => ({ auth: state.auth });
+const PhoneNumberContainer =
+  connect<IConnectedState, IConnectedActions, IOwnProps>(mapStateToProps)<IOwnProps>(PhoneNumberImpl);
 
-export { PhoneNumberContainer as PhoneNumber }
+export { PhoneNumberContainer as PhoneNumber };
