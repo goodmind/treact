@@ -16,11 +16,19 @@ const sliceSchema = {
   messages: [ messages ],
 };
 
-const buildMessage = (id: number, text: string, randomId: any, self: any, outputPeer: any) => (message) => {
+type Flags = {
+  out?: boolean,
+};
+
+const buildMessage =
+  // TODO: generate types from TL
+  // tslint:disable-next-line
+  (id: number, text: string, randomId: number[], self: /*peerUser*/any, outputPeer: /*peer*/any) =>
+    (message: any) => {
   const messageId = tempId--;
   const randomIds = bigint(randomId[0]).shiftLeft(32).add(bigint(randomId[1])).toString();
   const fromID = self.id;
-  const pFlags: any = {};
+  const pFlags: Flags = {};
   let flags = 0;
   if (id !== fromID) {
     flags |= 2;
@@ -28,7 +36,7 @@ const buildMessage = (id: number, text: string, randomId: any, self: any, output
   }
   flags |= 256;
   console.debug('buildMessage', message);
-  const newMessage = Object.assign({
+  const newMessage = {
     _: 'message',
     id: messageId,
     from_id: fromID,
@@ -38,27 +46,27 @@ const buildMessage = (id: number, text: string, randomId: any, self: any, output
     date: tsNow(true),
     message: text,
     random_id: randomIds,
-    pending: true,
-  }, message._ === 'updateShortSentMessage'
+    pending: true, ...(message._ === 'updateShortSentMessage'
     ? pick(['flags', 'date', 'id', 'media', 'entities'], message)
-    : {});
+    : {})};
 
   const normalized = normalize({ messages: [newMessage] }, sliceSchema);
   normalized.result.histories = [id];
   normalized.entities.histories = { [id]: normalized.result.messages };
+  // tslint:disable-next-line
   (normalized as any).id = id;
   return normalized;
 };
 
 export function sendText(id: number, text: string) {
-  return (dispatch: IDispatch, getState) => {
+  return (dispatch: IDispatch, getState: () => IStore) => {
     const state = getState();
     const inputPeer = dispatch(getInputPeerById(id));
     const outputPeer = dispatch(getOutputPeer(id));
     const randomId = [nextRandomInt(0xFFFFFFFF), nextRandomInt(0xFFFFFFFF)];
 
     dispatch(SEND_TEXT.INIT());
-    return api<any>('messages.sendMessage', {
+    return api('messages.sendMessage', {
       peer: inputPeer,
       message: text,
       random_id: randomId,
