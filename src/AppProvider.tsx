@@ -1,15 +1,14 @@
 import * as React from 'react';
 import { Provider } from 'react-redux';
-import { persistStore } from 'redux-persist';
 import { browserHistory } from 'react-router';
+import { persistStore } from 'redux-persist';
 import { configureStore } from './app/redux/store';
 
 export const store = configureStore(
   browserHistory,
-  window.__INITIAL_STATE__,
 );
 
-class AppProvider extends React.Component<{ children?: React.ReactChildren }, { rehydrated: boolean }> {
+class AppProvider extends React.Component<{ children?: React.ReactNode }, { rehydrated: boolean }> {
   public state = { rehydrated: false };
 
   public componentWillMount() {
