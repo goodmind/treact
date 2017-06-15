@@ -1,8 +1,11 @@
-const appConfig = require('../../../config/main');
-import { createStore, applyMiddleware, compose } from 'redux';
+import { History } from 'history';
 import { routerMiddleware } from 'react-router-redux';
+import { applyMiddleware, compose, createStore, Middleware, StoreEnhancerStoreCreator } from 'redux';
+import { createLogger } from 'redux-logger';
+import { autoRehydrate } from 'redux-persist';
 import thunk from 'redux-thunk';
-import rootReducer from './reducers';
+import * as appConfig from '../../../config/main';
+import { batchUpdate } from './batchUpdate';
 import { IStore } from './IStore';
 import { autoRehydrate } from 'redux-persist';
 const createLogger = require('redux-logger');
