@@ -13,7 +13,7 @@ const mergef = flip(merge);
 
 const updateStore =
   // tslint:disable-next-line
-  (_mergeFunc: any) =>
+  (_mergeFunc: FlipMergeLists) =>
       <P1, K1 extends keyof P1>(modelName: K1) => {
         type T1 = IPayload<P1>;
         type S1 = StoredPayload<P1[K1]>;
