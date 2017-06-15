@@ -1,15 +1,15 @@
 import { normalize, schema } from 'normalizr';
-import { map, when, prop, isNil, pipe,
-  of, nthArg, pathOr,
-  keys, assocPath, pathSatisfies, converge, identity,
-  flip, reduce } from 'ramda';
+import { assocPath, converge, flip, identity, isNil,
+  keys, map, nthArg,
+  of, pathOr, pathSatisfies, pipe, prop,
+  reduce, when } from 'ramda';
 
 import { CHATS } from 'actions';
-import { api } from 'helpers/Telegram/pool';
 import { unifiedGetId } from 'helpers/state';
+import { api } from 'helpers/Telegram/pool';
+import { IAsyncAction, IDispatch } from 'redux/IStore';
+import { IMtpDialog, IMtpMessage, IMtpUser, TById } from 'redux/mtproto';
 import { IMtpMessagesSlice, IMtpPeer } from '../mtproto';
-import { IDispatch, IAsyncAction } from 'redux/IStore';
-import { TById, IMtpMessage, IMtpUser, IMtpDialog } from 'redux/mtproto';
 
 import { getPeerData, retrieveInputPeer } from 'helpers/Telegram/Peers';
 
