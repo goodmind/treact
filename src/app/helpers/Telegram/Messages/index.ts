@@ -1,3 +1,4 @@
+/*
 const channelLocals = {};
 const channelsByLocals = {};
 let channelCurLocal = 0;
@@ -59,3 +60,4 @@ export function splitMessageIDsByChannels (mids) {
     mids: midsByChannels,
   };
 }
+*/
