@@ -18,7 +18,7 @@ import users from './modules/users';
 
 const { reducer } = require('redux-connect');
 
-const rootReducer: Redux.Reducer<IStore> = combineReducers<IStore>({
+const rootReducer = combineReducers<IStore & { routing: typeof routerReducer, reduxAsyncConnect: typeof reducer }>({
   routing: routerReducer,
   authKey: authKeyReducer,
   auth: authReducer,
