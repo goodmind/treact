@@ -1,14 +1,16 @@
-import * as React from 'react';
+import { fetchChatList } from 'api/chatList';
 import { ChatList } from 'components';
 import { ChatListItem } from 'containers';
+import { IPayload, Slice } from 'helpers/reselector.h';
+import { path, sort } from 'ramda';
+import * as React from 'react';
 import { connect } from 'react-redux';
-import { IStore } from 'redux/IStore';
-import { TById, IMtpDialog } from 'redux/mtproto';
+import { Action } from 'redux-act';
+import { IDispatch, IStore } from 'redux/IStore';
 import { IStoreHistory } from 'redux/modules/histories';
 import { TPeersType } from 'redux/modules/peers';
-import { fetchChatList } from 'api/chatList';
+import { IMtpDialog, TById } from 'redux/mtproto';
 import { createSelector } from 'reselect';
-import { path, sort } from 'ramda';
 
 interface IProps {
   offsetDate: number;
