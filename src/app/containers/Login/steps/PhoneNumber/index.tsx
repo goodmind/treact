@@ -1,10 +1,10 @@
+import { sendCode } from 'api/auth';
+import { PhoneNumber } from 'components/Login/steps';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { sendCode } from 'api/auth';
 import { IDispatch, IStore } from 'redux/IStore';
+import { IAuthError, isAuthError } from 'redux/modules/auth';
 import { IStepNext as IOwnProps } from '../..';
-import { IAuthError } from 'redux/modules/auth';
-import { PhoneNumber } from 'components/Login/steps';
 
 type IConnectedState = Pick<IStore, 'auth'>;
 type IConnectedActions = { dispatch: IDispatch };
