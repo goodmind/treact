@@ -2,8 +2,8 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import { ChatFooter } from 'components/ChatFooter';
-import { IStore, IDispatch } from 'redux/IStore';
 import { sendText } from 'redux/api/messages';
+import { IDispatch, IStore } from 'redux/IStore';
 
 type IState = {
   message: string;
