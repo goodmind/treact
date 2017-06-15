@@ -1,8 +1,8 @@
-import { createReducer } from 'redux-act';
-import { IStoreList } from 'helpers/state';
 import { CHATS, MESSAGES } from 'actions';
+import { IStoreList } from 'helpers/state';
+import { createReducer } from 'redux-act';
 
-import { updateStoreListSorted, modelDefaults } from 'helpers/reselector';
+import { modelDefaults, updateStoreListSorted } from 'helpers/reselector';
 import { Slice } from 'helpers/reselector.h';
 
 const { LOAD_SLICE, GET_DIALOGS } = CHATS;
