@@ -3,10 +3,8 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { IDispatch } from 'redux/IStore';
-import { logOut } from 'api/auth';
-import { connect } from 'react-redux';
-const logo = require('./title-logo.png');
-const s = require('./style.css');
+import * as s from './style.css';
+import * as logo from './title-logo.png';
 
 interface IConnectedActions {
   logOut: React.EventHandler<React.MouseEvent<HTMLAnchorElement>>;
