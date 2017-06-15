@@ -30,11 +30,11 @@ class ChatContainer extends React.Component<IProps, {}> {
     const { selected } = this.props;
     onChatSelect(selected, nextProps.selected);
   }
-  public loadSliceRange = () => {
+  public loadSliceRange = async () => {
     const { loadOffset, selected, history } = this.props;
     const maxID = history[0];
-    loadOffset(selected, maxID)
-      .then(console.log.bind(console));
+    // TODO: remove console.log
+    console.log(await loadOffset(selected, maxID));
   }
   public render() {
     if (!this.props.selected) return <DefaultScreen />;
