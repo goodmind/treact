@@ -1,10 +1,9 @@
-import { isEmpty, equals, evolve, merge, pick,
-  mergeWith, union, flip, pipe, sort, subtract } from 'ramda';
-const { pluck } = require('ramda');
+import { equals, evolve, flip, isEmpty, merge,
+  mergeWith, pick, pipe, pluck, sort, subtract, union } from 'ramda';
+import { IPayload, SelectedPayload, StoredPayload } from './reselector.h';
 
-import { StoredPayload, SelectedPayload, IPayload } from './reselector.h';
-
-const selectModel = pluck;
+// tslint:disable-next-line
+const selectModel = pluck as any;
 
 type FlipMergeLists = <T>(b: T[]) => (a: T[]) => T[];
 const mergeLists: FlipMergeLists = flip(mergeWith(union));
