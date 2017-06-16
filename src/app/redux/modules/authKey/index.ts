@@ -1,3 +1,4 @@
+import { AUTH } from 'actions';
 import { combineReducers } from 'redux';
 import { createReducer } from 'redux-act';
 import { AUTH } from 'actions';
