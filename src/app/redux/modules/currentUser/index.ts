@@ -1,5 +1,6 @@
-import { createReducer } from 'redux-act';
 import { AUTH } from 'actions';
+import { createReducer } from 'redux-act';
+import { IMtpUser } from 'redux/mtproto';
 
 export const currentUserReducer = createReducer({
   [AUTH.SIGN_IN.DONE]: (_, { user }) => user,
