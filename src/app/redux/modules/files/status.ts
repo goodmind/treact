@@ -1,11 +1,11 @@
 import { createReducer } from 'redux-act';
 
-import { CHATS, CACHE } from 'actions';
+import { CACHE, CHATS } from 'actions';
 import { SlicePayload, TLPhoto } from 'helpers/reselector.h';
 
 
-import { has, reject, isEmpty, merge, pipe, map, __,
-  pluck, values, contains, into, repeat, zipObj, mergeWith } from 'ramda';
+import { __, contains, has, into, isEmpty, map, merge,
+  mergeWith, pipe, pluck, reject, repeat, values, zipObj } from 'ramda';
 
 const { LOAD_SLICE, GET_DIALOGS } = CHATS;
 const { LOAD, DONE } = CACHE;
