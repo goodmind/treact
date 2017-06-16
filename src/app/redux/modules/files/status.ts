@@ -34,7 +34,7 @@ const updater = (store: Store, payload: SlicePayload): Store => {
   if (isEmpty(onlyNew))
     return store;
   const setStatus = pipe(
-      into<number, any, Store>(store, map(remap)),
+      into<number, Array<[number, Status]>, Store>(store, map(remap)),
       merge(store),
     );
   return setStatus(onlyNew);
