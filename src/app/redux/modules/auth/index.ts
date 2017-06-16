@@ -29,15 +29,15 @@ const passwordSalt = createReducer({
   [GET_PASSWORD.DONE]: (_, { passwordSalt }) => passwordSalt,
 }, '');
 
-const saveError = (_, { code, type }: IAuthError): IAuthError => ({ code, type });
+const saveError = (_: IAuthError, { code, type }: IAuthError): IAuthError => ({ code, type });
 
 const error = createReducer<IAuthError>({
   [SEND_CODE.FAIL]: saveError,
   [SIGN_IN.FAIL]: saveError,
   [GET_PASSWORD.FAIL]: saveError,
 }, {
-  code: null,
-  type: null,
+  code: -1,
+  type: '',
 });
 
 const loading = createReducer({
@@ -66,7 +66,7 @@ const phoneCodeHash = createReducer({
   [SEND_CODE.DONE]: (_, { phoneCodeHash }) => phoneCodeHash,
 }, '');
 
-const loggedOut = createReducer({
+const loggedOut = createReducer<boolean>({
   [LOG_OUT.DONE]: T,
 }, false);
 
