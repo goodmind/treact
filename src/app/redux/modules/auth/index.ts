@@ -1,8 +1,8 @@
-import { REHYDRATE } from 'redux-persist/constants';
-import { createReducer } from 'redux-act';
-import { combineReducers } from 'redux';
-import { T, F } from 'ramda';
 import { byIdGetter } from 'helpers/Telegram/helpers';
+import { F, T } from 'ramda';
+import { combineReducers } from 'redux';
+import { createReducer } from 'redux-act';
+import { REHYDRATE } from 'redux-persist/constants';
 
 import { AUTH } from 'actions';
 
