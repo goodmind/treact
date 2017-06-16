@@ -11,6 +11,8 @@ export interface IAuthError {
   type: string;
   description?: string;
 }
+export const isAuthError =
+  (p: any): p is IAuthError => p.code && p.type;
 export interface IAuth {
   authenticated: boolean;
   loading: boolean;
