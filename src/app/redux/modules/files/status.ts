@@ -21,6 +21,8 @@ const updater = (store: Store, payload: SlicePayload): Store => {
   const isPhoto = (id: number) => contains(id, data);
   const filesIds = payload.result.fileLocations;
 
+  // TODO: don't use placeholder (or wait for better types)
+  // tslint:disable-next-line
   const inStore: (s: number) => boolean = has(__, store) as any;
 
   const onlyNew = reject(inStore, filesIds);
