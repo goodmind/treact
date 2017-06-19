@@ -126,6 +126,6 @@
     "redux-thunk": "^2.1.0",
     "reselect": "^3.0.1",
     "reselect-map": "^1.0.2",
-    "telegram-mtproto": "^2.2.2"
+    "telegram-mtproto": "^3.0.7"
   }
 }
