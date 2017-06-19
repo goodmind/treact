@@ -12,7 +12,8 @@ class InstantMessagesImpl extends React.Component<{}, {}> {
 
   constructor(props: {}, context: {}) {
     super(props, context);
-    pool.updates.attach();
+    // NOTE: Updates disabled until telegram-mtproto release
+    // pool.updates.attach();
     pool.on('*', msg => console.debug('updates', msg._, msg));
     pool.on('apiUpdate', msg => console.debug('apiUpdate', msg._, msg));
     pool.on('difference', msg => console.debug('difference', msg._, msg));
