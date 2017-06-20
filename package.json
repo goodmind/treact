@@ -108,6 +108,7 @@
     "jsbn": "^1.1.0",
     "knack": "0.0.3",
     "localforage": "^1.5.0",
+    "mtproto-storage-browser": "^0.1.2",
     "normalizr": "^3.2.3",
     "ramda": "^0.24.1",
     "react": "^15.5.4",
@@ -126,6 +127,6 @@
     "redux-thunk": "^2.1.0",
     "reselect": "^3.0.1",
     "reselect-map": "^1.0.2",
-    "telegram-mtproto": "^3.0.7"
+    "telegram-mtproto": "^3.0.8"
   }
 }
