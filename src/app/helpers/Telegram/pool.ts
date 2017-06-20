@@ -1,24 +1,15 @@
 import * as localforage from 'localforage';
-import { /* pipe, */ map /*, apply, toPairs*/ } from 'ramda';
-import MTProto, { AsyncStorage } from 'telegram-mtproto';
+import BrowserStorage from 'mtproto-storage-browser';
+import MTProto from 'telegram-mtproto';
 import { appSettings, serverConfig } from './config';
 
 export const storage = localforage.createInstance({
   driver: localforage.LOCALSTORAGE,
 });
 
-const LocalStorage: AsyncStorage = {
-  get: storage.getItem, // (...keys) => Promise.all(map<string, Promise<any>>(storage.getItem.bind(storage), keys)),
-  remove: async <T>(...keys: string[]) => {
-    await Promise.all(map<string, Promise<T>>(storage.removeItem.bind(storage), keys));
-  },
-  set: storage.setItem, // pipe<any, any>(toPairs, map(apply(storage.setItem.bind(storage)))),
-  clear: (): Promise<void> => storage.clear(),
-};
-
 const app = {
   debug: true,
-  storage: LocalStorage,
+  storage: new BrowserStorage(storage),
 };
 
 const pool = MTProto({
