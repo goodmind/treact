@@ -38,8 +38,8 @@ const SenderPreview = ({ userName }: SenderProps) => {
   });
   return (
     <div className={sender}>
-        <span>{userName}</span>
-        <span>:</span>
+      <span>{userName}</span>
+      <span>:</span>
     </div>
   );
 };
