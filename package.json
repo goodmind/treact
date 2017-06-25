@@ -4,14 +4,20 @@
   "description": "A universal boilerplate for building web applications w/ TypeScript, React, Redux and more.",
   "main": "build/server.js",
   "jest": {
+    "globals": {
+      "ts-jest": {
+        "skipBabel": false
+      }
+    },
     "transform": {
       "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
     "moduleDirectories": [
       "node_modules",
-      "app",
-      "redux"
+      "src",
+      "src/app",
+      "src/app/redux"
     ],
     "moduleFileExtensions": [
       "ts",
@@ -20,7 +26,7 @@
       "json"
     ],
     "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/src/__mocks__/fileMock.js",
       "\\.(css)$": "identity-obj-proxy"
     }
   },
@@ -31,7 +37,7 @@
     "build:vendor": "webpack --config ./config/webpack/vendor.js",
     "start": "node build/server.js",
     "start:dev": "webpack-dev-server",
-    "start:prod": "cross-env NODE_ENV=production npm run build:vendor & webpack",
+    "start:prod": "cross-env-shell NODE_ENV=production \"npm run build:vendor && webpack\"",
     "test": "jest",
     "lint": "node_modules/.bin/tslint \"src/**/**.ts*\""
   },
@@ -91,6 +97,7 @@
     "@types/webpack": "^2.2.16",
     "@types/webpack-env": "^1.13.0",
     "babel-core": "^6.25.0",
+    "babel-jest": "^20.0.3",
     "babel-loader": "^7.1.0",
     "babel-plugin-transform-async-to-generator": "^6.24.1",
     "babel-polyfill": "^6.22.0",
@@ -124,6 +131,7 @@
     "typescript": "^2.5.0-dev.20170614",
     "url-loader": "^0.5.9",
     "webpack": "^3.0.0",
+    "webpack-bundle-analyzer": "^2.8.2",
     "webpack-dev-server": "^2.5.0",
     "webpack-manifest-plugin": "^1.0.1"
   },
@@ -131,6 +139,7 @@
     "classnames": "^2.2.5",
     "flexboxgrid": "^6.3.1",
     "history": "^4.5.1",
+    "jest-cli": "^20.0.4",
     "jsbn": "^1.1.0",
     "knack": "0.0.3",
     "localforage": "^1.5.0",
