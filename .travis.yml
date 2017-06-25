@@ -12,8 +12,8 @@ install:
 before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
-  - npm run lint
 script:
+  - npm run lint
   - npm run build:vendor
   - npm run build
   - npm test
