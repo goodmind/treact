@@ -41,7 +41,7 @@ const config = {
       }
     }),
     new webpack.NoEmitOnErrorsPlugin(),
-    new BabiliPlugin({
+    new BabiliPlugin({}, {
       comments: false
     })
   ]
