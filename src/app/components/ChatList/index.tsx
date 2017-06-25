@@ -1,6 +1,5 @@
-import { ChatListSearch } from 'components';
+import { ChatListSearch, InfiniteScroll } from 'components';
 import * as React from 'react';
-import * as InfiniteScroll from 'react-infinite-scroller';
 import * as style from './style.css';
 
 interface IProps {
