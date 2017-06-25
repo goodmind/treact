@@ -1,8 +1,8 @@
+jest.mock('helpers/FileManager/picStore');
+
 import * as React from 'react';
 import * as renderer from 'react-test-renderer';
 import { PeerPhoto, PeerPhotoEmpty } from './';
-
-jest.mock('helpers/FileManager/picStore');
 
 it('PeerPhoto renders correctly', () => {
   const tree = renderer.create(
