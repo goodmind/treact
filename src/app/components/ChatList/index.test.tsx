@@ -12,15 +12,6 @@ it('ChatList renders correctly', () => {
       Hello, world!
     </ChatList>,
   ).toJSON();
-  const tree2 = renderer.create(
-    <ChatList
-      loading={true}
-      hasMore={false}
-      loadMore={noop}>
-      Hello, world!
-    </ChatList>,
-  ).toJSON();
 
   expect(tree).toMatchSnapshot();
-  expect(tree2).toMatchSnapshot();
 });
