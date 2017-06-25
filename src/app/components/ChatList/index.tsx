@@ -16,7 +16,7 @@ const LoadingPane = () => (
 
 class ChatList extends React.Component<IProps, {}> {
   public render() {
-    const { loading, children, loadMore, hasMore } = this.props;
+    const { children, loadMore, hasMore } = this.props;
 
     return (
       <div className={style.chatlist}>
@@ -28,9 +28,9 @@ class ChatList extends React.Component<IProps, {}> {
             loadMore={loadMore}
             initialLoad={false}
             hasMore={hasMore}
+            loader={<LoadingPane />}
             useWindow={false}>
             {children}
-            {loading && <LoadingPane />}
           </InfiniteScroll>
         </div>
       </div>
