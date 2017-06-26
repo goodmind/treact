@@ -1,7 +1,7 @@
 import { AUTH } from 'actions';
 import { makePasswordHash } from 'helpers/Telegram';
 import { APP_HASH, APP_ID, DEFAULT_DC_ID } from 'helpers/Telegram/config';
-import pool, { api, storage } from 'helpers/Telegram/pool';
+import { api, storage } from 'helpers/Telegram/pool';
 import { pipe, tap } from 'ramda';
 import { push } from 'react-router-redux';
 import { IAuthError } from 'redux/modules/auth';
@@ -14,9 +14,6 @@ const options = {dcID: DEFAULT_DC_ID, createNetworker: true, noErrorBox: true};
 
 const addDc = <T extends { user: IMtpUser }>(r: T) => {
   const dcID = DEFAULT_DC_ID;
-  pool.setUserAuth(dcID, {
-    id: r.user.id,
-  });
   return storage
     .getItem<string>(`dc${dcID}_auth_key`)
     .then(authKey => Object.assign({}, r, {dcID, authKey}));
