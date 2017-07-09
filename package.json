@@ -38,7 +38,7 @@
     "start": "node build/server.js",
     "start:dev": "webpack-dev-server",
     "start:prod": "cross-env-shell NODE_ENV=production \"npm run build:vendor && webpack\"",
-    "test": "jest",
+    "test": "jest --no-cache",
     "lint": "node_modules/.bin/tslint \"src/**/**.ts*\""
   },
   "author": "goodmind <andwebar@gmail.com>",
