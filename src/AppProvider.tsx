@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { Provider } from 'react-redux';
-import { browserHistory } from 'react-router';
 import { persistStore } from 'redux-persist';
 import { configureStore } from './app/redux/store';
+// TOOD: use absolute paths
+import history from './history';
 
 export const store = configureStore(
-  browserHistory,
+  history,
 );
 
 class AppProvider extends React.Component<{ children?: React.ReactNode }, { rehydrated: boolean }> {
