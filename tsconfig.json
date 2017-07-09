@@ -8,8 +8,8 @@
       ]
     },
     "outDir": "build",
-    "module": "es2015",
-    "target": "es6",
+    "module": "esnext",
+    "target": "es2015",
     "pretty": true,
     "sourceMap": true,
     "inlineSourceMap": false,
