@@ -3,7 +3,6 @@ import { makePasswordHash } from 'helpers/Telegram';
 import { APP_HASH, APP_ID, DEFAULT_DC_ID } from 'helpers/Telegram/config';
 import { api, storage } from 'helpers/Telegram/pool';
 import { pipe, tap } from 'ramda';
-import { push } from 'react-router-redux';
 import { IAuthError } from 'redux/modules/auth';
 import { IMtpUser } from 'redux/mtproto';
 // TODO: use absolute paths
