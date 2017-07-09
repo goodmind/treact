@@ -1,4 +1,3 @@
-import { routerReducer } from 'react-router-redux';
 import { combineReducers } from 'redux';
 import { IStore } from './IStore';
 import { authReducer } from './modules/auth';
@@ -16,15 +15,12 @@ import photos from './modules/photos';
 import selected from './modules/selected';
 import users from './modules/users';
 
-const { reducer } = require('redux-connect');
-
-const rootReducer = combineReducers<IStore & { routing: typeof routerReducer, reduxAsyncConnect: typeof reducer }>({
-  routing: routerReducer,
+const rootReducer = combineReducers<IStore>({
+  // routing: routerReducer,
   authKey: authKeyReducer,
   auth: authReducer,
   currentUser: currentUserReducer,
   currentDc: currentDcReducer,
-  reduxAsyncConnect: reducer,
   histories,
   users,
   chats,
