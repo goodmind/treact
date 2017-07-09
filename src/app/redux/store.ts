@@ -1,6 +1,5 @@
 import { History } from 'history';
-import { routerMiddleware } from 'react-router-redux';
-import { applyMiddleware, compose, createStore, Middleware, StoreEnhancerStoreCreator } from 'redux';
+import { applyMiddleware, compose, createStore, Middleware, Store, StoreEnhancerStoreCreator } from 'redux';
 import { createLogger } from 'redux-logger';
 import { autoRehydrate } from 'redux-persist';
 import thunk from 'redux-thunk';
@@ -9,11 +8,17 @@ import { batchUpdate } from './batchUpdate';
 import { IStore } from './IStore';
 import rootReducer from './reducers';
 
+declare module 'universal-router' {
+  export interface Context {
+    store: Store<IStore>;
+  }
+}
+
 export function configureStore(history: History) {
   type Enhancer = StoreEnhancerStoreCreator<IStore>;
 
   const middlewares: Middleware[] = [
-    routerMiddleware(history),
+    // routerMiddleware(history),
     batchUpdate,
     thunk,
   ];
