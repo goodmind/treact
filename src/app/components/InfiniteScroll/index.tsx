@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-type Loader = React.ReactElement<any> | null;
+type Loader = React.ReactElement<object> | null;
 
 interface IProps {
   element: string;
@@ -14,6 +14,7 @@ interface IProps {
   useWindow: boolean;
   children: React.ReactNode;
   loader: Loader;
+  ref(node: HTMLElement): void;
 }
 
 type IExtProps = React.HTMLProps<HTMLElement> & {
@@ -154,7 +155,7 @@ class InfiniteScroll extends React.Component<IProps, {}> {
       ...props,
     } = this.props;
 
-    (props as any).ref = (node: HTMLElement) => {
+    (props as IProps).ref = (node: HTMLElement) => {
       this.scrollComponent = node;
     };
 

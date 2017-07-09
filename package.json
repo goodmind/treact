@@ -38,7 +38,7 @@
     "start": "node build/server.js",
     "start:dev": "webpack-dev-server",
     "start:prod": "cross-env-shell NODE_ENV=production \"npm run build:vendor && webpack\"",
-    "test": "jest",
+    "test": "jest --no-cache",
     "lint": "node_modules/.bin/tslint \"src/**/**.ts*\""
   },
   "author": "goodmind <andwebar@gmail.com>",
@@ -110,6 +110,7 @@
     "css-loader": "^0.28.4",
     "extract-text-webpack-plugin": "^2.1.0",
     "file-loader": "^0.11.2",
+    "fork-ts-checker-webpack-plugin": "^0.2.4",
     "html-webpack-plugin": "^2.26.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^20.0.4",
@@ -130,10 +131,10 @@
     "tslint-react": "^3.0.0",
     "typescript": "^2.5.0-dev.20170614",
     "url-loader": "^0.5.9",
-    "webpack": "^3.0.0",
+    "webpack": "^3.1.0",
     "webpack-bundle-analyzer": "^2.8.2",
-    "webpack-dev-server": "^2.5.0",
-    "webpack-manifest-plugin": "^1.0.1"
+    "webpack-dev-server": "^2.5.1",
+    "webpack-manifest-plugin": "^1.1.1"
   },
   "dependencies": {
     "classnames": "^2.2.5",
