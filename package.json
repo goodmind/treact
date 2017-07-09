@@ -131,10 +131,10 @@
     "tslint-react": "^3.0.0",
     "typescript": "^2.5.0-dev.20170614",
     "url-loader": "^0.5.9",
-    "webpack": "^3.0.0",
+    "webpack": "^3.1.0",
     "webpack-bundle-analyzer": "^2.8.2",
-    "webpack-dev-server": "^2.5.0",
-    "webpack-manifest-plugin": "^1.0.1"
+    "webpack-dev-server": "^2.5.1",
+    "webpack-manifest-plugin": "^1.1.1"
   },
   "dependencies": {
     "classnames": "^2.2.5",
