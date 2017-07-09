@@ -9,6 +9,7 @@ declare module '' {}
 /// <reference path="redux-connect.d.ts" />
 /// <reference path="react-autosize-textarea.d.ts" />
 /// <reference path="normalizr.d.ts" />
+/// <reference path="universal-router.d.ts" />
 
 declare module '*.png' {
   const image: any;
