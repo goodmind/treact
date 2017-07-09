@@ -6,6 +6,8 @@ import { pipe, tap } from 'ramda';
 import { push } from 'react-router-redux';
 import { IAuthError } from 'redux/modules/auth';
 import { IMtpUser } from 'redux/mtproto';
+// TODO: use absolute paths
+import history from '../../../history';
 import { IDispatch, IStore } from '../IStore';
 
 const { SEND_CODE, SIGN_IN, GET_PASSWORD, LOG_OUT } = AUTH;
@@ -83,7 +85,7 @@ export function logOut() {
   return (dispatch: IDispatch) => {
     const cleanAndRedirect = () => {
       localStorage.clear();
-      dispatch(push('/'));
+      history.push('/');
     };
     dispatch(LOG_OUT.INIT());
     return api<boolean>('auth.logOut')
