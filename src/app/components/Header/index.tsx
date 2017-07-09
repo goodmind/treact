@@ -1,7 +1,8 @@
 import { logOut } from 'api/auth';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+// TODO: use absolute paths
+import { Link } from '../../../vendor/containers/Link';
 import { IDispatch } from 'redux/IStore';
 import * as s from './style.css';
 import * as logo from './title-logo.png';
