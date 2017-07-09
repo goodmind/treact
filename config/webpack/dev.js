@@ -5,6 +5,8 @@ const build = resolve(process.cwd(), 'build');
 
 const reactDll = require(join(build, 'React.json'));
 const vendorDll = require(join(build, 'Vendor.json'));
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const config = {
   devtool: 'source-map',
@@ -47,10 +49,15 @@ const config = {
         DC_SERVER: JSON.stringify(process.env.DC_SERVER),
       }
     }),
+    new ForkTsCheckerWebpackPlugin({
+      tsconfig: resolve(process.cwd(), 'tsconfig.json')
+    }),
+    // new BundleAnalyzerPlugin(),
     // new webpack.optimize.CommonsChunkPlugin({
     //   name: 'vendor',
     //   filename: 'vendor.bundle.js'
     // }),
+    // new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     // new webpack.NoEmitOnErrorsPlugin()
