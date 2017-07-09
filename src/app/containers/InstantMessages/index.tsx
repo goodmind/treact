@@ -1,10 +1,7 @@
-import { fetchChatList } from 'api/chatList';
 import { InstantMessages } from 'components';
 import { Chat, ChatList } from 'containers';
 import pool from 'helpers/Telegram/pool';
 import * as React from 'react';
-import { asyncConnect /*, AsyncOptions*/ } from 'redux-connect';
-// import { IStore } from 'redux/IStore';
 import DownloadAssistant from './downloadAssistant';
 
 class InstantMessagesImpl extends React.Component<{}, {}> {
@@ -30,10 +27,4 @@ class InstantMessagesImpl extends React.Component<{}, {}> {
   }
 }
 
-// TODO: remove redux-connect
-const InstantMessagesContainer =
-  asyncConnect([{
-    promise: o => o.store.dispatch(fetchChatList()),
-  }])(InstantMessagesImpl);
-
-export { InstantMessagesContainer as InstantMessages };
+export { InstantMessagesImpl as InstantMessages };
