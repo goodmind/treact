@@ -6,6 +6,7 @@ const build = resolve(process.cwd(), 'build');
 const BabiliPlugin = require('babili-webpack-plugin');
 
 const plugins = [
+  new webpack.optimize.ModuleConcatenationPlugin(),
   new webpack.DllPlugin({
     name: '[name]',
     path: join(build, '[name].json')
@@ -39,11 +40,10 @@ const config = {
     ],
     Vendor: [
       'ramda',
-      'jsbn',
       'history',
       'classnames',
+      'localforage'
       // 'telegram-mtproto',
-      'knack'
     ]
   },
 
