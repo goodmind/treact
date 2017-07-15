@@ -1,6 +1,5 @@
 import * as React from 'react';
-
-const s = require('./style.css');
+import * as s from './style.css';
 
 const ChatListSearch = () => (
   <div className={s.chatlistsearch}>
@@ -9,4 +8,4 @@ const ChatListSearch = () => (
   </div>
 );
 
-export { ChatListSearch }
+export { ChatListSearch };

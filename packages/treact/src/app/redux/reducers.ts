@@ -1,30 +1,26 @@
 import { combineReducers } from 'redux';
-import { routerReducer } from 'react-router-redux';
-import { authReducer } from './modules/auth';
-import { currentUserReducer } from './modules/currentUser';
-import { currentDcReducer } from './modules/currentDc';
-import { authKeyReducer } from './modules/authKey';
-import histories from './modules/histories';
-import users from './modules/users';
-import dialogs from './modules/dialogs';
-import peers from './modules/peers';
-import chats from './modules/chats';
-import loadings from './modules/loadings';
-import selected from './modules/selected';
-import messages from './modules/messages';
-import files from './modules/files';
-import photos from './modules/photos';
 import { IStore } from './IStore';
+import { authReducer } from './modules/auth';
+import { authKeyReducer } from './modules/authKey';
+import chats from './modules/chats';
+import { currentDcReducer } from './modules/currentDc';
+import { currentUserReducer } from './modules/currentUser';
+import dialogs from './modules/dialogs';
+import files from './modules/files';
+import histories from './modules/histories';
+import loadings from './modules/loadings';
+import messages from './modules/messages';
+import peers from './modules/peers';
+import photos from './modules/photos';
+import selected from './modules/selected';
+import users from './modules/users';
 
-const { reducer } = require('redux-connect');
-
-const rootReducer: Redux.Reducer<IStore> = combineReducers<IStore>({
-  routing: routerReducer,
+const rootReducer = combineReducers<IStore>({
+  // routing: routerReducer,
   authKey: authKeyReducer,
   auth: authReducer,
   currentUser: currentUserReducer,
   currentDc: currentDcReducer,
-  reduxAsyncConnect: reducer,
   histories,
   users,
   chats,

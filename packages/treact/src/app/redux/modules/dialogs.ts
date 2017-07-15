@@ -1,10 +1,10 @@
 import { createReducer } from 'redux-act';
 
-import { IMtpDialog } from 'redux/mtproto';
 import { CHATS } from 'actions';
 import { IStoreList } from 'helpers/state';
+import { IMtpDialog } from 'redux/mtproto';
 
-import { updateStoreMap, modelDefaults } from 'helpers/reselector';
+import { modelDefaults, updateStoreMap } from 'helpers/reselector';
 import { Slice } from 'helpers/reselector.h';
 
 const { GET_DIALOGS } = CHATS;

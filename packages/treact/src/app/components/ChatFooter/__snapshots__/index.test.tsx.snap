@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Message renders correctly 1`] = `
+<div
+  className="chatfooter"
+>
+  <textarea
+    className="editText"
+    onChange={[Function]}
+    placeholder="  Write a message"
+    rows={1}
+    style={undefined}
+    value="Hello, world!"
+  />
+  <div
+    className="sendbutton"
+    onClick={[Function]}
+  >
+    Send
+  </div>
+</div>
+`;

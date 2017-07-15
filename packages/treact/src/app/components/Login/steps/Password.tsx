@@ -1,7 +1,10 @@
 import * as React from 'react';
-const t = require('../style.css');
+import * as t from '../style.css';
+import { ICommonProps } from './';
 
-const Password = ({ error, change, nextStep }) => (
+type IProps = ICommonProps;
+
+const Password = ({ error, change, nextStep }: IProps) => (
   <div className={t.loginStep}>
     <h1>Cloud password check</h1>
     <p>
@@ -19,4 +22,4 @@ const Password = ({ error, change, nextStep }) => (
   </div>
 );
 
-export { Password }
+export { Password };

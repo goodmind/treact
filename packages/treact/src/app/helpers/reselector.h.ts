@@ -1,5 +1,5 @@
-import { IMtpFileLocation, IMtpChat, IMtpUser, IMtpMessage, IMtpDialog } from 'redux/mtproto';
-export interface IPayload<T> {
+import { IMtpChat, IMtpDialog, IMtpFileLocation, IMtpMessage, IMtpUser } from 'redux/mtproto';
+export type IPayload<T> = {
   entities: {
     [K in keyof T]: {
       [key: number]: T[K];

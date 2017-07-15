@@ -1,39 +1,24 @@
-const appConfig = require('../../../config/main');
-import { createStore, applyMiddleware, compose } from 'redux';
-import { routerMiddleware } from 'react-router-redux';
-import thunk from 'redux-thunk';
-import rootReducer from './reducers';
-import { IStore } from './IStore';
+// import { History } from 'history';
+import { applyMiddleware, compose, createStore, Middleware, Store, StoreEnhancerStoreCreator } from 'redux';
+import { createLogger } from 'redux-logger';
 import { autoRehydrate } from 'redux-persist';
-const createLogger = require('redux-logger');
+import thunk from 'redux-thunk';
+import * as appConfig from '../../../config/main';
+import { batchUpdate } from './batchUpdate';
+import { IStore } from './IStore';
+import rootReducer from './reducers';
 
-import { CACHE } from 'actions';
-const { DONE } = CACHE;
+declare module 'universal-router' {
+  export interface Context {
+    store: Store<IStore>;
+  }
+}
 
-const doneType = DONE.toString();
+export function configureStore(/*history: History*/) {
+  type Enhancer = StoreEnhancerStoreCreator<IStore>;
 
-const batchUpdate = ({ dispatch }) => next => {
-  let pool = [];
-  const flush = () => {
-    if (pool.length === 0) return;
-    const action = { type: doneType, payload: [...pool] };
-    pool = [];
-    return dispatch(action);
-  };
-  setInterval(flush, 300);
-  return action => {
-    if (action.type === doneType && typeof action.payload === 'number') {
-      pool.push(action.payload);
-      return;
-    }
-
-    return next(action);
-  };
-};
-export function configureStore(history, initialState?: IStore): Redux.Store<IStore> {
-
-  const middlewares: Redux.Middleware[] = [
-    routerMiddleware(history),
+  const middlewares: Middleware[] = [
+    // routerMiddleware(history),
     batchUpdate,
     thunk,
   ];
@@ -44,14 +29,16 @@ export function configureStore(history, initialState?: IStore): Redux.Store<ISto
     middlewares.push(logger);
   }
 
-  const composeEnhancers = (appConfig.env !== 'production' &&
+  const composeEnhancers: typeof compose = (appConfig.env !== 'production' &&
     typeof window === 'object' &&
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
-  const store = createStore(rootReducer, initialState, composeEnhancers(
+  const storeEnhancer = composeEnhancers<Enhancer, Enhancer, Enhancer>(
     applyMiddleware(...middlewares),
     autoRehydrate(),
-  ));
+  );
+
+  const store = createStore<IStore>(rootReducer, storeEnhancer);
 
   if (appConfig.env === 'development' && module.hot) {
     module.hot.accept('./reducers', () => {

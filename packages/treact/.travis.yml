@@ -1,0 +1,19 @@
+language: node_js
+node_js:
+  - "7"
+  - "node"
+env:
+  - NODE_ENV=ci
+cache:
+  directories:
+  - node_modules
+install:
+  - npm install
+before_script:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+script:
+  - npm run lint || true
+  - npm run build:vendor
+  - npm run build
+  - npm test

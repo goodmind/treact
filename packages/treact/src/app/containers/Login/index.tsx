@@ -1,8 +1,8 @@
+import { Login } from 'components/Login';
 import * as React from 'react';
-import * as Steps from './steps';
 import { connect } from 'react-redux';
 import { IStore } from 'redux/IStore';
-import { Login } from 'components/Login';
+import * as Steps from './steps';
 
 type IConnectedState = Pick<IStore, 'auth'>;
 type IConnectedActions = {};
@@ -31,24 +31,24 @@ class LoginImpl extends React.Component<IProps, IState> {
   };
 
   public nextStep = () => {
-    this.setState({
-      step: this.state.step + 1,
-    });
+    this.setState(prevState => ({
+      step: prevState.step + 1,
+    }));
   }
 
   public skipStep = (steps: number = 1) => {
-    this.setState({
-      step: this.state.step + steps,
-    });
+    this.setState(prevState => ({
+      step: prevState.step + steps,
+    }));
   }
 
   public updateForm = <K extends keyof IFormState>(state: Pick<IFormState, K>) => {
-    this.setState({
-      form: Object.assign({}, this.state.form, state),
-    });
+    this.setState(prevState => ({
+      form: Object.assign({}, prevState.form, state),
+    }));
   }
 
-  public form = step => {
+  public form = (step: number) => {
     switch (step) {
       case 1:
         return (
@@ -109,6 +109,6 @@ export interface IStepSkip extends IStep {
 
 const LoginContainer = connect<IConnectedState, IConnectedActions, IOwnProps>(
   state => ({ auth: state.auth }),
-)(LoginImpl);
+)<{}>(LoginImpl);
 
-export { LoginContainer as Login }
+export { LoginContainer as Login };

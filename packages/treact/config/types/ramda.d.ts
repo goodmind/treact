@@ -2978,11 +2978,11 @@ declare namespace R {
   }
 }
 
-declare namespace R {
-  interface Static {
-    pipe<V0, T1>(...fns: ((x0: V0) => T1)[]): (x0: V0) => T1;
-  }
-}
+// declare namespace R {
+//  interface Static {
+//    pipe<V0, T1>(...fns: ((x0: V0) => T1)[]): (x0: V0) => T1;
+//  }
+// }
 
 declare module 'ramda' {
   export = R;
