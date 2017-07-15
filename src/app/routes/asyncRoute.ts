@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Context } from 'universal-router';
-import { AsyncRoute } from './';
+// import { AsyncRoute } from './';
 
 type Render = (context: Context) => Promise<React.ComponentClass<{}>>;
 
@@ -12,8 +12,8 @@ export const asyncRoute = (
   opts: object = { guard: false },
 ) => ({
   path,
-  action: async <R>(ctx: Context): Promise<R> => {
+  action: async (ctx: Context) => {
     const route = { ...opts, render: () => render(ctx) };
-    return route as AsyncRoute;
+    return route;
   },
 });
