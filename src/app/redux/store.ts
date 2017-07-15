@@ -1,4 +1,4 @@
-import { History } from 'history';
+// import { History } from 'history';
 import { applyMiddleware, compose, createStore, Middleware, Store, StoreEnhancerStoreCreator } from 'redux';
 import { createLogger } from 'redux-logger';
 import { autoRehydrate } from 'redux-persist';
@@ -14,7 +14,7 @@ declare module 'universal-router' {
   }
 }
 
-export function configureStore(history: History) {
+export function configureStore(/*history: History*/) {
   type Enhancer = StoreEnhancerStoreCreator<IStore>;
 
   const middlewares: Middleware[] = [
