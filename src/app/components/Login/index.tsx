@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as s from './style.css';
+const s = require('./style.css');
 
 interface IProps {
   children?: React.ReactNode;
@@ -11,4 +11,4 @@ const Login = ({ children }: IProps) => (
   </div>
 );
 
-export { Login };
+export { Login }

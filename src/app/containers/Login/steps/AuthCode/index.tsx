@@ -1,17 +1,17 @@
-import { signIn } from 'api/auth';
-import { AuthCode } from 'components/Login/steps';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { IDispatch, IStore } from 'redux/IStore';
-import { IAuthError, isAuthError } from 'redux/modules/auth';
+import { signIn } from 'api/auth';
+import { IStore, IDispatch } from 'redux/IStore';
 import { IStepSkip as IOwnProps } from '../..';
+import { IAuthError } from 'redux/modules/auth';
+import { AuthCode } from 'components/Login/steps';
 
 type IConnectedState = Pick<IStore, 'auth'>;
 type IConnectedActions = { dispatch: IDispatch };
 type IProps = IConnectedState & IConnectedActions & IOwnProps;
 type IState = {
   authCode: string;
-  error: IAuthError | null;
+  error: IAuthError;
 };
 
 class AuthCodeImpl extends React.Component<IProps, IState> {
@@ -20,8 +20,8 @@ class AuthCodeImpl extends React.Component<IProps, IState> {
     error: null,
   };
 
-  public handleChange = (e: any) =>
-    this.setState({ [e.target.name]: e.target.value })
+  public handleChange = event =>
+    this.setState({ [event.target.name]: event.target.value });
 
   public handleNextStep = () => {
     const { update, skipStep, dispatch } = this.props;
@@ -29,9 +29,7 @@ class AuthCodeImpl extends React.Component<IProps, IState> {
 
     update({ authCode });
     dispatch(signIn(this.state.authCode))
-      .then(({payload: error}) => isAuthError(error)
-        ? this.setState({ error })
-        : this.setState({ error: null }))
+      .then(({payload: error}) => (error && error.code) ? this.setState({ error }) : this.setState({error: null}))
       .then(() => skipStep(this.props.auth.error.type === 'SESSION_PASSWORD_NEEDED' ? 1 : 2));
   }
 
@@ -51,6 +49,6 @@ class AuthCodeImpl extends React.Component<IProps, IState> {
 
 const AuthCodeContainer = connect<IConnectedState, IConnectedActions, IOwnProps>(
   state => ({ auth: state.auth }),
-)<IOwnProps>(AuthCodeImpl);
+)(AuthCodeImpl);
 
-export { AuthCodeContainer as AuthCode };
+export { AuthCodeContainer as AuthCode }

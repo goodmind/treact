@@ -1,11 +1,11 @@
 import { createReducer } from 'redux-act';
 
-import { CACHE, CHATS } from 'actions';
+import { CHATS, CACHE } from 'actions';
 import { SlicePayload, TLPhoto } from 'helpers/reselector.h';
 
 
-import { __, contains, has, into, isEmpty, map, merge,
-  mergeWith, pipe, pluck, reject, repeat, values, zipObj } from 'ramda';
+import { has, reject, isEmpty, merge, pipe, map, __,
+  pluck, values, contains, into, repeat, zipObj, mergeWith } from 'ramda';
 
 const { LOAD_SLICE, GET_DIALOGS } = CHATS;
 const { LOAD, DONE } = CACHE;
@@ -21,8 +21,6 @@ const updater = (store: Store, payload: SlicePayload): Store => {
   const isPhoto = (id: number) => contains(id, data);
   const filesIds = payload.result.fileLocations;
 
-  // TODO: don't use placeholder (or wait for better types)
-  // tslint:disable-next-line
   const inStore: (s: number) => boolean = has(__, store) as any;
 
   const onlyNew = reject(inStore, filesIds);
@@ -34,7 +32,7 @@ const updater = (store: Store, payload: SlicePayload): Store => {
   if (isEmpty(onlyNew))
     return store;
   const setStatus = pipe(
-      into<number, Array<[number, Status]>, Store>(store, map(remap)),
+      into<number, any, Store>(store, map(remap)),
       merge(store),
     );
   return setStatus(onlyNew);

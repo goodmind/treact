@@ -12,4 +12,4 @@ const AutoSizeTextarea = (props: IProps) => {
   return <textarea {...props}>{value}</textarea>;
 };
 
-export { AutoSizeTextarea };
+export { AutoSizeTextarea }

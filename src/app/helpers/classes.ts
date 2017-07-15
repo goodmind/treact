@@ -5,8 +5,6 @@ type TClassNames<S> = {
   [P in keyof S]: string;
 };
 
-// TODO: remove type cast
-type  classes = <S>(styles: S) => TClassNames<S>;
-const classes = map(classNames) as classes;
+const classes = <S>(styles: S): TClassNames<S> => map<any, any, S>(classNames, styles);
 
 export default classes;

@@ -2,14 +2,14 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import { Chat, DefaultScreen } from 'components/Chat';
-import { Message } from 'components/Message';
+import { IStore, IDispatch } from 'redux/IStore';
 import { getPeerData } from 'helpers/Telegram/Peers';
+import { IMtpUser, IMtpChat, IMtpMessage } from 'redux/mtproto';
+import { Message } from 'components/Message';
+import { selectChat, loadOffset } from 'redux/api/chatList';
 import { getPeerName } from 'helpers/Telegram/Peers';
-import { Obj, path, props } from 'ramda';
-import { loadOffset, selectChat } from 'redux/api/chatList';
-import { IDispatch, IStore } from 'redux/IStore';
 import { TPeersType } from 'redux/modules/peers';
-import { IMtpChat, IMtpMessage, IMtpUser } from 'redux/mtproto';
+import { path, props, Obj } from 'ramda';
 
 const onChatSelect = async (currentId: number, nextId: number) => {
   if (nextId && nextId !== currentId) {
@@ -30,11 +30,11 @@ class ChatContainer extends React.Component<IProps, {}> {
     const { selected } = this.props;
     onChatSelect(selected, nextProps.selected);
   }
-  public loadSliceRange = async () => {
+  public loadSliceRange = () => {
     const { loadOffset, selected, history } = this.props;
     const maxID = history[0];
-    // TODO: remove console.log
-    console.log(await loadOffset(selected, maxID));
+    loadOffset(selected, maxID)
+      .then(console.log.bind(console));
   }
   public render() {
     if (!this.props.selected) return <DefaultScreen />;
@@ -50,18 +50,18 @@ class ChatContainer extends React.Component<IProps, {}> {
   }
 }
 
-type IConnectedState =  {
+interface IConnectedState {
   selected: number;
   history: number[];
   messages: IMtpMessage[];
   peer?: TPeersType;
   peerData?: IMtpUser | IMtpChat;
-  peerName: string;
-};
+  peerName?: string;
+}
 
-type IConnectedActions = {
-  loadOffset<T>(id: number, offset?: number): Promise<T>;
-};
+interface IConnectedActions {
+  loadOffset: (id: number, offset?: number) => any;
+}
 
 type IProps = IConnectedState & IConnectedActions;
 
@@ -74,8 +74,6 @@ const stateMap = (state: IStore): IConnectedState => {
     selected,
     history: [],
     messages: [],
-    // TODO: This is arguable
-    peerName: '',
   };
 
   const history = state.histories.byId[selected] || [];
