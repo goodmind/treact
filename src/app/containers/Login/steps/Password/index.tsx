@@ -1,17 +1,17 @@
-import * as React from 'react';
 import { checkPassword } from 'api/auth';
-import { connect } from 'react-redux';
-import { IStore, IDispatch } from 'redux/IStore';
-import { IStepNext as IOwnProps } from '../..';
-import { IAuthError } from 'redux/modules/auth';
 import { Password } from 'components/Login/steps';
+import * as React from 'react';
+import { connect } from 'react-redux';
+import { IDispatch, IStore } from 'redux/IStore';
+import { IAuthError, isAuthError } from 'redux/modules/auth';
+import { IStepNext as IOwnProps } from '../..';
 
 type IConnectedState = Pick<IStore, 'auth'>;
 type IConnectedActions = { dispatch: IDispatch };
 type IProps = IConnectedState & IConnectedActions & IOwnProps;
 type IState = {
   password: string;
-  error: IAuthError;
+  error: IAuthError | null;
 };
 
 class PasswordImpl extends React.Component<IProps, IState> {
@@ -20,8 +20,8 @@ class PasswordImpl extends React.Component<IProps, IState> {
     error: null,
   };
 
-  public handleChange = event =>
-    this.setState({ [event.target.name]: event.target.value });
+  public handleChange = (e: any) =>
+    this.setState({ [e.target.name]: e.target.value })
 
   public handleNextStep = () => {
     const { update, nextStep, dispatch } = this.props;
@@ -30,7 +30,9 @@ class PasswordImpl extends React.Component<IProps, IState> {
     update({ password });
     console.log(this.state, this.props);
     dispatch(checkPassword(this.state.password))
-      .then(({payload: error}) => error.code ? this.setState({ error }) : this.setState({error: null}))
+      .then(({ payload: error }) => isAuthError(error)
+        ? this.setState({ error })
+        : this.setState({ error: null }))
       .then(() => this.state.error || nextStep());
   }
 
@@ -48,6 +50,6 @@ class PasswordImpl extends React.Component<IProps, IState> {
 
 const PasswordContainer = connect<IConnectedState, IConnectedActions, IOwnProps>(
   state => ({ auth: state.auth }),
-)(PasswordImpl);
+)<IOwnProps>(PasswordImpl);
 
-export { PasswordContainer as Password }
+export { PasswordContainer as Password };

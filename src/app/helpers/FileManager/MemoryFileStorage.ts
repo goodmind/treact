@@ -1,3 +1,4 @@
+/*
 import { FileManager } from 'helpers/FileManager';
 
 class MemoryFileStorage extends Map {
@@ -25,4 +26,5 @@ class MemoryFileStorage extends Map {
 
 const singleton = new MemoryFileStorage();
 
-export { singleton as MemoryFileStorage, MemoryFileStorage as MemoryFileStorageConstructor }
+export { singleton as MemoryFileStorage, MemoryFileStorage as MemoryFileStorageConstructor };
+*/

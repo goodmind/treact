@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PeerPhoto renders correctly 1`] = `
+<img
+  className=""
+  src="test-data"
+/>
+`;
+
+exports[`PeerPhotoEmpty renders correctly 1`] = `
+<img
+  className=""
+  src="test-file-stub"
+/>
+`;

@@ -1,7 +1,7 @@
-const appConfig = require('../../../../config/main');
+import { App, Header } from 'components';
 import * as React from 'react';
 import * as Helmet from 'react-helmet';
-import { App, Header } from 'components';
+import * as appConfig from '../../../../config/main';
 
 interface IProps {
   children: React.ReactNode;
@@ -13,4 +13,5 @@ const AppContainer = ({ children }: IProps) =>
     <Header />
     {children}
   </App>;
-export { AppContainer as App }
+
+export { AppContainer as App };

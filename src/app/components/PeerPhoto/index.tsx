@@ -1,15 +1,13 @@
-import * as React from 'react';
-
 import picStore from 'helpers/FileManager/picStore';
-
-const defPhoto = require('./usercolor1.png');
+import * as React from 'react';
+import * as defPhoto from './usercolor1.png';
 
 interface IProps {
-  id?: number | 'default';
-  className?: string;
+  id: number | 'default';
+  className: string;
 }
 
-export const PeerPhotoEmpty = ({ className }: IProps) =>
+export const PeerPhotoEmpty = ({ className }: Pick<IProps, 'className'>) =>
   <img
     className={className}
     src={defPhoto} />;

@@ -1,9 +1,13 @@
 import * as React from 'react';
+import { ICommonProps } from '../';
+import * as t from '../../style.css';
+import * as s from './style.css';
 
-const s = require('./style.css');
-const t = require('../../style.css');
+type IProps = ICommonProps & {
+  phoneCode: string,
+};
 
-const PhoneNumber = ({ error, nextStep, change, phoneCode }) => (
+const PhoneNumber = ({ error, nextStep, change, phoneCode }: IProps) => (
   <div className={t.loginStep}>
     <h1>Your Phone</h1>
     <p>
@@ -26,4 +30,4 @@ const PhoneNumber = ({ error, nextStep, change, phoneCode }) => (
   </div>
 );
 
-export { PhoneNumber }
+export { PhoneNumber };

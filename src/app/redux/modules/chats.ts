@@ -1,5 +1,5 @@
-import { createReducer } from 'redux-act';
 import { Slice } from 'helpers/reselector.h';
+import { createReducer } from 'redux-act';
 
 import { CHATS } from 'actions';
 import { IStoreList } from 'helpers/state';
@@ -7,7 +7,7 @@ import { IMtpChat } from '../mtproto';
 
 export type IStoreChats = IStoreList<IMtpChat>;
 
-import { updateStoreMap, modelDefaults } from 'helpers/reselector';
+import { modelDefaults, updateStoreMap } from 'helpers/reselector';
 
 const { LOAD_SLICE, GET_DIALOGS } = CHATS;
 

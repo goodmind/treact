@@ -7,4 +7,4 @@ class TmpfsFileStorage {
 
 const singleton = new TmpfsFileStorage();
 
-export { singleton as TmpfsFileStorage }
+export { singleton as TmpfsFileStorage };
