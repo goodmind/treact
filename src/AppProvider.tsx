@@ -3,10 +3,10 @@ import { Provider } from 'react-redux';
 import { persistStore } from 'redux-persist';
 import { configureStore } from './app/redux/store';
 // TOOD: use absolute paths
-import history from './history';
+// import history from './history';
 
 export const store = configureStore(
-  history,
+  // history,
 );
 
 class AppProvider extends React.Component<{ children?: React.ReactNode }, { rehydrated: boolean }> {
