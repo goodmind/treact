@@ -4,7 +4,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import * as UniversalRouter from 'universal-router';
-import routes, { Route } from './app/routes';
+import routes, { resolveRoute } from './app/routes';
 import AppProvider, { store } from './AppProvider';
 // TODO: use absolute paths
 import history from './history';
@@ -24,9 +24,9 @@ const renderComponent = function <T extends JSX.Element>(Component: T | null) {
 const render = async (location: Location, Routes: typeof routes) => {
   if (routes)
     currentRoutes = Routes;
-  const Router = new UniversalRouter(currentRoutes, { context: { store } });
-  const Route = await Router.resolve<Route>({ path: location.pathname });
-  return renderComponent(Route.Component);
+  const Router = new UniversalRouter(currentRoutes, { resolveRoute, context: { store } });
+  const Route = await Router.resolve<JSX.Element>({ path: location.pathname });
+  return renderComponent(Route);
 };
 
 const onHistory = (location: Location) => render(location, currentRoutes);
