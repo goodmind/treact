@@ -1,13 +1,7 @@
-import { IFormState } from 'containers/Login';
 import * as React from 'react';
-import * as t from '../style.css';
-import { ICommonProps } from './';
+const t = require('../style.css');
 
-type IProps = ICommonProps & {
-  form: IFormState,
-};
-
-const AuthCode = ({ form, error, nextStep, change }: IProps) => (
+const AuthCode = ({ form, error, nextStep, change }) => (
   <div className={t.loginStep}>
     <h1>{form.phoneNumber}</h1>
     <p>
@@ -25,4 +19,4 @@ const AuthCode = ({ form, error, nextStep, change }: IProps) => (
   </div>
 );
 
-export { AuthCode };
+export { AuthCode }

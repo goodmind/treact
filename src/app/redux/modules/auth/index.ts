@@ -1,8 +1,8 @@
-import { byIdGetter } from 'helpers/Telegram/helpers';
-import { F, T } from 'ramda';
-import { combineReducers } from 'redux';
-import { createReducer } from 'redux-act';
 import { REHYDRATE } from 'redux-persist/constants';
+import { createReducer } from 'redux-act';
+import { combineReducers } from 'redux';
+import { T, F } from 'ramda';
+import { byIdGetter } from 'helpers/Telegram/helpers';
 
 import { AUTH } from 'actions';
 
@@ -11,8 +11,6 @@ export interface IAuthError {
   type: string;
   description?: string;
 }
-export const isAuthError =
-  (p: any): p is IAuthError => p.code && p.type;
 export interface IAuth {
   authenticated: boolean;
   loading: boolean;
@@ -29,15 +27,15 @@ const passwordSalt = createReducer({
   [GET_PASSWORD.DONE]: (_, { passwordSalt }) => passwordSalt,
 }, '');
 
-const saveError = (_: IAuthError, { code, type }: IAuthError): IAuthError => ({ code, type });
+const saveError = (_, { code, type }: IAuthError): IAuthError => ({ code, type });
 
 const error = createReducer<IAuthError>({
   [SEND_CODE.FAIL]: saveError,
   [SIGN_IN.FAIL]: saveError,
   [GET_PASSWORD.FAIL]: saveError,
 }, {
-  code: -1,
-  type: '',
+  code: null,
+  type: null,
 });
 
 const loading = createReducer({
@@ -66,7 +64,7 @@ const phoneCodeHash = createReducer({
   [SEND_CODE.DONE]: (_, { phoneCodeHash }) => phoneCodeHash,
 }, '');
 
-const loggedOut = createReducer<boolean>({
+const loggedOut = createReducer({
   [LOG_OUT.DONE]: T,
 }, false);
 

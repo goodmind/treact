@@ -1,9 +1,10 @@
-import { equals, evolve, flip, isEmpty, merge,
-  mergeWith, pick, pipe, pluck, sort, subtract, union } from 'ramda';
-import { IPayload, SelectedPayload, StoredPayload } from './reselector.h';
+import { isEmpty, equals, evolve, merge, pick,
+  mergeWith, union, flip, pipe, sort, subtract } from 'ramda';
+const { pluck } = require('ramda');
 
-// tslint:disable-next-line
-const selectModel = pluck as any;
+import { StoredPayload, SelectedPayload, IPayload } from './reselector.h';
+
+const selectModel = pluck;
 
 type FlipMergeLists = <T>(b: T[]) => (a: T[]) => T[];
 const mergeLists: FlipMergeLists = flip(mergeWith(union));
@@ -13,7 +14,7 @@ const mergef = flip(merge);
 
 const updateStore =
   // tslint:disable-next-line
-  (_mergeFunc: FlipMergeLists) =>
+  (_mergeFunc: any) =>
       <P1, K1 extends keyof P1>(modelName: K1) => {
         type T1 = IPayload<P1>;
         type S1 = StoredPayload<P1[K1]>;
@@ -25,7 +26,7 @@ const updateStore =
         return (store: S1, payload: T1): S1 => {
           const selected = selector(payload);
           const data = selected.entities;
-          const changed = [];
+          const changed = []
           for (const key of selected.result) {
             if (!equals(store.byId[key], data[key])) {
               changed.push(key);

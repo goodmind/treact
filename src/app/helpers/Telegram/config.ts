@@ -1,5 +1,5 @@
 // import { restoreAuthKeyFromLocalStorage } from './helpers';
-import { APP_HASH, APP_ID, DEFAULT_DC_ID, SERVER } from './constants';
+import { APP_ID, APP_HASH, SERVER, DEFAULT_DC_ID } from './constants';
 
 export const appSettings = {
   invokeWithLayer: 0xda9b0d0d,
@@ -23,4 +23,4 @@ export const config = {
   // authKey: restoreAuthKeyFromLocalStorage(),
 };
 
-export { SERVER, APP_ID, APP_HASH, DEFAULT_DC_ID };
+export { SERVER, APP_ID, APP_HASH, DEFAULT_DC_ID }

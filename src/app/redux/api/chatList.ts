@@ -1,15 +1,15 @@
 import { normalize, schema } from 'normalizr';
-import { assocPath, converge, flip, identity, isNil,
-  keys, map, nthArg,
-  of, pathOr, pathSatisfies, pipe, prop,
-  reduce, when } from 'ramda';
+import { map, when, prop, isNil, pipe,
+  of, nthArg, pathOr,
+  keys, assocPath, pathSatisfies, converge, identity,
+  flip, reduce } from 'ramda';
 
 import { CHATS } from 'actions';
-import { unifiedGetId } from 'helpers/state';
 import { api } from 'helpers/Telegram/pool';
-import { IAsyncAction, IDispatch } from 'redux/IStore';
-import { IMtpDialog, IMtpMessage, IMtpUser, TById } from 'redux/mtproto';
+import { unifiedGetId } from 'helpers/state';
 import { IMtpMessagesSlice, IMtpPeer } from '../mtproto';
+import { IDispatch, IAsyncAction } from 'redux/IStore';
+import { TById, IMtpMessage, IMtpUser, IMtpDialog } from 'redux/mtproto';
 
 import { getPeerData, retrieveInputPeer } from 'helpers/Telegram/Peers';
 
@@ -27,14 +27,14 @@ const photos = new schema.Entity('photos', {
   photo_small: fileLocations,
   photo_big: fileLocations,
 }, {
-  idAttribute: pipe(nthArg(1), prop('id'), e => +e),
+  idAttribute: pipe<any, any>(nthArg(1), prop('id'), e => +e),
 });
 const users = new schema.Entity('users', { photo: photos });
 const messages = new schema.Entity('messages');
 const chats = new schema.Entity('chats', { photo: photos });
 
 const dialogs = new schema.Entity('dialogs', {}, {
-  idAttribute: pipe( prop('peer'), unifiedGetId ),
+  idAttribute: pipe<IMtpPeer, string>( prop('peer'), unifiedGetId ),
 });
 
 const sliceSchema = {
@@ -50,8 +50,6 @@ const sliceSchema = {
  * Add index list in `result` for model values in `entities`
  * @function addModelIndex
  */
-// TODO: fix types
-// tslint:disable-next-line
 const addModelIndex = (obj: any, modelName: string) =>
   when(
     pathSatisfies(isNil, ['result', modelName]),
@@ -66,9 +64,9 @@ const modelsIndexation = flip(reduce(addModelIndex));
 
 const indexation = modelsIndexation(['photos', 'fileLocations']);
 
-const fullNormalize = <T>(obj: T) => indexation(normalize(obj, sliceSchema));
+const fullNormalize = (obj: any) => indexation(normalize(obj, sliceSchema));
 
-const mapTopMessage = map(pipe<IMtpDialog, number, number[]>(prop('top_message'), of));
+const mapTopMessage = map(pipe<IMtpDialog, number[]>(prop('top_message'), of));
 
 
 export const loadSliceRange = (dispatch: IDispatch) =>
@@ -77,9 +75,7 @@ export const loadSliceRange = (dispatch: IDispatch) =>
       const normalized = fullNormalize(slice);
       normalized.result.histories = [id];
       normalized.entities.histories = { [id]: normalized.result.messages };
-
-      // tslint:disable-next-line
-      (normalized as any).id = id; // NOTE This needs because we cant infer id later
+      (normalized as any).id = id; //NOTE This needs because we cant infer id later
       return LOAD_SLICE.DONE(normalized);
     };
     const data = {
@@ -94,7 +90,7 @@ export const loadSliceRange = (dispatch: IDispatch) =>
       .then(dispatch);
   };
 
-export const loadOffset = (id: number, offset: number): IAsyncAction<Promise<{}>> =>
+export const loadOffset = (id: number, offset: number): IAsyncAction<Promise<any>|void> =>
   async (dispatch, getState) => {
     const store = getState();
     const peer = store.peers.byId[id];
@@ -109,7 +105,7 @@ export const loadOffset = (id: number, offset: number): IAsyncAction<Promise<{}>
     }
   };
 
-export const selectChat = (id: number): IAsyncAction<void> =>
+export const selectChat = (id: number): IAsyncAction<Promise<any>|void> =>
   (dispatch, getState) => {
     const store = getState();
     const peer = store.peers.byId[id];
@@ -125,8 +121,8 @@ export const selectChat = (id: number): IAsyncAction<void> =>
     }
   };
 
-export const fetchChatList = (limit: number = 20, date: number = 0) =>
-  async (dispatch: IDispatch) => {
+export function fetchChatList(limit: number = 20, date: number = 0) {
+  return async (dispatch: IDispatch) => {
     dispatch(GET_DIALOGS.INIT());
     try {
       const result = await api('messages.getDialogs', {
@@ -144,3 +140,4 @@ export const fetchChatList = (limit: number = 20, date: number = 0) =>
       return dispatch(GET_DIALOGS.FAIL(err));
     }
   };
+}

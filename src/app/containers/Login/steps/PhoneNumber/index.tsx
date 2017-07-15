@@ -1,10 +1,10 @@
-import { sendCode } from 'api/auth';
-import { PhoneNumber } from 'components/Login/steps';
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { sendCode } from 'api/auth';
 import { IDispatch, IStore } from 'redux/IStore';
-import { IAuthError, isAuthError } from 'redux/modules/auth';
 import { IStepNext as IOwnProps } from '../..';
+import { IAuthError } from 'redux/modules/auth';
+import { PhoneNumber } from 'components/Login/steps';
 
 type IConnectedState = Pick<IStore, 'auth'>;
 type IConnectedActions = { dispatch: IDispatch };
@@ -12,7 +12,7 @@ type IProps = IConnectedState & IConnectedActions & IOwnProps;
 type IState = {
   phoneCode: string;
   phoneNumber: string;
-  error: IAuthError | null;
+  error: IAuthError;
 };
 
 class PhoneNumberImpl extends React.Component<IProps, IState> {
@@ -22,8 +22,8 @@ class PhoneNumberImpl extends React.Component<IProps, IState> {
     error: null,
   };
 
-  private handleChange = (e: any) =>
-    this.setState({ [e.target.name]: e.target.value })
+  private handleChange = event =>
+    this.setState({ [event.target.name]: event.target.value });
 
   public handleNextStep = () => {
     const { dispatch, nextStep, update } = this.props;
@@ -31,9 +31,7 @@ class PhoneNumberImpl extends React.Component<IProps, IState> {
 
     update({ phoneNumber });
     dispatch(sendCode(phoneNumber))
-      .then(({ payload: error }) => isAuthError(error)
-        ? this.setState({ error })
-        : this.setState({ error: null }))
+      .then(({payload: error}) => error.code ? this.setState({ error }) : this.setState({error: null}))
       .then(() => this.state.error || nextStep());
   }
 
@@ -50,8 +48,7 @@ class PhoneNumberImpl extends React.Component<IProps, IState> {
   }
 }
 
-const mapStateToProps = (state: IStore) => ({ auth: state.auth });
-const PhoneNumberContainer =
-  connect<IConnectedState, IConnectedActions, IOwnProps>(mapStateToProps)<IOwnProps>(PhoneNumberImpl);
+const mapStateToProps = state => ({ auth: state.auth });
+const PhoneNumberContainer = connect<IConnectedState, IConnectedActions, IOwnProps>(mapStateToProps)(PhoneNumberImpl);
 
-export { PhoneNumberContainer as PhoneNumber };
+export { PhoneNumberContainer as PhoneNumber }

@@ -78,7 +78,7 @@ declare module 'redux-act' {
   export function createAction<P, M>(payloadReducer: (...args: any[]) => P, metaReducer?: (...args: any[]) => M): ActionCreator<P, M>;
 
   interface Reducer<S> {
-    <A>(state: S, action: A): S
+    (state: S, action: Action<any, any>): S
 
     options(opts: Object): void
     has(actionCreator: ActionCreatorOrString<any, any>): boolean

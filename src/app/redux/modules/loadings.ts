@@ -1,6 +1,6 @@
-import { F, T } from 'ramda';
-import { combineReducers } from 'redux';
 import { createReducer } from 'redux-act';
+import { combineReducers } from 'redux';
+import { T, F } from 'ramda';
 
 import { CHATS } from 'redux/actions';
 const { GET_DIALOGS } = CHATS;

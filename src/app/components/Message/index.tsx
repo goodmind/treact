@@ -1,13 +1,14 @@
-import { PeerPhoto } from 'containers/PeerPhoto';
 import * as React from 'react';
-import * as style from './style.css';
+import { PeerPhoto } from 'containers/PeerPhoto';
+
+const style = require('./style.css');
 
 interface IOwnProps {
   id: number;
   date: number;
   user: number;
   text: string;
-}
+};
 
 const formatTime = (date: number) => {
   const dateObject = new Date(date * 1000);

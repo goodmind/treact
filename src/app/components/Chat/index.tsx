@@ -1,7 +1,8 @@
-import { InfiniteScroll } from 'components';
-import { ChatFooter } from 'containers';
 import * as React from 'react';
-import * as s from './style.css';
+import { ChatFooter } from 'containers';
+import * as InfiniteScroll from 'react-infinite-scroller';
+
+const s = require('./style.css');
 
 export const DefaultScreen = () => (
   <div className={s.chat}>
@@ -9,12 +10,13 @@ export const DefaultScreen = () => (
   </div>
 );
 
-type IBasicProps = {
+type IProps = {
   name: string;
   userCount: number;
+  loadMore: () => void;
 };
 
-const ChatHeader = ({ name, userCount }: IBasicProps) => (
+const ChatHeader = ({ name, userCount }) => (
   <div className={s.chatheader}>
     <div className={s.left}>
       <div className={s.top}>{name}</div>
@@ -23,10 +25,6 @@ const ChatHeader = ({ name, userCount }: IBasicProps) => (
     <div className={s.right} />
   </div>
 );
-
-type IProps = IBasicProps & {
-  loadMore(): void,
-};
 
 class Chat extends React.Component<IProps, {}> {
   public render() {
@@ -54,4 +52,4 @@ class Chat extends React.Component<IProps, {}> {
   }
 }
 
-export { Chat };
+export { Chat }

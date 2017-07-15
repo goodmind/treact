@@ -2,39 +2,14 @@
  * Type declerations for global development variables
  */
 
-declare module '' {}
+declare module ''
 
 /// <reference path="ramda.d.ts" />
 /// <reference path="redux-act.d.ts" />
-/// <reference path="redux-connect.d.ts" />
-/// <reference path="react-autosize-textarea.d.ts" />
-/// <reference path="normalizr.d.ts" />
-/// <reference path="universal-router.d.ts" />
-
-declare module '*.png' {
-  const image: any;
-  export = image;
-}
-
-declare module '*.css' {
-  const classes: { [className: string]: string };
-  export = classes;
-}
 
 declare module '@goodmind/*' {
-  const module: any;
-  export = module;
-}
-
-declare module 'telegram-mtproto/lib/bin' {
-  export function bufferConcat(b1: ArrayBuffer | Uint8Array | string, b2: ArrayBuffer | Uint8Array | string): ArrayBuffer;
-  export function sha256HashSync(b: ArrayBuffer): string;
-  export function bigint(i: number): any;
-  export function nextRandomInt(i: number): number;
-}
-
-declare module 'telegram-mtproto/lib/service/time-manager' {
-  export function tsNow(bool: boolean): number;
+  const s: any;
+  export = s;
 }
 
 interface Window {
