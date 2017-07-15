@@ -12,8 +12,8 @@ export const asyncRoute = (
   opts: object = { guard: false },
 ) => ({
   path,
-  action: async <R extends AsyncRoute>(ctx: Context): Promise<R> => {
+  action: async <R>(ctx: Context): Promise<R> => {
     const route = { ...opts, render: () => render(ctx) };
-    return route as R;
+    return route as AsyncRoute;
   },
 });
