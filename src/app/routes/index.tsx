@@ -1,6 +1,6 @@
 import { fetchChatList } from 'api/chatList';
 import * as React from 'react';
-import { Context, Route, Options } from 'universal-router';
+import { Options, Route } from 'universal-router';
 import history from '../../history';
 
 export type Route = {
