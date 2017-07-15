@@ -1,8 +1,7 @@
 import { fetchChatList } from 'api/chatList';
 import * as React from 'react';
-import { Context } from 'universal-router';
+import { Context, Route, Options } from 'universal-router';
 import history from '../../history';
-import { asyncRoute } from './asyncRoute';
 
 export type Route = {
   Component: JSX.Element | null,
@@ -18,42 +17,63 @@ declare module 'universal-router' {
     guard?: boolean;
     render<T>(): Promise<React.ComponentClass<T>>;
   }
+
+  export interface Route {
+    guard?: boolean;
+  }
 }
 
-export default [
+export const resolveRoute: Options['resolveRoute'] = async (context, params) => {
+  const { route, store } = context;
+  const { App } = await import ('containers/App');
+  const { auth } = store.getState();
+
+  if (typeof route.action === 'function') {
+    if (route.guard && !auth.authenticated) {
+      history.push('/login');
+      return null;
+    }
+
+    const Comp = await route.action(context, params);
+    return <App><Comp/></App>;
+  }
+
+  return null;
+};
+
+const routes: Route[] = [
   {
     path: '/',
-
-    async action({ next, store: { getState } }: Context): Promise<Route> {
-      const { App } = await import ('containers/App');
-      const { auth } = getState();
-      const { guard, render } = await next();
-
-      if (guard && !auth.authenticated) {
-        history.push('/login');
-        return { Component: null };
-      }
-
-      const Component = await render();
-      return { Component: <App><Component /></App> };
-    },
-
     children: [
-      asyncRoute('/', async () => {
-        const { Home } = await import ('containers/Home');
-        return Home;
-      }),
+      {
+        path: '/',
+        guard: false,
+        async action() {
+          const { Home } = await import ('containers/Home');
+          return Home;
+        },
+      },
 
-      asyncRoute('/im', async ({ store: { dispatch } }) => {
-        const { InstantMessages } = await import ('containers/InstantMessages');
-        await dispatch(fetchChatList());
-        return InstantMessages;
-      }, { guard: true }),
+      {
+        path: '/im',
+        guard: true,
+        async action({ store: { dispatch } }) {
+          const { InstantMessages } = await import ('containers/InstantMessages');
+          await dispatch(fetchChatList());
+          return InstantMessages;
+        },
+      },
 
-      asyncRoute('/login', async () => {
-        const { Login } = await import ('containers/Login');
-        return Login;
-      }),
+      {
+        path: '/login',
+        guard: false,
+        async action() {
+          const { Login } = await import ('containers/Login');
+          return Login;
+        },
+      },
     ],
   },
 ];
+
+export default routes;
