@@ -1,7 +1,6 @@
 language: node_js
 node_js:
-  - "7"
-  - "node"
+  - "5"
 env:
   - NODE_ENV=ci
 cache:
@@ -13,7 +12,5 @@ before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
 script:
-  - npm run lint || true
-  - npm run build:vendor
   - npm run build
   - npm test

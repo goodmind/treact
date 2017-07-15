@@ -7,4 +7,4 @@ class IdbFileStorage {
 
 const singleton = new IdbFileStorage();
 
-export { singleton as IdbFileStorage };
+export { singleton as IdbFileStorage }

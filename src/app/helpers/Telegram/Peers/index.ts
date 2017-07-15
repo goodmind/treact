@@ -1,9 +1,9 @@
-import { is, join, pipe, trim } from 'ramda';
-import { IDispatch, IStore } from 'redux/IStore';
+import { is, pipe, join, trim } from 'ramda';
+import { IStore } from 'redux/IStore';
 import { TPeersType } from 'redux/modules/peers';
-import { IMtpChat, IMtpUser } from 'redux/mtproto';
+import { IMtpUser, IMtpChat } from 'redux/mtproto';
 
-export const retrieveInputPeer = (id: number, peer: TPeersType, peerData: IMtpUser | IMtpChat) => {
+export const retrieveInputPeer = (id: number, peer: TPeersType, peerData) => {
   switch (peer) {
     case 'channel':
       return {
@@ -29,10 +29,8 @@ export const retrieveInputPeer = (id: number, peer: TPeersType, peerData: IMtpUs
   }
 };
 
-// NOTE: wrong type
-type PeerString = { user_id: number, chat_id: number, channel_id: number };
-export function getPeerID(peerString: string | PeerString) {
-  if (is<PeerString>((Object as any), peerString)) {
+export function getPeerID(peerString) {
+  if (is(Object, peerString)) {
     return peerString.user_id
       ? peerString.user_id
       : -(peerString.channel_id || peerString.chat_id);
@@ -73,8 +71,7 @@ export const resolveUsername = (username: string) => (dispatch): Promise<number 
 };
 */
 
-// TODO: peer should be IMtpUser | IMtpChat
-export const retrieveId = (peer: any): number => {
+export const retrieveId = (peer): number => {
   switch (peer._) {
     case 'channel': return -peer.id;
     case 'chat': return -peer.id;
@@ -83,7 +80,7 @@ export const retrieveId = (peer: any): number => {
   }
 };
 
-export const getInputPeerById = (id: number) => (_: IDispatch, getState: () => IStore) => {
+export const getInputPeerById = (id: number) => (_, getState) => {
   const state = getState();
   const peerType = state.peers.byId[id];
   const peerData = getPeerData(id, peerType, state);
@@ -91,7 +88,7 @@ export const getInputPeerById = (id: number) => (_: IDispatch, getState: () => I
   return retrieveInputPeer(id, peerType, peerData);
 };
 
-export const getOutputPeer = (id: number) => (_: IDispatch, getState: () => IStore) => {
+export const getOutputPeer = (id: number) => (_, getState) => {
   const state = getState();
   const peer = state.peers.byId[id];
   switch (peer) {
@@ -118,7 +115,7 @@ export const getPeerData = (id: number, peer: TPeersType, { users, chats }: ISto
 
 const joinNames = (...names: string[]): string => pipe( join(' '), trim )(names);
 
-export const getPeerName = (peer: TPeersType, peerData: IMtpUser | IMtpChat) => {
+export const getPeerName = (peer: TPeersType, peerData: IMtpUser|IMtpChat) => {
   switch (peer) {
     case 'user': {
       const { first_name = '', username = '', last_name = '' } = (peerData as IMtpUser);
@@ -134,8 +131,7 @@ export const getPeerName = (peer: TPeersType, peerData: IMtpUser | IMtpChat) => 
   }
 };
 
-// TODO: This is arguable (shouldn't be nullable)
-export const getPeerShortName = (peer: TPeersType, peerData: IMtpUser | IMtpChat | null) => {
+export const getPeerShortName = (peer: TPeersType, peerData: IMtpUser|IMtpChat) => {
   switch (peer) {
     case 'user': {
       const { first_name = null, username = null, last_name = null } = (peerData as IMtpUser);

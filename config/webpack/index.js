@@ -32,7 +32,7 @@ const rules = [
     exclude: /node_modules/,
     use: [
       'babel-loader',
-      { loader: 'ts-loader', options: { transpileOnly: true } }
+      'ts-loader'
     ]
   }, {
     test: /\.css$/,

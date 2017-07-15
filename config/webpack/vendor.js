@@ -3,10 +3,9 @@ const webpack = require('webpack');
 const source = resolve(process.cwd(), 'src');
 const build = resolve(process.cwd(), 'build');
 
-const BabiliPlugin = require('babili-webpack-plugin');
+const BabiliPlugin = require("babili-webpack-plugin");
 
 const plugins = [
-  new webpack.optimize.ModuleConcatenationPlugin(),
   new webpack.DllPlugin({
     name: '[name]',
     path: join(build, '[name].json')
@@ -14,7 +13,7 @@ const plugins = [
 ];
 
 if (process.env.NODE_ENV === 'production')
-  plugins.push(new BabiliPlugin({}, {
+  plugins.push(new BabiliPlugin({
     comments: false
   }));
 
@@ -24,11 +23,13 @@ const config = {
     React: [
       'react',
       'react-dom',
-      'universal-router',
+      'react-router',
+      'react-router-redux',
       'react-redux',
       'react-helmet',
       'redux',
       'redux-act',
+      'redux-connect',
       'redux-persist',
       'redux-thunk',
       'recompose',
@@ -38,10 +39,11 @@ const config = {
     ],
     Vendor: [
       'ramda',
+      'jsbn',
       'history',
       'classnames',
-      'localforage'
       // 'telegram-mtproto',
+      'knack'
     ]
   },
 

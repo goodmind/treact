@@ -1,16 +1,14 @@
-import { fetchChatList } from 'api/chatList';
+import * as React from 'react';
 import { ChatList } from 'components';
 import { ChatListItem } from 'containers';
-import { IPayload, Slice } from 'helpers/reselector.h';
-import { path, sort } from 'ramda';
-import * as React from 'react';
 import { connect } from 'react-redux';
-import { Action } from 'redux-act';
-import { IDispatch, IStore } from 'redux/IStore';
+import { IStore } from 'redux/IStore';
+import { TById, IMtpDialog } from 'redux/mtproto';
 import { IStoreHistory } from 'redux/modules/histories';
 import { TPeersType } from 'redux/modules/peers';
-import { IMtpDialog, TById } from 'redux/mtproto';
+import { fetchChatList } from 'api/chatList';
 import { createSelector } from 'reselect';
+import { path, sort } from 'ramda';
 
 interface IProps {
   offsetDate: number;
@@ -21,7 +19,7 @@ interface IProps {
   peersMap: TById<TPeersType>;
   selected: number;
   loading: boolean;
-  loadAtDate: (date: number) => Promise<Action<IPayload<Slice>, {}>>;
+  loadAtDate: (date: number) => any;
   // item?: any;
   // activeChat?: any;
   // dialogs: any;
@@ -56,9 +54,7 @@ class ChatListContainer extends React.Component<IProps, IState> {
     const offsetId = dialogsIds[dialogsIds.length - 1];
     console.log('loadSliceRange', offsetId, offsetDate, loadAtDate);
     loadAtDate(offsetDate)
-      .then(({ payload: { result } }) => this.setState({
-        hasMore: result.dialogs.length !== 0,
-      }))
+      .then(({ payload: { dialogs } }) => this.setState({ hasMore: dialogs.list.length !== 0 }))
       .catch(e => console.error(e));
   }
 
@@ -81,9 +77,9 @@ class ChatListContainer extends React.Component<IProps, IState> {
 const sortDialogs = createSelector<
   IStore,
   IStore['dialogs']['ids'],
+  IStore['dialogs']['ids'],
   IStore['messages']['byId'],
-  IStore['dialogs']['byId'],
-  IStore['dialogs']['ids']>(
+  IStore['dialogs']['byId']>(
   path(['dialogs', 'ids']),
   path(['messages', 'byId']),
   path(['dialogs', 'byId']),
@@ -95,10 +91,10 @@ const sortDialogs = createSelector<
 
 const offsetDate = createSelector<
   IStore,
+  number,
   IStore['dialogs']['ids'],
   IStore['dialogs']['byId'],
-  IStore['messages']['byId'],
-  number
+  IStore['messages']['byId']
 >(
   path(['dialogs', 'ids']),
   path(['dialogs', 'byId']),
@@ -109,7 +105,7 @@ const offsetDate = createSelector<
     return messages[msgId].date;
   });
 
-const mapDispatchToProps = (dispatch: IDispatch) => ({
+const mapDispatchToProps = dispatch => ({
   loadAtDate: (date: number) => dispatch(fetchChatList(undefined, date)),
 });
 
@@ -125,6 +121,6 @@ const mapStateToProps = (state: IStore) => ({
   loading: state.loadings.chatList,
 });
 
-const connected = connect(mapStateToProps, mapDispatchToProps)<{}>(ChatListContainer);
+const connected = connect(mapStateToProps, mapDispatchToProps)(ChatListContainer);
 
-export { connected as ChatList };
+export { connected as ChatList }

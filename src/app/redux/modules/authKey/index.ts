@@ -1,15 +1,21 @@
-import { AUTH } from 'actions';
 import { combineReducers } from 'redux';
 import { createReducer } from 'redux-act';
+import { AUTH } from 'actions';
 
-const ids = createReducer<number[]>({
-  [AUTH.LOG_OUT.DONE]: () => ([]),
-  [AUTH.SIGN_IN.DONE]: (s, { dcID }) => s.concat([dcID]),
+const onLogOut = () => ({});
+const onSignIn = (s, { dcID, authKey }) => Object.assign({}, s, { [dcID]: authKey });
+
+const onLogOutIds = () => ([]);
+const onSignInIds = (s, { dcID }) => s.concat([dcID]);
+
+const ids = createReducer({
+  [AUTH.LOG_OUT.DONE]: onLogOutIds,
+  [AUTH.SIGN_IN.DONE]: onSignInIds,
 }, []);
 
-const byId = createReducer<{ [key: number]: string }>({
-  [AUTH.LOG_OUT.DONE]: () => ({}),
-  [AUTH.SIGN_IN.DONE]: (s, { dcID, authKey }) => ({...s,  [dcID]: authKey}),
+const byId = createReducer({
+  [AUTH.LOG_OUT.DONE]: onLogOut,
+  [AUTH.SIGN_IN.DONE]: onSignIn,
 }, {});
 
 export const authKeyReducer = combineReducers({

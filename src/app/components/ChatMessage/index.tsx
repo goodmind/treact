@@ -1,8 +1,6 @@
-/* tslint:disable */
-// TODO: remove this component
-
 import * as React from 'react';
-import * as s from './style.css';
+
+const s = require('./style.css');
 
 interface IProps {
   message: any;
@@ -32,4 +30,4 @@ class ChatMessage extends React.Component<IProps, {}> {
   }
 }
 
-export { ChatMessage };
+export { ChatMessage }

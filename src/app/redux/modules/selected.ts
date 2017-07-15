@@ -1,5 +1,5 @@
-import { combineReducers } from 'redux';
 import { createReducer } from 'redux-act';
+import { combineReducers } from 'redux';
 
 import { CHATS } from 'redux/actions';
 const { SELECT } = CHATS;
