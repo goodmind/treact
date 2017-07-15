@@ -14,6 +14,7 @@
     "sourceMap": true,
     "inlineSourceMap": false,
     "inlineSources": false,
+    "noStrictGenericChecks": true,
     "experimentalDecorators": true,
     "noUnusedParameters": true,
     "noUnusedLocals": true,
