@@ -31,7 +31,7 @@ declare module 'universal-router' {
       name?: string;
       parent?: any;
       children?: Route[];
-      action(context: Context, params: Params): ActionResult | Promise<ActionResult>;
+      action?: <T>(context: Context, params: Params) => Promise<T>;
     }
 
     export interface Options {
