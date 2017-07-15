@@ -2,22 +2,25 @@ import { Dispatch } from 'redux';
 // NOTE This type coming from redux-thunk module, not from redux itself
 
 import { IAuth } from './modules/auth';
-import { IStoreHistories } from './modules/histories';
-import { IStoreDialogs } from './modules/dialogs';
-import { IStoreUsers } from './modules/users';
-import { IStorePeers } from './modules/peers';
 import { IStoreChats } from './modules/chats';
-import { IStoreLoadings } from './modules/loadings';
-import { IStoreSelected } from './modules/selected';
+import { IStoreDialogs } from './modules/dialogs';
 import { StatusStore } from './modules/files';
+import { IStoreHistories } from './modules/histories';
+import { IStoreLoadings } from './modules/loadings';
+import { IStoreMessages } from './modules/messages';
+import { IStorePeers } from './modules/peers';
+import { IStorePhotos } from './modules/photos';
+import { IStoreSelected } from './modules/selected';
+import { IStoreUsers } from './modules/users';
 
 import { IStoreList } from 'helpers/state';
-import { IMtpFileLocation } from 'redux/mtproto';
+import { IMtpFileLocation, IMtpUser } from 'redux/mtproto';
 export interface IStore {
-  authKey: any;
+  currentDc: number;
+  authKey: {};
   auth: IAuth;
-  currentUser: any;
-  messages: any;
+  currentUser: IMtpUser;
+  messages: IStoreMessages;
   histories: IStoreHistories;
   dialogs: IStoreDialogs;
   users: IStoreUsers;
@@ -29,9 +32,10 @@ export interface IStore {
     status: StatusStore;
     locations: IStoreList<IMtpFileLocation>;
   };
-};
+  photos: IStorePhotos;
+}
 
-export type IThunkAction<R, S, E> = (dispatch: Dispatch<S>, getState?: () => S, extraArgument?: E) => R;
+export type IThunkAction<R, S, E> = (dispatch: Dispatch<S>, getState: () => S, extraArgument?: E) => R;
 
 export type IAsyncAction<R> = IThunkAction<R, IStore, undefined>;
 

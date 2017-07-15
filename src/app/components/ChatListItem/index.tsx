@@ -1,14 +1,13 @@
-import * as React from 'react';
 import * as classNames from 'classnames';
 import { PeerPhoto } from 'containers/PeerPhoto';
-
-const style = require('./style.css');
+import * as React from 'react';
+import * as style from './style.css';
 
 interface IChatListBasicProps {
   id: number;
   name: string;
   selected: boolean;
-  click: React.EventHandler<React.MouseEvent<any>>;
+  click: React.MouseEventHandler<{}>;
 }
 
 interface IChatListFullProps extends IChatListBasicProps {
@@ -39,8 +38,8 @@ const SenderPreview = ({ userName }: SenderProps) => {
   });
   return (
     <div className={sender}>
-        <span>{userName}</span>
-        <span>:</span>
+      <span>{userName}</span>
+      <span>:</span>
     </div>
   );
 };

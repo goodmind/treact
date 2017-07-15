@@ -1,3 +1,6 @@
+/* tslint:disable */
+// TODO: remove this file
+/*
 URL = window.URL || window.webkitURL;
 const BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder;
 const buggyUnknownBlob = navigator.userAgent.indexOf('Safari') !== -1 &&
@@ -36,23 +39,15 @@ export function bytesToBase64(bytes) {
 
   return result.replace(/A(?=A$|$)/g, '=');
 }
-
-export function bytesToArrayBuffer(b) {
+*/
+export function bytesToArrayBuffer(b: Iterable<number>) {
   return (new Uint8Array(b)).buffer;
 }
 
-export function blobConstruct(blobParts: any[], mimeType?) {
-  let blob;
-  try {
-    blob = new Blob(blobParts, {type: mimeType});
-  } catch (e) {
-    const bb = new BlobBuilder();
-    blobParts.forEach(blobPart => bb.append(blobPart));
-    blob = bb.getBlob(mimeType);
-  }
-  return blob;
+export function blobConstruct(blobParts: any[], mimeType?: string) {
+  return new Blob(blobParts, {type: mimeType});
 }
-
+/*
 try {
   blobConstruct([], '');
 } catch (e) {
@@ -273,7 +268,7 @@ class FileManager {
         $(anchor).remove();
       }, 100);
     });
-  }*/
+  }
 
   public isAvailable = this.isBlobAvailable;
   public copy = this.fileCopyTo;
@@ -284,4 +279,5 @@ class FileManager {
 
 const singleton = new FileManager();
 
-export { singleton as FileManager }
+export { singleton as FileManager };
+*/

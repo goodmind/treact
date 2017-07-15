@@ -1,36 +1,44 @@
-// TODO: remove fetch
-import 'isomorphic-fetch';
 
+import { Location } from 'history';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
-import { syncHistoryWithStore } from 'react-router-redux';
+import * as UniversalRouter from 'universal-router';
+import routes, { resolveRoute } from './app/routes';
 import AppProvider, { store } from './AppProvider';
-import { Router, browserHistory } from 'react-router';
-import { ReduxAsyncConnect } from 'redux-connect';
-import routes from './app/routes';
+// TODO: use absolute paths
+import history from './history';
 
-const history = syncHistoryWithStore(browserHistory, store);
-const connectedCmp = (props) => <ReduxAsyncConnect {...props} />;
+let currentRoutes = routes;
 
-const render = Component =>
-  ReactDOM.render((
+const renderComponent = function <T extends JSX.Element>(Component: T | null) {
+  return ReactDOM.render((
     <AppContainer>
       <AppProvider>
-        <Router
-          history={history}
-          render={connectedCmp}>
-          {Component}
-        </Router>
+        {Component}
       </AppProvider>
     </AppContainer>
   ), document.getElementById('app'));
+};
 
-render(routes);
+const render = async (location: Location, Routes: typeof routes) => {
+  if (routes)
+    currentRoutes = Routes;
+  const Router = new UniversalRouter(currentRoutes, { resolveRoute, context: { store } });
+  const Route = await Router.resolve<JSX.Element>({ path: location.pathname });
+  return renderComponent(Route);
+};
+
+const onHistory = (location: Location) => render(location, currentRoutes);
+
+history.listen(onHistory);
+render(history.location, currentRoutes);
+
+console.log(history.location);
 
 if (module.hot) {
   module.hot.accept('./app/routes', () => {
     const NewApp = require('./app/routes').default;
-    render(NewApp);
+    render(history.location, NewApp);
   });
 }

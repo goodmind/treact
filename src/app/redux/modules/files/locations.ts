@@ -1,7 +1,7 @@
 import { createReducer } from 'redux-act';
 
 import { CHATS } from 'actions';
-import { updateStoreMap, modelDefaults } from 'helpers/reselector';
+import { modelDefaults, updateStoreMap } from 'helpers/reselector';
 import { Slice } from 'helpers/reselector.h';
 
 const { LOAD_SLICE, GET_DIALOGS } = CHATS;

@@ -4,6 +4,8 @@
     "tslint-react"
   ],
   "rules": {
+    "no-non-null-assertion": true,
+    "no-any": true,
     "indent": [
       true,
       "spaces"
@@ -44,6 +46,7 @@
     "jsx-no-multiline-js": false,
     "jsx-wrap-multiline": false,
     "max-classes-per-file": [false],
-    "comment-format": [false]
+    "comment-format": [false],
+    "prefer-object-spread": false
   }
 }

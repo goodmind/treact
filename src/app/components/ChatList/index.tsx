@@ -1,8 +1,6 @@
+import { ChatListSearch, InfiniteScroll } from 'components';
 import * as React from 'react';
-import { ChatListSearch } from 'components';
-import * as InfiniteScroll from 'react-infinite-scroller';
-
-const style = require('./style.css');
+import * as style from './style.css';
 
 interface IProps {
   loading: boolean;
@@ -18,7 +16,7 @@ const LoadingPane = () => (
 
 class ChatList extends React.Component<IProps, {}> {
   public render() {
-    const { loading, children, loadMore, hasMore } = this.props;
+    const { children, loadMore, hasMore } = this.props;
 
     return (
       <div className={style.chatlist}>
@@ -30,9 +28,9 @@ class ChatList extends React.Component<IProps, {}> {
             loadMore={loadMore}
             initialLoad={false}
             hasMore={hasMore}
+            loader={<LoadingPane />}
             useWindow={false}>
             {children}
-            {loading && <LoadingPane />}
           </InfiniteScroll>
         </div>
       </div>

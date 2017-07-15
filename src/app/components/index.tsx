@@ -7,3 +7,4 @@ export { ChatListSearch } from './ChatListSearch';
 export { ChatMessage } from './ChatMessage';
 export { AutoSizeTextarea } from './AutoSizeTextarea';
 export { InstantMessages } from './InstantMessages';
+export { InfiniteScroll } from './InfiniteScroll';

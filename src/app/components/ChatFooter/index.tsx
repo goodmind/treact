@@ -1,8 +1,14 @@
 import * as React from 'react';
 import AutoSizeTextarea from 'react-autosize-textarea';
-const s = require('../Chat/style.css');
+import * as s from '../Chat/style.css';
 
-export const ChatFooter = ({ value, change, submit }) => (
+type IProps = {
+  value: string,
+  change: React.ChangeEventHandler<{}>,
+  submit: React.MouseEventHandler<{}>,
+};
+
+export const ChatFooter = ({ value, change, submit }: IProps) => (
   <div className={s.chatfooter}>
     <AutoSizeTextarea
       onChange={change}

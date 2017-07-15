@@ -85,6 +85,8 @@ export interface IMtpDcOption extends IMtpObject<TMtpDcOption> {
   port: number;
 }
 
+// TODO: generate from TL
+// tslint:disable-next-line
 type IMtpMessageEntity = any;
 
 export interface IMtpMessage extends IMtpObject<TMtpMessage> {
@@ -133,6 +135,7 @@ export interface IMtpUser extends IMtpObject<TMtpUser> {
 
 export interface IMtpChat extends IMtpObject<TMtpChat> {
   title: string;
+  access_hash: string;
 }
 
 export interface IMtpMessagesSlice extends IMtpObject<TMtpMessagesSlice> {
@@ -148,7 +151,7 @@ export interface IMtpGetDialogs extends IMtpObject<TMtpGetDialogs> {
   users: IMtpVector<IMtpUser>;
   dialogs: IMtpVector<IMtpDialog>;
   count: number;
-};
+}
 
 export type IMtpObjectGeneric = IMtpDcOption|IMtpMessage|IMtpDialog|
   IMtpFileLocation|IMtpPhoto|IMtpUser|IMtpChat|IMtpMessagesSlice|IMtpGetDialogs;

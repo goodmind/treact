@@ -8,17 +8,20 @@
       ]
     },
     "outDir": "build",
-    "module": "es2015",
-    "target": "es6",
+    "module": "esnext",
+    "target": "es2015",
     "pretty": true,
     "sourceMap": true,
     "inlineSourceMap": false,
     "inlineSources": false,
+    "noStrictGenericChecks": true,
     "experimentalDecorators": true,
     "noUnusedParameters": true,
     "noUnusedLocals": true,
+    "strict": true,
     "jsx": "react",
     "moduleResolution": "node",
+    "allowJs": true,
     "lib": [
       "es2015",
       "dom"
@@ -26,6 +29,7 @@
   },
   "exclude": [
     "node_modules",
+    "gh-pages",
     "build",
     "typings/main",
     "typings/main.d.ts"

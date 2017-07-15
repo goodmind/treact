@@ -1,5 +1,5 @@
 import * as React from 'react';
-const s = require('./style.css');
+import * as s from './style.css';
 
 interface IProps {
   children?: React.ReactNode;
@@ -10,4 +10,4 @@ const InstantMessages = ({ children }: IProps) => (
     {children}
   </div>
 );
-export { InstantMessages }
+export { InstantMessages };

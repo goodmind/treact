@@ -1,5 +1,5 @@
-import { TById, IMtpPeer } from 'redux/mtproto';
-import { pipe as P, props, complement, isNil, find } from 'ramda';
+import { complement, find, isNil, pipe as P, props } from 'ramda';
+import { IMtpPeer, TById } from 'redux/mtproto';
 
 export interface IStoreList<T> {
   ids: number[];

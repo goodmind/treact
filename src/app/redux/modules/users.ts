@@ -4,7 +4,7 @@ import { CHATS } from 'actions';
 import { IStoreList } from 'helpers/state';
 import { IMtpUser } from '../mtproto';
 
-import { updateStoreMap, modelDefaults } from 'helpers/reselector';
+import { modelDefaults, updateStoreMap } from 'helpers/reselector';
 import { Slice } from 'helpers/reselector.h';
 
 export type IStoreUsers = IStoreList<IMtpUser>;
