@@ -11,7 +11,7 @@ import history from './history';
 
 let currentRoutes = routes;
 
-const renderComponent = function <T extends JSX.Element>(Component: T | null) {
+const renderComponent = (Component: JSX.Element | null) => {
   return ReactDOM.render((
     <AppContainer>
       <AppProvider>
