@@ -39,7 +39,7 @@
     "start:dev": "webpack-dev-server",
     "start:prod": "cross-env-shell NODE_ENV=production \"npm run build:vendor && webpack\"",
     "test": "jest --no-cache",
-    "lint": "tslint --type-check -p . -e \"src/**/**.snap\" \"src/**/**.ts*\""
+    "lint": "tslint --type-check -p . \"src/**/**.(ts|tsx)\""
   },
   "author": "goodmind <andwebar@gmail.com>",
   "contributors": [
