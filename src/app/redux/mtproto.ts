@@ -67,7 +67,7 @@ export interface IMtpStorageObject<T extends TMtpStorageType> extends IMtpPrimit
 
 export interface IMtpObject<T extends TMtpType> extends IMtpPrimitive<T> {
   id: number;
-  flags: number; // NOTE I'm not shure thats any object has it
+  flags: number; // NOTE: I'm not shure thats any object has it
 }
 
 export interface IMtpVector<T extends IMtpObject<TMtpType>> extends IMtpObject<TMtpVector> {
