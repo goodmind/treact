@@ -28,6 +28,8 @@ function getPassword() {
     dispatch(GET_PASSWORD.INIT());
     return api('account.getPassword', {}, options)
       .then(onDone, GET_PASSWORD.FAIL)
+      // TODO: why promise loses type here?
+      // tslint:disable-next-line
       .then(dispatch as any);
   };
 }
@@ -40,6 +42,8 @@ export function checkPassword(password: string) {
       password_hash: hash,
     }, options).then(addDc)
       .then(SIGN_IN.DONE, SIGN_IN.FAIL)
+      // TODO: why promise loses type here?
+      // tslint:disable-next-line
       .then(dispatch as any);
   };
 }
@@ -58,6 +62,8 @@ export function signIn(phoneCode: string) {
       phone_code: phoneCode,
     }, options).then(addDc)
       .then(SIGN_IN.DONE)
+      // TODO: why promise loses type here?
+      // tslint:disable-next-line
       .then(dispatch as any)
       .catch(catchAndDispatch);
   };
@@ -76,7 +82,9 @@ export function sendCode(phoneNumber: string) {
       api_id: APP_ID,
       api_hash: APP_HASH,
     }, options).then(onDone, SEND_CODE.FAIL)
-      .then(dispatch);
+      // TODO: why promise loses type here?
+      // tslint:disable-next-line
+      .then(dispatch as any);
   };
 }
 
@@ -89,6 +97,8 @@ export function logOut() {
     dispatch(LOG_OUT.INIT());
     return api<boolean>('auth.logOut')
       .then(LOG_OUT.DONE, LOG_OUT.FAIL)
+      // TODO: why promise loses type here?
+      // tslint:disable-next-line
       .then(dispatch as any)
       .then(tap(cleanAndRedirect));
   };
