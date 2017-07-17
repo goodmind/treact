@@ -12,6 +12,7 @@ export interface IAuthError {
   description?: string;
 }
 export const isAuthError =
+  // tslint:disable-next-line
   (p: any): p is IAuthError => p.code && p.type;
 export interface IAuth {
   authenticated: boolean;
