@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux';
-// NOTE This type coming from redux-thunk module, not from redux itself
+// NOTE: This type coming from redux-thunk module, not from redux itself
 
 import { IAuth } from './modules/auth';
 import { IStoreChats } from './modules/chats';
