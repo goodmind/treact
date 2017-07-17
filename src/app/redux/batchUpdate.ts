@@ -4,8 +4,6 @@ import { Middleware } from 'redux';
 const { DONE } = CACHE;
 const doneType = DONE.toString();
 
-// TODO: remove any
-// tslint:disable-next-line
 export const batchUpdate: Middleware = ({ dispatch }) => (next) => {
   let pool: number[] = [];
 
@@ -18,6 +16,8 @@ export const batchUpdate: Middleware = ({ dispatch }) => (next) => {
 
   setInterval(flush, 300);
 
+  // TODO: remove any
+  // tslint:disable-next-line
   return (action: any) => {
     if (action.type === doneType && typeof action.payload === 'number') {
       pool.push(action.payload);
