@@ -39,7 +39,7 @@
     "start:dev": "webpack-dev-server",
     "start:prod": "cross-env-shell NODE_ENV=production \"npm run build:vendor && webpack\"",
     "test": "jest --no-cache",
-    "lint": "node_modules/.bin/tslint \"src/**/**.ts*\""
+    "lint": "tslint --type-check -p . -e \"src/**/**.snap\" \"src/**/**.ts*\""
   },
   "author": "goodmind <andwebar@gmail.com>",
   "contributors": [
@@ -113,7 +113,7 @@
     "html-webpack-plugin": "^2.29.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^20.0.4",
-    "postcss-assets": "^4.1.0",
+    "postcss-assets": "^4.2.0",
     "postcss-cssnext": "^3.0.2",
     "postcss-loader": "^2.0.6",
     "react-hot-loader": "^3.0.0-beta.7",
