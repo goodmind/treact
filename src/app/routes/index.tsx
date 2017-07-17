@@ -25,7 +25,7 @@ declare module 'universal-router' {
 
 export const resolveRoute: Options['resolveRoute'] = async (context, params) => {
   const { route, store } = context;
-  const { App } = await import ('containers/App');
+  const { App } = await import (/* webpackChunkName: "app" */ 'containers/App');
   const { auth } = store.getState();
 
   if (typeof route.action === 'function') {
@@ -49,7 +49,7 @@ const routes: Route[] = [
         path: '/',
         guard: false,
         async action() {
-          const { Home } = await import ('containers/Home');
+          const { Home } = await import (/* webpackChunkName: "home" */ 'containers/Home');
           return Home;
         },
       },
@@ -58,7 +58,7 @@ const routes: Route[] = [
         path: '/im',
         guard: true,
         async action({ store: { dispatch } }) {
-          const { InstantMessages } = await import ('containers/InstantMessages');
+          const { InstantMessages } = await import (/* webpackChunkName: "im" */ 'containers/InstantMessages');
           await dispatch(fetchChatList());
           return InstantMessages;
         },
@@ -68,7 +68,7 @@ const routes: Route[] = [
         path: '/login',
         guard: false,
         async action() {
-          const { Login } = await import ('containers/Login');
+          const { Login } = await import (/* webpackChunkName: "login" */ 'containers/Login');
           return Login;
         },
       },
