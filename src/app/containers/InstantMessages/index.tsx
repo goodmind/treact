@@ -9,7 +9,7 @@ class InstantMessagesImpl extends React.Component<{}, {}> {
 
   constructor(props: {}, context: {}) {
     super(props, context);
-    // NOTE: Updates disabled until telegram-mtproto release
+    // TODO: Updates disabled until telegram-mtproto release
     // pool.updates.attach();
     pool.on('*', msg => console.debug('updates', msg._, msg));
     pool.on('apiUpdate', msg => console.debug('apiUpdate', msg._, msg));
