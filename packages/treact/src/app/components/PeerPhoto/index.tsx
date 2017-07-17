@@ -16,4 +16,4 @@ export const PeerPhoto = ({ id, className }: IProps) =>
   <img
     className={className}
     src={picStore.get(id)} />;
-// NOTE Sending blob through props is definitely slower
+// HACK:  Sending blob through props is definitely slower
