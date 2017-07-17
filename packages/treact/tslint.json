@@ -4,8 +4,6 @@
     "tslint-react"
   ],
   "rules": {
-    "no-non-null-assertion": true,
-    "no-any": true,
     "indent": [
       true,
       "spaces"
@@ -15,14 +13,18 @@
       "single",
       "jsx-double"
     ],
-    "no-var-requires": false,
+    "semicolon": [
+      true,
+      "always"
+    ],
+    "interface-name": [
+      true,
+      "never-prefix"
+    ],
     "ordered-imports": [],
-    "arrow-parens": false,
     "member-ordering": [
       false
     ],
-    "object-literal-sort-keys": false,
-    "no-shadowed-variable": false,
     "no-console": [
       false
     ],
@@ -35,18 +37,27 @@
     "space-before-function-paren": [
       false
     ],
-    "interface-over-type-literal":  false,
-    "prefer-const": ["warn"],
-    "curly": false,
-    "semicolon": [
-      true
+    "no-consecutive-blank-lines": [
+      false
     ],
+    "max-classes-per-file": [
+      false
+    ],
+    "comment-format": [
+      false
+    ],
+    "no-non-null-assertion": true,
+    "no-any": true,
+    "no-var-requires": true,
+    "arrow-parens": false,
+    "object-literal-sort-keys": false,
+    "no-shadowed-variable": false,
+    "interface-over-type-literal": false,
+    "prefer-const": true,
+    "curly": false,
     "no-bitwise": false,
-    "no-consecutive-blank-lines": [false],
     "jsx-no-multiline-js": false,
     "jsx-wrap-multiline": false,
-    "max-classes-per-file": [false],
-    "comment-format": [false],
     "prefer-object-spread": false
   }
 }
