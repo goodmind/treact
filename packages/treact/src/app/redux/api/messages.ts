@@ -24,6 +24,7 @@ const buildMessage =
   // TODO: generate types from TL
   // tslint:disable-next-line
   (id: number, text: string, randomId: number[], self: /*peerUser*/any, outputPeer: /*peer*/any) =>
+    // tslint:disable-next-line
     (message: any) => {
   const messageId = tempId--;
   const randomIds = bigint(randomId[0]).shiftLeft(32).add(bigint(randomId[1])).toString();
@@ -73,6 +74,8 @@ export function sendText(id: number, text: string) {
     })
       .then(buildMessage(id, text, randomId, state.currentUser, outputPeer))
       .then(SEND_TEXT.DONE, SEND_TEXT.FAIL)
-      .then(dispatch);
+      // TODO: why promise loses type here?
+      // tslint:disable-next-line
+      .then(dispatch as any);
   };
 }
