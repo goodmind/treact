@@ -74,8 +74,8 @@ class InfiniteScroll extends React.Component<IProps, {}> {
 
   public detachScrollListener() {
     let scrollEl: EventTarget = window;
-    if (this.props.useWindow === false) {
-      scrollEl = this.scrollComponent.parentNode!;
+    if (this.props.useWindow === false && this.scrollComponent.parentNode) {
+      scrollEl = this.scrollComponent.parentNode;
     }
 
     scrollEl.removeEventListener('scroll', this.scrollListener, this.props.useCapture);
@@ -88,8 +88,8 @@ class InfiniteScroll extends React.Component<IProps, {}> {
     }
 
     let scrollEl: EventTarget = window;
-    if (this.props.useWindow === false) {
-      scrollEl = this.scrollComponent.parentNode!;
+    if (this.props.useWindow === false && this.scrollComponent.parentNode) {
+      scrollEl = this.scrollComponent.parentNode;
     }
 
     scrollEl.addEventListener('scroll', this.scrollListener, this.props.useCapture);
@@ -109,6 +109,7 @@ class InfiniteScroll extends React.Component<IProps, {}> {
       const scrollTop = (scrollEl.pageYOffset !== undefined) ?
        scrollEl.pageYOffset :
        (document.documentElement || document.body.parentNode || document.body).scrollTop;
+
       if (this.props.isReverse) {
         offset = scrollTop;
       } else {
@@ -117,13 +118,13 @@ class InfiniteScroll extends React.Component<IProps, {}> {
                      scrollTop -
                      window.innerHeight);
       }
-    } else if (this.props.isReverse) {
-      offset = el.parentElement!.scrollTop;
-    } else {
-      offset = el.scrollHeight - el.parentElement!.scrollTop - el.parentElement!.clientHeight;
+    } else if (this.props.isReverse && el.parentElement) {
+      offset = el.parentElement.scrollTop;
+    } else if (el.parentElement) {
+      offset = el.scrollHeight - el.parentElement.scrollTop - el.parentElement.clientHeight;
     }
 
-    if (offset < Number(this.props.threshold)) {
+    if (offset && offset < Number(this.props.threshold)) {
       this.detachScrollListener();
       // Call loadMore after detachScrollListener to allow for non-async loadMore functions
       if (typeof this.props.loadMore === 'function') {
