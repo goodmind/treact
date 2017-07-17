@@ -1,4 +1,4 @@
-import { is, join, pipe, trim } from 'ramda';
+import { join, pipe, trim } from 'ramda';
 import { IDispatch, IStore } from 'redux/IStore';
 import { TPeersType } from 'redux/modules/peers';
 import { IMtpChat, IMtpUser } from 'redux/mtproto';
@@ -29,10 +29,14 @@ export const retrieveInputPeer = (id: number, peer: TPeersType, peerData: IMtpUs
   }
 };
 
-// NOTE: wrong type
-type PeerString = { user_id: number, chat_id: number, channel_id: number };
+// HACK: wrong type
+type PeerString = { user_id?: number, chat_id: number, channel_id: number };
+// tslint:disable-next-line
+function isPeerString(v: any): v is PeerString {
+  return v.user_id || v.channel_id || v.chat_id;
+}
 export function getPeerID(peerString: string | PeerString) {
-  if (is<PeerString>((Object as any), peerString)) {
+  if (isPeerString(peerString)) {
     return peerString.user_id
       ? peerString.user_id
       : -(peerString.channel_id || peerString.chat_id);
@@ -74,6 +78,7 @@ export const resolveUsername = (username: string) => (dispatch): Promise<number 
 */
 
 // TODO: peer should be IMtpUser | IMtpChat
+// tslint:disable-next-line
 export const retrieveId = (peer: any): number => {
   switch (peer._) {
     case 'channel': return -peer.id;
