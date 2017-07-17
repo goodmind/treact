@@ -22,6 +22,8 @@ class PhoneNumberImpl extends React.Component<IProps, IState> {
     error: null,
   };
 
+  // TODO: can't type computed properties
+  // tslint:disable-next-line
   private handleChange = (e: any) =>
     this.setState({ [e.target.name]: e.target.value })
 
