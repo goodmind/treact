@@ -15,9 +15,8 @@
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
     "moduleDirectories": [
       "node_modules",
-      "src",
-      "src/app",
-      "src/app/redux"
+      "<rootDir>/src/app",
+      "<rootDir>/src/app/redux"
     ],
     "moduleFileExtensions": [
       "ts",
