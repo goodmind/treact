@@ -3,18 +3,18 @@ import { connect } from 'react-redux';
 
 import { ChatFooter } from 'components/ChatFooter';
 import { sendText } from 'redux/api/messages';
-import { IDispatch, IStore } from 'redux/IStore';
+import { Dispatch, Store } from 'redux/store.h';
 
-type IState = {
+type State = {
   message: string,
 };
 
-type IProps = {
+type Props = {
   selected: number,
   sendMessage(id: number, text: string): Promise<void>,
 };
 
-class ChatFooterContainer extends React.Component<IProps, IState> {
+class ChatFooterContainer extends React.Component<Props, State> {
   public state = {
     message: '',
   };
@@ -38,8 +38,8 @@ class ChatFooterContainer extends React.Component<IProps, IState> {
   }
 }
 
-const mapState = (state: IStore) => ({ selected: state.selected.dialog });
-const mapDispatch = (dispatch: IDispatch) => ({
+const mapState = (state: Store) => ({ selected: state.selected.dialog });
+const mapDispatch = (dispatch: Dispatch) => ({
   sendMessage: (id: number, text: string) => dispatch(sendText(id, text)),
 });
 const connected = connect(mapState, mapDispatch)<{}>(ChatFooterContainer);

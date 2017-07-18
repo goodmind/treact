@@ -1,27 +1,27 @@
 import { Login } from 'components/Login';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { IStore } from 'redux/IStore';
+import { Store } from 'redux/store.h';
 import * as Steps from './steps';
 
-type IConnectedState = Pick<IStore, 'auth'>;
-type IConnectedActions = {};
-type IOwnProps = {};
-type IProps = IConnectedState & IConnectedActions & IOwnProps;
+type ConnectedState = Pick<Store, 'auth'>;
+type ConnectedActions = {};
+type OwnProps = {};
+type Props = ConnectedState & ConnectedActions & OwnProps;
 
-export interface IFormState {
+export interface FormState {
   phoneNumber: string;
   authCode: string;
   password: string;
 }
 
-interface IState {
+interface State {
   step: number;
-  form: IFormState;
+  form: FormState;
 }
 
-class LoginImpl extends React.Component<IProps, IState> {
-  public state: IState = {
+class LoginImpl extends React.Component<Props, State> {
+  public state: State = {
     step: 1,
     form: {
       phoneNumber: '',
@@ -42,7 +42,7 @@ class LoginImpl extends React.Component<IProps, IState> {
     }));
   }
 
-  public updateForm = <K extends keyof IFormState>(state: Pick<IFormState, K>) => {
+  public updateForm = <K extends keyof FormState>(state: Pick<FormState, K>) => {
     this.setState(prevState => ({
       form: Object.assign({}, prevState.form, state),
     }));
@@ -94,20 +94,20 @@ class LoginImpl extends React.Component<IProps, IState> {
   }
 }
 
-interface IStep {
+interface Step {
   update: LoginImpl['updateForm'];
-  form: IFormState;
+  form: FormState;
 }
 
-export interface IStepNext extends IStep {
+export interface StepNext extends Step {
   nextStep: LoginImpl['nextStep'];
 }
 
-export interface IStepSkip extends IStep {
+export interface StepSkip extends Step {
   skipStep: LoginImpl['skipStep'];
 }
 
-const LoginContainer = connect<IConnectedState, IConnectedActions, IOwnProps>(
+const LoginContainer = connect<ConnectedState, ConnectedActions, OwnProps>(
   state => ({ auth: state.auth }),
 )<{}>(LoginImpl);
 

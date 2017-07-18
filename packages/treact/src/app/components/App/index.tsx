@@ -1,11 +1,11 @@
 import * as React from 'react';
 import * as s from './style.css';
 
-interface IProps {
+interface Props {
   children?: React.ReactNode;
 }
 
-const App = ({ children }: IProps) => (
+const App = ({ children }: Props) => (
   <section className={s.app}>
     {children}
   </section>

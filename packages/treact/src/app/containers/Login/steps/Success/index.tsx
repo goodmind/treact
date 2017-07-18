@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { IStore } from 'redux/IStore';
+import { Store } from 'redux/store.h';
 
-type IConnectedState = Pick<IStore, 'currentUser'>;
-type IProps = IConnectedState;
+type ConnectedState = Pick<Store, 'currentUser'>;
+type Props = ConnectedState;
 
-class SuccessImpl extends React.Component<IProps, {}> {
+class SuccessImpl extends React.Component<Props, {}> {
   public static defaultPhrase = 'No current user';
   public toPrintable = () => this.props.currentUser
     ? JSON.stringify(this.props.currentUser)
@@ -22,7 +22,7 @@ class SuccessImpl extends React.Component<IProps, {}> {
   }
 }
 
-const mapStateToProps = (state: IStore) => ({ currentUser: state.currentUser });
-const Success = connect<IConnectedState, {}, {}>(mapStateToProps)<{}>(SuccessImpl);
+const mapStateToProps = (state: Store) => ({ currentUser: state.currentUser });
+const Success = connect<ConnectedState, {}, {}>(mapStateToProps)<{}>(SuccessImpl);
 
 export { Success };

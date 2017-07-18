@@ -2,21 +2,21 @@ import { sendCode } from 'api/auth';
 import { PhoneNumber } from 'components/Login/steps';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { IDispatch, IStore } from 'redux/IStore';
-import { IAuthError, isAuthError } from 'redux/modules/auth';
-import { IStepNext as IOwnProps } from '../..';
+import { AuthError, isAuthError } from 'redux/modules/auth';
+import { Dispatch, Store } from 'redux/store.h';
+import { StepNext as OwnProps } from '../..';
 
-type IConnectedState = Pick<IStore, 'auth'>;
-type IConnectedActions = { dispatch: IDispatch };
-type IProps = IConnectedState & IConnectedActions & IOwnProps;
-type IState = {
+type ConnectedState = Pick<Store, 'auth'>;
+type ConnectedActions = { dispatch: Dispatch };
+type Props = ConnectedState & ConnectedActions & OwnProps;
+type State = {
   phoneCode: string;
   phoneNumber: string;
-  error: IAuthError | null;
+  error: AuthError | null;
 };
 
-class PhoneNumberImpl extends React.Component<IProps, IState> {
-  public state: IState = {
+class PhoneNumberImpl extends React.Component<Props, State> {
+  public state: State = {
     phoneCode: '+7',
     phoneNumber: '',
     error: null,
@@ -52,8 +52,8 @@ class PhoneNumberImpl extends React.Component<IProps, IState> {
   }
 }
 
-const mapStateToProps = (state: IStore) => ({ auth: state.auth });
+const mapStateToProps = (state: Store) => ({ auth: state.auth });
 const PhoneNumberContainer =
-  connect<IConnectedState, IConnectedActions, IOwnProps>(mapStateToProps)<IOwnProps>(PhoneNumberImpl);
+  connect<ConnectedState, ConnectedActions, OwnProps>(mapStateToProps)<OwnProps>(PhoneNumberImpl);
 
 export { PhoneNumberContainer as PhoneNumber };

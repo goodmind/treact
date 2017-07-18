@@ -1,11 +1,11 @@
-import { IStepNext } from 'containers/Login';
+import { StepNext } from 'containers/Login';
 import * as React from 'react';
 import * as t from '../../style.css';
 import * as icon from './icon102.png';
 
-type IProps = Pick<IStepNext, 'nextStep'>;
+type Props = Pick<StepNext, 'nextStep'>;
 
-const Intro = ({ nextStep }: IProps) => {
+const Intro = ({ nextStep }: Props) => {
   return (
     <div className={t.loginStep}>
       <img

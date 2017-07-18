@@ -1,6 +1,6 @@
 import { equals, evolve, flip, isEmpty, merge,
   mergeWith, pick, pipe, pluck, sort, subtract, union } from 'ramda';
-import { IPayload, SelectedPayload, StoredPayload } from './reselector.h';
+import { Payload, SelectedPayload, StoredPayload } from './reselector.h';
 
 // tslint:disable-next-line
 const selectModel = pluck as any;
@@ -15,7 +15,7 @@ const updateStore =
   // tslint:disable-next-line
   (_mergeFunc: FlipMergeLists) =>
       <P1, K1 extends keyof P1>(modelName: K1) => {
-        type T1 = IPayload<P1>;
+        type T1 = Payload<P1>;
         type S1 = StoredPayload<P1[K1]>;
         type Selector = (p: T1) => SelectedPayload<P1[K1]>;
         type MergeFunc = (a: T1['entities'][K1]) => (a: S1['byId']) => S1['byId'];

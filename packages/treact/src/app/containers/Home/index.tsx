@@ -1,15 +1,15 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { IDispatch, IStore } from 'redux/IStore';
+import { Dispatch, Store } from 'redux/store.h';
 // TODO: use absolute paths
 import history from '../../../history';
 
-type IConnectedState = Pick<IStore, 'auth'>;
-type IConnectedActions = { dispatch: IDispatch };
-type IOwnProps = {};
-type IProps = IConnectedState & IConnectedActions & IOwnProps;
+type ConnectedState = Pick<Store, 'auth'>;
+type ConnectedActions = { dispatch: Dispatch };
+type OwnProps = {};
+type Props = ConnectedState & ConnectedActions & OwnProps;
 
-class HomeImpl extends React.Component<IProps, {}> {
+class HomeImpl extends React.Component<Props, {}> {
   public componentWillMount() {
     const { auth } = this.props;
     const route = auth.authenticated
@@ -23,7 +23,7 @@ class HomeImpl extends React.Component<IProps, {}> {
   }
 }
 
-const mapStateToProps = (state: IStore) => ({ auth: state.auth });
-const Home = connect<IConnectedState, IConnectedActions, IOwnProps>(mapStateToProps)(HomeImpl);
+const mapStateToProps = (state: Store) => ({ auth: state.auth });
+const Home = connect<ConnectedState, ConnectedActions, OwnProps>(mapStateToProps)(HomeImpl);
 
 export { Home };

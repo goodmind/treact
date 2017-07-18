@@ -1,13 +1,13 @@
 import { createReducer } from 'redux-act';
 
 import { CHATS } from 'actions';
-import { IStoreList } from 'helpers/state';
-import { IMtpUser } from '../mtproto';
+import { StoreList } from 'helpers/state';
+import { MtpUser } from '../mtproto';
 
 import { modelDefaults, updateStoreMap } from 'helpers/reselector';
 import { Slice } from 'helpers/reselector.h';
 
-export type IStoreUsers = IStoreList<IMtpUser>;
+export type StoreUsers = StoreList<MtpUser>;
 
 const { LOAD_SLICE, GET_DIALOGS } = CHATS;
 

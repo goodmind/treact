@@ -4,12 +4,12 @@
 import * as React from 'react';
 import * as s from './style.css';
 
-interface IProps {
+interface Props {
   message: any;
   activeChat: any;
 }
 
-class ChatMessage extends React.Component<IProps, {}> {
+class ChatMessage extends React.Component<Props, {}> {
   public render() {
     const { message, activeChat } = this.props;
 

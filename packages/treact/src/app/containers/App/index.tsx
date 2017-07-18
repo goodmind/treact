@@ -3,11 +3,11 @@ import * as React from 'react';
 import * as Helmet from 'react-helmet';
 import * as appConfig from '../../../../config/main';
 
-interface IProps {
+interface Props {
   children: React.ReactNode;
 }
 
-const AppContainer = ({ children }: IProps) =>
+const AppContainer = ({ children }: Props) =>
   <App>
     <Helmet {...appConfig.app} {...appConfig.app.head}/>
     <Header />

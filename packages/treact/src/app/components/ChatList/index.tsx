@@ -2,7 +2,7 @@ import { ChatListSearch, InfiniteScroll } from 'components';
 import * as React from 'react';
 import * as style from './style.css';
 
-interface IProps {
+interface Props {
   loading: boolean;
   hasMore: boolean;
   loadMore: () => void;
@@ -14,7 +14,7 @@ const LoadingPane = () => (
   </div>
 );
 
-class ChatList extends React.Component<IProps, {}> {
+class ChatList extends React.Component<Props, {}> {
   public render() {
     const { children, loadMore, hasMore } = this.props;
 

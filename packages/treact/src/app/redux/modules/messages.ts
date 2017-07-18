@@ -7,7 +7,7 @@ const { SEND_TEXT } = MESSAGES;
 import { modelDefaults, updateStoreMap } from 'helpers/reselector';
 import { Slice, StoredPayload } from 'helpers/reselector.h';
 
-export type IStoreMessages = StoredPayload<Slice['messages']>;
+export type StoreMessages = StoredPayload<Slice['messages']>;
 
 const updater = updateStoreMap<Slice, 'messages'>('messages');
 

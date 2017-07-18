@@ -1,10 +1,10 @@
 import * as React from 'react';
 import * as t from '../style.css';
-import { ICommonProps } from './';
+import { CommonProps } from './';
 
-type IProps = ICommonProps;
+type Props = CommonProps;
 
-const Password = ({ error, change, nextStep }: IProps) => (
+const Password = ({ error, change, nextStep }: Props) => (
   <div className={t.loginStep}>
     <h1>Cloud password check</h1>
     <p>

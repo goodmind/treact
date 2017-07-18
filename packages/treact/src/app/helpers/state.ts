@@ -1,7 +1,8 @@
 import { complement, find, isNil, pipe as P, props } from 'ramda';
-import { IMtpPeer, TById } from 'redux/mtproto';
+import { MtpPeer, TById } from 'redux/mtproto';
 
-export interface IStoreList<T> {
+// TODO: this looks like duplicate of StoredPayload from reselector
+export interface StoreList<T> {
   ids: number[];
   byId: TById<T>;
 }
@@ -19,7 +20,7 @@ const notNil = complement(isNil);
  * (with `user_id`, `chat_id` or `channel_id`)
  * @function unifiedGetId
  */
-export const unifiedGetId: (obj: IMtpPeer) => string = P(
+export const unifiedGetId: (obj: MtpPeer) => string = P(
   props(idProps),
   find(notNil),
   // e => +e,

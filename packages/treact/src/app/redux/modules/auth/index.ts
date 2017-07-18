@@ -6,22 +6,22 @@ import { REHYDRATE } from 'redux-persist/constants';
 
 import { AUTH } from 'actions';
 
-export interface IAuthError {
+export interface AuthError {
   code: number;
   type: string;
   description?: string;
 }
 export const isAuthError =
   // tslint:disable-next-line
-  (p: any): p is IAuthError => p.code && p.type;
-export interface IAuth {
+  (p: any): p is AuthError => p.code && p.type;
+export interface Auth {
   authenticated: boolean;
   loading: boolean;
   phoneNumber: string;
   phoneCodeHash: string;
   phoneCode: string;
   passwordSalt: string;
-  error: IAuthError;
+  error: AuthError;
 }
 
 const { SEND_CODE, SIGN_IN, GET_PASSWORD, LOG_OUT } = AUTH;
@@ -30,9 +30,9 @@ const passwordSalt = createReducer({
   [GET_PASSWORD.DONE]: (_, { passwordSalt }) => passwordSalt,
 }, '');
 
-const saveError = (_: IAuthError, { code, type }: IAuthError): IAuthError => ({ code, type });
+const saveError = (_: AuthError, { code, type }: AuthError): AuthError => ({ code, type });
 
-const error = createReducer<IAuthError>({
+const error = createReducer<AuthError>({
   [SEND_CODE.FAIL]: saveError,
   [SIGN_IN.FAIL]: saveError,
   [GET_PASSWORD.FAIL]: saveError,
@@ -71,7 +71,7 @@ const loggedOut = createReducer<boolean>({
   [LOG_OUT.DONE]: T,
 }, false);
 
-export const authReducer = combineReducers<IAuth>({
+export const authReducer = combineReducers<Auth>({
   loading,
   error,
   authenticated,

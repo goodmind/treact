@@ -3,14 +3,14 @@ import { PeerPhoto } from 'containers/PeerPhoto';
 import * as React from 'react';
 import * as style from './style.css';
 
-interface IChatListBasicProps {
+interface ChatListBasicProps {
   id: number;
   name: string;
   selected: boolean;
   click: React.MouseEventHandler<{}>;
 }
 
-interface IChatListFullProps extends IChatListBasicProps {
+interface ChatListFullProps extends ChatListBasicProps {
   isYou: boolean;
   previewName: string;
   text: string;
@@ -54,7 +54,7 @@ const MessagePreview = ({ text, userName, isYou }: MessageProps) => (
 
 // <PeerPhoto peerID={id} />
 
-export class ChatListItemEmpty extends React.Component<IChatListBasicProps, {}> {
+export class ChatListItemEmpty extends React.Component<ChatListBasicProps, {}> {
   public render() {
     const {
       id,
@@ -87,7 +87,7 @@ export class ChatListItemEmpty extends React.Component<IChatListBasicProps, {}> 
 
 export const ChatListItem = ({
   id, name, click, selected,
-  previewName, text, unreadCount, isYou }: IChatListFullProps) => (
+  previewName, text, unreadCount, isYou }: ChatListFullProps) => (
   <ChatListItemEmpty id={id} name={name} click={click} selected={selected}>
     <MessagePreview text={text} userName={previewName} isYou={isYou} />
     <UnreadBadge unread={unreadCount}/>

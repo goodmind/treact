@@ -1,17 +1,17 @@
 import { logOut } from 'api/auth';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { IDispatch } from 'redux/IStore';
+import { Dispatch } from 'redux/store.h';
 // TODO: use absolute paths
 import { Link } from '../../../vendor/containers/Link';
 import * as s from './style.css';
 import * as logo from './title-logo.png';
 
-interface IConnectedActions {
+interface ConnectedActions {
   logOut: React.MouseEventHandler<HTMLAnchorElement>;
 }
 
-const Header = ({ logOut }: IConnectedActions) => (
+const Header = ({ logOut }: ConnectedActions) => (
   <header className={s.header}>
     <img className={s.headerIcon} src={logo} />
     <Link to="/">Home</Link>
@@ -20,12 +20,12 @@ const Header = ({ logOut }: IConnectedActions) => (
   </header>
 );
 
-const dispatchToProps = (dispatch: IDispatch) => ({
+const dispatchToProps = (dispatch: Dispatch) => ({
   logOut() {
     dispatch(logOut());
   },
 });
 
-const connected = connect<{}, IConnectedActions, {}>(null, dispatchToProps)<{}>(Header);
+const connected = connect<{}, ConnectedActions, {}>(null, dispatchToProps)<{}>(Header);
 
 export { connected as Header };

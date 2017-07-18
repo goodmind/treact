@@ -54,23 +54,23 @@ type TMtpStorageType =
   | TMtpFileMp4
   | TMtpFileWebp;
 
-interface IMtpPrimitive<T> {
+interface MtpPrimitive<T> {
   _: T;
 }
 
 type Bytes = Uint8Array;
 
-export interface IMtpHelpObject<T extends TMtpHelpType> extends IMtpPrimitive<T> { }
-export interface IMtpPeerObject<T extends TMtpPeerType> extends IMtpPrimitive<T> { }
-export interface IMtpUploadObject<T extends TMtpUploadType> extends IMtpPrimitive<T> { }
-export interface IMtpStorageObject<T extends TMtpStorageType> extends IMtpPrimitive<T> { }
+export interface MtpHelpObject<T extends TMtpHelpType> extends MtpPrimitive<T> { }
+export interface MtpPeerObject<T extends TMtpPeerType> extends MtpPrimitive<T> { }
+export interface MtpUploadObject<T extends TMtpUploadType> extends MtpPrimitive<T> { }
+export interface MtpStorageObject<T extends TMtpStorageType> extends MtpPrimitive<T> { }
 
-export interface IMtpObject<T extends TMtpType> extends IMtpPrimitive<T> {
+export interface MtpObject<T extends TMtpType> extends MtpPrimitive<T> {
   id: number;
   flags: number; // NOTE: I'm not shure thats any object has it
 }
 
-export interface IMtpVector<T extends IMtpObject<TMtpType>> extends IMtpObject<TMtpVector> {
+export interface MtpVector<T extends MtpObject<TMtpType>> extends MtpObject<TMtpVector> {
   type: TMtpVectorSubType;
   list: T[];
   _byId: TById<T>;
@@ -78,7 +78,7 @@ export interface IMtpVector<T extends IMtpObject<TMtpType>> extends IMtpObject<T
 
 // STANDART OBJECTS
 
-export interface IMtpDcOption extends IMtpObject<TMtpDcOption> {
+export interface MtpDcOption extends MtpObject<TMtpDcOption> {
   ipv6?: true;
   tcpo_only?: true;
   ip_address: string;
@@ -87,42 +87,42 @@ export interface IMtpDcOption extends IMtpObject<TMtpDcOption> {
 
 // TODO: generate from TL
 // tslint:disable-next-line
-type IMtpMessageEntity = any;
+type MtpMessageEntity = any;
 
-export interface IMtpMessage extends IMtpObject<TMtpMessage> {
+export interface MtpMessage extends MtpObject<TMtpMessage> {
   from_id: number;
   date: number; // Unix time
   message: string;
-  to_id: IMtpPeer;
+  to_id: MtpPeer;
   mentioned?: true;
   via_bot_id?: number;
-  entities?: IMtpVector<IMtpMessageEntity>; // Vector of message markdown if any
+  entities?: MtpVector<MtpMessageEntity>; // Vector of message markdown if any
   unread?: true;
   peerID?: true;
   out?: true;
 }
 
-export interface IMtpDialog extends IMtpObject<TMtpDialog> {
+export interface MtpDialog extends MtpObject<TMtpDialog> {
   read_inbox_max_id: number;
   read_outbox_max_id: number;
   top_message: number;
   unread_count: number;
 }
 
-export interface IMtpFileLocation extends IMtpObject<TMtpFileLocation> {
+export interface MtpFileLocation extends MtpObject<TMtpFileLocation> {
   dc_id: number;
   volume_id: string;
   local_id: number;
   secret: string;
 }
 
-export interface IMtpPhoto extends IMtpObject<TMtpPhoto> {
+export interface MtpPhoto extends MtpObject<TMtpPhoto> {
   photo_id: string;
-  photo_small: IMtpFileLocation;
-  photo_big: IMtpFileLocation;
+  photo_small: MtpFileLocation;
+  photo_big: MtpFileLocation;
 }
 
-export interface IMtpUser extends IMtpObject<TMtpUser> {
+export interface MtpUser extends MtpObject<TMtpUser> {
   access_hash: string;
   first_name?: string;
   last_name?: string;
@@ -133,57 +133,57 @@ export interface IMtpUser extends IMtpObject<TMtpUser> {
   bot?: true;
 }
 
-export interface IMtpChat extends IMtpObject<TMtpChat> {
+export interface MtpChat extends MtpObject<TMtpChat> {
   title: string;
   access_hash: string;
 }
 
-export interface IMtpMessagesSlice extends IMtpObject<TMtpMessagesSlice> {
-  chats: IMtpVector<IMtpChat>;
-  messages: IMtpVector<IMtpMessage>;
-  users: IMtpVector<IMtpUser>;
+export interface MtpMessagesSlice extends MtpObject<TMtpMessagesSlice> {
+  chats: MtpVector<MtpChat>;
+  messages: MtpVector<MtpMessage>;
+  users: MtpVector<MtpUser>;
   count: number;
 }
 
-export interface IMtpGetDialogs extends IMtpObject<TMtpGetDialogs> {
-  chats: IMtpVector<IMtpChat>;
-  messages: IMtpVector<IMtpMessage>;
-  users: IMtpVector<IMtpUser>;
-  dialogs: IMtpVector<IMtpDialog>;
+export interface MtpGetDialogs extends MtpObject<TMtpGetDialogs> {
+  chats: MtpVector<MtpChat>;
+  messages: MtpVector<MtpMessage>;
+  users: MtpVector<MtpUser>;
+  dialogs: MtpVector<MtpDialog>;
   count: number;
 }
 
-export type IMtpObjectGeneric = IMtpDcOption|IMtpMessage|IMtpDialog|
-  IMtpFileLocation|IMtpPhoto|IMtpUser|IMtpChat|IMtpMessagesSlice|IMtpGetDialogs;
+export type MtpObjectGeneric = MtpDcOption|MtpMessage|MtpDialog|
+  MtpFileLocation|MtpPhoto|MtpUser|MtpChat|MtpMessagesSlice|MtpGetDialogs;
 // PEER OBJECTS
 
-export type IMtpPeer = IMtpPeerUser|IMtpPeerChat|IMtpPeerChannel;
+export type MtpPeer = MtpPeerUser|MtpPeerChat|MtpPeerChannel;
 
-export interface IMtpPeerUser extends IMtpPeerObject<TMtpPeerUser|TMtpInputPeerUser> {
+export interface MtpPeerUser extends MtpPeerObject<TMtpPeerUser|TMtpInputPeerUser> {
   user_id: number;
 }
 
-export interface IMtpPeerChat extends IMtpPeerObject<TMtpPeerChat|TMtpInputPeerChat> {
+export interface MtpPeerChat extends MtpPeerObject<TMtpPeerChat|TMtpInputPeerChat> {
   chat_id: number;
 }
 
-export interface IMtpPeerChannel extends IMtpPeerObject<TMtpPeerChannel|TMtpInputPeerChannel> {
+export interface MtpPeerChannel extends MtpPeerObject<TMtpPeerChannel|TMtpInputPeerChannel> {
   channel_id: number;
 }
 
 // HELP OBJECTS
 
-export interface IMtpHelpNearestDc extends IMtpHelpObject<TMtpNearestDc> {
+export interface MtpHelpNearestDc extends MtpHelpObject<TMtpNearestDc> {
   country: string;
   nearest_dc: number;
   this_dc: number;
 }
 
-export interface IMtpHelpGetConfig extends IMtpHelpObject<TMtpNearestDc> {
+export interface MtpHelpGetConfig extends MtpHelpObject<TMtpNearestDc> {
   chat_big_size: number;
   chat_size_max: number;
   date: number;
-  dc_options: IMtpVector<IMtpDcOption>;
+  dc_options: MtpVector<MtpDcOption>;
   edit_time_limit: number;
   expires: number;
   flags: number;
@@ -206,8 +206,8 @@ export interface IMtpHelpGetConfig extends IMtpHelpObject<TMtpNearestDc> {
 
 // UPLOAD OBJECTS
 
-export interface IMtpUploadFile extends IMtpUploadObject<TMtpFile> {
-  type: IMtpStorageObject<TMtpStorageType>;
+export interface MtpUploadFile extends MtpUploadObject<TMtpFile> {
+  type: MtpStorageObject<TMtpStorageType>;
   mtime: number;
   bytes: Bytes;
 }

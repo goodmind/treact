@@ -2,20 +2,20 @@ import { checkPassword } from 'api/auth';
 import { Password } from 'components/Login/steps';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { IDispatch, IStore } from 'redux/IStore';
-import { IAuthError, isAuthError } from 'redux/modules/auth';
-import { IStepNext as IOwnProps } from '../..';
+import { AuthError, isAuthError } from 'redux/modules/auth';
+import { Dispatch, Store } from 'redux/store.h';
+import { StepNext as OwnProps } from '../..';
 
-type IConnectedState = Pick<IStore, 'auth'>;
-type IConnectedActions = { dispatch: IDispatch };
-type IProps = IConnectedState & IConnectedActions & IOwnProps;
-type IState = {
+type ConnectedState = Pick<Store, 'auth'>;
+type ConnectedActions = { dispatch: Dispatch };
+type Props = ConnectedState & ConnectedActions & OwnProps;
+type State = {
   password: string;
-  error: IAuthError | null;
+  error: AuthError | null;
 };
 
-class PasswordImpl extends React.Component<IProps, IState> {
-  public state: IState = {
+class PasswordImpl extends React.Component<Props, State> {
+  public state: State = {
     password: '',
     error: null,
   };
@@ -50,8 +50,8 @@ class PasswordImpl extends React.Component<IProps, IState> {
   }
 }
 
-const PasswordContainer = connect<IConnectedState, IConnectedActions, IOwnProps>(
+const PasswordContainer = connect<ConnectedState, ConnectedActions, OwnProps>(
   state => ({ auth: state.auth }),
-)<IOwnProps>(PasswordImpl);
+)<OwnProps>(PasswordImpl);
 
 export { PasswordContainer as Password };

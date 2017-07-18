@@ -5,7 +5,7 @@ import { pick } from 'ramda';
 import { bigint, nextRandomInt } from 'telegram-mtproto/lib/bin';
 import { tsNow } from 'telegram-mtproto/lib/service/time-manager';
 
-import { IDispatch, IStore } from 'redux/IStore';
+import { Dispatch, Store } from 'redux/store.h';
 import { MESSAGES } from '../actions';
 const { SEND_TEXT } = MESSAGES;
 
@@ -60,7 +60,7 @@ const buildMessage =
 };
 
 export function sendText(id: number, text: string) {
-  return (dispatch: IDispatch, getState: () => IStore) => {
+  return (dispatch: Dispatch, getState: () => Store) => {
     const state = getState();
     const inputPeer = dispatch(getInputPeerById(id));
     const outputPeer = dispatch(getOutputPeer(id));
