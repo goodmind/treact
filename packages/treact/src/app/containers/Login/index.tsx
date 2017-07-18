@@ -1,11 +1,11 @@
 import { Login } from 'components/Login';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Store } from 'redux/store.h';
+import { Store, Dispatch } from 'redux/store.h';
 import * as Steps from './steps';
 
 type ConnectedState = Pick<Store, 'auth'>;
-type ConnectedActions = {};
+type ConnectedActions = { dispatch: Dispatch };
 type OwnProps = {};
 type Props = ConnectedState & ConnectedActions & OwnProps;
 
@@ -107,8 +107,8 @@ export interface StepSkip extends Step {
   skipStep: LoginImpl['skipStep'];
 }
 
-const LoginContainer = connect<ConnectedState, ConnectedActions, OwnProps>(
-  state => ({ auth: state.auth }),
-)<{}>(LoginImpl);
+const mapStateToProps = (state: Store) => ({ auth: state.auth });
+const LoginContainer =
+  connect<ConnectedState, ConnectedActions, OwnProps>(mapStateToProps)(LoginImpl);
 
 export { LoginContainer as Login };

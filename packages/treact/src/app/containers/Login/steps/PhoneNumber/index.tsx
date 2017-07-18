@@ -54,6 +54,6 @@ class PhoneNumberImpl extends React.Component<Props, State> {
 
 const mapStateToProps = (state: Store) => ({ auth: state.auth });
 const PhoneNumberContainer =
-  connect<ConnectedState, ConnectedActions, OwnProps>(mapStateToProps)<OwnProps>(PhoneNumberImpl);
+  connect<ConnectedState, ConnectedActions, OwnProps>(mapStateToProps)(PhoneNumberImpl);
 
 export { PhoneNumberContainer as PhoneNumber };

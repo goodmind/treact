@@ -51,8 +51,8 @@ class AuthCodeImpl extends React.Component<Props, State> {
   }
 }
 
-const AuthCodeContainer = connect<ConnectedState, ConnectedActions, OwnProps>(
-  state => ({ auth: state.auth }),
-)<OwnProps>(AuthCodeImpl);
+const mapStateToProps = (state: Store) => ({ auth: state.auth });
+const AuthCodeContainer =
+  connect<ConnectedState, ConnectedActions, OwnProps>(mapStateToProps)(AuthCodeImpl);
 
 export { AuthCodeContainer as AuthCode };

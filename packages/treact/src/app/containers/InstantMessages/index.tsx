@@ -7,7 +7,7 @@ import DownloadAssistant from './downloadAssistant';
 class InstantMessagesImpl extends React.Component<{}, {}> {
   // public updates = Updates.getInstance();
 
-  constructor(props: any, context: {}) {
+  constructor(props: {}, context: {}) {
     super(props, context);
     // TODO: Updates disabled until telegram-mtproto release
     // pool.updates.attach();

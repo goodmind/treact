@@ -9,10 +9,10 @@ type State = {
   message: string,
 };
 
-type Props = {
-  selected: number,
-  sendMessage(id: number, text: string): Promise<void>,
-};
+type ConnectedState = { selected: number };
+type ConnectedActions = { sendMessage(id: number, text: string): Promise<void> };
+type OwnProps = {};
+type Props = ConnectedState & ConnectedActions & OwnProps;
 
 class ChatFooterContainer extends React.Component<Props, State> {
   public state = {
@@ -42,6 +42,7 @@ const mapState = (state: Store) => ({ selected: state.selected.dialog });
 const mapDispatch = (dispatch: Dispatch) => ({
   sendMessage: (id: number, text: string) => dispatch(sendText(id, text)),
 });
-const connected = connect(mapState, mapDispatch)<{}>(ChatFooterContainer);
+const connected =
+  connect<ConnectedState, ConnectedActions, OwnProps>(mapState, mapDispatch)(ChatFooterContainer);
 
 export { connected as ChatFooter };

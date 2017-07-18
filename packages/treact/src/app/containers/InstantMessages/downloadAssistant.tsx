@@ -92,6 +92,6 @@ const dispatchProps = (dispatch: Dispatch) => ({
   done: (id: number) => dispatch(DONE(id)),
 });
 
-const connected = connect(stateProps, dispatchProps)<{}>(DownloadAssistant);
+const connected = connect(stateProps, dispatchProps)(DownloadAssistant);
 
 export default connected;

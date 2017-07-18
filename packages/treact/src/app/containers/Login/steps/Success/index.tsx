@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Store } from 'redux/store.h';
+import { Store, Dispatch } from 'redux/store.h';
 
 type ConnectedState = Pick<Store, 'currentUser'>;
-type Props = ConnectedState;
+type ConnectedActions = { dispatch: Dispatch };
+type Props = ConnectedState & ConnectedActions;
 
 class SuccessImpl extends React.Component<Props, {}> {
   public static defaultPhrase = 'No current user';
@@ -23,6 +24,7 @@ class SuccessImpl extends React.Component<Props, {}> {
 }
 
 const mapStateToProps = (state: Store) => ({ currentUser: state.currentUser });
-const Success = connect<ConnectedState, {}, {}>(mapStateToProps)<{}>(SuccessImpl);
+const Success =
+  connect<ConnectedState, ConnectedActions, {}>(mapStateToProps)(SuccessImpl);
 
 export { Success };

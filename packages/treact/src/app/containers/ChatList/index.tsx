@@ -125,6 +125,6 @@ const mapStateToProps = (state: Store) => ({
   loading: state.loadings.chatList,
 });
 
-const connected = connect(mapStateToProps, mapDispatchToProps)<{}>(ChatListContainer);
+const connected = connect(mapStateToProps, mapDispatchToProps)(ChatListContainer);
 
 export { connected as ChatList };
