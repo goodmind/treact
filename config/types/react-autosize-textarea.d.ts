@@ -1,9 +1,9 @@
 declare module 'react-autosize-textarea' {
-  import * as React from 'react';
+  import { Component, DetailedHTMLProps, TextareaHTMLAttributes } from 'react';
 
-  type IProps = React.ChangeTargetHTMLProps<HTMLTextAreaElement>
+  type IProps = DetailedHTMLProps<TextareaHTMLAttributes<HTMLTextAreaElement>, {}>
 
-  export default class AutoSizeTextarea extends React.Component<IProps, {}> {
+  export default class AutoSizeTextarea extends Component<IProps, {}> {
 
   }
 }
