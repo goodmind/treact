@@ -1,9 +1,9 @@
 import { join, pipe, trim } from 'ramda';
-import { IDispatch, IStore } from 'redux/IStore';
 import { TPeersType } from 'redux/modules/peers';
-import { IMtpChat, IMtpUser } from 'redux/mtproto';
+import { MtpChat, MtpUser } from 'redux/mtproto';
+import { Dispatch, Store } from 'redux/store.h';
 
-export const retrieveInputPeer = (id: number, peer: TPeersType, peerData: IMtpUser | IMtpChat) => {
+export const retrieveInputPeer = (id: number, peer: TPeersType, peerData: MtpUser | MtpChat) => {
   switch (peer) {
     case 'channel':
       return {
@@ -77,7 +77,7 @@ export const resolveUsername = (username: string) => (dispatch): Promise<number 
 };
 */
 
-// TODO: peer should be IMtpUser | IMtpChat
+// TODO: peer should be MtpUser | MtpChat
 // tslint:disable-next-line
 export const retrieveId = (peer: any): number => {
   switch (peer._) {
@@ -88,7 +88,7 @@ export const retrieveId = (peer: any): number => {
   }
 };
 
-export const getInputPeerById = (id: number) => (_: IDispatch, getState: () => IStore) => {
+export const getInputPeerById = (id: number) => (_: Dispatch, getState: () => Store) => {
   const state = getState();
   const peerType = state.peers.byId[id];
   const peerData = getPeerData(id, peerType, state);
@@ -96,7 +96,7 @@ export const getInputPeerById = (id: number) => (_: IDispatch, getState: () => I
   return retrieveInputPeer(id, peerType, peerData);
 };
 
-export const getOutputPeer = (id: number) => (_: IDispatch, getState: () => IStore) => {
+export const getOutputPeer = (id: number) => (_: Dispatch, getState: () => Store) => {
   const state = getState();
   const peer = state.peers.byId[id];
   switch (peer) {
@@ -111,7 +111,7 @@ export const getOutputPeer = (id: number) => (_: IDispatch, getState: () => ISto
   }
 };
 
-export const getPeerData = (id: number, peer: TPeersType, { users, chats }: IStore) => {
+export const getPeerData = (id: number, peer: TPeersType, { users, chats }: Store) => {
   switch (peer) {
     case 'user': return users.byId[id];
     case 'chatForbidden':
@@ -123,16 +123,16 @@ export const getPeerData = (id: number, peer: TPeersType, { users, chats }: ISto
 
 const joinNames = (...names: string[]): string => pipe( join(' '), trim )(names);
 
-export const getPeerName = (peer: TPeersType, peerData: IMtpUser | IMtpChat) => {
+export const getPeerName = (peer: TPeersType, peerData: MtpUser | MtpChat) => {
   switch (peer) {
     case 'user': {
-      const { first_name = '', username = '', last_name = '' } = (peerData as IMtpUser);
+      const { first_name = '', username = '', last_name = '' } = (peerData as MtpUser);
       return joinNames(first_name, last_name, username);
     }
     case 'chatForbidden':
     case 'channel':
     case 'chat': {
-      const { title = '' } = (peerData as IMtpChat);
+      const { title = '' } = (peerData as MtpChat);
       return title;
     }
     default: throw new TypeError(`Unknown peer type ${peer}`);
@@ -140,16 +140,16 @@ export const getPeerName = (peer: TPeersType, peerData: IMtpUser | IMtpChat) => 
 };
 
 // TODO: This is arguable (shouldn't be nullable)
-export const getPeerShortName = (peer: TPeersType, peerData: IMtpUser | IMtpChat | null) => {
+export const getPeerShortName = (peer: TPeersType, peerData: MtpUser | MtpChat | null) => {
   switch (peer) {
     case 'user': {
-      const { first_name = null, username = null, last_name = null } = (peerData as IMtpUser);
+      const { first_name = null, username = null, last_name = null } = (peerData as MtpUser);
       return first_name || username || last_name;
     }
     case 'chatForbidden':
     case 'channel':
     case 'chat': {
-      const { title = null } = (peerData as IMtpChat);
+      const { title = null } = (peerData as MtpChat);
       return title;
     }
     default: throw new TypeError(`Unknown peer type ${peer}`);

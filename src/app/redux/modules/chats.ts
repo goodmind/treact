@@ -2,10 +2,10 @@ import { Slice } from 'helpers/reselector.h';
 import { createReducer } from 'redux-act';
 
 import { CHATS } from 'actions';
-import { IStoreList } from 'helpers/state';
-import { IMtpChat } from '../mtproto';
+import { StoreList } from 'helpers/state';
+import { MtpChat } from '../mtproto';
 
-export type IStoreChats = IStoreList<IMtpChat>;
+export type StoreChats = StoreList<MtpChat>;
 
 import { modelDefaults, updateStoreMap } from 'helpers/reselector';
 

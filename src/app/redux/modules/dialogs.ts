@@ -1,15 +1,15 @@
 import { createReducer } from 'redux-act';
 
 import { CHATS } from 'actions';
-import { IStoreList } from 'helpers/state';
-import { IMtpDialog } from 'redux/mtproto';
+import { StoreList } from 'helpers/state';
+import { MtpDialog } from 'redux/mtproto';
 
 import { modelDefaults, updateStoreMap } from 'helpers/reselector';
 import { Slice } from 'helpers/reselector.h';
 
 const { GET_DIALOGS } = CHATS;
 
-export type IStoreDialogs = IStoreList<IMtpDialog>;
+export type StoreDialogs = StoreList<MtpDialog>;
 
 
 const updater = updateStoreMap<Slice, 'dialogs'>('dialogs');

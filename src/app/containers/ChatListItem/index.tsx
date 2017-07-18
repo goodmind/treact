@@ -7,15 +7,15 @@ import { getPeerData } from 'helpers/Telegram/Peers';
 import { getPeerName, getPeerShortName } from 'helpers/Telegram/Peers';
 import { connect } from 'react-redux';
 import { selectChat } from 'redux/api/chatList';
-import { IDispatch, IStore } from 'redux/IStore';
-import { IStoreHistory } from 'redux/modules/histories';
+import { StoreHistory } from 'redux/modules/histories';
 import { TPeersType } from 'redux/modules/peers';
-import { IMtpChat, IMtpDialog, IMtpMessage /* IMtpMessage */, IMtpUser } from 'redux/mtproto';
+import { MtpChat, MtpDialog, MtpMessage /* MtpMessage */, MtpUser } from 'redux/mtproto';
+import { Dispatch, Store } from 'redux/store.h';
 
 // const getLastMessage =
-//  (history: IStoreHistory): IMtpMessage => history.byId[last<number, typeof history.ids>(history.ids)];
+//  (history: StoreHistory): MtpMessage => history.byId[last<number, typeof history.ids>(history.ids)];
 
-class ChatListItemContainer extends React.Component<IProps & IFuncs & IState, {}> {
+class ChatListItemContainer extends React.Component<Props & Funcs & State, {}> {
   public renderEmptyItem = () => {
     const { id, selected, peer, peerData } = this.props;
     return <ChatListItemEmpty
@@ -48,29 +48,29 @@ class ChatListItemContainer extends React.Component<IProps & IFuncs & IState, {}
   }
 }
 
-interface IProps {
+interface Props {
   id: number;
-  dialog: IMtpDialog;
-  history: IStoreHistory;
+  dialog: MtpDialog;
+  history: StoreHistory;
   peer: TPeersType;
   selected: boolean;
 }
 
-interface IFuncs {
+interface Funcs {
   click(id: number): Promise<void>;
 }
 
-interface IState {
-  peerData: IMtpUser | IMtpChat;
+interface State {
+  peerData: MtpUser | MtpChat;
   // TODO: This is arguable (shouldn't be nullable)
-  fromData: IMtpUser | IMtpChat | null;
+  fromData: MtpUser | MtpChat | null;
   from: TPeersType;
   isNotChat: boolean;
   isYou: boolean;
-  message?: IMtpMessage;
+  message?: MtpMessage;
 }
 
-const preview = (state: IStore, message: IMtpMessage, peer: TPeersType) => {
+const preview = (state: Store, message: MtpMessage, peer: TPeersType) => {
   const fromId = message.from_id || -1;
   const from = state.peers.byId[fromId];
 
@@ -88,8 +88,8 @@ const preview = (state: IStore, message: IMtpMessage, peer: TPeersType) => {
 
 const messagesPath = path(['messages', 'byId']);
 
-const mapState = (state: IStore, { id, peer, dialog }: IProps): IState => {
-  const message = messagesPath<IStore['messages']['byId']>(state)[dialog.top_message];
+const mapState = (state: Store, { id, peer, dialog }: Props): State => {
+  const message = messagesPath<Store['messages']['byId']>(state)[dialog.top_message];
   const peerData = getPeerData(id, peer, state);
 
   return {
@@ -99,10 +99,10 @@ const mapState = (state: IStore, { id, peer, dialog }: IProps): IState => {
   };
 };
 
-const mapDispatch = (dispatch: IDispatch) => ({
+const mapDispatch = (dispatch: Dispatch) => ({
   click: (id: number) => dispatch(selectChat(id)),
 });
 
-const connected = connect<IState, IFuncs, IProps>(mapState, mapDispatch)(ChatListItemContainer);
+const connected = connect<State, Funcs, Props>(mapState, mapDispatch)(ChatListItemContainer);
 
 export { connected as ChatListItem };

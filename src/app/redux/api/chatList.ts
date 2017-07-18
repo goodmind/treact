@@ -7,17 +7,17 @@ import { assocPath, converge, flip, identity, isNil,
 import { CHATS } from 'actions';
 import { unifiedGetId } from 'helpers/state';
 import { api } from 'helpers/Telegram/pool';
-import { IAsyncAction, IDispatch } from 'redux/IStore';
-import { IMtpDialog, IMtpMessage, IMtpUser, TById } from 'redux/mtproto';
-import { IMtpMessagesSlice, IMtpPeer } from '../mtproto';
+import { MtpDialog, MtpMessage, MtpUser, TById } from 'redux/mtproto';
+import { AsyncAction, Dispatch } from 'redux/store.h';
+import { MtpMessagesSlice, MtpPeer } from '../mtproto';
 
 import { getPeerData, retrieveInputPeer } from 'helpers/Telegram/Peers';
 
 const { LOAD_SLICE, SELECT, GET_DIALOGS } = CHATS;
 
-export interface IDialogPayload {
-  messages: TById<IMtpMessage>;
-  users: IMtpUser[];
+export interface DialogPayload {
+  messages: TById<MtpMessage>;
+  users: MtpUser[];
 }
 
 const fileLocations  = new schema.Entity('fileLocations', {}, {
@@ -68,12 +68,12 @@ const indexation = modelsIndexation(['photos', 'fileLocations']);
 
 const fullNormalize = <T>(obj: T) => indexation(normalize(obj, sliceSchema));
 
-const mapTopMessage = map(pipe<IMtpDialog, number, number[]>(prop('top_message'), of));
+const mapTopMessage = map(pipe<MtpDialog, number, number[]>(prop('top_message'), of));
 
 
-export const loadSliceRange = (dispatch: IDispatch) =>
-  (id: number, peer: IMtpPeer, offset: number = 0, limit: number = 10) => {
-    const adapter = (slice: IMtpMessagesSlice) => {
+export const loadSliceRange = (dispatch: Dispatch) =>
+  (id: number, peer: MtpPeer, offset: number = 0, limit: number = 10) => {
+    const adapter = (slice: MtpMessagesSlice) => {
       const normalized = fullNormalize(slice);
       normalized.result.histories = [id];
       normalized.entities.histories = { [id]: normalized.result.messages };
@@ -89,12 +89,13 @@ export const loadSliceRange = (dispatch: IDispatch) =>
       limit,
     };
     dispatch(LOAD_SLICE.INIT(id));
-    return api<IMtpMessagesSlice>('messages.getHistory', data)
+    return api<MtpMessagesSlice>('messages.getHistory', data)
       .then(adapter, LOAD_SLICE.FAIL)
+      // TODO: propogate type here
       .then(dispatch);
   };
 
-export const loadOffset = (id: number, offset: number): IAsyncAction<Promise<{}>> =>
+export const loadOffset = (id: number, offset: number): AsyncAction<Promise<{}>> =>
   async (dispatch, getState) => {
     const store = getState();
     const peer = store.peers.byId[id];
@@ -109,7 +110,7 @@ export const loadOffset = (id: number, offset: number): IAsyncAction<Promise<{}>
     }
   };
 
-export const selectChat = (id: number): IAsyncAction<void> =>
+export const selectChat = (id: number): AsyncAction<void> =>
   (dispatch, getState) => {
     const store = getState();
     const peer = store.peers.byId[id];
@@ -126,7 +127,7 @@ export const selectChat = (id: number): IAsyncAction<void> =>
   };
 
 export const fetchChatList = (limit: number = 20, date: number = 0) =>
-  async (dispatch: IDispatch) => {
+  async (dispatch: Dispatch) => {
     dispatch(GET_DIALOGS.INIT());
     try {
       const result = await api('messages.getDialogs', {

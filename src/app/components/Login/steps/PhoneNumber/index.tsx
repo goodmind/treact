@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { ICommonProps } from '../';
+import { CommonProps } from '../';
 import * as t from '../../style.css';
 import * as s from './style.css';
 
-type IProps = ICommonProps & {
+type Props = CommonProps & {
   phoneCode: string,
 };
 
-const PhoneNumber = ({ error, nextStep, change, phoneCode }: IProps) => (
+const PhoneNumber = ({ error, nextStep, change, phoneCode }: Props) => (
   <div className={t.loginStep}>
     <h1>Your Phone</h1>
     <p>

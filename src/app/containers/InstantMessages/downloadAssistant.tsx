@@ -7,8 +7,8 @@ import { Action } from 'redux-act';
 import picStore from 'helpers/FileManager/picStore';
 import { api } from 'helpers/Telegram/pool';
 import { CACHE } from 'redux/actions';
-import { IDispatch, IStore } from 'redux/IStore';
-import { IMtpFileLocation, IMtpUploadFile } from 'redux/mtproto';
+import { MtpFileLocation, MtpUploadFile } from 'redux/mtproto';
+import { Dispatch, Store } from 'redux/store.h';
 
 import * as localForage from 'localforage';
 // import * as Knack from 'knack';
@@ -25,26 +25,26 @@ const picStorage = localForage.createInstance({
   storeName: 'files',
 });
 
-interface IPropsStore {
+interface PropsStore {
   photoCache: number[];
   files: {
-    [key: number]: IMtpFileLocation;
+    [key: number]: MtpFileLocation;
   };
 }
 
-interface IPropsDispatch {
+interface PropsDispatch {
   load(list: number[]): Action<number[], {}>;
   done(id: number): Action<number, {}>;
 }
 
-const beginLoad = async (id: number, loc: IMtpFileLocation) => {
+const beginLoad = async (id: number, loc: MtpFileLocation) => {
   const { dc_id = 2, volume_id, secret, local_id } = loc;
   const inputLocation = { _: 'inputFileLocation', dc_id, volume_id, secret, local_id };
   console.warn(`idle`, loc);
   const cached = picStorage.getItem<Blob>(id.toString())
     .then(when(isNil, Promise.reject))
     .then(blob => picStore.addBlob(id, blob), () => ({}));
-  const loader = () => api<IMtpUploadFile>('upload.getFile', {
+  const loader = () => api<MtpUploadFile>('upload.getFile', {
     location: inputLocation,
     offset: 0,
     limit: 1024 * 1024,
@@ -57,7 +57,7 @@ const beginLoad = async (id: number, loc: IMtpFileLocation) => {
   return unless(isNil, loader, await cached);
 };
 // tslint:disable:no-debugger
-const DownloadAssistant = ({ photoCache, files, load, done }: IPropsStore & IPropsDispatch) => {
+const DownloadAssistant = ({ photoCache, files, load, done }: PropsStore & PropsDispatch) => {
   console.count('DownloadAssistant');
   if (isEmpty(photoCache)) return <span />;
   const mapLoad = (id: number) => {
@@ -79,7 +79,7 @@ const queueList = pipe(
   map(e => +e),
 );
 
-const stateProps = ({ files: { status, locations } }: IStore) => {
+const stateProps = ({ files: { status, locations } }: Store) => {
   const photoCache = queueList(status);
   const files = pick(photoCache, locations.byId);
   return {
@@ -87,7 +87,7 @@ const stateProps = ({ files: { status, locations } }: IStore) => {
     files,
   };
 };
-const dispatchProps = (dispatch: IDispatch) => ({
+const dispatchProps = (dispatch: Dispatch) => ({
   load: (list: number[]) => dispatch(LOAD(list)),
   done: (id: number) => dispatch(DONE(id)),
 });

@@ -3,17 +3,17 @@ import { makePasswordHash } from 'helpers/Telegram';
 import { APP_HASH, APP_ID, DEFAULT_DC_ID } from 'helpers/Telegram/config';
 import { api, storage } from 'helpers/Telegram/pool';
 import { pipe, tap } from 'ramda';
-import { IAuthError } from 'redux/modules/auth';
-import { IMtpUser } from 'redux/mtproto';
+import { AuthError } from 'redux/modules/auth';
+import { MtpUser } from 'redux/mtproto';
 // TODO: use absolute paths
 import history from '../../../history';
-import { IDispatch, IStore } from '../IStore';
+import { Dispatch, Store } from '../store.h';
 
 const { SEND_CODE, SIGN_IN, GET_PASSWORD, LOG_OUT } = AUTH;
 
 const options = {dcID: DEFAULT_DC_ID, createNetworker: true, noErrorBox: true};
 
-const addDc = <T extends { user: IMtpUser }>(r: T) => {
+const addDc = <T extends { user: MtpUser }>(r: T) => {
   const dcID = DEFAULT_DC_ID;
   return storage
     .getItem<string>(`dc${dcID}_auth_key`)
@@ -24,7 +24,7 @@ function getPassword() {
   const onDone = <T extends { current_salt: string }>({ current_salt }: T) => GET_PASSWORD.DONE({
     passwordSalt: current_salt,
   });
-  return (dispatch: IDispatch) => {
+  return (dispatch: Dispatch) => {
     dispatch(GET_PASSWORD.INIT());
     return api('account.getPassword', {}, options)
       .then(onDone, GET_PASSWORD.FAIL)
@@ -35,7 +35,7 @@ function getPassword() {
 }
 
 export function checkPassword(password: string) {
-  return (dispatch: IDispatch, getState: () => IStore) => {
+  return (dispatch: Dispatch, getState: () => Store) => {
     const { auth } = getState();
     const hash = makePasswordHash(auth.passwordSalt, password);
     return api('auth.checkPassword', {
@@ -49,8 +49,8 @@ export function checkPassword(password: string) {
 }
 
 export function signIn(phoneCode: string) {
-  return (dispatch: IDispatch, getState: () => IStore) => {
-    const catchNeedPass = (err: IAuthError) => err.type === 'SESSION_PASSWORD_NEEDED'
+  return (dispatch: Dispatch, getState: () => Store) => {
+    const catchNeedPass = (err: AuthError) => err.type === 'SESSION_PASSWORD_NEEDED'
       ? dispatch(getPassword())
       : err;
     const catchAndDispatch = pipe( tap(catchNeedPass), err => dispatch(SIGN_IN.FAIL(err)) );
@@ -74,7 +74,7 @@ export function sendCode(phoneNumber: string) {
     phoneCodeHash: phone_code_hash,
     phoneNumber,
   });
-  return (dispatch: IDispatch) => {
+  return (dispatch: Dispatch) => {
     dispatch(SEND_CODE.INIT());
     return api('auth.sendCode', {
       phone_number: phoneNumber,
@@ -89,7 +89,7 @@ export function sendCode(phoneNumber: string) {
 }
 
 export function logOut() {
-  return (dispatch: IDispatch) => {
+  return (dispatch: Dispatch) => {
     const cleanAndRedirect = () => {
       localStorage.clear();
       history.push('/');

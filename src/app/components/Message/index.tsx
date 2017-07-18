@@ -2,7 +2,7 @@ import { PeerPhoto } from 'containers/PeerPhoto';
 import * as React from 'react';
 import * as style from './style.css';
 
-interface IOwnProps {
+interface OwnProps {
   id: number;
   date: number;
   user: number;
@@ -17,7 +17,8 @@ const formatTime = (date: number) => {
   };
 };
 
-const Time = ({ date }: { date: number }) => {
+type TimeProps = { date: number };
+const Time = ({ date }: TimeProps) => {
   const { timeString } = formatTime(date);
   return (
     <div className={style.time}>
@@ -26,7 +27,7 @@ const Time = ({ date }: { date: number }) => {
   );
 };
 
-export const Message = ({ user, date, text }: IOwnProps) => {
+export const Message = ({ user, date, text }: OwnProps) => {
   console.debug(`Message`, user, text);
   return (
     <div className={style.message}>

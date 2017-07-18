@@ -1,21 +1,24 @@
 // import { History } from 'history';
-import { applyMiddleware, compose, createStore, Middleware, Store, StoreEnhancerStoreCreator } from 'redux';
+import {
+  applyMiddleware, compose, createStore, Middleware,
+  Store as ReduxStore, StoreEnhancerStoreCreator,
+} from 'redux';
 import { createLogger } from 'redux-logger';
 import { autoRehydrate } from 'redux-persist';
 import thunk from 'redux-thunk';
 import * as appConfig from '../../../config/main';
 import { batchUpdate } from './batchUpdate';
-import { IStore } from './IStore';
 import rootReducer from './reducers';
+import { Store } from './store.h';
 
 declare module 'universal-router' {
   export interface Context {
-    store: Store<IStore>;
+    store: ReduxStore<Store>;
   }
 }
 
 export function configureStore(/*history: History*/) {
-  type Enhancer = StoreEnhancerStoreCreator<IStore>;
+  type Enhancer = StoreEnhancerStoreCreator<Store>;
 
   const middlewares: Middleware[] = [
     // routerMiddleware(history),
@@ -38,7 +41,7 @@ export function configureStore(/*history: History*/) {
     autoRehydrate(),
   );
 
-  const store = createStore<IStore>(rootReducer, storeEnhancer);
+  const store = createStore<Store>(rootReducer, storeEnhancer);
 
   if (appConfig.env === 'development' && module.hot) {
     module.hot.accept('./reducers', () => {

@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-import { IStore } from './IStore';
 import { authReducer } from './modules/auth';
 import { authKeyReducer } from './modules/authKey';
 import chats from './modules/chats';
@@ -14,8 +13,9 @@ import peers from './modules/peers';
 import photos from './modules/photos';
 import selected from './modules/selected';
 import users from './modules/users';
+import { Store } from './store.h';
 
-const rootReducer = combineReducers<IStore>({
+const rootReducer = combineReducers<Store>({
   // routing: routerReducer,
   authKey: authKeyReducer,
   auth: authReducer,

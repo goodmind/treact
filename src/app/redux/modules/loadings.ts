@@ -5,7 +5,7 @@ import { createReducer } from 'redux-act';
 import { CHATS } from 'redux/actions';
 const { GET_DIALOGS } = CHATS;
 
-export type IStoreLoadings = {
+export type StoreLoadings = {
   chatList: boolean;
 };
 

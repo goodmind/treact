@@ -7,9 +7,9 @@ import { getPeerData } from 'helpers/Telegram/Peers';
 import { getPeerName } from 'helpers/Telegram/Peers';
 import { Obj, path, props } from 'ramda';
 import { loadOffset, selectChat } from 'redux/api/chatList';
-import { IDispatch, IStore } from 'redux/IStore';
 import { TPeersType } from 'redux/modules/peers';
-import { IMtpChat, IMtpMessage, IMtpUser } from 'redux/mtproto';
+import { MtpChat, MtpMessage, MtpUser } from 'redux/mtproto';
+import { Dispatch, Store } from 'redux/store.h';
 
 const onChatSelect = async (currentId: number, nextId: number) => {
   if (nextId && nextId !== currentId) {
@@ -17,7 +17,7 @@ const onChatSelect = async (currentId: number, nextId: number) => {
   }
 };
 
-const MessageItem = ({ id, from_id, date, message }: IMtpMessage) =>
+const MessageItem = ({ id, from_id, date, message }: MtpMessage) =>
   <Message
     key={id}
     id={id}
@@ -25,8 +25,8 @@ const MessageItem = ({ id, from_id, date, message }: IMtpMessage) =>
     user={from_id}
     text={message} />;
 
-class ChatContainer extends React.Component<IProps, {}> {
-  public componentWillReceiveProps(nextProps: IConnectedState) {
+class ChatContainer extends React.Component<Props, {}> {
+  public componentWillReceiveProps(nextProps: ConnectedState) {
     const { selected } = this.props;
     onChatSelect(selected, nextProps.selected);
   }
@@ -50,25 +50,25 @@ class ChatContainer extends React.Component<IProps, {}> {
   }
 }
 
-type IConnectedState =  {
+type ConnectedState =  {
   selected: number;
   history: number[];
-  messages: IMtpMessage[];
+  messages: MtpMessage[];
   peer?: TPeersType;
-  peerData?: IMtpUser | IMtpChat;
+  peerData?: MtpUser | MtpChat;
   peerName: string;
 };
 
-type IConnectedActions = {
+type ConnectedActions = {
   loadOffset<T>(id: number, offset?: number): Promise<T>;
 };
 
-type IProps = IConnectedState & IConnectedActions;
+type Props = ConnectedState & ConnectedActions;
 
-type MessagesPath = (obj: IStore) => Obj<IMtpMessage>;
+type MessagesPath = (obj: Store) => Obj<MtpMessage>;
 const messagesPath: MessagesPath = path(['messages', 'byId']);
 
-const stateMap = (state: IStore): IConnectedState => {
+const stateMap = (state: Store): ConnectedState => {
   const selected = state.selected.dialog;
   if (!selected) return {
     selected,
@@ -94,10 +94,10 @@ const stateMap = (state: IStore): IConnectedState => {
   };
 };
 
-const dispatchMap = (dispatch: IDispatch) => ({
+const dispatchMap = (dispatch: Dispatch) => ({
   loadOffset: (id: number, offset: number) => dispatch(loadOffset(id, offset)),
 });
 
-const connected = connect<IConnectedState, IConnectedActions, {}>(stateMap, dispatchMap)(ChatContainer);
+const connected = connect<ConnectedState, ConnectedActions, {}>(stateMap, dispatchMap)(ChatContainer);
 
 export { connected as Chat };

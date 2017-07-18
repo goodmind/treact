@@ -2,7 +2,7 @@ import * as React from 'react';
 
 type Loader = React.ReactElement<object> | null;
 
-interface IProps {
+interface Props {
   element: string;
   hasMore: boolean;
   initialLoad: boolean;
@@ -17,7 +17,7 @@ interface IProps {
   ref(node: HTMLElement): void;
 }
 
-type IExtProps = React.HTMLProps<HTMLElement> & {
+type ExtProps = React.HTMLProps<HTMLElement> & {
   element?: string;
   hasMore?: boolean;
   initialLoad?: boolean;
@@ -31,12 +31,12 @@ type IExtProps = React.HTMLProps<HTMLElement> & {
   loader?: Loader;
 };
 
-class InfiniteScroll extends React.Component<IProps, {}> {
+class InfiniteScroll extends React.Component<Props, {}> {
   private scrollComponent: HTMLElement;
   private pageLoaded: number;
   private defaultLoader: Loader;
 
-  public static defaultProps: Partial<IProps> = {
+  public static defaultProps: Partial<Props> = {
     element: 'div',
     hasMore: false,
     initialLoad: true,
@@ -48,7 +48,7 @@ class InfiniteScroll extends React.Component<IProps, {}> {
     loader: null,
   };
 
-  constructor(props: IProps) {
+  constructor(props: Props) {
     super(props);
 
     this.scrollListener = this.scrollListener.bind(this);
@@ -156,7 +156,7 @@ class InfiniteScroll extends React.Component<IProps, {}> {
       ...props,
     } = this.props;
 
-    (props as IProps).ref = (node: HTMLElement) => {
+    (props as Props).ref = (node: HTMLElement) => {
       this.scrollComponent = node;
     };
 
@@ -169,6 +169,6 @@ class InfiniteScroll extends React.Component<IProps, {}> {
   }
 }
 
-const hoc: React.ComponentClass<IExtProps> = InfiniteScroll;
+const hoc: React.ComponentClass<ExtProps> = InfiniteScroll;
 
 export { hoc as InfiniteScroll };

@@ -2,20 +2,20 @@ import { signIn } from 'api/auth';
 import { AuthCode } from 'components/Login/steps';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { IDispatch, IStore } from 'redux/IStore';
-import { IAuthError, isAuthError } from 'redux/modules/auth';
-import { IStepSkip as IOwnProps } from '../..';
+import { AuthError, isAuthError } from 'redux/modules/auth';
+import { Dispatch, Store } from 'redux/store.h';
+import { StepSkip as OwnProps } from '../..';
 
-type IConnectedState = Pick<IStore, 'auth'>;
-type IConnectedActions = { dispatch: IDispatch };
-type IProps = IConnectedState & IConnectedActions & IOwnProps;
-type IState = {
+type ConnectedState = Pick<Store, 'auth'>;
+type ConnectedActions = { dispatch: Dispatch };
+type Props = ConnectedState & ConnectedActions & OwnProps;
+type State = {
   authCode: string;
-  error: IAuthError | null;
+  error: AuthError | null;
 };
 
-class AuthCodeImpl extends React.Component<IProps, IState> {
-  public state: IState = {
+class AuthCodeImpl extends React.Component<Props, State> {
+  public state: State = {
     authCode: '',
     error: null,
   };
@@ -51,8 +51,8 @@ class AuthCodeImpl extends React.Component<IProps, IState> {
   }
 }
 
-const AuthCodeContainer = connect<IConnectedState, IConnectedActions, IOwnProps>(
+const AuthCodeContainer = connect<ConnectedState, ConnectedActions, OwnProps>(
   state => ({ auth: state.auth }),
-)<IOwnProps>(AuthCodeImpl);
+)<OwnProps>(AuthCodeImpl);
 
 export { AuthCodeContainer as AuthCode };

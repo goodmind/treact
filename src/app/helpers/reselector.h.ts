@@ -1,5 +1,5 @@
-import { IMtpChat, IMtpDialog, IMtpFileLocation, IMtpMessage, IMtpUser } from 'redux/mtproto';
-export type IPayload<T> = {
+import { MtpChat, MtpDialog, MtpFileLocation, MtpMessage, MtpUser } from 'redux/mtproto';
+export type Payload<T> = {
   entities: {
     [K in keyof T]: {
       [key: number]: T[K];
@@ -18,15 +18,15 @@ export type TLPhoto = {
 
 export type Slice = {
   histories: number,
-  chats: IMtpChat,
-  users: IMtpUser,
-  messages: IMtpMessage,
-  dialogs: IMtpDialog,
+  chats: MtpChat,
+  users: MtpUser,
+  messages: MtpMessage,
+  dialogs: MtpDialog,
   photos: TLPhoto,
-  fileLocations: IMtpFileLocation,
+  fileLocations: MtpFileLocation,
 };
 
-export type SlicePayload = IPayload<Slice>;
+export type SlicePayload = Payload<Slice>;
 
 export type SelectedPayload<T> = {
   entities: {
@@ -43,9 +43,9 @@ export type StoredPayload<T> = {
 };
 
 export type SelectModel = <T, P>(modelName: string) =>
-  (payload: IPayload<P>) =>
+  (payload: Payload<P>) =>
     SelectedPayload<T>;
 
 export type ReducerCreator = <T, P>(modelName: string) =>
-  (store: StoredPayload<T>, payload: IPayload<P>) =>
+  (store: StoredPayload<T>, payload: Payload<P>) =>
     StoredPayload<T>;

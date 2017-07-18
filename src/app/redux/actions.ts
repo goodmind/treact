@@ -1,5 +1,5 @@
 import { createAction } from 'redux-act';
-import { IAuthError } from 'redux/modules/auth';
+import { AuthError } from 'redux/modules/auth';
 
 export const actionEvent = <I, D, F>(reduxMessage: string) => ({
   INIT: createAction<I, {}>(`[begin] ${reduxMessage}`),
@@ -8,10 +8,10 @@ export const actionEvent = <I, D, F>(reduxMessage: string) => ({
 });
 
 export const AUTH = {
-  SEND_CODE   : actionEvent<{}, {}, IAuthError>('send code'),
-  SIGN_IN     : actionEvent<{}, {}, IAuthError>('sign in'),
-  GET_PASSWORD: actionEvent<{}, {}, IAuthError>('get password'),
-  LOG_OUT     : actionEvent<{}, {}, IAuthError>('user log out'),
+  SEND_CODE   : actionEvent<{}, {}, AuthError>('send code'),
+  SIGN_IN     : actionEvent<{}, {}, AuthError>('sign in'),
+  GET_PASSWORD: actionEvent<{}, {}, AuthError>('get password'),
+  LOG_OUT     : actionEvent<{}, {}, AuthError>('user log out'),
 };
 
 export const MESSAGES = {

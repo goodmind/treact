@@ -4,7 +4,7 @@ import { createReducer } from 'redux-act';
 import { CHATS } from 'redux/actions';
 const { SELECT } = CHATS;
 
-export type IStoreSelected = {
+export type StoreSelected = {
   dialog: number;
 };
 

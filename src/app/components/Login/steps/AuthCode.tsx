@@ -1,13 +1,13 @@
-import { IFormState } from 'containers/Login';
+import { FormState } from 'containers/Login';
 import * as React from 'react';
 import * as t from '../style.css';
-import { ICommonProps } from './';
+import { CommonProps } from './';
 
-type IProps = ICommonProps & {
-  form: IFormState,
+type Props = CommonProps & {
+  form: FormState,
 };
 
-const AuthCode = ({ form, error, nextStep, change }: IProps) => (
+const AuthCode = ({ form, error, nextStep, change }: Props) => (
   <div className={t.loginStep}>
     <h1>{form.phoneNumber}</h1>
     <p>
