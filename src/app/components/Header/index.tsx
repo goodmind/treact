@@ -11,6 +11,7 @@ interface ConnectedActions {
   logOut: React.MouseEventHandler<HTMLAnchorElement>;
 }
 
+// TODO: move into containers
 const Header = ({ logOut }: ConnectedActions) => (
   <header className={s.header}>
     <img className={s.headerIcon} src={logo} />
@@ -26,6 +27,6 @@ const dispatchToProps = (dispatch: Dispatch) => ({
   },
 });
 
-const connected = connect<{}, ConnectedActions, {}>(null, dispatchToProps)<{}>(Header);
+const connected = connect<{}, ConnectedActions, {}>(null, dispatchToProps)(Header);
 
 export { connected as Header };
