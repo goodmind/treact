@@ -10,6 +10,9 @@ const vendorDll = require(join(build, 'Vendor.json'));
 
 const isProd = process.env.NODE_ENV === 'production';
 
+/* TODO: use options instead of shorthand
+         notation in webpack */
+
 const rules = [
   /*{
     test: /\.tsx?$/,
@@ -39,7 +42,14 @@ const rules = [
     include: app,
     use: [
       'style-loader',
-      'css-loader?modules&importLoaders=2&localIdentName=[local]___[hash:base64:5]',
+      {
+        loader: 'css-loader',
+        options: {
+          modules: true,
+          importLoaders: 2,
+          localIdentName: '[local]___[hash:base64:5]'
+        }
+      },
       'postcss-loader'
     ]
   }, {
