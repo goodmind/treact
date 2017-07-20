@@ -1,7 +1,11 @@
 const postcssAssets = require('postcss-assets');
 const postcssNext = require('postcss-cssnext');
+const stylelint = require('stylelint');
 
-module.exports = ctx => [
-  postcssNext(),
-  postcssAssets({ relative: true })
-];
+module.exports = ({ options }) => Object.assign({}, options, {
+  plugins: [
+    stylelint(),
+    postcssNext(),
+    postcssAssets({ relative: true }),
+  ],
+});
