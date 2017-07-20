@@ -1,18 +1,14 @@
-import { logOut } from 'api/auth';
 import * as React from 'react';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux/store.h';
 // TODO: use absolute paths
 import { Link } from '../../../vendor/containers/Link';
 import * as s from './style.css';
 import * as logo from './title-logo.png';
 
-interface ConnectedActions {
+interface Props {
   logOut: React.MouseEventHandler<HTMLAnchorElement>;
 }
 
-// TODO: move into containers
-const Header = ({ logOut }: ConnectedActions) => (
+const Header = ({ logOut }: Props) => (
   <header className={s.header}>
     <img className={s.headerIcon} src={logo} />
     <Link to="/">Home</Link>
@@ -21,12 +17,4 @@ const Header = ({ logOut }: ConnectedActions) => (
   </header>
 );
 
-const dispatchToProps = (dispatch: Dispatch) => ({
-  logOut() {
-    dispatch(logOut());
-  },
-});
-
-const connected = connect<{}, ConnectedActions, {}>(null, dispatchToProps)(Header);
-
-export { connected as Header };
+export { Header };
