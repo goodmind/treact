@@ -1,6 +1,7 @@
 /** Exporting Containers for Easier Imports */
 // export { Html } from './Html';
 export { App } from './App';
+export { Header } from './Header';
 export { InstantMessages } from './InstantMessages';
 export { Home } from './Home';
 export { Login } from './Login';
