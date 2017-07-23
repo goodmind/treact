@@ -30,6 +30,7 @@
     }
   },
   "scripts": {
+    "postinstall": "npm run build:vendor",
     "clean": "rimraf build",
     "build": "webpack --config config/webpack/index.js",
     "build:prod": "cross-env NODE_ENV=production npm run build",
@@ -150,7 +151,7 @@
     "redux-thunk": "^2.1.0",
     "reselect": "^3.0.1",
     "reselect-map": "^1.0.2",
-    "telegram-mtproto": "^3.1.2",
+    "telegram-mtproto": "^3.1.3",
     "universal-router": "^3.2.0"
   }
 }
