@@ -150,7 +150,7 @@
     "redux-thunk": "^2.1.0",
     "reselect": "^3.0.1",
     "reselect-map": "^1.0.2",
-    "telegram-mtproto": "^3.1.0",
+    "telegram-mtproto": "^3.1.2",
     "universal-router": "^3.2.0"
   }
 }
