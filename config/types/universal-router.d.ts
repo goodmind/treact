@@ -28,6 +28,7 @@ declare module 'universal-router' {
 
     export interface Route {
       path: string;
+      guard?: boolean;
       name?: string;
       parent?: any;
       children?: Route[];

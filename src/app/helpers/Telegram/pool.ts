@@ -19,12 +19,6 @@ const pool = MTProto({
 });
 
 // TODO: use generic params and options
-export const api = async <T>(method: string, params?: object, options?: object): Promise<T> =>
-  pool<T>(method, params, options)
-    // TODO: remove error interceptor
-    .catch(err => Promise.reject({
-      code: err.code,
-      type: err.message,
-      _: err.type,
-    }));
+export const api = <T>(method: string, params?: object, options?: object): Promise<T> =>
+  pool<T>(method, params, options);
 export default pool;
