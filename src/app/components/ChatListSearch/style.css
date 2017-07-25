@@ -1,6 +1,6 @@
 .chatlistsearch {
   display: flex;
-  padding: 13px;
+  padding: 11px;
   position: relative;
 }
 
@@ -13,7 +13,7 @@
   color: #000;
   flex: 1 100%;
   font-size: 13px;
-  height: 40px;
+  height: 32px;
   outline: none;
   padding: 0 35px 0 35px;
   transition: all .15s linear;
@@ -32,7 +32,7 @@
   background: url('./pencil.png') no-repeat 9px 10px;
   background-size: 15px;
   cursor: pointer;
-  height: 40px;
+  height: 32px;
   position: absolute;
   right: 10px;
   width: 36px;

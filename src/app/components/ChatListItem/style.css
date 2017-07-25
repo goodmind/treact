@@ -1,7 +1,7 @@
 .item {
   background-color: #ffffff;
-  height: 77px;
-  padding-right: 12px;
+  height: 62px;
+  padding-right: 10px;
 }
 
 .item:hover {
@@ -23,16 +23,16 @@
 .item img {
   border-radius: 50px;
   float: left;
-  height: 57px;
-  margin: 10px 12px;
-  margin-right: 15px;
-  width: 57px;
+  height: 46px;
+  width: 46px;
+  margin: 8px 10px;
+  margin-right: 12px;
 }
 
 .info {
   display: flex;
   flex-direction: column;
-  font-size: 16px;
+  font-size: 13px;
   margin-top: 2px;
   height: 100%;
 }
