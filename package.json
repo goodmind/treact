@@ -124,9 +124,9 @@
     "tslint": "^5.5.0",
     "tslint-loader": "^3.5.3",
     "tslint-react": "^3.0.0",
-    "typescript": "^2.5.0-dev.20170712",
+    "typescript": "^2.5.0-dev.20170719",
     "url-loader": "^0.5.9",
-    "webpack": "^3.3.0",
+    "webpack": "^3.4.0",
     "webpack-bundle-analyzer": "^2.8.3",
     "webpack-dev-server": "^2.5.1",
     "webpack-manifest-plugin": "^1.1.2"
