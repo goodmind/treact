@@ -25,7 +25,7 @@ const PhoneNumber = ({ error, nextStep, change, phoneCode }: Props) => (
         className="col-xs-10 form-control form-control-lg"
         placeholder="--- --- -- --" type="tel" />
     </div>
-    {error && <div>Error type: {error.description}</div>}
+    {error && <div>Error type: {error.message}</div>}
     <button onClick={nextStep} className={`${t.btn} ${t.primary}`}>Next</button>
   </div>
 );

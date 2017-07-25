@@ -17,7 +17,7 @@ const Password = ({ error, change, nextStep }: Props) => (
         className="form-control form-control-lg"
         placeholder="Your cloud password" type="password" />
     </div>
-    {error && <div>Error type: {error.description}</div>}
+    {error && <div>Error type: {error.message}</div>}
     <button onClick={nextStep} className={`${t.btn} ${t.primary}`}>Submit</button>
   </div>
 );

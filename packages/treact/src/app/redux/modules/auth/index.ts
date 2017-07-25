@@ -9,11 +9,14 @@ import { AUTH } from 'actions';
 export interface AuthError {
   code: number;
   type: string;
-  description?: string;
+  message: string;
 }
 export const isAuthError =
   // tslint:disable-next-line
-  (p: any): p is AuthError => p.code && p.type;
+  (p: any): p is AuthError =>
+    typeof p === 'object'
+    && typeof p.code === 'number'
+    && typeof p.type === 'string';
 export interface Auth {
   authenticated: boolean;
   loading: boolean;
@@ -30,7 +33,7 @@ const passwordSalt = createReducer({
   [GET_PASSWORD.DONE]: (_, { passwordSalt }) => passwordSalt,
 }, '');
 
-const saveError = (_: AuthError, { code, type }: AuthError): AuthError => ({ code, type });
+const saveError = (_: AuthError, { code, message, type }: AuthError): AuthError => ({ code, message, type });
 
 const error = createReducer<AuthError>({
   [SEND_CODE.FAIL]: saveError,
@@ -38,6 +41,7 @@ const error = createReducer<AuthError>({
   [GET_PASSWORD.FAIL]: saveError,
 }, {
   code: -1,
+  message: '',
   type: '',
 });
 

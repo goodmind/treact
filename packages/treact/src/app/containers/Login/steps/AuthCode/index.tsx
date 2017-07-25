@@ -34,7 +34,7 @@ class AuthCodeImpl extends React.Component<Props, State> {
       .then(({payload: error}) => isAuthError(error)
         ? this.setState({ error })
         : this.setState({ error: null }))
-      .then(() => skipStep(this.props.auth.error.type === 'SESSION_PASSWORD_NEEDED' ? 1 : 2));
+      .then(() => skipStep(this.props.auth.error.message === 'SESSION_PASSWORD_NEEDED' ? 1 : 2));
   }
 
   public render() {
