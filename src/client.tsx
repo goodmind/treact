@@ -3,7 +3,7 @@ import { Location } from 'history';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
-import * as UniversalRouter from 'universal-router';
+import UniversalRouter from 'universal-router';
 import routes, { resolveRoute } from './app/routes';
 import AppProvider, { store } from './AppProvider';
 // TODO: use absolute paths
