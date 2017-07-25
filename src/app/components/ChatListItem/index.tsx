@@ -1,4 +1,4 @@
-import * as classNames from 'classnames';
+import * as cx from 'classnames';
 import { PeerPhoto } from 'containers/PeerPhoto';
 import * as React from 'react';
 import * as style from './style.css';
@@ -19,7 +19,7 @@ interface ChatListFullProps extends ChatListBasicProps {
 
 type UnreadProps = { unread: number };
 const UnreadBadge = ({ unread }: UnreadProps) => {
-  const block = classNames({
+  const block = cx({
     [style.unread]: true,
     [style.hidden]: unread === 0,
   });
@@ -32,7 +32,7 @@ const UnreadBadge = ({ unread }: UnreadProps) => {
 
 type SenderProps = { userName: string };
 const SenderPreview = ({ userName }: SenderProps) => {
-  const sender = classNames({
+  const sender = cx({
     [style.sender]: true,
     [style.hidden]: !userName,
   });
@@ -63,7 +63,7 @@ export class ChatListItemEmpty extends React.Component<ChatListBasicProps, {}> {
       selected,
       children,
     } = this.props;
-    const block = classNames({
+    const block = cx({
       [style.item]: true,
       [style.active]: selected,
     });
@@ -74,7 +74,8 @@ export class ChatListItemEmpty extends React.Component<ChatListBasicProps, {}> {
         <PeerPhoto peerID={id} />
         <div className={style.info}>
           <div className={style.top}>
-            <div className={style.chattime}>{name}</div>
+            <div className={style.chatname}>{name}</div>
+            <div className={style.time}>00:00</div>
           </div>
           <div className={style.bottom}>
             {children}
