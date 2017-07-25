@@ -20,7 +20,7 @@ const AuthCode = ({ form, error, nextStep, change }: Props) => (
         className="col-xs-4 form-control form-control-lg"
         placeholder="Your code" type="text" maxLength={5} />
     </div>
-    {error && <div>Error type: {error.description}</div>}
+    {error && <div>Error type: {error.message}</div>}
     <button onClick={nextStep} className={`${t.btn} ${t.primary}`}>Next</button>
   </div>
 );

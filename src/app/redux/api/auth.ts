@@ -50,7 +50,7 @@ export function checkPassword(password: string) {
 
 export function signIn(phoneCode: string) {
   return (dispatch: Dispatch, getState: () => Store) => {
-    const catchNeedPass = (err: AuthError) => err.type === 'SESSION_PASSWORD_NEEDED'
+    const catchNeedPass = (err: AuthError) => err.message === 'SESSION_PASSWORD_NEEDED'
       ? dispatch(getPassword())
       : err;
     const catchAndDispatch = pipe( tap(catchNeedPass), err => dispatch(SIGN_IN.FAIL(err)) );

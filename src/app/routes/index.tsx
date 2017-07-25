@@ -12,17 +12,6 @@ export type AsyncRoute = {
   render<T>(): Promise<React.ComponentClass<T>>,
 };
 
-declare module 'universal-router' {
-  export interface ActionResult {
-    guard?: boolean;
-    render<T>(): Promise<React.ComponentClass<T>>;
-  }
-
-  export interface Route {
-    guard?: boolean;
-  }
-}
-
 export const resolveRoute: Options['resolveRoute'] = async (context, params) => {
   const { route, store } = context;
   const { App } = await import (/* webpackChunkName: "app" */ 'containers/App');
