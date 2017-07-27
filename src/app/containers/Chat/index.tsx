@@ -28,7 +28,10 @@ const MessageItem = ({ id, from_id, date, message, entities }: MtpMessage) =>
     text={entities
       // TODO: remove any cast
       // tslint:disable-next-line
-      ? <RichText entities={(entities as any) as Entity[]} text={message} />
+      ? <RichText
+          id={id}
+          entities={(entities as any) as Entity[]}
+          text={message} />
       : message} />;
 
 class ChatContainer extends React.Component<Props, {}> {
@@ -45,6 +48,7 @@ class ChatContainer extends React.Component<Props, {}> {
   public render() {
     if (!this.props.selected) return <DefaultScreen />;
     const { messages, peerName } = this.props;
+    console.log(messages);
     return (
       <Chat
         name={peerName}
