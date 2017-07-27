@@ -1,32 +1,13 @@
-import { pipe, reduce } from 'ramda';
 import * as React from 'react';
+import { Entity, parse } from './parser';
 
-// TODO: generate from TL scheme
-export interface Entity {
-  _: string;
-  offset: number;
-  length: number;
-}
+export { Entity };
 
 interface Props {
+  id: number;
   entities: Entity[];
   text: string;
 }
-
-type RichText = { _: string, text: string };
-type RichAccum = { list: RichText[], last: number };
-const parse = (text: string) => pipe(reduce<Entity, RichAccum, Entity[]>((acc, p) => {
-  return {
-    list: [...acc.list,
-      { _: 'messageEntityText', text: text.slice(acc.last, p.offset) },
-      {
-        _: p._,
-        text: text.slice(p.offset, p.offset + p.length),
-      },
-    ],
-    last: p.offset + p.length,
-  };
-}, { list: [], last: 0 }), p => p.list);
 
 // TODO: better place for this?
 const transformers: { [key: string]: (t: string) => JSX.Element } = {
@@ -47,12 +28,17 @@ const transformers: { [key: string]: (t: string) => JSX.Element } = {
   messageEntityText       : t => <span>{t}</span>,
 };
 
-const RichText = ({ entities, text }: Props) => {
-  const format = parse(text);
-  const formattedText = format(entities);
-  return <span>
-    {formattedText.map(p => transformers[p._](p.text))}
-  </span>;
+const RichText = ({ id, entities, text }: Props) => {
+  const formattedText = parse(entities, text);
+
+  return (
+    <span>
+      {formattedText.map((p, i) =>
+        React.cloneElement(
+          transformers[p._](p.text),
+          { key: `rt${id}_${i}` }))}
+    </span>
+  );
 };
 
 export { RichText };
