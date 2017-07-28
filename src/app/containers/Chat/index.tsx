@@ -25,14 +25,13 @@ const MessageItem = ({ id, from_id, date, message, entities }: MtpMessage) =>
     date={date}
     user={from_id}
     // HACK: what to do here?
-    text={entities
-      // TODO: remove any cast
-      // tslint:disable-next-line
-      ? <RichText
-          id={id}
-          entities={(entities as any) as Entity[]}
-          text={message} />
-      : message} />;
+    text={
+      <RichText
+        id={id}
+        // TODO: remove any cast
+        // tslint:disable-next-line
+        entities={(entities as any) as Entity[]}
+        text={message} />} />;
 
 class ChatContainer extends React.Component<Props, {}> {
   public componentWillReceiveProps(nextProps: ConnectedState) {
