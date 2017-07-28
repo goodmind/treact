@@ -3,14 +3,9 @@ import * as React from 'react';
 import { Options, Route } from 'universal-router';
 import history from '../../history';
 
-export type Route = {
-  Component: JSX.Element | null,
-};
-
-export type AsyncRoute = {
-  guard?: boolean,
-  render<T>(): Promise<React.ComponentClass<T>>,
-};
+export interface Route {
+  Component: JSX.Element | null;
+}
 
 export const resolveRoute: Options['resolveRoute'] = async (context, params) => {
   const { route, store } = context;
