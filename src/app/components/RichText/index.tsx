@@ -5,7 +5,7 @@ export { Entity };
 
 interface Props {
   id: number;
-  entities: Entity[];
+  entities?: Entity[];
   text: string;
 }
 
@@ -29,7 +29,7 @@ const transformers: { [key: string]: (props: RichText) => JSX.Element } = {
   messageEntityText       : ({ text }) => <span>{text}</span>,
 };
 
-const RichText = ({ id, entities, text }: Props) => {
+const RichText = ({ id, entities = [], text }: Props) => {
   const formattedText = parse(entities, text);
   return (
     <span>
