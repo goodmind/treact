@@ -2279,9 +2279,9 @@ declare namespace R {
      * then passing the result to the next call.
      */
     // reason for 'any' on acc: somehow empty accumulators like '[]' won't work well when matching
-    reduceRight<T, TResult>(fn: (acc: TResult, elem: T) => TResult|Reduced, acc: TResult|any, list: List<T>): TResult;
-    reduceRight<T, TResult>(fn: (acc: TResult, elem: T) => TResult|Reduced, acc: TResult|any): (list: List<T>) => TResult;
-    reduceRight<T, TResult>(fn: (acc: TResult, elem: T) => TResult|Reduced): CurriedFunction2<TResult, List<T>, TResult>;
+    reduceRight<T, TResult>(fn: (elem: T, acc: TResult) => TResult|Reduced, acc: TResult|any, list: List<T>): TResult;
+    reduceRight<T, TResult>(fn: (elem: T, acc: TResult) => TResult|Reduced, acc: TResult|any): (list: List<T>) => TResult;
+    reduceRight<T, TResult>(fn: (elem: T, acc: TResult) => TResult|Reduced): CurriedFunction2<TResult, List<T>, TResult>;
     // reduceRight<T, TResult>(fn: (acc: TResult, elem: T) => TResult|Reduced): (acc: TResult|any, list: List<T>) => TResult;
     // reduceRight<T, TResult>(fn: (acc: TResult, elem: T) => TResult|Reduced): (acc: TResult|any) => (list: List<T>) => TResult;
     // reduceRight<T, TResult>: CurriedFunction3<(acc: TResult, elem: T) => TResult|Reduced, TResult|any, List<T>, TResult>;

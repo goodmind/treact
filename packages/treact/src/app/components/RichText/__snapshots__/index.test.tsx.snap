@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RichText renders correctly with data 1`] = `
+<span>
+  <span>
+    abc123 abc123 
+  </span>
+  <code>
+    abc123
+  </code>
+  <span>
+     **__
+  </span>
+  <code>
+    _*_*\`
+  </code>
+  <span>
+    _** 😃😂😏😁🅱❤👅 
+  </span>
+  <a
+    href="youtube.com"
+  >
+    youtube.com
+  </a>
+  <span>
+     
+  </span>
+  <a
+    href="goo.gl"
+  >
+    goo.gl
+  </a>
+  <span>
+     must show
+  </span>
+</span>
+`;
+
+exports[`RichText renders correctly without data 1`] = `
+<span>
+  <span>
+    
+  </span>
+</span>
+`;

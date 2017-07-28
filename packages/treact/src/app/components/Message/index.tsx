@@ -6,7 +6,8 @@ interface OwnProps {
   id: number;
   date: number;
   user: number;
-  text: string;
+  // TODO: Should be children?
+  text: React.ReactNode;
 }
 
 const formatTime = (date: number) => {

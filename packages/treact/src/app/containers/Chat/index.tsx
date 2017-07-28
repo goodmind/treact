@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import { Chat, DefaultScreen } from 'components/Chat';
 import { Message } from 'components/Message';
+import { RichText, Entity } from 'components/RichText';
 import { getPeerData } from 'helpers/Telegram/Peers';
 import { getPeerName } from 'helpers/Telegram/Peers';
 import { Obj, path, props } from 'ramda';
@@ -17,13 +18,20 @@ const onChatSelect = async (currentId: number, nextId: number) => {
   }
 };
 
-const MessageItem = ({ id, from_id, date, message }: MtpMessage) =>
+const MessageItem = ({ id, from_id, date, message, entities }: MtpMessage) =>
   <Message
     key={id}
     id={id}
     date={date}
     user={from_id}
-    text={message} />;
+    // HACK: what to do here?
+    text={
+      <RichText
+        id={id}
+        // TODO: remove any cast
+        // tslint:disable-next-line
+        entities={(entities as any) as Entity[]}
+        text={message} />} />;
 
 class ChatContainer extends React.Component<Props, {}> {
   public componentWillReceiveProps(nextProps: ConnectedState) {
@@ -39,6 +47,7 @@ class ChatContainer extends React.Component<Props, {}> {
   public render() {
     if (!this.props.selected) return <DefaultScreen />;
     const { messages, peerName } = this.props;
+    console.log(messages);
     return (
       <Chat
         name={peerName}
