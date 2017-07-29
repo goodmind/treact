@@ -46,4 +46,5 @@ interface Window {
   WebKitBlobBuilder?: any;
   MozBlobBuilder?: any;
   chrome?: any;
+  api?: any;
 }
