@@ -1,7 +1,10 @@
 import { ComponentClass } from 'react'
 
 declare module 'universal-router' {
-  export interface ActionResult {
-    render<T>(): Promise<ComponentClass<T>>;
+  export interface ActionResult extends ComponentClass {
+  }
+
+  export interface Route {
+    guard?: boolean;
   }
 }

@@ -7,9 +7,7 @@ declare module 'universal-router' {
 
   export interface Params {}
 
-  export interface ActionResult {
-    guard?: boolean,
-  }
+  export interface ActionResult {}
 
   interface NextFunction {
     (resume?: boolean, parent?: Route): Promise<ActionResult>
@@ -17,7 +15,7 @@ declare module 'universal-router' {
 
   export interface Context {
     router: Router;
-    route: any;
+    route: Route;
     next: NextFunction;
     url: string;
     baseUrl: string;
@@ -29,16 +27,15 @@ declare module 'universal-router' {
 
   export interface Route {
     path: string;
-    guard?: boolean;
     name?: string;
     parent?: any;
     children?: Route[];
-    action?: <T>(context: Context, params: Params) => Promise<T>;
+    action?: (context: Context, params: Params) => Promise<ActionResult>;
   }
 
   export interface Options {
     context: Partial<Context>;
     baseUrl: string;
-    resolveRoute(context: Context, params: Params): any;
+    resolveRoute(context: Context, params: Params): Promise<any>;
   }
 }
