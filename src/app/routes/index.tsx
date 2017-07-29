@@ -1,13 +1,9 @@
 import { fetchChatList } from 'api/chatList';
 import * as React from 'react';
-import { Options, Route } from 'universal-router';
+import { Context, Params, Route } from 'universal-router';
 import history from '../../history';
 
-export interface Route {
-  Component: JSX.Element | null;
-}
-
-export const resolveRoute: Options['resolveRoute'] = async (context, params) => {
+export const resolveRoute = async (context: Context, params: Params) => {
   const { route, store } = context;
   const { App } = await import (/* webpackChunkName: "app" */ 'containers/App');
   const { auth } = store.getState();
