@@ -21,4 +21,9 @@ const pool = MTProto({
 // TODO: use generic params and options
 export const api = <T>(method: string, params?: object, options?: object): Promise<T> =>
   pool<T>(method, params, options);
+
+if (process.env.NODE_ENV === 'development') {
+  window.api = api;
+}
+
 export default pool;
