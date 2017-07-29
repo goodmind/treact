@@ -1,4 +1,5 @@
 /* tslint:disable:max-line-length */
+// TODO: remove this file
 /*
 import { ITelegram } from 'telegram-mtproto';
 
