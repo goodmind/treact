@@ -29,6 +29,7 @@
   display: flex;
   height: 54px;
   padding-left: 16px;
+  border-left: 1px solid rgba(0, 0, 0, .1);
 }
 
 .left {
@@ -60,6 +61,7 @@
   height: 100%;
   overflow: auto;
   padding-bottom: 8px;
+  border-left: 1px solid rgba(0, 0, 0, .1);
 }
 
 .box {
@@ -72,6 +74,7 @@
 .chatfooter {
   background-color: #fff;
   border-top: 1px solid rgba(0, 0, 0, .1);
+  border-left: 1px solid rgba(0, 0, 0, .1);
   display: flex;
 }
 
