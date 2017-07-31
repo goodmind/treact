@@ -1,25 +1,26 @@
 import * as React from 'react';
 import * as t from '../style.css';
+import { Button, FormGroup, Heading, Step } from './';
 import { CommonProps } from './';
 
 type Props = CommonProps;
 
 const Password = ({ error, change, nextStep }: Props) => (
-  <div className={t.loginStep}>
-    <h1>Cloud password check</h1>
+  <Step>
+    <Heading>Cloud password check</Heading>
     <p>
       Please enter your cloud password.
     </p>
-    <div className={t.formGroupLogin}>
+    <FormGroup>
       <input
         onChange={change}
         name="password"
         className="form-control form-control-lg"
         placeholder="Your cloud password" type="password" />
-    </div>
+    </FormGroup>
     {error && <div>Error type: {error.message}</div>}
-    <button onClick={nextStep} className={`${t.btn} ${t.primary}`}>Submit</button>
-  </div>
+    <Button onClick={nextStep} primary>Submit</Button>
+  </Step>
 );
 
 export { Password };
