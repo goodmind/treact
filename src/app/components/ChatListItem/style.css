@@ -9,7 +9,7 @@
 }
 
 .active, .active:hover {
-  background-color: #6a91b1;
+  background-color: #419fd9;
   margin-right: -1px;
 }
 
@@ -65,7 +65,6 @@
 .message {
   color: #888888;
   flex: 1;
-  overflow: hidden;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -78,17 +77,25 @@
 }
 
 .unread {
-  color: #5b94bf;
+  color: #fff;
+}
+
+.active .unread {
+  color: #419fd9;
 }
 
 .counter {
-  background-color: #d3e2ee;
+  background-color: #bbb;
   border-radius: 19px;
   font-size: 12px;
   font-weight: 700;
   min-width: 9px;
   padding: 1px 5px;
   text-align: center;
+}
+
+.active .counter {
+  background-color: #c6e1f7;
 }
 
 .hidden {
