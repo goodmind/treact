@@ -58,6 +58,7 @@
     "curly": false,
     "no-bitwise": false,
     "jsx-no-multiline-js": false,
+    "jsx-boolean-value": false,
     "jsx-wrap-multiline": false,
     "prefer-object-spread": false
   }
