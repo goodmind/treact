@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as t from '../style.css';
 import { Button, FormGroup, Heading, Step } from './';
 import { CommonProps } from './';
 
