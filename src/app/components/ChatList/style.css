@@ -1,5 +1,4 @@
 .chatlist {
-  border-right: 1px solid rgba(0, 0, 0, .1);
   flex: 35;
   min-width: 260px;
 }
