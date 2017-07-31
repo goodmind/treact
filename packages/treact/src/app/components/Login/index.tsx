@@ -1,14 +1,13 @@
-import * as React from 'react';
-import * as s from './style.css';
+import styled from 'glamorous';
 
-interface Props {
-  children?: React.ReactNode;
-}
+export const Login = styled.div({
+  backgroundColor: '#FFF',
+  width: '100%',
+  flex: '1 100%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+});
 
-const Login = ({ children }: Props) => (
-  <div className={s.main}>
-    {children}
-  </div>
-);
 
-export { Login };
+
