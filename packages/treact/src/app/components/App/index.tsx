@@ -1,14 +1,12 @@
-import * as React from 'react';
-import * as s from './style.css';
+import styled from 'glamorous';
 
-interface Props {
-  children?: React.ReactNode;
-}
-
-const App = ({ children }: Props) => (
-  <section className={s.app}>
-    {children}
-  </section>
-);
+const App = styled.section({
+  display: 'flex',
+  flexDirection: 'column',
+  padding: 0,
+  margin: 0,
+  width: '100%',
+  height: '100%',
+});
 
 export { App };
