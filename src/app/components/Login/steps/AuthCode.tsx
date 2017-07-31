@@ -1,6 +1,5 @@
 import { FormState } from 'containers/Login';
 import * as React from 'react';
-import * as t from '../style.css';
 import { Button, Heading, RowFormGroup, Step } from './';
 import { CommonProps } from './';
 
