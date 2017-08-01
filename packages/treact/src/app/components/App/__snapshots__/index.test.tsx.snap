@@ -2,7 +2,7 @@
 
 exports[`App renders correctly 1`] = `
 <section
-  className="app"
+  className="css-1ehidck"
 >
   Hello, world!
 </section>
