@@ -15,7 +15,7 @@ import Color from './color-value';
 type ColorRef = [string, number];
 type ColorLink = [string, number, number];
 type InputPair = [string, Array<Color | string>];
-
+type IndexMap = {[field: string]: number};
 
 
 const createNamesMap: (list: InputPair[]) => {[name: string]: ColorRef[]} =
@@ -64,39 +64,44 @@ function colorsReducer(
     .reduce(colorReducer, acc);
 }
 
-function resolveLinks({ colorList, namesMap, results }: ReducerAcc): {[name: string]: Color[]} {
-  // TODO: fix types
-  const refMap = fromPairs(results
-    // tslint:disable-next-line
-    .filter(([_, index]: any) => index === 0)
-    // tslint:disable-next-line
-    .map(([name, _, position]: any) => [name, position]) as any,
-  );
-  const linked = pipe(
-    toPairs,
-    chain(
-      // tslint:disable-next-line
-      ([field, links]: any) => links.map(
-        // tslint:disable-next-line
-        ([name, index]: any) => [name, index, refMap[field]])),
-  )(namesMap);
+const converter = (field: string, refMap: IndexMap) =>
+  ([name, index]: ColorRef): ColorLink  => [name, index, refMap[field]];
+
+function joinResults(results: ColorLink[], linked: ColorLink[], colorList: Color[]) {
   return results
-    // tslint:disable-next-line
-    .concat(linked as any)
-    .reduce((acc: {[key: string]: Color[]}, [name, index, ref]) => {
-      if (!colorList[ref])
-        return acc;
-      if (!acc[name])
-        acc[name] = [];
-      acc[name][index] = colorList[ref];
-      //log(['acc name', name])(acc[name])
+    .concat(linked)
+    .reduce(reducer, {});
+
+  function reducer(acc: {[key: string]: Color[]}, [name, index, ref]: ColorLink) {
+    if (!colorList[ref])
       return acc;
-    }, {});
+    if (!acc[name])
+      acc[name] = [];
+    acc[name][index] = colorList[ref];
+    return acc;
+  }
+}
+
+function createRefMap(results: ColorLink[]) {
+  const refPairs = results
+    .filter(([_, index]) => index === 0)
+    .map(([name, _, position]): ColorRef => [name, position]);
+
+  return fromPairs<number>(refPairs);
+}
+
+function resolveLinks({ colorList, namesMap, results }: ReducerAcc): {[name: string]: Color[]} {
+  const namePairs = toPairs(namesMap);
+  const refMap = createRefMap(results);
+
+  const linker = ([field, links]: [string, ColorRef[]]) => links.map(converter(field, refMap));
+  const linked: ColorLink[]  = chain<[string, ColorRef[]], ColorLink>(linker, namePairs);
+  return joinResults(results, linked, colorList);
 }
 
 export default function processing(list: InputPair[]) {
   const namesMap = createNamesMap(list);
-  const result = list
-    .reduce(colorsReducer, { colorList: [], namesMap, results: [] });
+  const initialAcc = { colorList: [], namesMap, results: [] };
+  const result = list.reduce(colorsReducer, initialAcc);
   return resolveLinks(result);
 }
