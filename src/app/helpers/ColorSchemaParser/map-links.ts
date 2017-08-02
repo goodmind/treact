@@ -65,18 +65,24 @@ function colorsReducer(
 }
 
 function resolveLinks({ colorList, namesMap, results }: ReducerAcc): {[name: string]: Color[]} {
+  // TODO: fix types
   const refMap = fromPairs(results
-    .filter(([name, index]: [string, number]) => index === 0)
-    .map(([name, index, position]: [string, number, number]) => [name, position]),
+    // tslint:disable-next-line
+    .filter(([_, index]: any) => index === 0)
+    // tslint:disable-next-line
+    .map(([name, _, position]: any) => [name, position]) as any,
   );
   const linked = pipe(
     toPairs,
     chain(
-      ([field, links]: [string, ColorRef[]]) => links.map(
-        ([name, index]: [string, number]) => [name, index, refMap[field]])),
+      // tslint:disable-next-line
+      ([field, links]: any) => links.map(
+        // tslint:disable-next-line
+        ([name, index]: any) => [name, index, refMap[field]])),
   )(namesMap);
   return results
-    .concat(linked)
+    // tslint:disable-next-line
+    .concat(linked as any)
     .reduce((acc: {[key: string]: Color[]}, [name, index, ref]) => {
       if (!colorList[ref])
         return acc;
@@ -88,7 +94,7 @@ function resolveLinks({ colorList, namesMap, results }: ReducerAcc): {[name: str
     }, {});
 }
 
-export default function processing(list: [string, Array<Color | string>]) {
+export default function processing(list: InputPair[]) {
   const namesMap = createNamesMap(list);
   const result = list
     .reduce(colorsReducer, { colorList: [], namesMap, results: [] });
