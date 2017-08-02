@@ -10,7 +10,6 @@ import {
   trim,
 } from 'ramda';
 import {
-  ListChange,
   StringPred,
 } from './index.h';
 
@@ -19,7 +18,7 @@ const checkString: StringPred = both(
   str => str.length > 0,
 );
 
-const process: ListChange = pipe(
+const process = pipe(
   filter(contains(':')),
   map(split(':')),
   map(map(trim)),

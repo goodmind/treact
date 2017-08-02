@@ -7,7 +7,6 @@ import {
   last,
   map,
   pipe,
-  prop,
   reduce,
   split,
   take,
@@ -19,9 +18,6 @@ import {
   StringPred,
   TokenHandler,
 } from './index.h';
-
-
-
 
 const isBeginWith: (word: string) => StringPred = word => pipe(
   take(word.length),
@@ -46,7 +42,7 @@ const mlCommentL: StringChange = callHandler({
 
 const mlCommentR: StringChange = callHandler({
   isOnly: pipe( takeLast(2), equals('*/') ),
-  apply : pipe( split('*/'), last ),
+  apply : pipe( split('*/'), t => last(t) ),
 });
 
 const semi: StringChange = callHandler({
@@ -75,7 +71,7 @@ const omitMLComments: (list: string[]) => string[] = pipe(
       comment,
     };
   }, { list: [], comment: false }),
-  prop('list'),
+  x => x.list,
 );
 
 
@@ -84,6 +80,5 @@ const omitComment: ListChange = pipe(
   omitMLComments,
   map(semi),
 );
-
 
 export default omitComment;

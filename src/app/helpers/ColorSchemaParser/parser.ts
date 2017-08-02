@@ -1,11 +1,10 @@
-import { pipe, split, reject, isEmpty } from 'ramda';
-import omitComment from './omit-comment';
-import splitKV from './split-kv';
+import { isEmpty, pipe, reject, split } from 'ramda';
 import color from './color';
 import mapLinks from './map-links';
-import { Parser } from './index.h';
+import omitComment from './omit-comment';
+import splitKV from './split-kv';
 
-const parser: Parser = pipe(
+const parser = pipe(
   split(`\n`),
   omitComment,
   reject(isEmpty),
