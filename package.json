@@ -30,7 +30,7 @@
     }
   },
   "scripts": {
-    "postinstall": "npm run build:vendor",
+    "cleanup": "sh scripts/cleanup.sh",
     "clean": "rimraf build",
     "build": "webpack --config config/webpack/index.js",
     "build:prod": "cross-env NODE_ENV=production npm run build",
