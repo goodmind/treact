@@ -2,7 +2,6 @@ import {
   append,
   chain,
   fromPairs,
-  is,
   lensProp,
   map,
   over,
@@ -43,7 +42,7 @@ function colorReducer(
   { colorList, namesMap, results }: ReducerAcc,
   [name, color, index]: [string, Color | string, number],
 ) {
-  if (is(String, color))
+  if (typeof color === 'string')
     return {
       colorList,
       namesMap: addToNameMap(name, index, color, namesMap),
