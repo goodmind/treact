@@ -1,0 +1,3888 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Parser works correctly 1`] = `
+Object {
+  "activeButtonBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        64,
+        167,
+        227,
+        255,
+      ],
+    },
+  ],
+  "activeButtonBgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        57,
+        165,
+        219,
+        255,
+      ],
+    },
+  ],
+  "activeButtonBgRipple": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        32,
+        149,
+        208,
+        255,
+      ],
+    },
+  ],
+  "activeButtonFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "activeButtonSecondaryFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        204,
+        238,
+        255,
+        255,
+      ],
+    },
+  ],
+  "activeButtonSecondaryFgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        204,
+        238,
+        255,
+        255,
+      ],
+    },
+  ],
+  "activeLineFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        55,
+        161,
+        222,
+        255,
+      ],
+    },
+  ],
+  "activeLineFgError": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        228,
+        131,
+        131,
+        255,
+      ],
+    },
+  ],
+  "attentionButtonBgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        252,
+        223,
+        222,
+        255,
+      ],
+    },
+  ],
+  "attentionButtonBgRipple": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        244,
+        195,
+        194,
+        255,
+      ],
+    },
+  ],
+  "attentionButtonFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        209,
+        78,
+        78,
+        255,
+      ],
+    },
+  ],
+  "attentionButtonFgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        209,
+        78,
+        78,
+        255,
+      ],
+    },
+  ],
+  "botKbColor": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        34,
+        34,
+        34,
+        255,
+      ],
+    },
+  ],
+  "boxBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "boxTextFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        0,
+        0,
+        0,
+        255,
+      ],
+    },
+  ],
+  "boxTextFgError": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        216,
+        77,
+        77,
+        255,
+      ],
+    },
+  ],
+  "boxTextFgGood": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        74,
+        180,
+        74,
+        255,
+      ],
+    },
+  ],
+  "boxTitleAdditionalFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        128,
+        128,
+        128,
+        255,
+      ],
+    },
+  ],
+  "boxTitleFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        64,
+        64,
+        64,
+        255,
+      ],
+    },
+  ],
+  "callAnswerBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        100,
+        193,
+        91,
+        255,
+      ],
+    },
+  ],
+  "callAnswerBgOuter": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        80,
+        235,
+        65,
+        38,
+      ],
+    },
+  ],
+  "callAnswerRipple": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        82,
+        177,
+        73,
+        255,
+      ],
+    },
+  ],
+  "callArrowFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        42,
+        179,
+        42,
+        255,
+      ],
+    },
+    Color {
+      "data": Uint8ClampedArray [
+        74,
+        180,
+        74,
+        255,
+      ],
+    },
+  ],
+  "callArrowMissedFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        221,
+        91,
+        74,
+        255,
+      ],
+    },
+    Color {
+      "data": Uint8ClampedArray [
+        216,
+        77,
+        77,
+        255,
+      ],
+    },
+  ],
+  "callBarBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        65,
+        159,
+        217,
+        255,
+      ],
+    },
+  ],
+  "callBarBgMuted": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        143,
+        143,
+        143,
+        255,
+      ],
+    },
+    Color {
+      "data": Uint8ClampedArray [
+        187,
+        187,
+        187,
+        255,
+      ],
+    },
+  ],
+  "callBarUnmuteRipple": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        127,
+        127,
+        127,
+        255,
+      ],
+    },
+    Color {
+      "data": Uint8ClampedArray [
+        0,
+        0,
+        0,
+        24,
+      ],
+    },
+  ],
+  "callBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        38,
+        40,
+        44,
+        242,
+      ],
+    },
+  ],
+  "callCancelBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "callCancelFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        119,
+        119,
+        119,
+        255,
+      ],
+    },
+  ],
+  "callCancelRipple": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        241,
+        241,
+        241,
+        255,
+      ],
+    },
+  ],
+  "callFingerprintBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        0,
+        0,
+        0,
+        102,
+      ],
+    },
+  ],
+  "callHangupBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        215,
+        90,
+        90,
+        255,
+      ],
+    },
+  ],
+  "callHangupRipple": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        192,
+        70,
+        70,
+        255,
+      ],
+    },
+  ],
+  "callIconFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "callMuteRipple": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        18,
+      ],
+    },
+  ],
+  "callNameFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "callStatusFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        170,
+        171,
+        172,
+        255,
+      ],
+    },
+  ],
+  "cancelIconFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        168,
+        168,
+        168,
+        255,
+      ],
+    },
+  ],
+  "cancelIconFgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        153,
+        153,
+        153,
+        255,
+      ],
+    },
+  ],
+  "changePhoneSimcardFrom": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        215,
+        215,
+        215,
+        255,
+      ],
+    },
+  ],
+  "changePhoneSimcardTo": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        147,
+        147,
+        147,
+        255,
+      ],
+    },
+  ],
+  "checkboxFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        179,
+        179,
+        179,
+        255,
+      ],
+    },
+  ],
+  "contactsBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "contactsBgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        241,
+        241,
+        241,
+        255,
+      ],
+    },
+  ],
+  "contactsStatusFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        153,
+        153,
+        153,
+        255,
+      ],
+    },
+  ],
+  "contactsStatusFgOnline": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        22,
+        138,
+        205,
+        255,
+      ],
+    },
+  ],
+  "contactsStatusFgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        145,
+        145,
+        145,
+        255,
+      ],
+    },
+  ],
+  "dialogsBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "dialogsBgActive": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        65,
+        159,
+        217,
+        255,
+      ],
+    },
+  ],
+  "dialogsBgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        241,
+        241,
+        241,
+        255,
+      ],
+    },
+  ],
+  "dialogsDateFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        153,
+        153,
+        153,
+        255,
+      ],
+    },
+  ],
+  "dialogsDateFgActive": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "dialogsDateFgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        145,
+        145,
+        145,
+        255,
+      ],
+    },
+  ],
+  "dialogsDraftFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        221,
+        75,
+        57,
+        255,
+      ],
+    },
+  ],
+  "dialogsDraftFgActive": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        198,
+        225,
+        247,
+        255,
+      ],
+    },
+  ],
+  "dialogsDraftFgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        221,
+        75,
+        57,
+        255,
+      ],
+    },
+  ],
+  "dialogsForwardBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        65,
+        159,
+        217,
+        255,
+      ],
+    },
+  ],
+  "dialogsMenuIconFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        168,
+        168,
+        168,
+        255,
+      ],
+    },
+  ],
+  "dialogsMenuIconFgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        153,
+        153,
+        153,
+        255,
+      ],
+    },
+  ],
+  "dialogsNameFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        34,
+        34,
+        34,
+        255,
+      ],
+    },
+  ],
+  "dialogsNameFgActive": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "dialogsNameFgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        34,
+        34,
+        34,
+        255,
+      ],
+    },
+  ],
+  "dialogsRippleBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        229,
+        229,
+        229,
+        255,
+      ],
+    },
+  ],
+  "dialogsRippleBgActive": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        32,
+        149,
+        208,
+        255,
+      ],
+    },
+  ],
+  "dialogsSendingIconFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        193,
+        193,
+        193,
+        255,
+      ],
+    },
+  ],
+  "dialogsSendingIconFgActive": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        153,
+      ],
+    },
+  ],
+  "dialogsSendingIconFgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        193,
+        193,
+        193,
+        255,
+      ],
+    },
+  ],
+  "dialogsSentIconFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        93,
+        196,
+        82,
+        255,
+      ],
+    },
+  ],
+  "dialogsSentIconFgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        93,
+        196,
+        82,
+        255,
+      ],
+    },
+  ],
+  "dialogsTextFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        153,
+        153,
+        153,
+        255,
+      ],
+    },
+  ],
+  "dialogsTextFgActive": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "dialogsTextFgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        145,
+        145,
+        145,
+        255,
+      ],
+    },
+  ],
+  "dialogsTextFgService": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        22,
+        138,
+        205,
+        255,
+      ],
+    },
+  ],
+  "dialogsUnreadBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        64,
+        167,
+        227,
+        255,
+      ],
+    },
+  ],
+  "dialogsUnreadBgMuted": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        187,
+        187,
+        187,
+        255,
+      ],
+    },
+  ],
+  "dialogsUnreadBgMutedActive": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        198,
+        225,
+        247,
+        255,
+      ],
+    },
+  ],
+  "dialogsUnreadBgMutedOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        187,
+        187,
+        187,
+        255,
+      ],
+    },
+  ],
+  "dialogsUnreadFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "dialogsUnreadFgActive": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        65,
+        159,
+        217,
+        255,
+      ],
+    },
+  ],
+  "dialogsVerifiedIconBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        64,
+        167,
+        227,
+        255,
+      ],
+    },
+  ],
+  "dialogsVerifiedIconFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "dialogsVerifiedIconFgActive": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        65,
+        159,
+        217,
+        255,
+      ],
+    },
+  ],
+  "emojiIconFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        179,
+        179,
+        179,
+        255,
+      ],
+    },
+  ],
+  "emojiIconFgActive": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        64,
+        167,
+        227,
+        255,
+      ],
+    },
+  ],
+  "emojiPanBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "emojiPanCategories": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        247,
+        247,
+        247,
+        255,
+      ],
+    },
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "emojiPanHeaderBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        242,
+      ],
+    },
+  ],
+  "emojiPanHeaderFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        153,
+        153,
+        153,
+        255,
+      ],
+    },
+  ],
+  "filterInputActiveBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "filterInputBorderFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        84,
+        195,
+        243,
+        255,
+      ],
+    },
+  ],
+  "filterInputInactiveBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        241,
+        241,
+        241,
+        255,
+      ],
+    },
+  ],
+  "historyCallArrowInFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        42,
+        179,
+        42,
+        255,
+      ],
+    },
+  ],
+  "historyCallArrowInFgSelected": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        42,
+        179,
+        42,
+        255,
+      ],
+    },
+  ],
+  "historyCallArrowMissedInFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        221,
+        91,
+        74,
+        255,
+      ],
+    },
+  ],
+  "historyCallArrowMissedInFgSelected": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        221,
+        91,
+        74,
+        255,
+      ],
+    },
+  ],
+  "historyComposeAreaFgService": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        160,
+        172,
+        182,
+        255,
+      ],
+    },
+  ],
+  "historyComposeButtonBgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        241,
+        241,
+        241,
+        255,
+      ],
+    },
+  ],
+  "historyComposeButtonBgRipple": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        229,
+        229,
+        229,
+        255,
+      ],
+    },
+  ],
+  "historyComposeIconFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        168,
+        168,
+        168,
+        255,
+      ],
+    },
+  ],
+  "historyComposeIconFgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        153,
+        153,
+        153,
+        255,
+      ],
+    },
+  ],
+  "historyFileInIconFgSelected": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        194,
+        220,
+        242,
+        255,
+      ],
+    },
+  ],
+  "historyFileOutIconFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        239,
+        253,
+        222,
+        255,
+      ],
+    },
+  ],
+  "historyFileOutIconFgSelected": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        183,
+        219,
+        219,
+        255,
+      ],
+    },
+  ],
+  "historyFileThumbIconFgSelected": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        194,
+        220,
+        242,
+        255,
+      ],
+    },
+  ],
+  "historyForwardChooseBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        0,
+        0,
+        0,
+        76,
+      ],
+    },
+  ],
+  "historyForwardChooseFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "historyIconFgInverted": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "historyLinkInFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        22,
+        138,
+        205,
+        255,
+      ],
+    },
+  ],
+  "historyLinkOutFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        22,
+        138,
+        205,
+        255,
+      ],
+    },
+  ],
+  "historyOutIconFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        93,
+        196,
+        82,
+        255,
+      ],
+    },
+  ],
+  "historyOutIconFgSelected": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        77,
+        167,
+        159,
+        255,
+      ],
+    },
+  ],
+  "historyPeer1NameFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        192,
+        61,
+        51,
+        255,
+      ],
+    },
+  ],
+  "historyPeer1NameFgSelected": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        192,
+        61,
+        51,
+        255,
+      ],
+    },
+  ],
+  "historyPeer1UserpicBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        225,
+        112,
+        118,
+        255,
+      ],
+    },
+  ],
+  "historyPeer2NameFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        79,
+        173,
+        45,
+        255,
+      ],
+    },
+  ],
+  "historyPeer2NameFgSelected": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        79,
+        173,
+        45,
+        255,
+      ],
+    },
+  ],
+  "historyPeer2UserpicBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        123,
+        200,
+        98,
+        255,
+      ],
+    },
+  ],
+  "historyPeer3NameFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        208,
+        147,
+        6,
+        255,
+      ],
+    },
+  ],
+  "historyPeer3NameFgSelected": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        208,
+        147,
+        6,
+        255,
+      ],
+    },
+  ],
+  "historyPeer3UserpicBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        229,
+        202,
+        119,
+        255,
+      ],
+    },
+  ],
+  "historyPeer4NameFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        22,
+        138,
+        205,
+        255,
+      ],
+    },
+  ],
+  "historyPeer4UserpicBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        101,
+        170,
+        221,
+        255,
+      ],
+    },
+  ],
+  "historyPeer5NameFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        133,
+        68,
+        214,
+        255,
+      ],
+    },
+  ],
+  "historyPeer5NameFgSelected": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        133,
+        68,
+        214,
+        255,
+      ],
+    },
+  ],
+  "historyPeer5UserpicBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        166,
+        149,
+        231,
+        255,
+      ],
+    },
+  ],
+  "historyPeer6NameFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        205,
+        64,
+        115,
+        255,
+      ],
+    },
+  ],
+  "historyPeer6NameFgSelected": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        205,
+        64,
+        115,
+        255,
+      ],
+    },
+  ],
+  "historyPeer6UserpicBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        238,
+        122,
+        174,
+        255,
+      ],
+    },
+  ],
+  "historyPeer7NameFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        41,
+        150,
+        173,
+        255,
+      ],
+    },
+  ],
+  "historyPeer7NameFgSelected": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        41,
+        150,
+        173,
+        255,
+      ],
+    },
+  ],
+  "historyPeer7UserpicBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        110,
+        201,
+        203,
+        255,
+      ],
+    },
+  ],
+  "historyPeer8NameFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        206,
+        103,
+        27,
+        255,
+      ],
+    },
+  ],
+  "historyPeer8NameFgSelected": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        206,
+        103,
+        27,
+        255,
+      ],
+    },
+  ],
+  "historyPeer8UserpicBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        250,
+        167,
+        116,
+        255,
+      ],
+    },
+  ],
+  "historyPeerUserpicFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "historyReplyIconFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        64,
+        167,
+        227,
+        255,
+      ],
+    },
+  ],
+  "historyScrollBarBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        81,
+        124,
+        65,
+        122,
+      ],
+    },
+  ],
+  "historyScrollBarBgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        81,
+        124,
+        65,
+        188,
+      ],
+    },
+  ],
+  "historyScrollBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        81,
+        124,
+        65,
+        76,
+      ],
+    },
+  ],
+  "historyScrollBgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        81,
+        124,
+        65,
+        107,
+      ],
+    },
+  ],
+  "historySendIconFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        64,
+        167,
+        227,
+        255,
+      ],
+    },
+  ],
+  "historySendIconFgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        64,
+        167,
+        227,
+        255,
+      ],
+    },
+  ],
+  "historySendingInIconFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        160,
+        173,
+        181,
+        255,
+      ],
+    },
+  ],
+  "historySendingInvertedIconFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        200,
+      ],
+    },
+  ],
+  "historySendingOutIconFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        152,
+        210,
+        146,
+        255,
+      ],
+    },
+  ],
+  "historyTextInFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        0,
+        0,
+        0,
+        255,
+      ],
+    },
+  ],
+  "historyTextOutFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        0,
+        0,
+        0,
+        255,
+      ],
+    },
+  ],
+  "historyToDownBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "historyToDownBgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        241,
+        241,
+        241,
+        255,
+      ],
+    },
+  ],
+  "historyToDownBgRipple": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        229,
+        229,
+        229,
+        255,
+      ],
+    },
+  ],
+  "historyToDownFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        168,
+        168,
+        168,
+        255,
+      ],
+    },
+  ],
+  "historyToDownFgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        153,
+        153,
+        153,
+        255,
+      ],
+    },
+  ],
+  "historyToDownShadow": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        0,
+        0,
+        0,
+        64,
+      ],
+    },
+  ],
+  "historyUnreadBarBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        252,
+        251,
+        250,
+        255,
+      ],
+    },
+  ],
+  "historyUnreadBarBorder": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        0,
+        0,
+        0,
+        24,
+      ],
+    },
+  ],
+  "historyUnreadBarFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        83,
+        139,
+        180,
+        255,
+      ],
+    },
+  ],
+  "imageBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        0,
+        0,
+        0,
+        255,
+      ],
+    },
+  ],
+  "imageBgTransparent": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "importantTooltipBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        0,
+        0,
+        0,
+        178,
+      ],
+    },
+  ],
+  "importantTooltipFgLink": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        145,
+        217,
+        255,
+        255,
+      ],
+    },
+  ],
+  "inputBorderFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        224,
+        224,
+        224,
+        255,
+      ],
+    },
+  ],
+  "introBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "introCoverBottomBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        57,
+        176,
+        240,
+        255,
+      ],
+    },
+  ],
+  "introCoverIconsFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        94,
+        198,
+        255,
+        255,
+      ],
+    },
+  ],
+  "introCoverPlaneInner": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        198,
+        216,
+        232,
+        255,
+      ],
+    },
+  ],
+  "introCoverPlaneOuter": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        161,
+        190,
+        212,
+        255,
+      ],
+    },
+  ],
+  "introCoverPlaneTop": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "introCoverPlaneTrace": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        94,
+        198,
+        255,
+        105,
+      ],
+    },
+  ],
+  "introCoverTopBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        15,
+        137,
+        208,
+        255,
+      ],
+    },
+  ],
+  "introDescriptionFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        153,
+        153,
+        153,
+        255,
+      ],
+    },
+  ],
+  "introErrorFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        153,
+        153,
+        153,
+        255,
+      ],
+    },
+  ],
+  "introTitleFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        34,
+        34,
+        34,
+        255,
+      ],
+    },
+  ],
+  "layerBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        0,
+        0,
+        0,
+        127,
+      ],
+    },
+  ],
+  "lightButtonBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "lightButtonBgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        227,
+        241,
+        250,
+        255,
+      ],
+    },
+  ],
+  "lightButtonBgRipple": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        201,
+        228,
+        246,
+        255,
+      ],
+    },
+  ],
+  "lightButtonFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        22,
+        138,
+        205,
+        255,
+      ],
+    },
+  ],
+  "mainMenuBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "mainMenuCloudBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        39,
+        133,
+        191,
+        255,
+      ],
+    },
+    Color {
+      "data": Uint8ClampedArray [
+        32,
+        149,
+        208,
+        255,
+      ],
+    },
+  ],
+  "mainMenuCoverBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        65,
+        159,
+        217,
+        255,
+      ],
+    },
+  ],
+  "mainMenuCoverFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "mediaInFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        160,
+        172,
+        182,
+        255,
+      ],
+    },
+  ],
+  "mediaInFgSelected": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        106,
+        156,
+        197,
+        255,
+      ],
+    },
+  ],
+  "mediaOutFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        108,
+        194,
+        100,
+        255,
+      ],
+    },
+  ],
+  "mediaOutFgSelected": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        80,
+        167,
+        156,
+        255,
+      ],
+    },
+  ],
+  "mediaPlayerActiveFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        64,
+        167,
+        227,
+        255,
+      ],
+    },
+  ],
+  "mediaPlayerBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "mediaPlayerDisabledFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        157,
+        209,
+        239,
+        255,
+      ],
+    },
+  ],
+  "mediaPlayerInactiveFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        225,
+        234,
+        239,
+        255,
+      ],
+    },
+  ],
+  "mediaviewBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        34,
+        34,
+        34,
+        235,
+      ],
+    },
+  ],
+  "mediaviewCaptionBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        17,
+        17,
+        17,
+        128,
+      ],
+    },
+  ],
+  "mediaviewControlBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        0,
+        0,
+        0,
+        60,
+      ],
+    },
+  ],
+  "mediaviewControlFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "mediaviewFileBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "mediaviewFileBlueCornerFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        89,
+        157,
+        207,
+        255,
+      ],
+    },
+  ],
+  "mediaviewFileGreenCornerFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        73,
+        169,
+        87,
+        255,
+      ],
+    },
+  ],
+  "mediaviewFileNameFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        0,
+        0,
+        0,
+        255,
+      ],
+    },
+  ],
+  "mediaviewFileRedCornerFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        213,
+        89,
+        89,
+        255,
+      ],
+    },
+  ],
+  "mediaviewFileSizeFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        153,
+        153,
+        153,
+        255,
+      ],
+    },
+  ],
+  "mediaviewFileYellowCornerFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        232,
+        166,
+        89,
+        255,
+      ],
+    },
+  ],
+  "mediaviewMenuBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        56,
+        56,
+        56,
+        255,
+      ],
+    },
+  ],
+  "mediaviewMenuBgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        80,
+        80,
+        80,
+        255,
+      ],
+    },
+  ],
+  "mediaviewMenuBgRipple": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        103,
+        103,
+        103,
+        255,
+      ],
+    },
+  ],
+  "mediaviewMenuFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "mediaviewPlaybackActive": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        199,
+        199,
+        199,
+        255,
+      ],
+    },
+  ],
+  "mediaviewPlaybackActiveOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "mediaviewPlaybackIconFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        199,
+        199,
+        199,
+        255,
+      ],
+    },
+  ],
+  "mediaviewPlaybackIconFgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "mediaviewPlaybackInactive": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        37,
+        37,
+        37,
+        255,
+      ],
+    },
+  ],
+  "mediaviewPlaybackInactiveOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        71,
+        71,
+        71,
+        255,
+      ],
+    },
+  ],
+  "mediaviewPlaybackProgressFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        199,
+      ],
+    },
+  ],
+  "mediaviewSaveMsgBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        0,
+        0,
+        0,
+        178,
+      ],
+    },
+  ],
+  "mediaviewTextLinkFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        145,
+        217,
+        255,
+        255,
+      ],
+    },
+  ],
+  "mediaviewTransparentBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "mediaviewTransparentFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        204,
+        204,
+        204,
+        255,
+      ],
+    },
+  ],
+  "mediaviewVideoBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        0,
+        0,
+        0,
+        255,
+      ],
+    },
+  ],
+  "membersAboutLimitFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        145,
+        145,
+        145,
+        255,
+      ],
+    },
+  ],
+  "menuBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "menuBgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        241,
+        241,
+        241,
+        255,
+      ],
+    },
+  ],
+  "menuBgRipple": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        229,
+        229,
+        229,
+        255,
+      ],
+    },
+  ],
+  "menuFgDisabled": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        204,
+        204,
+        204,
+        255,
+      ],
+    },
+  ],
+  "menuIconFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        168,
+        168,
+        168,
+        255,
+      ],
+    },
+  ],
+  "menuIconFgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        153,
+        153,
+        153,
+        255,
+      ],
+    },
+  ],
+  "menuSeparatorFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        241,
+        241,
+        241,
+        255,
+      ],
+    },
+  ],
+  "menuSubmenuArrowFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        55,
+        55,
+        55,
+        255,
+      ],
+    },
+  ],
+  "msgBotKbOverBgAdd": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        32,
+      ],
+    },
+  ],
+  "msgBotKbRippleBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        0,
+        0,
+        0,
+        32,
+      ],
+    },
+  ],
+  "msgDateImgBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        0,
+        0,
+        0,
+        84,
+      ],
+    },
+  ],
+  "msgDateImgBgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        0,
+        0,
+        0,
+        116,
+      ],
+    },
+  ],
+  "msgDateImgBgSelected": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        28,
+        74,
+        113,
+        135,
+      ],
+    },
+  ],
+  "msgFile1Bg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        114,
+        177,
+        223,
+        255,
+      ],
+    },
+  ],
+  "msgFile1BgDark": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        92,
+        158,
+        206,
+        255,
+      ],
+    },
+  ],
+  "msgFile1BgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        82,
+        148,
+        196,
+        255,
+      ],
+    },
+  ],
+  "msgFile1BgSelected": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        80,
+        153,
+        208,
+        255,
+      ],
+    },
+  ],
+  "msgFile2Bg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        97,
+        185,
+        110,
+        255,
+      ],
+    },
+  ],
+  "msgFile2BgDark": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        77,
+        168,
+        89,
+        255,
+      ],
+    },
+  ],
+  "msgFile2BgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        68,
+        160,
+        80,
+        255,
+      ],
+    },
+  ],
+  "msgFile2BgSelected": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        70,
+        160,
+        126,
+        255,
+      ],
+    },
+  ],
+  "msgFile3Bg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        228,
+        114,
+        114,
+        255,
+      ],
+    },
+  ],
+  "msgFile3BgDark": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        205,
+        91,
+        94,
+        255,
+      ],
+    },
+  ],
+  "msgFile3BgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        195,
+        81,
+        84,
+        255,
+      ],
+    },
+  ],
+  "msgFile3BgSelected": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        159,
+        106,
+        130,
+        255,
+      ],
+    },
+  ],
+  "msgFile4Bg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        239,
+        194,
+        116,
+        255,
+      ],
+    },
+  ],
+  "msgFile4BgDark": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        230,
+        165,
+        97,
+        255,
+      ],
+    },
+  ],
+  "msgFile4BgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        220,
+        156,
+        90,
+        255,
+      ],
+    },
+  ],
+  "msgFile4BgSelected": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        177,
+        157,
+        132,
+        255,
+      ],
+    },
+  ],
+  "msgFileInBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        64,
+        167,
+        227,
+        255,
+      ],
+    },
+  ],
+  "msgFileInBgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        78,
+        173,
+        227,
+        255,
+      ],
+    },
+  ],
+  "msgFileInBgSelected": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        81,
+        163,
+        211,
+        255,
+      ],
+    },
+  ],
+  "msgFileOutBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        120,
+        198,
+        127,
+        255,
+      ],
+    },
+  ],
+  "msgFileOutBgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        107,
+        194,
+        114,
+        255,
+      ],
+    },
+  ],
+  "msgFileOutBgSelected": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        95,
+        179,
+        137,
+        255,
+      ],
+    },
+  ],
+  "msgFileThumbLinkOutFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        94,
+        186,
+        91,
+        255,
+      ],
+    },
+  ],
+  "msgFileThumbLinkOutFgSelected": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        49,
+        162,
+        152,
+        255,
+      ],
+    },
+  ],
+  "msgInBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "msgInBgSelected": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        194,
+        220,
+        242,
+        255,
+      ],
+    },
+  ],
+  "msgInDateFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        160,
+        172,
+        182,
+        255,
+      ],
+    },
+  ],
+  "msgInDateFgSelected": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        106,
+        156,
+        197,
+        255,
+      ],
+    },
+  ],
+  "msgInMonoFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        78,
+        115,
+        145,
+        255,
+      ],
+    },
+  ],
+  "msgInMonoFgSelected": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        78,
+        115,
+        145,
+        255,
+      ],
+    },
+  ],
+  "msgInReplyBarColor": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        55,
+        161,
+        222,
+        255,
+      ],
+    },
+  ],
+  "msgInReplyBarSelColor": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        55,
+        161,
+        222,
+        255,
+      ],
+    },
+  ],
+  "msgInServiceFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        22,
+        138,
+        205,
+        255,
+      ],
+    },
+  ],
+  "msgInServiceFgSelected": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        22,
+        138,
+        205,
+        255,
+      ],
+    },
+  ],
+  "msgInShadow": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        116,
+        142,
+        162,
+        41,
+      ],
+    },
+  ],
+  "msgInShadowSelected": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        84,
+        141,
+        187,
+        41,
+      ],
+    },
+  ],
+  "msgOutBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        239,
+        253,
+        222,
+        255,
+      ],
+    },
+  ],
+  "msgOutBgSelected": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        183,
+        219,
+        219,
+        255,
+      ],
+    },
+  ],
+  "msgOutDateFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        108,
+        194,
+        100,
+        255,
+      ],
+    },
+  ],
+  "msgOutDateFgSelected": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        80,
+        167,
+        156,
+        255,
+      ],
+    },
+  ],
+  "msgOutMonoFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        70,
+        145,
+        101,
+        255,
+      ],
+    },
+  ],
+  "msgOutMonoFgSelected": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        70,
+        145,
+        101,
+        255,
+      ],
+    },
+  ],
+  "msgOutReplyBarSelColor": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        77,
+        167,
+        159,
+        255,
+      ],
+    },
+  ],
+  "msgOutServiceFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        58,
+        142,
+        38,
+        255,
+      ],
+    },
+  ],
+  "msgOutServiceFgSelected": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        54,
+        117,
+        112,
+        255,
+      ],
+    },
+  ],
+  "msgOutShadow": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        58,
+        195,
+        71,
+        64,
+      ],
+    },
+  ],
+  "msgOutShadowSelected": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        55,
+        167,
+        142,
+        64,
+      ],
+    },
+  ],
+  "msgSelectOverlay": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        53,
+        140,
+        212,
+        76,
+      ],
+    },
+  ],
+  "msgServiceBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        81,
+        124,
+        65,
+        127,
+      ],
+    },
+  ],
+  "msgServiceBgSelected": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        150,
+        179,
+        139,
+        162,
+      ],
+    },
+  ],
+  "msgServiceFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "msgStickerOverlay": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        53,
+        140,
+        212,
+        127,
+      ],
+    },
+  ],
+  "msgWaveformInActive": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        64,
+        167,
+        227,
+        255,
+      ],
+    },
+  ],
+  "msgWaveformInActiveSelected": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        81,
+        163,
+        211,
+        255,
+      ],
+    },
+  ],
+  "msgWaveformInInactive": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        212,
+        222,
+        230,
+        255,
+      ],
+    },
+  ],
+  "msgWaveformInInactiveSelected": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        156,
+        193,
+        225,
+        255,
+      ],
+    },
+  ],
+  "msgWaveformOutActive": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        120,
+        198,
+        127,
+        255,
+      ],
+    },
+  ],
+  "msgWaveformOutActiveSelected": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        107,
+        173,
+        173,
+        255,
+      ],
+    },
+  ],
+  "msgWaveformOutInactive": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        179,
+        226,
+        180,
+        255,
+      ],
+    },
+  ],
+  "msgWaveformOutInactiveSelected": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        145,
+        195,
+        195,
+        255,
+      ],
+    },
+  ],
+  "notificationBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "notificationSampleCloseFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        215,
+        215,
+        215,
+        255,
+      ],
+    },
+    Color {
+      "data": Uint8ClampedArray [
+        153,
+        153,
+        153,
+        255,
+      ],
+    },
+  ],
+  "notificationSampleNameFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        147,
+        147,
+        147,
+        255,
+      ],
+    },
+    Color {
+      "data": Uint8ClampedArray [
+        153,
+        153,
+        153,
+        255,
+      ],
+    },
+  ],
+  "notificationSampleTextFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        215,
+        215,
+        215,
+        255,
+      ],
+    },
+    Color {
+      "data": Uint8ClampedArray [
+        153,
+        153,
+        153,
+        255,
+      ],
+    },
+  ],
+  "notificationSampleUserpicFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        64,
+        167,
+        227,
+        255,
+      ],
+    },
+  ],
+  "notificationsBoxMonitorFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        0,
+        0,
+        0,
+        255,
+      ],
+    },
+  ],
+  "notificationsBoxScreenBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        65,
+        159,
+        217,
+        255,
+      ],
+    },
+  ],
+  "outlineButtonBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "outlineButtonBgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        227,
+        241,
+        250,
+        255,
+      ],
+    },
+  ],
+  "outlineButtonBgRipple": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        201,
+        228,
+        246,
+        255,
+      ],
+    },
+  ],
+  "outlineButtonOutlineFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        64,
+        167,
+        227,
+        255,
+      ],
+    },
+  ],
+  "overviewCheckBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        0,
+        0,
+        0,
+        64,
+      ],
+    },
+  ],
+  "overviewCheckBgActive": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        64,
+        167,
+        227,
+        255,
+      ],
+    },
+  ],
+  "overviewCheckBorder": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "overviewCheckFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "overviewCheckFgActive": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "overviewPhotoSelectOverlay": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        64,
+        172,
+        227,
+        51,
+      ],
+    },
+  ],
+  "photoCropFadeBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        0,
+        0,
+        0,
+        127,
+      ],
+    },
+  ],
+  "photoCropPointFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        127,
+      ],
+    },
+  ],
+  "placeholderFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        153,
+        153,
+        153,
+        255,
+      ],
+    },
+  ],
+  "placeholderFgActive": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        170,
+        170,
+        170,
+        255,
+      ],
+    },
+  ],
+  "profileAdminStartFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        64,
+        167,
+        227,
+        255,
+      ],
+    },
+  ],
+  "profileOtherAdminStarFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        153,
+        153,
+        153,
+        255,
+      ],
+    },
+  ],
+  "profileOtherAdminStarFgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        124,
+        153,
+        178,
+        255,
+      ],
+    },
+  ],
+  "profileStatusFgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        124,
+        153,
+        178,
+        255,
+      ],
+    },
+  ],
+  "profileVerifiedCheckBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        64,
+        167,
+        227,
+        255,
+      ],
+    },
+  ],
+  "profileVerifiedCheckFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "radialBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        0,
+        0,
+        0,
+        86,
+      ],
+    },
+  ],
+  "radialFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "reportSpamBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        242,
+      ],
+    },
+  ],
+  "reportSpamFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        0,
+        0,
+        0,
+        255,
+      ],
+    },
+  ],
+  "scrollBarBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        0,
+        0,
+        0,
+        83,
+      ],
+    },
+  ],
+  "scrollBarBgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        0,
+        0,
+        0,
+        122,
+      ],
+    },
+  ],
+  "scrollBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        0,
+        0,
+        0,
+        26,
+      ],
+    },
+  ],
+  "scrollBgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        0,
+        0,
+        0,
+        44,
+      ],
+    },
+  ],
+  "searchedBarBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        241,
+        241,
+        241,
+        255,
+      ],
+    },
+  ],
+  "searchedBarFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        145,
+        145,
+        145,
+        255,
+      ],
+    },
+  ],
+  "shadowFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        0,
+        0,
+        0,
+        24,
+      ],
+    },
+  ],
+  "slideFadeOutBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        0,
+        0,
+        0,
+        60,
+      ],
+    },
+  ],
+  "slideFadeOutShadowFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        0,
+        0,
+        0,
+        255,
+      ],
+    },
+  ],
+  "sliderBgActive": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        64,
+        167,
+        227,
+        255,
+      ],
+    },
+  ],
+  "sliderBgInactive": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        225,
+        234,
+        239,
+        255,
+      ],
+    },
+  ],
+  "smallCloseIconFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        199,
+        199,
+        199,
+        255,
+      ],
+    },
+  ],
+  "smallCloseIconFgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        163,
+        163,
+        163,
+        255,
+      ],
+    },
+  ],
+  "stickerPanDeleteBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        0,
+        0,
+        0,
+        204,
+      ],
+    },
+  ],
+  "stickerPanDeleteFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "stickerPreviewBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        176,
+      ],
+    },
+  ],
+  "titleBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        241,
+        241,
+        241,
+        255,
+      ],
+    },
+  ],
+  "titleButtonBgActiveOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        229,
+        229,
+        229,
+        255,
+      ],
+    },
+  ],
+  "titleButtonBgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        229,
+        229,
+        229,
+        255,
+      ],
+    },
+  ],
+  "titleButtonCloseBgActiveOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        232,
+        17,
+        35,
+        255,
+      ],
+    },
+  ],
+  "titleButtonCloseBgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        232,
+        17,
+        35,
+        255,
+      ],
+    },
+  ],
+  "titleButtonCloseFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        171,
+        171,
+        171,
+        255,
+      ],
+    },
+  ],
+  "titleButtonCloseFgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "titleButtonFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        171,
+        171,
+        171,
+        255,
+      ],
+    },
+  ],
+  "titleButtonFgActive": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        171,
+        171,
+        171,
+        255,
+      ],
+    },
+  ],
+  "titleButtonFgActiveOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        154,
+        154,
+        154,
+        255,
+      ],
+    },
+  ],
+  "titleButtonFgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        154,
+        154,
+        154,
+        255,
+      ],
+    },
+  ],
+  "titleFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        172,
+        172,
+        172,
+        255,
+      ],
+    },
+  ],
+  "titleFgActive": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        62,
+        60,
+        62,
+        255,
+      ],
+    },
+  ],
+  "titleShadow": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        0,
+        0,
+        0,
+        3,
+      ],
+    },
+  ],
+  "toastBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        0,
+        0,
+        0,
+        178,
+      ],
+    },
+  ],
+  "toastFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "tooltipBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        238,
+        242,
+        245,
+        255,
+      ],
+    },
+  ],
+  "tooltipBorderFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        201,
+        209,
+        219,
+        255,
+      ],
+    },
+  ],
+  "tooltipFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        93,
+        108,
+        128,
+        255,
+      ],
+    },
+  ],
+  "topBarBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "trayCounterBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        242,
+        60,
+        52,
+        255,
+      ],
+    },
+  ],
+  "trayCounterBgMacInvert": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "trayCounterBgMute": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        136,
+        136,
+        136,
+        255,
+      ],
+    },
+  ],
+  "trayCounterFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "trayCounterFgMacInvert": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        1,
+      ],
+    },
+  ],
+  "videoPlayIconBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        0,
+        0,
+        0,
+        127,
+      ],
+    },
+  ],
+  "videoPlayIconFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "windowActiveTextFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        22,
+        138,
+        205,
+        255,
+      ],
+    },
+  ],
+  "windowBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "windowBgActive": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        64,
+        167,
+        227,
+        255,
+      ],
+    },
+  ],
+  "windowBgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        241,
+        241,
+        241,
+        255,
+      ],
+    },
+  ],
+  "windowBgRipple": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        229,
+        229,
+        229,
+        255,
+      ],
+    },
+  ],
+  "windowBoldFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        34,
+        34,
+        34,
+        255,
+      ],
+    },
+  ],
+  "windowBoldFgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        34,
+        34,
+        34,
+        255,
+      ],
+    },
+  ],
+  "windowFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        0,
+        0,
+        0,
+        255,
+      ],
+    },
+  ],
+  "windowFgActive": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+  "windowFgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        0,
+        0,
+        0,
+        255,
+      ],
+    },
+  ],
+  "windowShadowFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        0,
+        0,
+        0,
+        255,
+      ],
+    },
+  ],
+  "windowShadowFgFallback": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        241,
+        241,
+        241,
+        255,
+      ],
+    },
+  ],
+  "windowSubTextFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        153,
+        153,
+        153,
+        255,
+      ],
+    },
+  ],
+  "windowSubTextFgOver": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        145,
+        145,
+        145,
+        255,
+      ],
+    },
+  ],
+  "youtubePlayIconBg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        232,
+        49,
+        49,
+        200,
+      ],
+    },
+  ],
+  "youtubePlayIconFg": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        255,
+        255,
+        255,
+        255,
+      ],
+    },
+  ],
+}
+`;
