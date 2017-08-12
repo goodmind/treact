@@ -1,106 +1,140 @@
 import {
   append,
-  chain,
+  filter,
   fromPairs,
-  lensProp,
   map,
-  over,
+  mergeWith,
+  of,
   pipe,
-  toPairs,
 } from 'ramda';
 
 import Color from './color-value';
 
-type ColorRef = [string, number];
-type ColorLink = [string, number, number];
 type InputPair = [string, Array<Color | string>];
-type IndexMap = {[field: string]: number};
 
+const intoArrays = mergeWith((c1: Color[], c2: Color[]) => c1.concat(c2));
+const arrifyProps: (x: {[name: string]: Color}) => {[name: string]: Color[]} =
+  map(of);
 
-const createNamesMap: (list: InputPair[]) => {[name: string]: ColorRef[]} =
-pipe(
-  map(([name]: InputPair) => name),
-  map((name: string): [string, ColorRef[]] => [name, []]),
-  fromPairs,
-);
+export default function processing(list: InputPair[]) {
+  const res = flatten(list);
+  const mainColors = res.filter(val => !val.isSecond);
+  const defaults = res.filter(val => val.isSecond);
+  let firsts = {
+    pending: mainColors.filter(val => !val.isColor),
+    colorMap: makeColorMap(mainColors),
+  }
+  let seconds = {
+    pending: defaults.filter(val => !val.isColor),
+    colorMap: makeColorMap(defaults),
+  }
+  while (firsts.pending.length > 0 || seconds.pending.length > 0) {
+    const iteration = resolveLoop(
+      firsts.pending, seconds.pending,
+      firsts.colorMap, seconds.colorMap,
+    );
+    firsts = iteration.firsts;
+    seconds = iteration.seconds;
+  }
+  const r = intoArrays(
+    arrifyProps(firsts.colorMap),
+    arrifyProps(seconds.colorMap),
+  );
+  return r;
+}
 
-const addToNameMap = (
-  name: string,
-  index: number,
-  ref: string,
-  namesMap: {[name: string]: ColorRef[]},
-): {[name: string]: ColorRef[]} =>
-  over(lensProp(ref), append([name, index]), namesMap);
+const loopAcc = { found: [], notFound: [] };
 
-type ReducerAcc = {
-  colorList: Color[],
-  namesMap: {[name: string]: ColorRef[]},
-  results: ColorLink[],
-};
-
-function colorReducer(
-  { colorList, namesMap, results }: ReducerAcc,
-  [name, color, index]: [string, Color | string, number],
+function resolveLoop(
+  pending: ColorValue[],
+  pendingS: ColorValue[],
+  colorMap: {[name: string]: Color},
+  colorMapS: {[name: string]: Color},
 ) {
-  if (typeof color === 'string')
-    return {
-      colorList,
-      namesMap: addToNameMap(name, index, color, namesMap),
-      results,
-    };
+  const resolver = resolve(
+    reduceColorMap(colorMap, colorMapS),
+    getFound(colorMap, colorMapS),
+  );
   return {
-    colorList: append(color, colorList),
-    namesMap,
-    results: append([name, index, colorList.length], results),
+    firsts: resolver(pending, colorMap),
+    seconds: resolver(pendingS, colorMapS),
   };
 }
 
-function colorsReducer(
-  acc: ReducerAcc,
-  [name, colors]: InputPair) {
-  return colors
-    .map((color, index) => [name, color, index])
-    .reduce(colorReducer, acc);
-}
+const resolve = (reducer, getter) => (pending, colorMap) => {
+  const step =  pending.reduce(reducer, loopAcc);
+  const foundMap = fromPairs(step.found.map(getter));
+  const resultMap = Object.assign({}, colorMap, foundMap);
+  return {
+    pending: step.notFound,
+    colorMap: resultMap,
+  };
+};
 
-const converter = (field: string, refMap: IndexMap) =>
-  ([name, index]: ColorRef): ColorLink  => [name, index, refMap[field]];
+const getFound = (
+  colorMap: {[name: string]: Color},
+  colorMapS: {[name: string]: Color},
+) => (val: ColorValue) => {
+  const name = val.name;
+  const value = val.value as string;
+  return [name, colorMap[value] || colorMapS[value]];
+};
 
-function joinResults(results: ColorLink[], linked: ColorLink[], colorList: Color[]) {
-  return results
-    .concat(linked)
-    .reduce(reducer, {});
-
-  function reducer(acc: {[key: string]: Color[]}, [name, index, ref]: ColorLink) {
-    if (!colorList[ref])
-      return acc;
-    if (!acc[name])
-      acc[name] = [];
-    acc[name][index] = colorList[ref];
-    return acc;
+class ColorValue {
+  public isColor: boolean;
+  constructor(
+    public name: string,
+    public value: Color | string,
+    public isSecond: boolean = false,
+  ) {
+    this.isColor = value instanceof Color;
   }
 }
 
-function createRefMap(results: ColorLink[]) {
-  const refPairs = results
-    .filter(([_, index]) => index === 0)
-    .map(([name, _, position]): ColorRef => [name, position]);
-
-  return fromPairs<number>(refPairs);
+function flatten(list: InputPair[]) {
+  const result: ColorValue[] = [];
+  for (const [name, pair] of list) {
+    switch (pair.length) {
+      case 1: {
+        result.push(new ColorValue(name, pair[0]));
+        break;
+      }
+      case 2: {
+        result.push(new ColorValue(name, pair[0]));
+        result.push(new ColorValue(name, pair[1], true));
+        break;
+      }
+      default: throw new RangeError(`Unexpected array ${pair.toString()}`);
+    }
+  }
+  return result;
 }
 
-function resolveLinks({ colorList, namesMap, results }: ReducerAcc): {[name: string]: Color[]} {
-  const namePairs = toPairs(namesMap);
-  const refMap = createRefMap(results);
+const makeColorMap: (list: ColorValue[]) => {[name: string]: Color} =
+  pipe(
+    filter(val => val.isColor),
+    map((val): [string, Color] => [val.name, val.value as Color]),
+    fromPairs,
+  );
 
-  const linker = ([field, links]: [string, ColorRef[]]) => links.map(converter(field, refMap));
-  const linked: ColorLink[]  = chain<[string, ColorRef[]], ColorLink>(linker, namePairs);
-  return joinResults(results, linked, colorList);
-}
+type SearchReduceAcc = {
+  found: ColorValue[],
+  notFound: ColorValue[],
+};
 
-export default function processing(list: InputPair[]) {
-  const namesMap = createNamesMap(list);
-  const initialAcc = { colorList: [], namesMap, results: [] };
-  const result = list.reduce(colorsReducer, initialAcc);
-  return resolveLinks(result);
-}
+const reduceColorMap = (
+  colorMap: {[name: string]: Color},
+  colorMapS: {[name: string]: Color},
+) =>
+  ({ found, notFound }: SearchReduceAcc, value: ColorValue) => {
+  const data = value.value as string;
+  if (colorMap[data] || colorMapS[data])
+    return {
+      notFound,
+      found: append(value, found),
+    };
+  return {
+    notFound: append(value, notFound),
+    found,
+  };
+};

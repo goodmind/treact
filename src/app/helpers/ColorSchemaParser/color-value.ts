@@ -25,6 +25,9 @@ export default class Color {
   public toString() {
     return `rgba(${this.r}, ${this.g}, ${this.b}, ${+(this.a / 255).toFixed(2)})`;
   }
+  public inspect() {
+    return `Color ${this.toString()}`;
+  }
 
   public static of(color: string) {
     return new Color(fromString(color));
