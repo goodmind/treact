@@ -1,4 +1,5 @@
 
-import parser from './parser';
+import linkedParser, { parser } from './parser';
 
-export default parser;
+export { parser };
+export default linkedParser;

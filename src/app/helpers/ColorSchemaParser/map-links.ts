@@ -10,7 +10,7 @@ import {
 
 import Color from './color-value';
 
-type InputPair = [string, Array<Color | string>];
+export type InputPair = [string, Array<Color | string>];
 
 const intoArrays = mergeWith((c1: Color[], c2: Color[]) => c1.concat(c2));
 const arrifyProps: (x: {[name: string]: Color}) => {[name: string]: Color[]} =
@@ -23,11 +23,39 @@ export default function processing(list: InputPair[]) {
   let firsts = {
     pending: mainColors.filter(val => !val.isColor),
     colorMap: makeColorMap(mainColors),
-  }
+  };
   let seconds = {
     pending: defaults.filter(val => !val.isColor),
     colorMap: makeColorMap(defaults),
+  };
+  while (firsts.pending.length > 0 || seconds.pending.length > 0) {
+    const iteration = resolveLoop(
+      firsts.pending, seconds.pending,
+      firsts.colorMap, seconds.colorMap,
+    );
+    firsts = iteration.firsts;
+    seconds = iteration.seconds;
   }
+  const r = intoArrays(
+    arrifyProps(firsts.colorMap),
+    arrifyProps(seconds.colorMap),
+  );
+  return r;
+}
+
+export function merge(list: InputPair[], list2: InputPair[]) {
+  const defaults = flatten(list2);
+  const res = flatten(list).concat(defaults);
+  const mainColors = res.filter(val => val.isSecond);
+  // console.log(res2, defaults);
+  let firsts = {
+    pending: mainColors.filter(val => !val.isColor),
+    colorMap: makeColorMap(mainColors),
+  };
+  let seconds = {
+    pending: defaults.filter(val => !val.isColor),
+    colorMap: makeColorMap(defaults),
+  };
   while (firsts.pending.length > 0 || seconds.pending.length > 0) {
     const iteration = resolveLoop(
       firsts.pending, seconds.pending,
