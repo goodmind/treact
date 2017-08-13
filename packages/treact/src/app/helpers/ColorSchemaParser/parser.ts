@@ -7,13 +7,17 @@ import splitKV from './split-kv';
 
 type Parser = (text: string) => {[colorName: string]: Color[]};
 
-const parser: Parser = pipe(
+export const parser = pipe(
   split(`\n`),
   omitComment,
   reject(isEmpty),
   splitKV,
   color,
+);
+
+const linkedParser: Parser = pipe(
+  parser,
   mapLinks,
 );
 
-export default parser;
+export default linkedParser;
