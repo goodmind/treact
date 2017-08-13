@@ -1,7 +1,107 @@
-import parser from '..';
+import linkedParser, { parser } from '..';
+import Color from '../color-value';
+import { InputPair, merge } from '../map-links';
 
 test('Parser works correctly', () => {
+  const result = linkedParser(example);
+
+  expect(result).toMatchSnapshot();
+});
+
+test('Parser without linking', () => {
   const result = parser(example);
+
+  expect(result).toMatchSnapshot();
+});
+
+test('Should merge InputPair correctly', () => {
+  const a: InputPair[] = [
+    [
+      'someColor',
+      [
+        new Color([
+          127,
+          127,
+          127,
+          255,
+        ]),
+      ],
+    ],
+    [
+      'callBarUnmuteRipple',
+      [
+        new Color([
+          127,
+          127,
+          127,
+          255,
+        ]),
+        'shadowFg',
+      ],
+    ],
+  ];
+
+  const b: InputPair[] = [
+    [
+      'shadowFg',
+      [
+        new Color([
+          0,
+          0,
+          0,
+          24,
+        ]),
+      ],
+    ],
+  ];
+
+  const result = merge(a, b);
+
+  expect(result).toMatchSnapshot();
+});
+
+test('Should merge InputPair correctly 2', () => {
+  const a: InputPair[] = [
+    [
+      'callBarUnmuteRipple',
+      [
+        new Color([
+          127,
+          127,
+          127,
+          255,
+        ]),
+        'shadowFg',
+      ],
+    ],
+  ];
+
+  const b: InputPair[] = [
+    [
+      'callBarUnmuteRipple',
+      [
+        new Color([
+          127,
+          127,
+          127,
+          255,
+        ]),
+      ],
+    ],
+    [
+      'shadowFg',
+      [
+        new Color([
+          0,
+          0,
+          0,
+          24,
+        ]),
+      ],
+    ],
+  ];
+
+  const result = merge(a, b);
 
   expect(result).toMatchSnapshot();
 });
