@@ -5,10 +5,13 @@ import {
   map,
   mergeWith,
   of,
+  partition,
   pipe,
+  uniqBy,
 } from 'ramda';
 
 import Color from './color-value';
+import parser from './parser';
 
 export type InputPair = [string, Array<Color | string>];
 
@@ -16,61 +19,71 @@ const intoArrays = mergeWith((c1: Color[], c2: Color[]) => c1.concat(c2));
 const arrifyProps: (x: {[name: string]: Color}) => {[name: string]: Color[]} =
   map(of);
 
-export default function processing(list: InputPair[]) {
-  const res = flatten(list);
-  const mainColors = res.filter(val => !val.isFallback);
-  const defaults = res.filter(val => val.isFallback);
-  let firsts = {
-    pending: mainColors.filter(val => !val.isColor),
-    colorMap: makeColorMap(mainColors),
-  };
-  let fallbacks = {
-    pending: defaults.filter(val => !val.isColor),
-    colorMap: makeColorMap(defaults),
-  };
+const splitFallbacks: (colors: ColorValue[]) => [ColorValue[], ColorValue[]] =
+  partition(val => !val.isFallback);
+
+const inputToColorPair: (list: InputPair[]) => [ColorValue[], ColorValue[]] =
+  pipe(flatten, splitFallbacks);
+
+const makePendings = (list: ColorValue[]) => ({
+  pending: list.filter(val => !val.isColor),
+  colorMap: makeColorMap(list),
+});
+
+export function processing([mainColors, defaults]: [ColorValue[], ColorValue[]]) {
+  let firsts = makePendings(mainColors);
+  let fallbacks = makePendings(defaults);
   while (firsts.pending.length > 0 || fallbacks.pending.length > 0) {
     const iteration = resolveLoop(
       firsts.pending, fallbacks.pending,
       firsts.colorMap, fallbacks.colorMap,
     );
+    const uselessIteration =  // Prevents infinite loop
+      iteration.firsts.pending.length === firsts.pending.length &&
+      iteration.fallbacks.pending.length === fallbacks.pending.length;
+    if (uselessIteration) break;
     firsts = iteration.firsts;
     fallbacks = iteration.fallbacks;
   }
-  const r = intoArrays(
-    arrifyProps(firsts.colorMap),
-    arrifyProps(fallbacks.colorMap),
-  );
-  return r;
+  return {
+    main: firsts.colorMap,
+    fallbacks: fallbacks.colorMap,
+  };
 }
 
-export function merge(list: InputPair[], list2: InputPair[]) {
-  const defaults2 = flatten(list2);
-  const res = flatten(list).concat(defaults2);
-  const mainColors = res.filter(val => !val.isFallback);
-  const defaults = res.filter(val => val.isFallback);
-  // console.log(res2, defaults);
-  let firsts = {
-    pending: mainColors.filter(val => !val.isColor),
-    colorMap: makeColorMap(mainColors),
-  };
-  let fallbacks = {
-    pending: defaults.filter(val => !val.isColor),
-    colorMap: makeColorMap(defaults),
-  };
-  while (firsts.pending.length > 0 || fallbacks.pending.length > 0) {
-    const iteration = resolveLoop(
-      firsts.pending, fallbacks.pending,
-      firsts.colorMap, fallbacks.colorMap,
-    );
-    firsts = iteration.firsts;
-    fallbacks = iteration.fallbacks;
-  }
-  const r = intoArrays(
-    arrifyProps(firsts.colorMap),
-    arrifyProps(fallbacks.colorMap),
-  );
-  return r;
+const uniqColor = uniqBy((color: ColorValue) => color.name);
+const join = (listR: ColorValue[]) => (listL: ColorValue[]) => uniqColor(listL.concat(listR));
+
+export type ThemePair = [ColorValue[], ColorValue[]];
+
+export function mergeThemes(
+  [leftMain, leftFallbacks = []]: ThemePair,
+  [rightMain, rightFallbacks = []]: ThemePair,
+) {
+  const { main, fallbacks } = processing([
+    join(rightMain)(leftMain),
+    join(rightFallbacks)(leftFallbacks),
+  ]);
+  return Object.assign({}, fallbacks, main);
 }
+
+export function parseWithDefaults(rawDefaultTheme: string) {
+  const defaultTheme = inputToColorPair(parser(rawDefaultTheme));
+  return (rawTheme: string) => {
+    const theme = inputToColorPair(parser(rawTheme));
+    return mergeThemes(theme, defaultTheme);
+  };
+}
+
+function processingToPairs(list: InputPair[]) {
+  const { main, fallbacks } = processing(inputToColorPair(list));
+  return intoArrays(
+    arrifyProps(main),
+    arrifyProps(fallbacks),
+  );
+}
+
+export default pipe(parser, processingToPairs);
 
 const loopAcc = { found: [], notFound: [] };
 
@@ -120,7 +133,7 @@ class ColorValue {
   }
 }
 
-function flatten(list: InputPair[]) {
+export function flatten(list: InputPair[]) {
   const result: ColorValue[] = [];
   for (const [name, pair] of list) {
     switch (pair.length) {
