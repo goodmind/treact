@@ -1,23 +1,17 @@
 import { isEmpty, pipe, reject, split } from 'ramda';
 import color from './color';
 import Color from './color-value';
-import mapLinks from './map-links';
 import omitComment from './omit-comment';
 import splitKV from './split-kv';
 
-type Parser = (text: string) => {[colorName: string]: Color[]};
+type Parser = (text: string) => Array<[string, Array<Color | string>]>;
 
-export const parser = pipe(
+export const parser: Parser = pipe(
   split(`\n`),
   omitComment,
-  reject(isEmpty),
+  reject<string[]>(isEmpty),
   splitKV,
   color,
 );
 
-const linkedParser: Parser = pipe(
-  parser,
-  mapLinks,
-);
-
-export default linkedParser;
+export default parser;
