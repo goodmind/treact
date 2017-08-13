@@ -81,9 +81,9 @@ test('Should merge InputPair correctly 2', () => {
       'callBarUnmuteRipple',
       [
         new Color([
-          127,
-          127,
-          127,
+          128,
+          128,
+          128,
           255,
         ]),
       ],

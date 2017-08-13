@@ -8813,20 +8813,7 @@ Object {
       ],
     },
   ],
-}
-`;
-
-exports[`Should merge InputPair correctly 2 1`] = `
-Object {
-  "callBarUnmuteRipple": Array [
-    Color {
-      "data": Uint8ClampedArray [
-        0,
-        0,
-        0,
-        24,
-      ],
-    },
+  "someColor": Array [
     Color {
       "data": Uint8ClampedArray [
         127,
@@ -8835,6 +8822,21 @@ Object {
         255,
       ],
     },
+  ],
+}
+`;
+
+exports[`Should merge InputPair correctly 2 1`] = `
+Object {
+  "callBarUnmuteRipple": Array [
+    Color {
+      "data": Uint8ClampedArray [
+        128,
+        128,
+        128,
+        255,
+      ],
+    }
   ],
   "shadowFg": Array [
     Color {
