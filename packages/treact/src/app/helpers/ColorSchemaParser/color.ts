@@ -1,5 +1,4 @@
 import {
-  adjust,
   contains,
   equals,
   head,
@@ -17,7 +16,7 @@ import {
 
 import Color from './color-value';
 
-const onSecond = (fn: (a: {}) => {}) => adjust(fn, 1);
+const onSecond = <L, T, S>(fn: (a: T) => S) => ([l, t, ...rest]: Array<L | T>): [L, S] => [l, fn(t), ...rest];
 const isPair: StringPred = contains('|');
 const splitPair: Splitter = pipe(split('|'), map(trim));
 const isColor: StringPred = pipe(head, equals('#'));
@@ -45,8 +44,9 @@ const arrify = (str: string) => isPair(str)
 const transformColors: (str: string) => string | Color = when(isColor, getColorObj);
 
 const processing = pipe(
-  map(onSecond(arrify)),
-  map(onSecond(map(transformColors))),
+  map<string[], [string, string[]]>(onSecond<string, string, string[]>(arrify)),
+  map<[string, string[]], [string, Array<string | Color>]>(
+    onSecond<string, string[], Array<string | Color>>(map(transformColors))),
 );
 
 export default processing;
