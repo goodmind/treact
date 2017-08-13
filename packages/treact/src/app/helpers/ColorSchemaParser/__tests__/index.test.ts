@@ -1,6 +1,6 @@
-import linkedParser, { parser } from '..';
+import linkedParser, { parser, parseWithDefaults } from '..';
 import Color from '../color-value';
-import { InputPair, merge } from '../map-links';
+import { flatten, InputPair, mergeThemes } from '../map-links';
 
 test('Parser works correctly', () => {
   const result = linkedParser(example);
@@ -55,7 +55,7 @@ test('Should merge InputPair correctly', () => {
     ],
   ];
 
-  const result = merge(a, b);
+  const result = mergeThemes([flatten(a), []], [flatten(b), []]);
 
   expect(result).toMatchSnapshot();
 });
@@ -101,12 +101,27 @@ test('Should merge InputPair correctly 2', () => {
     ],
   ];
 
-  const result = merge(a, b);
+  const result = mergeThemes([flatten(a), []], [flatten(b), []]);
 
   expect(result).toMatchSnapshot();
 });
 
+
+test('parse with defaults', () => {
+  const withDefaults = parseWithDefaults(example);
+  const result = withDefaults(shortExample);
+
+  expect(result).toMatchSnapshot();
+});
+
+
 // tslint:disable
+const shortExample = `
+importantTooltipBg: #ffffff;
+callBarUnmuteRipple: #ffffff;
+callBarBgMuted: toastBg;
+`
+
 const example = `
 /*
 This file is part of Telegram Desktop,
