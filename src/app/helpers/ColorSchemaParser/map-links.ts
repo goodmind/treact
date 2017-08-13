@@ -10,7 +10,7 @@ import {
 
 import Color from './color-value';
 
-type InputPair = [string, Array<Color | string>];
+export type InputPair = [string, Array<Color | string>];
 
 const intoArrays = mergeWith((c1: Color[], c2: Color[]) => c1.concat(c2));
 const arrifyProps: (x: {[name: string]: Color}) => {[name: string]: Color[]} =
@@ -18,27 +18,56 @@ const arrifyProps: (x: {[name: string]: Color}) => {[name: string]: Color[]} =
 
 export default function processing(list: InputPair[]) {
   const res = flatten(list);
-  const mainColors = res.filter(val => !val.isSecond);
-  const defaults = res.filter(val => val.isSecond);
+  const mainColors = res.filter(val => !val.isFallback);
+  const defaults = res.filter(val => val.isFallback);
   let firsts = {
     pending: mainColors.filter(val => !val.isColor),
     colorMap: makeColorMap(mainColors),
-  }
-  let seconds = {
+  };
+  let fallbacks = {
     pending: defaults.filter(val => !val.isColor),
     colorMap: makeColorMap(defaults),
-  }
-  while (firsts.pending.length > 0 || seconds.pending.length > 0) {
+  };
+  while (firsts.pending.length > 0 || fallbacks.pending.length > 0) {
     const iteration = resolveLoop(
-      firsts.pending, seconds.pending,
-      firsts.colorMap, seconds.colorMap,
+      firsts.pending, fallbacks.pending,
+      firsts.colorMap, fallbacks.colorMap,
     );
     firsts = iteration.firsts;
-    seconds = iteration.seconds;
+    fallbacks = iteration.fallbacks;
   }
   const r = intoArrays(
     arrifyProps(firsts.colorMap),
-    arrifyProps(seconds.colorMap),
+    arrifyProps(fallbacks.colorMap),
+  );
+  return r;
+}
+
+export function merge(list: InputPair[], list2: InputPair[]) {
+  const defaults2 = flatten(list2);
+  const res = flatten(list).concat(defaults2);
+  const mainColors = res.filter(val => !val.isFallback);
+  const defaults = res.filter(val => val.isFallback);
+  // console.log(res2, defaults);
+  let firsts = {
+    pending: mainColors.filter(val => !val.isColor),
+    colorMap: makeColorMap(mainColors),
+  };
+  let fallbacks = {
+    pending: defaults.filter(val => !val.isColor),
+    colorMap: makeColorMap(defaults),
+  };
+  while (firsts.pending.length > 0 || fallbacks.pending.length > 0) {
+    const iteration = resolveLoop(
+      firsts.pending, fallbacks.pending,
+      firsts.colorMap, fallbacks.colorMap,
+    );
+    firsts = iteration.firsts;
+    fallbacks = iteration.fallbacks;
+  }
+  const r = intoArrays(
+    arrifyProps(firsts.colorMap),
+    arrifyProps(fallbacks.colorMap),
   );
   return r;
 }
@@ -57,7 +86,7 @@ function resolveLoop(
   );
   return {
     firsts: resolver(pending, colorMap),
-    seconds: resolver(pendingS, colorMapS),
+    fallbacks: resolver(pendingS, colorMapS),
   };
 }
 
@@ -85,7 +114,7 @@ class ColorValue {
   constructor(
     public name: string,
     public value: Color | string,
-    public isSecond: boolean = false,
+    public isFallback: boolean = false,
   ) {
     this.isColor = value instanceof Color;
   }
