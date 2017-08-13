@@ -107,11 +107,30 @@ test('Should merge InputPair correctly 2', () => {
 });
 
 
-test('parse with defaults', () => {
-  const withDefaults = parseWithDefaults(example);
-  const result = withDefaults(shortExample);
+describe('parse with defaults', () => {
 
-  expect(result).toMatchSnapshot();
+  test('short example', () => {
+    const withDefaults = parseWithDefaults(example);
+    const result = withDefaults(shortExample);
+    expect(result).toMatchSnapshot();
+  });
+
+  test('edge case', () => {
+    const shortExample = `
+shadowFg: #00000018;
+callBarUnmuteRipple: #777777;
+`
+
+    // tslint:disable
+    const shortDefaults = `
+importantTooltipBg: #ffffff | shadowFg;
+callBarUnmuteRipple: #ffffff | shadowFg;
+`
+    const withDefaults = parseWithDefaults(shortDefaults);
+    const result = withDefaults(shortExample);
+    expect(result).toMatchSnapshot();
+  })
+
 });
 
 

@@ -68,10 +68,10 @@ export function mergeThemes(
 }
 
 export function parseWithDefaults(rawDefaultTheme: string) {
-  const defaultTheme = inputToColorPair(parser(rawDefaultTheme));
+  const [, defaultTheme] = inputToColorPair(parser(rawDefaultTheme));
   return (rawTheme: string) => {
     const theme = inputToColorPair(parser(rawTheme));
-    return mergeThemes(theme, defaultTheme);
+    return mergeThemes(theme, [[], defaultTheme]);
   };
 }
 
