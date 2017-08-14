@@ -72,7 +72,7 @@ const mapTopMessage = map(pipe<MtpDialog, number, number[]>(prop('top_message'),
 
 
 export const loadSliceRange = (dispatch: Dispatch) =>
-  (id: number, peer: MtpPeer, offset: number = 0, limit: number = 10) => {
+  (id: number, peer: MtpPeer, offset: number = 0, limit: number = 15) => {
     const adapter = (slice: MtpMessagesSlice) => {
       const normalized = fullNormalize(slice);
       normalized.result.histories = [id];
@@ -95,7 +95,7 @@ export const loadSliceRange = (dispatch: Dispatch) =>
       .then(dispatch);
   };
 
-export const loadOffset = (id: number, offset: number): AsyncAction<Promise<{}>> =>
+export const loadOffset = (id: number, offset: number, limit?: number): AsyncAction<Promise<{}>> =>
   async (dispatch, getState) => {
     const store = getState();
     const peer = store.peers.byId[id];
@@ -104,7 +104,7 @@ export const loadOffset = (id: number, offset: number): AsyncAction<Promise<{}>>
     const currentActive = store.selected.dialog;
     try {
       if (currentActive === id)
-        return loadSliceRange(dispatch)(id, inputPeer, offset);
+        return loadSliceRange(dispatch)(id, inputPeer, offset, limit);
     } catch (err) {
       console.warn(err);
     }
