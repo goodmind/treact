@@ -17,13 +17,13 @@ const SearchButton = styled.div({
   },
 });
 
-const SearchInput = styled.input({
+const SearchInput = styled.input(({ theme }) => ({
   background: `url(${search}) no-repeat 10px 7px`,
-  backgroundColor: '#f2f2f2',
+  backgroundColor: theme.filterInputInactiveBg,
   backgroundSize: '15px',
   borderRadius: '3px',
-  border: '2px solid #f2f2f2',
-  color: '#000',
+  border: `2px solid ${theme.filterInputInactiveBg}`,
+  color: theme.windowFg,
   flex: '1 100%',
   fontSize: '13px',
   height: '32px',
@@ -32,13 +32,16 @@ const SearchInput = styled.input({
   transition: 'all .15s linear',
   width: '100%',
   '::placeholder': {
-    color: '#999',
+    color: theme.placeholderFg,
   },
   '&:active, &:focus': {
-    backgroundColor: '#fff',
-    borderColor: '#54c3f3',
+    backgroundColor: theme.filterInputActiveBg,
+    borderColor: theme.filterInputBorderFg,
   },
-});
+  '&:active ::placeholder, &:focus ::placeholder': {
+    color: theme.placeholderFgActive,
+  },
+}));
 SearchInput.defaultProps = {
   type: 'text',
   placeholder: 'Search',
