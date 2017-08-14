@@ -33,3 +33,7 @@ export const CACHE = {
   LOAD : createAction<number[], {}>('load next img'),
   DONE : createAction('complete downloading img'),
 };
+
+export const THEME = {
+  APPLY: createAction('apply theme'),
+};
