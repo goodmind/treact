@@ -1,7 +1,17 @@
 {
   "compilerOptions": {
+    "baseUrl": "..",
     "moduleResolution": "node",
     "target": "es5",
-    "lib": ["es2015", "es5"]
-  }
+    "lib": ["es2015", "es5", "dom"],
+    "allowJs": true,
+    "noStrictGenericChecks": true
+  },
+  "exclude": [
+    "node_modules",
+    "gh-pages",
+    "build",
+    "typings/main",
+    "typings/main.d.ts"
+  ]
 }
