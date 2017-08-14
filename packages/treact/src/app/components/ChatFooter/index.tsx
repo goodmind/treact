@@ -1,21 +1,54 @@
+import styled from 'glamorous';
 import * as React from 'react';
 import AutoSizeTextarea from 'react-autosize-textarea';
-import * as s from '../Chat/style.css';
 
-type Props = {
-  value: string,
-  change: React.ChangeEventHandler<{}>,
-  submit: React.MouseEventHandler<{}>,
-};
+const StyledChatFooter = styled.div(({ theme }) => ({
+  backgroundColor: theme.historyComposeAreaBg,
+  borderTop: `1px solid ${theme.shadowFg}`,
+  borderLeft: `1px solid ${theme.shadowFg}`,
+  display: 'flex',
+}));
+
+const SendButton = styled.button(({ theme }) => ({
+  border: 0,
+  userSelect: 'none',
+  alignSelf: 'flex-end',
+  background: 'none',
+  color: theme.historySendIconFg,
+  cursor: 'pointer',
+  fontSize: '16px',
+  padding: '12px 16px',
+  transition: 'all .2s linear',
+}));
+
+const Textarea = styled(AutoSizeTextarea)(({ theme }) => ({
+  color: theme.historyComposeAreaFg,
+  border: 'none',
+  background: 'none',
+  flex: 1,
+  fontSize: '13px',
+  lineHeight: '18px',
+  margin: '12px 0px 12px 7px',
+  maxHeight: '256px',
+  minHeight: '18px',
+  outline: 'none',
+  paddingLeft: '5px',
+  resize: 'none',
+}));
+
+export interface Props {
+  value: string;
+  change: React.ChangeEventHandler<{}>;
+  submit: React.MouseEventHandler<{}>;
+}
 
 export const ChatFooter = ({ value, change, submit }: Props) => (
-  <div className={s.chatfooter}>
-    <AutoSizeTextarea
+  <StyledChatFooter>
+    <Textarea
       onChange={change}
-      className={s.editText}
       value={value}
       rows={1}
       placeholder="  Write a message" />
-    <div className={s.sendbutton} onClick={submit}>Send</div>
-  </div>
+    <SendButton onClick={submit}>Send</SendButton>
+  </StyledChatFooter>
 );
