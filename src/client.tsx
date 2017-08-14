@@ -34,7 +34,12 @@ const init = () => {
   history.listen(onHistory);
   renderComponent(<div>Loading...</div>);
   persistStore(store,
-    {whitelist: ['authKey', 'currentUser', 'currentDc']}, onPersist);
+    {whitelist: [
+      'authKey',
+      'currentUser',
+      'currentDc',
+      'selected',
+    ]}, onPersist);
 
   console.log(history.location);
 };
