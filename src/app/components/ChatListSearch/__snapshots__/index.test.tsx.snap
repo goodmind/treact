@@ -5,7 +5,7 @@ exports[`ChatListSearch renders correctly 1`] = `
   className="css-c5c4qt"
 >
   <input
-    className="css-1816i7f"
+    className="css-wdr6gu"
     placeholder="Search"
     type="text"
   />
