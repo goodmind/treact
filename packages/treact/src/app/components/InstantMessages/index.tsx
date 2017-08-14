@@ -1,13 +1,8 @@
-import * as React from 'react';
-import * as s from './style.css';
+import styled from 'glamorous';
 
-interface Props {
-  children?: React.ReactNode;
-}
-
-const InstantMessages = ({ children }: Props) => (
-  <div className={s.main}>
-    {children}
-  </div>
-);
-export { InstantMessages };
+export const InstantMessages = styled.div({
+  backgroundColor: '#ffffff',
+  width: '100%',
+  flex: '1 100%',
+  display: 'flex',
+});
