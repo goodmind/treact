@@ -1,45 +1,30 @@
 import { ThemeProvider } from 'glamorous';
-import { assoc, difference, keys, reduce } from 'ramda';
+import { parseWithDefaults, processingToObject } from 'helpers/ColorSchemaParser/map-links';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import defaultTheme from './default';
-import { Theme, Themeable } from './theme.h';
+import { RawTheme, Theme } from './theme.h';
 
-const mergeThemes = (outer: typeof defaultTheme, inner: Theme): Theme => {
-  type DefaultTheme = typeof defaultTheme;
-  type Diff = Array<keyof DefaultTheme>;
-
-  const diff = difference(keys(outer), keys(inner)) as Diff;
-  const obj = reduce(
-    (acc: Theme, k: keyof DefaultTheme) => {
-      // TODO: fix types
-      // tslint:disable-next-line
-      const key = outer[k].fallback as keyof Theme;
-      return assoc(k, inner[key] || outer[k], acc);
-    },
-    {},
-    diff,
+export const mergeThemes = (outer: RawTheme, inner: RawTheme): Theme => {
+  const defaultTheme = processingToObject(outer.pairs) as Theme;
+  const innerTheme = parseWithDefaults(outer.pairs)(inner.pairs);
+  return Object.assign(
+    Object.assign({}, outer.meta, inner.meta),
+    defaultTheme,
+    innerTheme,
   );
-  return Object.assign({}, obj, inner);
 };
 
-class UserSelectedTheme extends React.Component<Themeable> {
-  public static defaultProps = {
-    theme: {},
-  };
-
-  public selectTheme = (outerTheme: typeof defaultTheme) => mergeThemes(
-    outerTheme,
-    this.props.theme,
-  )
-
+class UserSelectedTheme extends React.Component<{ theme: RawTheme }> {
   public render() {
-    const { children } = this.props;
+    const { children, theme } = this.props;
+    const selectedTheme = mergeThemes(
+      defaultTheme,
+      theme,
+    );
     return (
-      <ThemeProvider theme={defaultTheme}>
-        <ThemeProvider theme={this.selectTheme}>
-          {children}
-        </ThemeProvider>
+      <ThemeProvider theme={selectedTheme}>
+        {children}
       </ThemeProvider>
     );
   }
