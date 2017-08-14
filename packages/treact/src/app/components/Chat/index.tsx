@@ -1,18 +1,23 @@
-import { InfiniteScroll } from 'components';
 import { ChatFooter } from 'containers';
 import styled from 'glamorous';
 import * as React from 'react';
+import { Themeable } from 'themes/theme.h';
+import InfiniteScroll from './scroll';
 import * as s from './style.css';
 
-const StyledChat = styled.div(({ theme }) => ({
-  backgroundImage: `url(${theme.__backgroundImage__})`,
+type StyledChatProps = { selected?: boolean } & Themeable;
+const StyledChat = styled.div<StyledChatProps>(({ theme, selected }) => ({
+  backgroundImage: `url(${theme.backgroundImage})`,
   backgroundSize: 'cover',
   display: 'flex',
+  flexDirection: selected ? 'column' : 'row',
   flex: 65,
+  width: '100%',
   height: '100%',
 }));
 
 const Header = styled.div(({ theme }) => ({
+  color: theme.dialogsNameFg,
   backgroundColor: theme.topBarBg,
   borderBottom: `1px solid ${theme.shadowFg}`,
   display: 'flex',
@@ -21,16 +26,37 @@ const Header = styled.div(({ theme }) => ({
   borderLeft: `1px solid ${theme.shadowFg}`,
 }));
 
+const Bubble = styled.div(({ theme }) => ({
+  alignSelf: 'center',
+  backgroundColor: theme.msgServiceBg,
+  color: theme.msgServiceFg,
+  borderRadius: '27px',
+  fontSize: '14px',
+  fontWeight: 600,
+  margin: '0 auto',
+  padding: '3px 12px 4px 12px',
+}));
+
+const ChatBody = styled.div(({ theme }) => ({
+  alignItems: 'flex-start',
+  display: 'flex',
+  flex: 1,
+  height: '100%',
+  overflow: 'auto',
+  paddingBottom: '8px',
+  borderLeft: `1px solid ${theme.shadowFg}`,
+}));
+
 export const DefaultScreen = () => (
   <StyledChat>
-    <div className={s.bubble}>Please select a chat to start messaging</div>
+    <Bubble>Please select a chat to start messaging</Bubble>
   </StyledChat>
 );
 
-type BasicProps = {
+interface BasicProps {
   name: string;
   userCount: number;
-};
+}
 
 const ChatHeader = ({ name, userCount }: BasicProps) => (
   <Header>
@@ -42,34 +68,27 @@ const ChatHeader = ({ name, userCount }: BasicProps) => (
   </Header>
 );
 
-type Props = BasicProps & {
-  loadMore(): void,
-};
-
-class Chat extends React.Component<Props, {}> {
-  public render() {
-    const { name, userCount, children, loadMore } = this.props;
-    return (
-      <StyledChat>
-        <div className={s.chatcontainer}>
-          <ChatHeader name={name} userCount={userCount} />
-          <div className={s.chatbody}>
-            <InfiniteScroll
-              className={s.box}
-              pageStart={0}
-              loadMore={loadMore}
-              initialLoad={false}
-              hasMore={true}
-              isReverse={true}
-              useWindow={false}>
-              {children}
-            </InfiniteScroll>
-          </div>
-          <ChatFooter />
-        </div>
-      </StyledChat>
-    );
-  }
+interface Props extends BasicProps {
+  loadMore(): void;
+  children?: React.ReactNode;
 }
+
+const Chat = ({ name, userCount, children, loadMore }: Props) => (
+  <StyledChat selected>
+    <ChatHeader name={name} userCount={userCount} />
+    <ChatBody>
+      <InfiniteScroll
+        pageStart={0}
+        loadMore={loadMore}
+        initialLoad={false}
+        hasMore={true}
+        isReverse={true}
+        useWindow={false}>
+        {children}
+      </InfiniteScroll>
+    </ChatBody>
+    <ChatFooter />
+  </StyledChat>
+);
 
 export { Chat };
