@@ -1,428 +1,4307 @@
+import Color from 'helpers/ColorSchemaParser/color-value';
+import { InputPair } from 'helpers/ColorSchemaParser/map-links';
+const pairs: InputPair[] = [
+    [
+        'windowBg',
+        [
+            new Color([
+                40,
+                46,
+                51,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'windowFg',
+        [
+            new Color([
+                245,
+                245,
+                245,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'windowBgOver',
+        [
+            new Color([
+                49,
+                59,
+                67,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'windowBgRipple',
+        [
+            new Color([
+                63,
+                72,
+                80,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'windowFgOver',
+        [
+            new Color([
+                233,
+                236,
+                240,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'windowSubTextFg',
+        [
+            new Color([
+                130,
+                134,
+                138,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'windowSubTextFgOver',
+        [
+            new Color([
+                121,
+                123,
+                127,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'windowBoldFg',
+        [
+            new Color([
+                233,
+                232,
+                232,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'windowBoldFgOver',
+        [
+            new Color([
+                233,
+                233,
+                233,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'windowBgActive',
+        [
+            new Color([
+                63,
+                193,
+                176,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'windowFgActive',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'windowActiveTextFg',
+        [
+            new Color([
+                75,
+                225,
+                195,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'windowShadowFg',
+        [
+            new Color([
+                0,
+                0,
+                0,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'windowShadowFgFallback',
+        [
+            'windowBg',
+        ],
+    ],
+    [
+        'shadowFg',
+        [
+            new Color([
+                0,
+                0,
+                0,
+                24,
+            ]),
+        ],
+    ],
+    [
+        'slideFadeOutBg',
+        [
+            new Color([
+                0,
+                0,
+                0,
+                60,
+            ]),
+        ],
+    ],
+    [
+        'slideFadeOutShadowFg',
+        [
+            'windowShadowFg',
+        ],
+    ],
+    [
+        'imageBg',
+        [
+            new Color([
+                0,
+                0,
+                0,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'imageBgTransparent',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'activeButtonBg',
+        [
+            new Color([
+                45,
+                161,
+                146,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'activeButtonBgOver',
+        [
+            new Color([
+                50,
+                168,
+                152,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'activeButtonBgRipple',
+        [
+            new Color([
+                66,
+                184,
+                168,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'activeButtonFg',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'activeButtonFgOver',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'activeButtonSecondaryFg',
+        [
+            new Color([
+                142,
+                228,
+                217,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'activeButtonSecondaryFgOver',
+        [
+            'activeButtonSecondaryFg',
+        ],
+    ],
+    [
+        'activeLineFg',
+        [
+            new Color([
+                62,
+                226,
+                204,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'activeLineFgError',
+        [
+            new Color([
+                245,
+                120,
+                120,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'lightButtonBg',
+        [
+            new Color([
+                40,
+                46,
+                51,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'lightButtonBgOver',
+        [
+            new Color([
+                49,
+                59,
+                67,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'lightButtonBgRipple',
+        [
+            new Color([
+                60,
+                71,
+                79,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'lightButtonFg',
+        [
+            new Color([
+                121,
+                232,
+                218,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'lightButtonFgOver',
+        [
+            'lightButtonFg',
+        ],
+    ],
+    [
+        'attentionButtonFg',
+        [
+            new Color([
+                245,
+                116,
+                116,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'attentionButtonFgOver',
+        [
+            new Color([
+                231,
+                96,
+                96,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'attentionButtonBgOver',
+        [
+            new Color([
+                97,
+                58,
+                58,
+                100,
+            ]),
+        ],
+    ],
+    [
+        'attentionButtonBgRipple',
+        [
+            new Color([
+                244,
+                195,
+                194,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'outlineButtonBg',
+        [
+            'windowBg',
+        ],
+    ],
+    [
+        'outlineButtonBgOver',
+        [
+            new Color([
+                49,
+                59,
+                67,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'outlineButtonOutlineFg',
+        [
+            new Color([
+                41,
+                186,
+                167,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'outlineButtonBgRipple',
+        [
+            new Color([
+                60,
+                71,
+                79,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'menuBg',
+        [
+            new Color([
+                40,
+                46,
+                51,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'menuBgOver',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'menuBgRipple',
+        [
+            new Color([
+                38,
+                41,
+                45,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'menuIconFg',
+        [
+            new Color([
+                128,
+                128,
+                128,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'menuIconFgOver',
+        [
+            new Color([
+                220,
+                220,
+                220,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'menuSubmenuArrowFg',
+        [
+            new Color([
+                117,
+                117,
+                117,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'menuFgDisabled',
+        [
+            new Color([
+                115,
+                115,
+                115,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'menuSeparatorFg',
+        [
+            new Color([
+                66,
+                72,
+                77,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'scrollBarBg',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                83,
+            ]),
+        ],
+    ],
+    [
+        'scrollBarBgOver',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                122,
+            ]),
+        ],
+    ],
+    [
+        'scrollBg',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                26,
+            ]),
+        ],
+    ],
+    [
+        'scrollBgOver',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                44,
+            ]),
+        ],
+    ],
+    [
+        'smallCloseIconFg',
+        [
+            new Color([
+                109,
+                109,
+                109,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'smallCloseIconFgOver',
+        [
+            new Color([
+                163,
+                163,
+                163,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'radialFg',
+        [
+            'windowFgActive',
+        ],
+    ],
+    [
+        'radialBg',
+        [
+            new Color([
+                0,
+                0,
+                0,
+                86,
+            ]),
+        ],
+    ],
+    [
+        'placeholderFg',
+        [
+            new Color([
+                129,
+                137,
+                145,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'placeholderFgActive',
+        [
+            new Color([
+                93,
+                97,
+                101,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'inputBorderFg',
+        [
+            new Color([
+                111,
+                111,
+                111,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'filterInputBorderFg',
+        [
+            new Color([
+                61,
+                68,
+                75,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'filterInputInactiveBg',
+        [
+            new Color([
+                61,
+                68,
+                75,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'checkboxFg',
+        [
+            new Color([
+                108,
+                108,
+                108,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'sliderBgInactive',
+        [
+            new Color([
+                84,
+                84,
+                84,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'sliderBgActive',
+        [
+            'windowBgActive',
+        ],
+    ],
+    [
+        'tooltipBg',
+        [
+            new Color([
+                212,
+                218,
+                221,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'tooltipFg',
+        [
+            new Color([
+                154,
+                158,
+                156,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'tooltipBorderFg',
+        [
+            new Color([
+                201,
+                209,
+                219,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'titleShadow',
+        [
+            new Color([
+                0,
+                0,
+                0,
+                3,
+            ]),
+        ],
+    ],
+    [
+        'titleBg',
+        [
+            new Color([
+                58,
+                64,
+                71,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'titleBgActive',
+        [
+            'titleBg',
+        ],
+    ],
+    [
+        'titleButtonBg',
+        [
+            'titleBg',
+        ],
+    ],
+    [
+        'titleButtonFg',
+        [
+            new Color([
+                139,
+                144,
+                150,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'titleButtonBgOver',
+        [
+            new Color([
+                76,
+                83,
+                91,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'titleButtonFgOver',
+        [
+            new Color([
+                224,
+                224,
+                224,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'titleButtonBgActive',
+        [
+            'titleButtonBg',
+        ],
+    ],
+    [
+        'titleButtonFgActive',
+        [
+            'titleButtonFg',
+        ],
+    ],
+    [
+        'titleButtonBgActiveOver',
+        [
+            'titleButtonBgOver',
+        ],
+    ],
+    [
+        'titleButtonFgActiveOver',
+        [
+            'titleButtonFgOver',
+        ],
+    ],
+    [
+        'titleButtonCloseBg',
+        [
+            'titleButtonBg',
+        ],
+    ],
+    [
+        'titleButtonCloseFg',
+        [
+            'titleButtonFg',
+        ],
+    ],
+    [
+        'titleButtonCloseBgOver',
+        [
+            new Color([
+                232,
+                17,
+                35,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'titleButtonCloseFgOver',
+        [
+            'windowFgActive',
+        ],
+    ],
+    [
+        'titleButtonCloseBgActive',
+        [
+            'titleButtonCloseBg',
+        ],
+    ],
+    [
+        'titleButtonCloseFgActive',
+        [
+            'titleButtonCloseFg',
+        ],
+    ],
+    [
+        'titleButtonCloseBgActiveOver',
+        [
+            'titleButtonCloseBgOver',
+        ],
+    ],
+    [
+        'titleButtonCloseFgActiveOver',
+        [
+            'titleButtonCloseFgOver',
+        ],
+    ],
+    [
+        'titleFg',
+        [
+            new Color([
+                102,
+                102,
+                102,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'titleFgActive',
+        [
+            new Color([
+                128,
+                128,
+                128,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'trayCounterBg',
+        [
+            new Color([
+                242,
+                60,
+                52,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'trayCounterBgMute',
+        [
+            new Color([
+                136,
+                136,
+                136,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'trayCounterFg',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'trayCounterBgMacInvert',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'trayCounterFgMacInvert',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                1,
+            ]),
+        ],
+    ],
+    [
+        'layerBg',
+        [
+            new Color([
+                0,
+                0,
+                0,
+                127,
+            ]),
+        ],
+    ],
+    [
+        'cancelIconFg',
+        [
+            new Color([
+                102,
+                102,
+                102,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'cancelIconFgOver',
+        [
+            new Color([
+                220,
+                220,
+                220,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'boxBg',
+        [
+            'windowBg',
+        ],
+    ],
+    [
+        'boxTextFg',
+        [
+            'windowFg',
+        ],
+    ],
+    [
+        'boxTextFgGood',
+        [
+            new Color([
+                86,
+                219,
+                206,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'boxTextFgError',
+        [
+            new Color([
+                216,
+                77,
+                77,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'boxTitleFg',
+        [
+            new Color([
+                235,
+                235,
+                235,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'boxSearchBg',
+        [
+            new Color([
+                40,
+                46,
+                51,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'boxTitleAdditionalFg',
+        [
+            new Color([
+                128,
+                128,
+                128,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'boxTitleCloseFg',
+        [
+            'cancelIconFg',
+        ],
+    ],
+    [
+        'boxTitleCloseFgOver',
+        [
+            'cancelIconFgOver',
+        ],
+    ],
+    [
+        'membersAboutLimitFg',
+        [
+            new Color([
+                94,
+                96,
+                101,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'contactsBg',
+        [
+            new Color([
+                34,
+                37,
+                40,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'contactsBgOver',
+        [
+            new Color([
+                40,
+                46,
+                51,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'contactsNameFg',
+        [
+            'boxTextFg',
+        ],
+    ],
+    [
+        'contactsStatusFg',
+        [
+            new Color([
+                128,
+                128,
+                128,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'contactsStatusFgOver',
+        [
+            new Color([
+                128,
+                128,
+                128,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'contactsStatusFgOnline',
+        [
+            new Color([
+                85,
+                225,
+                211,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'photoCropFadeBg',
+        [
+            'layerBg',
+        ],
+    ],
+    [
+        'photoCropPointFg',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                127,
+            ]),
+        ],
+    ],
+    [
+        'callArrowFg',
+        [
+            new Color([
+                43,
+                199,
+                184,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'callArrowMissedFg',
+        [
+            new Color([
+                221,
+                91,
+                74,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'introBg',
+        [
+            'windowBg',
+        ],
+    ],
+    [
+        'introTitleFg',
+        [
+            new Color([
+                238,
+                238,
+                238,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'introDescriptionFg',
+        [
+            new Color([
+                153,
+                153,
+                153,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'introErrorFg',
+        [
+            new Color([
+                153,
+                153,
+                153,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'introCoverTopBg',
+        [
+            new Color([
+                24,
+                129,
+                115,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'introCoverBottomBg',
+        [
+            new Color([
+                24,
+                129,
+                115,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'introCoverIconsFg',
+        [
+            new Color([
+                52,
+                164,
+                149,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'introCoverPlaneTrace',
+        [
+            new Color([
+                50,
+                157,
+                143,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'introCoverPlaneInner',
+        [
+            new Color([
+                206,
+                217,
+                226,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'introCoverPlaneOuter',
+        [
+            new Color([
+                151,
+                169,
+                181,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'introCoverPlaneTop',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'dialogsMenuIconFg',
+        [
+            'menuIconFg',
+        ],
+    ],
+    [
+        'dialogsMenuIconFgOver',
+        [
+            'menuIconFgOver',
+        ],
+    ],
+    [
+        'dialogsBg',
+        [
+            'windowBg',
+        ],
+    ],
+    [
+        'dialogsNameFg',
+        [
+            new Color([
+                245,
+                245,
+                245,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'dialogsChatIconFg',
+        [
+            'dialogsNameFg',
+        ],
+    ],
+    [
+        'dialogsDateFg',
+        [
+            new Color([
+                109,
+                114,
+                124,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'dialogsTextFg',
+        [
+            new Color([
+                141,
+                147,
+                158,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'dialogsTextFgService',
+        [
+            new Color([
+                235,
+                235,
+                235,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'dialogsDraftFg',
+        [
+            new Color([
+                236,
+                102,
+                87,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'dialogsVerifiedIconBg',
+        [
+            new Color([
+                83,
+                237,
+                222,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'dialogsVerifiedIconFg',
+        [
+            new Color([
+                40,
+                46,
+                51,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'dialogsSendingIconFg',
+        [
+            new Color([
+                114,
+                114,
+                114,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'dialogsSentIconFg',
+        [
+            new Color([
+                32,
+                238,
+                218,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'dialogsUnreadBg',
+        [
+            new Color([
+                5,
+                160,
+                145,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'dialogsUnreadBgMuted',
+        [
+            new Color([
+                73,
+                81,
+                89,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'dialogsUnreadFg',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'dialogsBgOver',
+        [
+            new Color([
+                53,
+                60,
+                67,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'dialogsNameFgOver',
+        [
+            'windowBoldFgOver',
+        ],
+    ],
+    [
+        'dialogsChatIconFgOver',
+        [
+            'dialogsNameFgOver',
+        ],
+    ],
+    [
+        'dialogsDateFgOver',
+        [
+            new Color([
+                109,
+                114,
+                124,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'dialogsTextFgOver',
+        [
+            new Color([
+                163,
+                167,
+                174,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'dialogsTextFgServiceOver',
+        [
+            new Color([
+                240,
+                240,
+                240,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'dialogsDraftFgOver',
+        [
+            'dialogsDraftFg',
+        ],
+    ],
+    [
+        'dialogsVerifiedIconBgOver',
+        [
+            new Color([
+                83,
+                237,
+                222,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'dialogsVerifiedIconFgOver',
+        [
+            'dialogsVerifiedIconFg',
+        ],
+    ],
+    [
+        'dialogsSendingIconFgOver',
+        [
+            'dialogsSendingIconFg',
+        ],
+    ],
+    [
+        'dialogsSentIconFgOver',
+        [
+            new Color([
+                65,
+                240,
+                223,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'dialogsUnreadBgOver',
+        [
+            new Color([
+                0,
+                150,
+                135,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'dialogsUnreadBgMutedOver',
+        [
+            new Color([
+                85,
+                94,
+                103,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'dialogsUnreadFgOver',
+        [
+            'dialogsUnreadFg',
+        ],
+    ],
+    [
+        'dialogsBgActive',
+        [
+            new Color([
+                0,
+                150,
+                135,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'dialogsNameFgActive',
+        [
+            'windowFgActive',
+        ],
+    ],
+    [
+        'dialogsChatIconFgActive',
+        [
+            'dialogsNameFgActive',
+        ],
+    ],
+    [
+        'dialogsDateFgActive',
+        [
+            'windowFgActive',
+        ],
+    ],
+    [
+        'dialogsTextFgActive',
+        [
+            'windowFgActive',
+        ],
+    ],
+    [
+        'dialogsTextFgServiceActive',
+        [
+            'dialogsTextFgActive',
+        ],
+    ],
+    [
+        'dialogsDraftFgActive',
+        [
+            new Color([
+                198,
+                247,
+                243,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'dialogsVerifiedIconBgActive',
+        [
+            'dialogsTextFgActive',
+        ],
+    ],
+    [
+        'dialogsVerifiedIconFgActive',
+        [
+            'dialogsBgActive',
+        ],
+    ],
+    [
+        'dialogsSendingIconFgActive',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                153,
+            ]),
+        ],
+    ],
+    [
+        'dialogsSentIconFgActive',
+        [
+            'dialogsTextFgActive',
+        ],
+    ],
+    [
+        'dialogsUnreadBgActive',
+        [
+            'dialogsTextFgActive',
+        ],
+    ],
+    [
+        'dialogsUnreadBgMutedActive',
+        [
+            new Color([
+                203,
+                247,
+                233,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'dialogsUnreadFgActive',
+        [
+            new Color([
+                3,
+                157,
+                142,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'dialogsRippleBg',
+        [
+            new Color([
+                67,
+                71,
+                77,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'dialogsRippleBgActive',
+        [
+            new Color([
+                18,
+                167,
+                152,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'dialogsForwardBg',
+        [
+            'dialogsBgActive',
+        ],
+    ],
+    [
+        'dialogsForwardFg',
+        [
+            'dialogsNameFgActive',
+        ],
+    ],
+    [
+        'searchedBarBg',
+        [
+            new Color([
+                58,
+                64,
+                71,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'searchedBarFg',
+        [
+            new Color([
+                168,
+                168,
+                168,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'topBarBg',
+        [
+            new Color([
+                40,
+                46,
+                51,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'emojiPanBg',
+        [
+            'windowBg',
+        ],
+    ],
+    [
+        'emojiPanCategories',
+        [
+            new Color([
+                32,
+                38,
+                43,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'emojiPanHeaderFg',
+        [
+            new Color([
+                144,
+                148,
+                154,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'emojiPanHeaderBg',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                242,
+            ]),
+        ],
+    ],
+    [
+        'stickerPanDeleteBg',
+        [
+            new Color([
+                0,
+                0,
+                0,
+                204,
+            ]),
+        ],
+    ],
+    [
+        'stickerPanDeleteFg',
+        [
+            'windowFgActive',
+        ],
+    ],
+    [
+        'stickerPreviewBg',
+        [
+            new Color([
+                0,
+                0,
+                0,
+                176,
+            ]),
+        ],
+    ],
+    [
+        'historyTextInFg',
+        [
+            'windowFg',
+        ],
+    ],
+    [
+        'historyTextInFgSelected',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyTextOutFg',
+        [
+            new Color([
+                228,
+                236,
+                242,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyTextOutFgSelected',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyLinkInFg',
+        [
+            new Color([
+                55,
+                225,
+                203,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyLinkInFgSelected',
+        [
+            new Color([
+                167,
+                255,
+                244,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyLinkOutFg',
+        [
+            new Color([
+                55,
+                225,
+                203,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyLinkOutFgSelected',
+        [
+            new Color([
+                167,
+                255,
+                244,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyFileNameInFg',
+        [
+            'historyTextInFg',
+        ],
+    ],
+    [
+        'historyFileNameInFgSelected',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyFileNameOutFg',
+        [
+            'historyTextOutFg',
+        ],
+    ],
+    [
+        'historyFileNameOutFgSelected',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyOutIconFg',
+        [
+            new Color([
+                64,
+                230,
+                197,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyOutIconFgSelected',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyIconFgInverted',
+        [
+            new Color([
+                64,
+                230,
+                197,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historySendingOutIconFg',
+        [
+            new Color([
+                158,
+                250,
+                206,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historySendingInIconFg',
+        [
+            new Color([
+                118,
+                131,
+                139,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historySendingInvertedIconFg',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                200,
+            ]),
+        ],
+    ],
+    [
+        'historyCallArrowInFg',
+        [
+            new Color([
+                38,
+                194,
+                173,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyCallArrowInFgSelected',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyCallArrowMissedInFg',
+        [
+            'callArrowMissedFg',
+        ],
+    ],
+    [
+        'historyCallArrowMissedInFgSelected',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyCallArrowOutFg',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyCallArrowOutFgSelected',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyUnreadBarBg',
+        [
+            new Color([
+                51,
+                57,
+                63,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyUnreadBarBorder',
+        [
+            'shadowFg',
+        ],
+    ],
+    [
+        'historyUnreadBarFg',
+        [
+            new Color([
+                60,
+                211,
+                191,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyForwardChooseBg',
+        [
+            new Color([
+                0,
+                0,
+                0,
+                76,
+            ]),
+        ],
+    ],
+    [
+        'historyForwardChooseFg',
+        [
+            'windowFgActive',
+        ],
+    ],
+    [
+        'historyPeer1NameFg',
+        [
+            new Color([
+                236,
+                117,
+                119,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyPeer1NameFgSelected',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyPeer1UserpicBg',
+        [
+            new Color([
+                225,
+                112,
+                118,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyPeer2NameFg',
+        [
+            new Color([
+                134,
+                214,
+                127,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyPeer2NameFgSelected',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyPeer2UserpicBg',
+        [
+            new Color([
+                123,
+                200,
+                98,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyPeer3NameFg',
+        [
+            new Color([
+                228,
+                192,
+                84,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyPeer3NameFgSelected',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyPeer3UserpicBg',
+        [
+            new Color([
+                204,
+                173,
+                79,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyPeer4NameFg',
+        [
+            new Color([
+                104,
+                199,
+                243,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyPeer4NameFgSelected',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyPeer4UserpicBg',
+        [
+            new Color([
+                101,
+                170,
+                221,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyPeer5NameFg',
+        [
+            new Color([
+                179,
+                131,
+                243,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyPeer5NameFgSelected',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyPeer5UserpicBg',
+        [
+            new Color([
+                166,
+                149,
+                231,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyPeer6NameFg',
+        [
+            new Color([
+                225,
+                103,
+                148,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyPeer6NameFgSelected',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyPeer6UserpicBg',
+        [
+            new Color([
+                238,
+                122,
+                174,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyPeer7NameFg',
+        [
+            new Color([
+                87,
+                201,
+                224,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyPeer7NameFgSelected',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyPeer7UserpicBg',
+        [
+            new Color([
+                110,
+                201,
+                203,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyPeer8NameFg',
+        [
+            new Color([
+                239,
+                176,
+                93,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyPeer8NameFgSelected',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyPeer8UserpicBg',
+        [
+            new Color([
+                237,
+                168,
+                108,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyPeerUserpicFg',
+        [
+            'windowFgActive',
+        ],
+    ],
+    [
+        'historyScrollBarBg',
+        [
+            new Color([
+                137,
+                137,
+                137,
+                122,
+            ]),
+        ],
+    ],
+    [
+        'historyScrollBarBgOver',
+        [
+            new Color([
+                107,
+                107,
+                107,
+                188,
+            ]),
+        ],
+    ],
+    [
+        'historyScrollBg',
+        [
+            new Color([
+                95,
+                95,
+                95,
+                76,
+            ]),
+        ],
+    ],
+    [
+        'historyScrollBgOver',
+        [
+            new Color([
+                98,
+                98,
+                98,
+                107,
+            ]),
+        ],
+    ],
+    [
+        'msgInBg',
+        [
+            new Color([
+                51,
+                57,
+                63,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgInBgSelected',
+        [
+            new Color([
+                0,
+                150,
+                135,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgOutBg',
+        [
+            new Color([
+                42,
+                47,
+                51,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgOutBgSelected',
+        [
+            new Color([
+                0,
+                150,
+                135,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgSelectOverlay',
+        [
+            new Color([
+                53,
+                212,
+                191,
+                76,
+            ]),
+        ],
+    ],
+    [
+        'msgStickerOverlay',
+        [
+            new Color([
+                53,
+                212,
+                191,
+                127,
+            ]),
+        ],
+    ],
+    [
+        'msgInServiceFg',
+        [
+            'windowActiveTextFg',
+        ],
+    ],
+    [
+        'msgInServiceFgSelected',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgOutServiceFg',
+        [
+            new Color([
+                96,
+                229,
+                203,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgOutServiceFgSelected',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgInShadow',
+        [
+            new Color([
+                116,
+                142,
+                162,
+                0,
+            ]),
+        ],
+    ],
+    [
+        'msgInShadowSelected',
+        [
+            new Color([
+                83,
+                142,
+                187,
+                0,
+            ]),
+        ],
+    ],
+    [
+        'msgOutShadow',
+        [
+            new Color([
+                0,
+                0,
+                0,
+                0,
+            ]),
+        ],
+    ],
+    [
+        'msgOutShadowSelected',
+        [
+            new Color([
+                55,
+                167,
+                141,
+                0,
+            ]),
+        ],
+    ],
+    [
+        'msgInDateFg',
+        [
+            new Color([
+                130,
+                141,
+                148,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgInDateFgSelected',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgOutDateFg',
+        [
+            new Color([
+                115,
+                127,
+                135,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgOutDateFgSelected',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgServiceFg',
+        [
+            'windowFgActive',
+        ],
+    ],
+    [
+        'msgServiceBg',
+        [
+            new Color([
+                54,
+                60,
+                67,
+                200,
+            ]),
+        ],
+    ],
+    [
+        'msgServiceBgSelected',
+        [
+            new Color([
+                0,
+                150,
+                135,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgInReplyBarColor',
+        [
+            new Color([
+                50,
+                206,
+                185,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgInReplyBarSelColor',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgOutReplyBarColor',
+        [
+            new Color([
+                50,
+                206,
+                185,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgOutReplyBarSelColor',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgImgReplyBarColor',
+        [
+            'msgServiceFg',
+        ],
+    ],
+    [
+        'msgInMonoFg',
+        [
+            new Color([
+                90,
+                171,
+                160,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgOutMonoFg',
+        [
+            new Color([
+                194,
+                242,
+                236,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgInMonoFgSelected',
+        [
+            new Color([
+                167,
+                255,
+                244,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgOutMonoFgSelected',
+        [
+            new Color([
+                201,
+                255,
+                248,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgDateImgFg',
+        [
+            'msgServiceFg',
+        ],
+    ],
+    [
+        'msgDateImgBg',
+        [
+            new Color([
+                0,
+                0,
+                0,
+                84,
+            ]),
+        ],
+    ],
+    [
+        'msgDateImgBgOver',
+        [
+            new Color([
+                0,
+                0,
+                0,
+                116,
+            ]),
+        ],
+    ],
+    [
+        'msgDateImgBgSelected',
+        [
+            new Color([
+                28,
+                112,
+                101,
+                135,
+            ]),
+        ],
+    ],
+    [
+        'msgFileThumbLinkInFg',
+        [
+            'lightButtonFg',
+        ],
+    ],
+    [
+        'msgFileThumbLinkInFgSelected',
+        [
+            'lightButtonFgOver',
+        ],
+    ],
+    [
+        'msgFileThumbLinkOutFg',
+        [
+            new Color([
+                96,
+                229,
+                203,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgFileThumbLinkOutFgSelected',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgFileInBg',
+        [
+            new Color([
+                80,
+                212,
+                195,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgFileInBgOver',
+        [
+            new Color([
+                72,
+                207,
+                189,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgFileInBgSelected',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgFileOutBg',
+        [
+            new Color([
+                17,
+                191,
+                171,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgFileOutBgOver',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgFileOutBgSelected',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgFile1Bg',
+        [
+            new Color([
+                63,
+                187,
+                171,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgFile1BgDark',
+        [
+            new Color([
+                38,
+                159,
+                143,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgFile1BgOver',
+        [
+            new Color([
+                82,
+                196,
+                181,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgFile1BgSelected',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgFile2Bg',
+        [
+            new Color([
+                142,
+                245,
+                232,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgFile2BgDark',
+        [
+            new Color([
+                126,
+                247,
+                231,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgFile2BgOver',
+        [
+            new Color([
+                141,
+                247,
+                233,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgFile2BgSelected',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgFile3Bg',
+        [
+            new Color([
+                228,
+                114,
+                114,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgFile3BgDark',
+        [
+            new Color([
+                205,
+                91,
+                94,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgFile3BgOver',
+        [
+            new Color([
+                195,
+                81,
+                84,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgFile3BgSelected',
+        [
+            new Color([
+                159,
+                106,
+                130,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgFile4Bg',
+        [
+            new Color([
+                239,
+                194,
+                116,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgFile4BgDark',
+        [
+            new Color([
+                230,
+                165,
+                97,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgFile4BgOver',
+        [
+            new Color([
+                220,
+                156,
+                90,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgFile4BgSelected',
+        [
+            new Color([
+                177,
+                157,
+                132,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyFileInIconFg',
+        [
+            new Color([
+                51,
+                57,
+                63,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyFileInIconFgSelected',
+        [
+            new Color([
+                0,
+                150,
+                135,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyFileInRadialFg',
+        [
+            new Color([
+                51,
+                57,
+                63,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyFileInRadialFgSelected',
+        [
+            'historyFileInIconFgSelected',
+        ],
+    ],
+    [
+        'historyFileOutIconFg',
+        [
+            new Color([
+                51,
+                57,
+                63,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyFileOutIconFgSelected',
+        [
+            new Color([
+                0,
+                150,
+                135,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyFileOutRadialFg',
+        [
+            'historyFileOutIconFg',
+        ],
+    ],
+    [
+        'historyFileOutRadialFgSelected',
+        [
+            new Color([
+                0,
+                150,
+                135,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyFileThumbIconFg',
+        [
+            new Color([
+                239,
+                239,
+                239,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyFileThumbIconFgSelected',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyFileThumbRadialFg',
+        [
+            'historyFileThumbIconFg',
+        ],
+    ],
+    [
+        'historyFileThumbRadialFgSelected',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyVideoMessageProgressFg',
+        [
+            'historyFileThumbIconFg',
+        ],
+    ],
+    [
+        'msgWaveformInActive',
+        [
+            'windowBgActive',
+        ],
+    ],
+    [
+        'msgWaveformInActiveSelected',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgWaveformInInactive',
+        [
+            new Color([
+                93,
+                107,
+                118,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgWaveformInInactiveSelected',
+        [
+            new Color([
+                65,
+                209,
+                192,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgWaveformOutActive',
+        [
+            new Color([
+                17,
+                191,
+                171,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgWaveformOutActiveSelected',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgWaveformOutInactive',
+        [
+            new Color([
+                89,
+                104,
+                116,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgWaveformOutInactiveSelected',
+        [
+            new Color([
+                65,
+                209,
+                192,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'msgBotKbOverBgAdd',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                20,
+            ]),
+        ],
+    ],
+    [
+        'msgBotKbIconFg',
+        [
+            'msgServiceFg',
+        ],
+    ],
+    [
+        'msgBotKbRippleBg',
+        [
+            new Color([
+                158,
+                157,
+                157,
+                16,
+            ]),
+        ],
+    ],
+    [
+        'mediaInFg',
+        [
+            'msgInDateFg',
+        ],
+    ],
+    [
+        'mediaInFgSelected',
+        [
+            'msgInDateFgSelected',
+        ],
+    ],
+    [
+        'mediaOutFg',
+        [
+            'msgOutDateFg',
+        ],
+    ],
+    [
+        'mediaOutFgSelected',
+        [
+            'msgOutDateFgSelected',
+        ],
+    ],
+    [
+        'youtubePlayIconBg',
+        [
+            new Color([
+                232,
+                49,
+                49,
+                200,
+            ]),
+        ],
+    ],
+    [
+        'youtubePlayIconFg',
+        [
+            'windowFgActive',
+        ],
+    ],
+    [
+        'videoPlayIconBg',
+        [
+            new Color([
+                0,
+                0,
+                0,
+                127,
+            ]),
+        ],
+    ],
+    [
+        'videoPlayIconFg',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'toastBg',
+        [
+            new Color([
+                0,
+                0,
+                0,
+                178,
+            ]),
+        ],
+    ],
+    [
+        'toastFg',
+        [
+            'windowFgActive',
+        ],
+    ],
+    [
+        'reportSpamBg',
+        [
+            new Color([
+                54,
+                60,
+                66,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'reportSpamFg',
+        [
+            new Color([
+                60,
+                66,
+                72,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyToDownBg',
+        [
+            new Color([
+                67,
+                77,
+                87,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyToDownBgOver',
+        [
+            new Color([
+                81,
+                91,
+                101,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyToDownBgRipple',
+        [
+            new Color([
+                99,
+                109,
+                119,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyToDownFg',
+        [
+            new Color([
+                173,
+                180,
+                186,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyToDownFgOver',
+        [
+            'menuIconFgOver',
+        ],
+    ],
+    [
+        'historyToDownShadow',
+        [
+            new Color([
+                0,
+                0,
+                0,
+                64,
+            ]),
+        ],
+    ],
+    [
+        'historyComposeAreaBg',
+        [
+            new Color([
+                40,
+                46,
+                51,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyComposeAreaFg',
+        [
+            'historyTextInFg',
+        ],
+    ],
+    [
+        'historyComposeAreaFgService',
+        [
+            'msgInDateFg',
+        ],
+    ],
+    [
+        'historyComposeIconFg',
+        [
+            'menuIconFg',
+        ],
+    ],
+    [
+        'historyComposeIconFgOver',
+        [
+            'menuIconFgOver',
+        ],
+    ],
+    [
+        'historySendIconFg',
+        [
+            'windowBgActive',
+        ],
+    ],
+    [
+        'historySendIconFgOver',
+        [
+            'windowBgActive',
+        ],
+    ],
+    [
+        'historyPinnedBg',
+        [
+            'historyComposeAreaBg',
+        ],
+    ],
+    [
+        'historyReplyBg',
+        [
+            'historyComposeAreaBg',
+        ],
+    ],
+    [
+        'historyReplyIconFg',
+        [
+            'windowBgActive',
+        ],
+    ],
+    [
+        'historyReplyCancelFg',
+        [
+            'cancelIconFg',
+        ],
+    ],
+    [
+        'historyReplyCancelFgOver',
+        [
+            'cancelIconFgOver',
+        ],
+    ],
+    [
+        'historyComposeButtonBg',
+        [
+            'historyComposeAreaBg',
+        ],
+    ],
+    [
+        'historyComposeButtonBgOver',
+        [
+            new Color([
+                49,
+                54,
+                60,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'historyComposeButtonBgRipple',
+        [
+            new Color([
+                39,
+                43,
+                47,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'overviewCheckBg',
+        [
+            new Color([
+                0,
+                0,
+                0,
+                64,
+            ]),
+        ],
+    ],
+    [
+        'overviewCheckFg',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'overviewCheckFgActive',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'overviewPhotoSelectOverlay',
+        [
+            new Color([
+                64,
+                172,
+                227,
+                51,
+            ]),
+        ],
+    ],
+    [
+        'profileStatusFgOver',
+        [
+            new Color([
+                156,
+                156,
+                156,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'profileVerifiedCheckBg',
+        [
+            'windowBgActive',
+        ],
+    ],
+    [
+        'profileVerifiedCheckFg',
+        [
+            'windowFgActive',
+        ],
+    ],
+    [
+        'profileAdminStartFg',
+        [
+            'windowBgActive',
+        ],
+    ],
+    [
+        'notificationsBoxMonitorFg',
+        [
+            'windowFg',
+        ],
+    ],
+    [
+        'notificationsBoxScreenBg',
+        [
+            'dialogsBgActive',
+        ],
+    ],
+    [
+        'notificationSampleUserpicFg',
+        [
+            'windowBgActive',
+        ],
+    ],
+    [
+        'notificationSampleCloseFg',
+        [
+            new Color([
+                215,
+                215,
+                215,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'notificationSampleTextFg',
+        [
+            new Color([
+                215,
+                215,
+                215,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'notificationSampleNameFg',
+        [
+            new Color([
+                147,
+                147,
+                147,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'changePhoneSimcardFrom',
+        [
+            'notificationSampleTextFg',
+        ],
+    ],
+    [
+        'changePhoneSimcardTo',
+        [
+            'notificationSampleNameFg',
+        ],
+    ],
+    [
+        'mainMenuBg',
+        [
+            'windowBg',
+        ],
+    ],
+    [
+        'mainMenuCoverBg',
+        [
+            new Color([
+                0,
+                150,
+                135,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'mainMenuCoverFg',
+        [
+            'windowFgActive',
+        ],
+    ],
+    [
+        'mainMenuCloudFg',
+        [
+            'activeButtonFg',
+        ],
+    ],
+    [
+        'mainMenuCloudBg',
+        [
+            new Color([
+                14,
+                131,
+                127,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'mediaPlayerBg',
+        [
+            'windowBg',
+        ],
+    ],
+    [
+        'mediaPlayerActiveFg',
+        [
+            'windowBgActive',
+        ],
+    ],
+    [
+        'mediaPlayerInactiveFg',
+        [
+            'sliderBgInactive',
+        ],
+    ],
+    [
+        'mediaPlayerDisabledFg',
+        [
+            new Color([
+                157,
+                209,
+                239,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'mediaviewFileBg',
+        [
+            'windowBg',
+        ],
+    ],
+    [
+        'mediaviewFileNameFg',
+        [
+            'windowFg',
+        ],
+    ],
+    [
+        'mediaviewFileSizeFg',
+        [
+            'windowSubTextFg',
+        ],
+    ],
+    [
+        'mediaviewFileRedCornerFg',
+        [
+            new Color([
+                213,
+                89,
+                89,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'mediaviewFileYellowCornerFg',
+        [
+            new Color([
+                232,
+                166,
+                89,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'mediaviewFileGreenCornerFg',
+        [
+            new Color([
+                73,
+                169,
+                87,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'mediaviewFileBlueCornerFg',
+        [
+            new Color([
+                89,
+                157,
+                207,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'mediaviewFileExtFg',
+        [
+            'activeButtonFg',
+        ],
+    ],
+    [
+        'mediaviewMenuBg',
+        [
+            new Color([
+                56,
+                56,
+                56,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'mediaviewMenuBgOver',
+        [
+            new Color([
+                80,
+                80,
+                80,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'mediaviewMenuBgRipple',
+        [
+            new Color([
+                103,
+                103,
+                103,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'mediaviewMenuFg',
+        [
+            'windowFgActive',
+        ],
+    ],
+    [
+        'mediaviewBg',
+        [
+            new Color([
+                34,
+                34,
+                34,
+                235,
+            ]),
+        ],
+    ],
+    [
+        'mediaviewVideoBg',
+        [
+            'imageBg',
+        ],
+    ],
+    [
+        'mediaviewControlBg',
+        [
+            new Color([
+                0,
+                0,
+                0,
+                60,
+            ]),
+        ],
+    ],
+    [
+        'mediaviewControlFg',
+        [
+            'windowFgActive',
+        ],
+    ],
+    [
+        'mediaviewCaptionBg',
+        [
+            new Color([
+                17,
+                17,
+                17,
+                128,
+            ]),
+        ],
+    ],
+    [
+        'mediaviewCaptionFg',
+        [
+            'mediaviewControlFg',
+        ],
+    ],
+    [
+        'mediaviewTextLinkFg',
+        [
+            new Color([
+                102,
+                247,
+                228,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'mediaviewSaveMsgBg',
+        [
+            'toastBg',
+        ],
+    ],
+    [
+        'mediaviewSaveMsgFg',
+        [
+            'toastFg',
+        ],
+    ],
+    [
+        'mediaviewPlaybackActive',
+        [
+            new Color([
+                199,
+                199,
+                199,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'mediaviewPlaybackInactive',
+        [
+            new Color([
+                37,
+                37,
+                37,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'mediaviewPlaybackActiveOver',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'mediaviewPlaybackInactiveOver',
+        [
+            new Color([
+                71,
+                71,
+                71,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'mediaviewPlaybackProgressFg',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                199,
+            ]),
+        ],
+    ],
+    [
+        'mediaviewPlaybackIconFg',
+        [
+            'mediaviewPlaybackActive',
+        ],
+    ],
+    [
+        'mediaviewPlaybackIconFgOver',
+        [
+            'mediaviewPlaybackActiveOver',
+        ],
+    ],
+    [
+        'mediaviewTransparentBg',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'mediaviewTransparentFg',
+        [
+            new Color([
+                204,
+                204,
+                204,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'notificationBg',
+        [
+            'windowBg',
+        ],
+    ],
+    [
+        'callBg',
+        [
+            new Color([
+                38,
+                40,
+                44,
+                242,
+            ]),
+        ],
+    ],
+    [
+        'callNameFg',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'callFingerprintBg',
+        [
+            new Color([
+                0,
+                0,
+                0,
+                102,
+            ]),
+        ],
+    ],
+    [
+        'callStatusFg',
+        [
+            new Color([
+                170,
+                171,
+                172,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'callIconFg',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'callAnswerBg',
+        [
+            new Color([
+                90,
+                209,
+                193,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'callAnswerRipple',
+        [
+            new Color([
+                66,
+                194,
+                177,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'callAnswerBgOuter',
+        [
+            new Color([
+                63,
+                235,
+                201,
+                38,
+            ]),
+        ],
+    ],
+    [
+        'callHangupBg',
+        [
+            new Color([
+                215,
+                90,
+                90,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'callHangupRipple',
+        [
+            new Color([
+                192,
+                70,
+                70,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'callCancelBg',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'callCancelFg',
+        [
+            new Color([
+                119,
+                119,
+                119,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'callCancelRipple',
+        [
+            new Color([
+                241,
+                241,
+                241,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'callMuteRipple',
+        [
+            new Color([
+                255,
+                255,
+                255,
+                18,
+            ]),
+        ],
+    ],
+    [
+        'callBarBg',
+        [
+            'dialogsBgActive',
+        ],
+    ],
+    [
+        'callBarMuteRipple',
+        [
+            'dialogsRippleBgActive',
+        ],
+    ],
+    [
+        'callBarBgMuted',
+        [
+            new Color([
+                143,
+                143,
+                143,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'callBarUnmuteRipple',
+        [
+            new Color([
+                127,
+                127,
+                127,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'callBarFg',
+        [
+            'dialogsNameFgActive',
+        ],
+    ],
+    [
+        'importantTooltipBg',
+        [
+            'toastBg',
+        ],
+    ],
+    [
+        'importantTooltipFg',
+        [
+            'toastFg',
+        ],
+    ],
+    [
+        'importantTooltipFgLink',
+        [
+            new Color([
+                101,
+                252,
+                232,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'filterInputActiveBg',
+        [
+            new Color([
+                61,
+                68,
+                75,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'botKbBg',
+        [
+            new Color([
+                61,
+                68,
+                75,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'botKbDownBg',
+        [
+            new Color([
+                73,
+                79,
+                85,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'emojiIconFg',
+        [
+            new Color([
+                108,
+                114,
+                120,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'emojiIconFgActive',
+        [
+            new Color([
+                54,
+                205,
+                185,
+                255,
+            ]),
+        ],
+    ],
+    [
+        'overviewCheckBorder',
+        [
+            new Color([
+                228,
+                234,
+                239,
+                255,
+            ]),
+        ],
+    ],
+];
 export default {
-  __backgroundImage__: require('./tiled.jpg'),
-  __builtin__: true,
-
-  windowBg: 'rgba(40, 46, 51, 1)',
-  windowFg: 'rgba(245, 245, 245, 1)',
-  windowBgOver: 'rgba(49, 59, 67, 1)',
-  windowBgRipple: 'rgba(63, 72, 80, 1)',
-  windowFgOver: 'rgba(233, 236, 240, 1)',
-  windowSubTextFg: 'rgba(130, 134, 138, 1)',
-  windowSubTextFgOver: 'rgba(121, 123, 127, 1)',
-  windowBoldFg: 'rgba(233, 232, 232, 1)',
-  windowBoldFgOver: 'rgba(233, 233, 233, 1)',
-  windowBgActive: 'rgba(63, 193, 176, 1)',
-  windowFgActive: 'rgba(255, 255, 255, 1)',
-  windowActiveTextFg: 'rgba(75, 225, 195, 1)',
-  windowShadowFg: 'rgba(0, 0, 0, 1)',
-  shadowFg: 'rgba(0, 0, 0, 0.09)',
-  slideFadeOutBg: 'rgba(0, 0, 0, 0.24)',
-  imageBg: 'rgba(0, 0, 0, 1)',
-  imageBgTransparent: 'rgba(255, 255, 255, 1)',
-  activeButtonBg: 'rgba(45, 161, 146, 1)',
-  activeButtonBgOver: 'rgba(50, 168, 152, 1)',
-  activeButtonBgRipple: 'rgba(66, 184, 168, 1)',
-  activeButtonFg: 'rgba(255, 255, 255, 1)',
-  activeButtonFgOver: 'rgba(255, 255, 255, 1)',
-  activeButtonSecondaryFg: 'rgba(142, 228, 217, 1)',
-  activeLineFg: 'rgba(62, 226, 204, 1)',
-  activeLineFgError: 'rgba(245, 120, 120, 1)',
-  lightButtonBg: 'rgba(40, 46, 51, 1)',
-  lightButtonBgOver: 'rgba(49, 59, 67, 1)',
-  lightButtonBgRipple: 'rgba(60, 71, 79, 1)',
-  lightButtonFg: 'rgba(121, 232, 218, 1)',
-  attentionButtonFg: 'rgba(245, 116, 116, 1)',
-  attentionButtonFgOver: 'rgba(231, 96, 96, 1)',
-  attentionButtonBgOver: 'rgba(97, 58, 58, 0.39)',
-  attentionButtonBgRipple: 'rgba(244, 195, 194, 1)',
-  outlineButtonBgOver: 'rgba(49, 59, 67, 1)',
-  outlineButtonOutlineFg: 'rgba(41, 186, 167, 1)',
-  outlineButtonBgRipple: 'rgba(60, 71, 79, 1)',
-  menuBg: 'rgba(40, 46, 51, 1)',
-  menuBgOver: 'rgba(255, 255, 255, 1)',
-  menuBgRipple: 'rgba(38, 41, 45, 1)',
-  menuIconFg: 'rgba(128, 128, 128, 1)',
-  menuIconFgOver: 'rgba(220, 220, 220, 1)',
-  menuSubmenuArrowFg: 'rgba(117, 117, 117, 1)',
-  menuFgDisabled: 'rgba(115, 115, 115, 1)',
-  menuSeparatorFg: 'rgba(66, 72, 77, 1)',
-  scrollBarBg: 'rgba(255, 255, 255, 0.33)',
-  scrollBarBgOver: 'rgba(255, 255, 255, 0.48)',
-  scrollBg: 'rgba(255, 255, 255, 0.1)',
-  scrollBgOver: 'rgba(255, 255, 255, 0.17)',
-  smallCloseIconFg: 'rgba(109, 109, 109, 1)',
-  smallCloseIconFgOver: 'rgba(163, 163, 163, 1)',
-  radialBg: 'rgba(0, 0, 0, 0.34)',
-  placeholderFg: 'rgba(129, 137, 145, 1)',
-  placeholderFgActive: 'rgba(93, 97, 101, 1)',
-  inputBorderFg: 'rgba(111, 111, 111, 1)',
-  filterInputBorderFg: 'rgba(61, 68, 75, 1)',
-  filterInputInactiveBg: 'rgba(61, 68, 75, 1)',
-  checkboxFg: 'rgba(108, 108, 108, 1)',
-  sliderBgInactive: 'rgba(84, 84, 84, 1)',
-  tooltipBg: 'rgba(212, 218, 221, 1)',
-  tooltipFg: 'rgba(154, 158, 156, 1)',
-  tooltipBorderFg: 'rgba(201, 209, 219, 1)',
-  titleShadow: 'rgba(0, 0, 0, 0.01)',
-  titleBg: 'rgba(58, 64, 71, 1)',
-  titleButtonFg: 'rgba(139, 144, 150, 1)',
-  titleButtonBgOver: 'rgba(76, 83, 91, 1)',
-  titleButtonFgOver: 'rgba(224, 224, 224, 1)',
-  titleButtonCloseBgOver: 'rgba(232, 17, 35, 1)',
-  titleFg: 'rgba(102, 102, 102, 1)',
-  titleFgActive: 'rgba(128, 128, 128, 1)',
-  trayCounterBg: 'rgba(242, 60, 52, 1)',
-  trayCounterBgMute: 'rgba(136, 136, 136, 1)',
-  trayCounterFg: 'rgba(255, 255, 255, 1)',
-  trayCounterBgMacInvert: 'rgba(255, 255, 255, 1)',
-  trayCounterFgMacInvert: 'rgba(255, 255, 255, 0)',
-  layerBg: 'rgba(0, 0, 0, 0.5)',
-  cancelIconFg: 'rgba(102, 102, 102, 1)',
-  cancelIconFgOver: 'rgba(220, 220, 220, 1)',
-  boxTextFgGood: 'rgba(86, 219, 206, 1)',
-  boxTextFgError: 'rgba(216, 77, 77, 1)',
-  boxTitleFg: 'rgba(235, 235, 235, 1)',
-  boxSearchBg: 'rgba(40, 46, 51, 1)',
-  boxTitleAdditionalFg: 'rgba(128, 128, 128, 1)',
-  membersAboutLimitFg: 'rgba(94, 96, 101, 1)',
-  contactsBg: 'rgba(34, 37, 40, 1)',
-  contactsBgOver: 'rgba(40, 46, 51, 1)',
-  contactsStatusFg: 'rgba(128, 128, 128, 1)',
-  contactsStatusFgOver: 'rgba(128, 128, 128, 1)',
-  contactsStatusFgOnline: 'rgba(85, 225, 211, 1)',
-  photoCropPointFg: 'rgba(255, 255, 255, 0.5)',
-  callArrowFg: 'rgba(43, 199, 184, 1)',
-  callArrowMissedFg: 'rgba(221, 91, 74, 1)',
-  introTitleFg: 'rgba(238, 238, 238, 1)',
-  introDescriptionFg: 'rgba(153, 153, 153, 1)',
-  introErrorFg: 'rgba(153, 153, 153, 1)',
-  introCoverTopBg: 'rgba(24, 129, 115, 1)',
-  introCoverBottomBg: 'rgba(24, 129, 115, 1)',
-  introCoverIconsFg: 'rgba(52, 164, 149, 1)',
-  introCoverPlaneTrace: 'rgba(50, 157, 143, 1)',
-  introCoverPlaneInner: 'rgba(206, 217, 226, 1)',
-  introCoverPlaneOuter: 'rgba(151, 169, 181, 1)',
-  introCoverPlaneTop: 'rgba(255, 255, 255, 1)',
-  dialogsNameFg: 'rgba(245, 245, 245, 1)',
-  dialogsDateFg: 'rgba(109, 114, 124, 1)',
-  dialogsTextFg: 'rgba(141, 147, 158, 1)',
-  dialogsTextFgService: 'rgba(235, 235, 235, 1)',
-  dialogsDraftFg: 'rgba(236, 102, 87, 1)',
-  dialogsVerifiedIconBg: 'rgba(83, 237, 222, 1)',
-  dialogsVerifiedIconFg: 'rgba(40, 46, 51, 1)',
-  dialogsSendingIconFg: 'rgba(114, 114, 114, 1)',
-  dialogsSentIconFg: 'rgba(32, 238, 218, 1)',
-  dialogsUnreadBg: 'rgba(5, 160, 145, 1)',
-  dialogsUnreadBgMuted: 'rgba(73, 81, 89, 1)',
-  dialogsUnreadFg: 'rgba(255, 255, 255, 1)',
-  dialogsBgOver: 'rgba(53, 60, 67, 1)',
-  dialogsDateFgOver: 'rgba(109, 114, 124, 1)',
-  dialogsTextFgOver: 'rgba(163, 167, 174, 1)',
-  dialogsTextFgServiceOver: 'rgba(240, 240, 240, 1)',
-  dialogsVerifiedIconBgOver: 'rgba(83, 237, 222, 1)',
-  dialogsSentIconFgOver: 'rgba(65, 240, 223, 1)',
-  dialogsUnreadBgOver: 'rgba(0, 150, 135, 1)',
-  dialogsUnreadBgMutedOver: 'rgba(85, 94, 103, 1)',
-  dialogsBgActive: 'rgba(0, 150, 135, 1)',
-  dialogsDraftFgActive: 'rgba(198, 247, 243, 1)',
-  dialogsSendingIconFgActive: 'rgba(255, 255, 255, 0.6)',
-  dialogsUnreadBgMutedActive: 'rgba(203, 247, 233, 1)',
-  dialogsUnreadFgActive: 'rgba(3, 157, 142, 1)',
-  dialogsRippleBg: 'rgba(67, 71, 77, 1)',
-  dialogsRippleBgActive: 'rgba(18, 167, 152, 1)',
-  searchedBarBg: 'rgba(58, 64, 71, 1)',
-  searchedBarFg: 'rgba(168, 168, 168, 1)',
-  topBarBg: 'rgba(40, 46, 51, 1)',
-  emojiPanCategories: 'rgba(32, 38, 43, 1)',
-  emojiPanHeaderFg: 'rgba(144, 148, 154, 1)',
-  emojiPanHeaderBg: 'rgba(255, 255, 255, 0.95)',
-  stickerPanDeleteBg: 'rgba(0, 0, 0, 0.8)',
-  stickerPreviewBg: 'rgba(0, 0, 0, 0.69)',
-  historyTextInFgSelected: 'rgba(255, 255, 255, 1)',
-  historyTextOutFg: 'rgba(228, 236, 242, 1)',
-  historyTextOutFgSelected: 'rgba(255, 255, 255, 1)',
-  historyLinkInFg: 'rgba(55, 225, 203, 1)',
-  historyLinkInFgSelected: 'rgba(167, 255, 244, 1)',
-  historyLinkOutFg: 'rgba(55, 225, 203, 1)',
-  historyLinkOutFgSelected: 'rgba(167, 255, 244, 1)',
-  historyFileNameInFgSelected: 'rgba(255, 255, 255, 1)',
-  historyFileNameOutFgSelected: 'rgba(255, 255, 255, 1)',
-  historyOutIconFg: 'rgba(64, 230, 197, 1)',
-  historyOutIconFgSelected: 'rgba(255, 255, 255, 1)',
-  historyIconFgInverted: 'rgba(64, 230, 197, 1)',
-  historySendingOutIconFg: 'rgba(158, 250, 206, 1)',
-  historySendingInIconFg: 'rgba(118, 131, 139, 1)',
-  historySendingInvertedIconFg: 'rgba(255, 255, 255, 0.78)',
-  historyCallArrowInFg: 'rgba(38, 194, 173, 1)',
-  historyCallArrowInFgSelected: 'rgba(255, 255, 255, 1)',
-  historyCallArrowMissedInFgSelected: 'rgba(255, 255, 255, 1)',
-  historyCallArrowOutFg: 'rgba(255, 255, 255, 1)',
-  historyCallArrowOutFgSelected: 'rgba(255, 255, 255, 1)',
-  historyUnreadBarBg: 'rgba(51, 57, 63, 1)',
-  historyUnreadBarFg: 'rgba(60, 211, 191, 1)',
-  historyForwardChooseBg: 'rgba(0, 0, 0, 0.3)',
-  historyPeer1NameFg: 'rgba(236, 117, 119, 1)',
-  historyPeer1NameFgSelected: 'rgba(255, 255, 255, 1)',
-  historyPeer1UserpicBg: 'rgba(225, 112, 118, 1)',
-  historyPeer2NameFg: 'rgba(134, 214, 127, 1)',
-  historyPeer2NameFgSelected: 'rgba(255, 255, 255, 1)',
-  historyPeer2UserpicBg: 'rgba(123, 200, 98, 1)',
-  historyPeer3NameFg: 'rgba(228, 192, 84, 1)',
-  historyPeer3NameFgSelected: 'rgba(255, 255, 255, 1)',
-  historyPeer3UserpicBg: 'rgba(204, 173, 79, 1)',
-  historyPeer4NameFg: 'rgba(104, 199, 243, 1)',
-  historyPeer4NameFgSelected: 'rgba(255, 255, 255, 1)',
-  historyPeer4UserpicBg: 'rgba(101, 170, 221, 1)',
-  historyPeer5NameFg: 'rgba(179, 131, 243, 1)',
-  historyPeer5NameFgSelected: 'rgba(255, 255, 255, 1)',
-  historyPeer5UserpicBg: 'rgba(166, 149, 231, 1)',
-  historyPeer6NameFg: 'rgba(225, 103, 148, 1)',
-  historyPeer6NameFgSelected: 'rgba(255, 255, 255, 1)',
-  historyPeer6UserpicBg: 'rgba(238, 122, 174, 1)',
-  historyPeer7NameFg: 'rgba(87, 201, 224, 1)',
-  historyPeer7NameFgSelected: 'rgba(255, 255, 255, 1)',
-  historyPeer7UserpicBg: 'rgba(110, 201, 203, 1)',
-  historyPeer8NameFg: 'rgba(239, 176, 93, 1)',
-  historyPeer8NameFgSelected: 'rgba(255, 255, 255, 1)',
-  historyPeer8UserpicBg: 'rgba(237, 168, 108, 1)',
-  historyScrollBarBg: 'rgba(137, 137, 137, 0.48)',
-  historyScrollBarBgOver: 'rgba(107, 107, 107, 0.74)',
-  historyScrollBg: 'rgba(95, 95, 95, 0.3)',
-  historyScrollBgOver: 'rgba(98, 98, 98, 0.42)',
-  msgInBg: 'rgba(51, 57, 63, 1)',
-  msgInBgSelected: 'rgba(0, 150, 135, 1)',
-  msgOutBg: 'rgba(42, 47, 51, 1)',
-  msgOutBgSelected: 'rgba(0, 150, 135, 1)',
-  msgSelectOverlay: 'rgba(53, 212, 191, 0.3)',
-  msgStickerOverlay: 'rgba(53, 212, 191, 0.5)',
-  msgInServiceFgSelected: 'rgba(255, 255, 255, 1)',
-  msgOutServiceFg: 'rgba(96, 229, 203, 1)',
-  msgOutServiceFgSelected: 'rgba(255, 255, 255, 1)',
-  msgInShadow: 'rgba(116, 142, 162, 0)',
-  msgInShadowSelected: 'rgba(83, 142, 187, 0)',
-  msgOutShadow: 'rgba(0, 0, 0, 0)',
-  msgOutShadowSelected: 'rgba(55, 167, 141, 0)',
-  msgInDateFg: 'rgba(130, 141, 148, 1)',
-  msgInDateFgSelected: 'rgba(255, 255, 255, 1)',
-  msgOutDateFg: 'rgba(115, 127, 135, 1)',
-  msgOutDateFgSelected: 'rgba(255, 255, 255, 1)',
-  msgServiceBg: 'rgba(54, 60, 67, 0.78)',
-  msgServiceBgSelected: 'rgba(0, 150, 135, 1)',
-  msgInReplyBarColor: 'rgba(50, 206, 185, 1)',
-  msgInReplyBarSelColor: 'rgba(255, 255, 255, 1)',
-  msgOutReplyBarColor: 'rgba(50, 206, 185, 1)',
-  msgOutReplyBarSelColor: 'rgba(255, 255, 255, 1)',
-  msgInMonoFg: 'rgba(90, 171, 160, 1)',
-  msgOutMonoFg: 'rgba(194, 242, 236, 1)',
-  msgInMonoFgSelected: 'rgba(167, 255, 244, 1)',
-  msgOutMonoFgSelected: 'rgba(201, 255, 248, 1)',
-  msgDateImgBg: 'rgba(0, 0, 0, 0.33)',
-  msgDateImgBgOver: 'rgba(0, 0, 0, 0.45)',
-  msgDateImgBgSelected: 'rgba(28, 112, 101, 0.53)',
-  msgFileThumbLinkOutFg: 'rgba(96, 229, 203, 1)',
-  msgFileThumbLinkOutFgSelected: 'rgba(255, 255, 255, 1)',
-  msgFileInBg: 'rgba(80, 212, 195, 1)',
-  msgFileInBgOver: 'rgba(72, 207, 189, 1)',
-  msgFileInBgSelected: 'rgba(255, 255, 255, 1)',
-  msgFileOutBg: 'rgba(17, 191, 171, 1)',
-  msgFileOutBgOver: 'rgba(255, 255, 255, 1)',
-  msgFileOutBgSelected: 'rgba(255, 255, 255, 1)',
-  msgFile1Bg: 'rgba(63, 187, 171, 1)',
-  msgFile1BgDark: 'rgba(38, 159, 143, 1)',
-  msgFile1BgOver: 'rgba(82, 196, 181, 1)',
-  msgFile1BgSelected: 'rgba(255, 255, 255, 1)',
-  msgFile2Bg: 'rgba(142, 245, 232, 1)',
-  msgFile2BgDark: 'rgba(126, 247, 231, 1)',
-  msgFile2BgOver: 'rgba(141, 247, 233, 1)',
-  msgFile2BgSelected: 'rgba(255, 255, 255, 1)',
-  msgFile3Bg: 'rgba(228, 114, 114, 1)',
-  msgFile3BgDark: 'rgba(205, 91, 94, 1)',
-  msgFile3BgOver: 'rgba(195, 81, 84, 1)',
-  msgFile3BgSelected: 'rgba(159, 106, 130, 1)',
-  msgFile4Bg: 'rgba(239, 194, 116, 1)',
-  msgFile4BgDark: 'rgba(230, 165, 97, 1)',
-  msgFile4BgOver: 'rgba(220, 156, 90, 1)',
-  msgFile4BgSelected: 'rgba(177, 157, 132, 1)',
-  historyFileInIconFg: 'rgba(51, 57, 63, 1)',
-  historyFileInIconFgSelected: 'rgba(0, 150, 135, 1)',
-  historyFileInRadialFg: 'rgba(51, 57, 63, 1)',
-  historyFileOutIconFg: 'rgba(51, 57, 63, 1)',
-  historyFileOutIconFgSelected: 'rgba(0, 150, 135, 1)',
-  historyFileOutRadialFgSelected: 'rgba(0, 150, 135, 1)',
-  historyFileThumbIconFg: 'rgba(239, 239, 239, 1)',
-  historyFileThumbIconFgSelected: 'rgba(255, 255, 255, 1)',
-  historyFileThumbRadialFgSelected: 'rgba(255, 255, 255, 1)',
-  msgWaveformInActiveSelected: 'rgba(255, 255, 255, 1)',
-  msgWaveformInInactive: 'rgba(93, 107, 118, 1)',
-  msgWaveformInInactiveSelected: 'rgba(65, 209, 192, 1)',
-  msgWaveformOutActive: 'rgba(17, 191, 171, 1)',
-  msgWaveformOutActiveSelected: 'rgba(255, 255, 255, 1)',
-  msgWaveformOutInactive: 'rgba(89, 104, 116, 1)',
-  msgWaveformOutInactiveSelected: 'rgba(65, 209, 192, 1)',
-  msgBotKbOverBgAdd: 'rgba(255, 255, 255, 0.08)',
-  msgBotKbRippleBg: 'rgba(158, 157, 157, 0.06)',
-  youtubePlayIconBg: 'rgba(232, 49, 49, 0.78)',
-  videoPlayIconBg: 'rgba(0, 0, 0, 0.5)',
-  videoPlayIconFg: 'rgba(255, 255, 255, 1)',
-  toastBg: 'rgba(0, 0, 0, 0.7)',
-  reportSpamBg: 'rgba(54, 60, 66, 1)',
-  reportSpamFg: 'rgba(60, 66, 72, 1)',
-  historyToDownBg: 'rgba(67, 77, 87, 1)',
-  historyToDownBgOver: 'rgba(81, 91, 101, 1)',
-  historyToDownBgRipple: 'rgba(99, 109, 119, 1)',
-  historyToDownFg: 'rgba(173, 180, 186, 1)',
-  historyToDownShadow: 'rgba(0, 0, 0, 0.25)',
-  historyComposeAreaBg: 'rgba(40, 46, 51, 1)',
-  historyComposeButtonBgOver: 'rgba(49, 54, 60, 1)',
-  historyComposeButtonBgRipple: 'rgba(39, 43, 47, 1)',
-  overviewCheckBg: 'rgba(0, 0, 0, 0.25)',
-  overviewCheckFg: 'rgba(255, 255, 255, 1)',
-  overviewCheckFgActive: 'rgba(255, 255, 255, 1)',
-  overviewPhotoSelectOverlay: 'rgba(64, 172, 227, 0.2)',
-  profileStatusFgOver: 'rgba(156, 156, 156, 1)',
-  notificationSampleCloseFg: 'rgba(215, 215, 215, 1)',
-  notificationSampleTextFg: 'rgba(215, 215, 215, 1)',
-  notificationSampleNameFg: 'rgba(147, 147, 147, 1)',
-  mainMenuCoverBg: 'rgba(0, 150, 135, 1)',
-  mainMenuCloudBg: 'rgba(14, 131, 127, 1)',
-  mediaPlayerDisabledFg: 'rgba(157, 209, 239, 1)',
-  mediaviewFileRedCornerFg: 'rgba(213, 89, 89, 1)',
-  mediaviewFileYellowCornerFg: 'rgba(232, 166, 89, 1)',
-  mediaviewFileGreenCornerFg: 'rgba(73, 169, 87, 1)',
-  mediaviewFileBlueCornerFg: 'rgba(89, 157, 207, 1)',
-  mediaviewMenuBg: 'rgba(56, 56, 56, 1)',
-  mediaviewMenuBgOver: 'rgba(80, 80, 80, 1)',
-  mediaviewMenuBgRipple: 'rgba(103, 103, 103, 1)',
-  mediaviewBg: 'rgba(34, 34, 34, 0.92)',
-  mediaviewControlBg: 'rgba(0, 0, 0, 0.24)',
-  mediaviewCaptionBg: 'rgba(17, 17, 17, 0.5)',
-  mediaviewTextLinkFg: 'rgba(102, 247, 228, 1)',
-  mediaviewPlaybackActive: 'rgba(199, 199, 199, 1)',
-  mediaviewPlaybackInactive: 'rgba(37, 37, 37, 1)',
-  mediaviewPlaybackActiveOver: 'rgba(255, 255, 255, 1)',
-  mediaviewPlaybackInactiveOver: 'rgba(71, 71, 71, 1)',
-  mediaviewPlaybackProgressFg: 'rgba(255, 255, 255, 0.78)',
-  mediaviewTransparentBg: 'rgba(255, 255, 255, 1)',
-  mediaviewTransparentFg: 'rgba(204, 204, 204, 1)',
-  callBg: 'rgba(38, 40, 44, 0.95)',
-  callNameFg: 'rgba(255, 255, 255, 1)',
-  callFingerprintBg: 'rgba(0, 0, 0, 0.4)',
-  callStatusFg: 'rgba(170, 171, 172, 1)',
-  callIconFg: 'rgba(255, 255, 255, 1)',
-  callAnswerBg: 'rgba(90, 209, 193, 1)',
-  callAnswerRipple: 'rgba(66, 194, 177, 1)',
-  callAnswerBgOuter: 'rgba(63, 235, 201, 0.15)',
-  callHangupBg: 'rgba(215, 90, 90, 1)',
-  callHangupRipple: 'rgba(192, 70, 70, 1)',
-  callCancelBg: 'rgba(255, 255, 255, 1)',
-  callCancelFg: 'rgba(119, 119, 119, 1)',
-  callCancelRipple: 'rgba(241, 241, 241, 1)',
-  callMuteRipple: 'rgba(255, 255, 255, 0.07)',
-  callBarBgMuted: 'rgba(143, 143, 143, 1)',
-  callBarUnmuteRipple: 'rgba(127, 127, 127, 1)',
-  importantTooltipFgLink: 'rgba(101, 252, 232, 1)',
-  filterInputActiveBg: 'rgba(61, 68, 75, 1)',
-  botKbBg: 'rgba(61, 68, 75, 1)',
-  botKbDownBg: 'rgba(73, 79, 85, 1)',
-  emojiIconFg: 'rgba(108, 114, 120, 1)',
-  emojiIconFgActive: 'rgba(54, 205, 185, 1)',
-  overviewCheckBorder: 'rgba(228, 234, 239, 1)',
-  windowShadowFgFallback: 'rgba(40, 46, 51, 1)',
-  outlineButtonBg: 'rgba(40, 46, 51, 1)',
-  boxBg: 'rgba(40, 46, 51, 1)',
-  introBg: 'rgba(40, 46, 51, 1)',
-  dialogsBg: 'rgba(40, 46, 51, 1)',
-  emojiPanBg: 'rgba(40, 46, 51, 1)',
-  mainMenuBg: 'rgba(40, 46, 51, 1)',
-  mediaPlayerBg: 'rgba(40, 46, 51, 1)',
-  mediaviewFileBg: 'rgba(40, 46, 51, 1)',
-  notificationBg: 'rgba(40, 46, 51, 1)',
-  boxTextFg: 'rgba(245, 245, 245, 1)',
-  historyTextInFg: 'rgba(245, 245, 245, 1)',
-  notificationsBoxMonitorFg: 'rgba(245, 245, 245, 1)',
-  mediaviewFileNameFg: 'rgba(245, 245, 245, 1)',
-  mediaviewFileSizeFg: 'rgba(130, 134, 138, 1)',
-  dialogsNameFgOver: 'rgba(233, 233, 233, 1)',
-  sliderBgActive: 'rgba(63, 193, 176, 1)',
-  msgWaveformInActive: 'rgba(63, 193, 176, 1)',
-  historySendIconFg: 'rgba(63, 193, 176, 1)',
-  historySendIconFgOver: 'rgba(63, 193, 176, 1)',
-  historyReplyIconFg: 'rgba(63, 193, 176, 1)',
-  profileVerifiedCheckBg: 'rgba(63, 193, 176, 1)',
-  profileAdminStartFg: 'rgba(63, 193, 176, 1)',
-  notificationSampleUserpicFg: 'rgba(63, 193, 176, 1)',
-  mediaPlayerActiveFg: 'rgba(63, 193, 176, 1)',
-  radialFg: 'rgba(255, 255, 255, 1)',
-  titleButtonCloseFgOver: 'rgba(255, 255, 255, 1)',
-  dialogsNameFgActive: 'rgba(255, 255, 255, 1)',
-  dialogsDateFgActive: 'rgba(255, 255, 255, 1)',
-  dialogsTextFgActive: 'rgba(255, 255, 255, 1)',
-  stickerPanDeleteFg: 'rgba(255, 255, 255, 1)',
-  historyForwardChooseFg: 'rgba(255, 255, 255, 1)',
-  historyPeerUserpicFg: 'rgba(255, 255, 255, 1)',
-  msgServiceFg: 'rgba(255, 255, 255, 1)',
-  youtubePlayIconFg: 'rgba(255, 255, 255, 1)',
-  toastFg: 'rgba(255, 255, 255, 1)',
-  profileVerifiedCheckFg: 'rgba(255, 255, 255, 1)',
-  mainMenuCoverFg: 'rgba(255, 255, 255, 1)',
-  mediaviewMenuFg: 'rgba(255, 255, 255, 1)',
-  mediaviewControlFg: 'rgba(255, 255, 255, 1)',
-  msgInServiceFg: 'rgba(75, 225, 195, 1)',
-  slideFadeOutShadowFg: 'rgba(0, 0, 0, 1)',
-  historyUnreadBarBorder: 'rgba(0, 0, 0, 0.09)',
-  mediaviewVideoBg: 'rgba(0, 0, 0, 1)',
-  mainMenuCloudFg: 'rgba(255, 255, 255, 1)',
-  mediaviewFileExtFg: 'rgba(255, 255, 255, 1)',
-  activeButtonSecondaryFgOver: 'rgba(142, 228, 217, 1)',
-  lightButtonFgOver: 'rgba(121, 232, 218, 1)',
-  msgFileThumbLinkInFg: 'rgba(121, 232, 218, 1)',
-  dialogsMenuIconFg: 'rgba(128, 128, 128, 1)',
-  historyComposeIconFg: 'rgba(128, 128, 128, 1)',
-  dialogsMenuIconFgOver: 'rgba(220, 220, 220, 1)',
-  historyToDownFgOver: 'rgba(220, 220, 220, 1)',
-  historyComposeIconFgOver: 'rgba(220, 220, 220, 1)',
-  mediaPlayerInactiveFg: 'rgba(84, 84, 84, 1)',
-  titleBgActive: 'rgba(58, 64, 71, 1)',
-  titleButtonBg: 'rgba(58, 64, 71, 1)',
-  titleButtonFgActive: 'rgba(139, 144, 150, 1)',
-  titleButtonCloseFg: 'rgba(139, 144, 150, 1)',
-  titleButtonBgActiveOver: 'rgba(76, 83, 91, 1)',
-  titleButtonFgActiveOver: 'rgba(224, 224, 224, 1)',
-  titleButtonCloseBgActiveOver: 'rgba(232, 17, 35, 1)',
-  photoCropFadeBg: 'rgba(0, 0, 0, 0.5)',
-  boxTitleCloseFg: 'rgba(102, 102, 102, 1)',
-  historyReplyCancelFg: 'rgba(102, 102, 102, 1)',
-  boxTitleCloseFgOver: 'rgba(220, 220, 220, 1)',
-  historyReplyCancelFgOver: 'rgba(220, 220, 220, 1)',
-  historyCallArrowMissedInFg: 'rgba(221, 91, 74, 1)',
-  dialogsChatIconFg: 'rgba(245, 245, 245, 1)',
-  dialogsDraftFgOver: 'rgba(236, 102, 87, 1)',
-  dialogsVerifiedIconFgOver: 'rgba(40, 46, 51, 1)',
-  dialogsSendingIconFgOver: 'rgba(114, 114, 114, 1)',
-  dialogsUnreadFgOver: 'rgba(255, 255, 255, 1)',
-  dialogsVerifiedIconFgActive: 'rgba(0, 150, 135, 1)',
-  dialogsForwardBg: 'rgba(0, 150, 135, 1)',
-  notificationsBoxScreenBg: 'rgba(0, 150, 135, 1)',
-  callBarBg: 'rgba(0, 150, 135, 1)',
-  callBarMuteRipple: 'rgba(18, 167, 152, 1)',
-  historyFileNameOutFg: 'rgba(228, 236, 242, 1)',
-  mediaInFg: 'rgba(130, 141, 148, 1)',
-  historyComposeAreaFgService: 'rgba(130, 141, 148, 1)',
-  mediaInFgSelected: 'rgba(255, 255, 255, 1)',
-  mediaOutFg: 'rgba(115, 127, 135, 1)',
-  mediaOutFgSelected: 'rgba(255, 255, 255, 1)',
-  historyFileInRadialFgSelected: 'rgba(0, 150, 135, 1)',
-  historyFileOutRadialFg: 'rgba(51, 57, 63, 1)',
-  historyFileThumbRadialFg: 'rgba(239, 239, 239, 1)',
-  historyVideoMessageProgressFg: 'rgba(239, 239, 239, 1)',
-  mediaviewSaveMsgBg: 'rgba(0, 0, 0, 0.7)',
-  importantTooltipBg: 'rgba(0, 0, 0, 0.7)',
-  historyPinnedBg: 'rgba(40, 46, 51, 1)',
-  historyReplyBg: 'rgba(40, 46, 51, 1)',
-  historyComposeButtonBg: 'rgba(40, 46, 51, 1)',
-  changePhoneSimcardFrom: 'rgba(215, 215, 215, 1)',
-  changePhoneSimcardTo: 'rgba(147, 147, 147, 1)',
-  mediaviewPlaybackIconFg: 'rgba(199, 199, 199, 1)',
-  mediaviewPlaybackIconFgOver: 'rgba(255, 255, 255, 1)'
+  meta: {
+    backgroundImage: require('./tiled.jpg'),
+    builtin: true,
+    nightMode: true,
+  },
+  pairs,
 };
-
