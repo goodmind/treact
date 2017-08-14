@@ -16,7 +16,10 @@ import {
 
 import Color from './color-value';
 
-const onSecond = <L, T, S>(fn: (a: T) => S) => ([l, t, ...rest]: Array<L | T>): [L, S] => [l, fn(t), ...rest];
+// TODO: make better types
+const onSecond = <L, T, S>(fn: (a: T) => S) =>
+  // tslint:disable-next-line
+  ([l, t, ...rest]: any[]): (L|T|S) & any => [l, fn(t), ...rest];
 const isPair: StringPred = contains('|');
 const splitPair: Splitter = pipe(split('|'), map(trim));
 const isColor: StringPred = pipe(head, equals('#'));
