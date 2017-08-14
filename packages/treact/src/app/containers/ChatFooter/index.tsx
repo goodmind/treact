@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { compose, withHandlers, withProps, withState } from 'recompose';
 
-import { ChatFooter } from 'components/ChatFooter';
+import { ChatFooter, Props as ChatFooterProps } from 'components/ChatFooter';
 import { sendText } from 'redux/api/messages';
 import { Dispatch, Store } from 'redux/store.h';
 
@@ -9,40 +10,39 @@ type State = {
   message: string,
 };
 
-type ConnectedState = { selected: number };
-type ConnectedActions = { sendMessage(id: number, text: string): Promise<void> };
+type ConnectedState = {
+  selected: number,
+};
+type ConnectedActions = {
+  sendMessage(id: number, text: string): Promise<void>,
+  setMessage(s: string): string,
+  onChange: React.ChangeEventHandler<HTMLInputElement>,
+  onSubmit: React.MouseEventHandler<{}>,
+};
 type OwnProps = {};
-type Props = ConnectedState & ConnectedActions & OwnProps;
+type Props = ConnectedState & ConnectedActions & OwnProps & State;
 
-class ChatFooterContainer extends React.Component<Props, State> {
-  public state = {
-    message: '',
-  };
+const enhance = compose(
+  connect<ConnectedState, ConnectedActions, OwnProps>(
+    (state: Store) => ({ selected: state.selected.dialog }),
+    (dispatch: Dispatch) => ({
+      sendMessage: (id: number, text: string) => dispatch(sendText(id, text)),
+    })),
+  withState('message', 'setMessage', ''),
+  withHandlers<Props, {}>({
+    onChange: ({ setMessage }) => e => setMessage(e.target.value),
+    onSubmit: ({ sendMessage, selected, setMessage, message }) => async () => {
+      await sendMessage(selected, message);
+      setMessage('');
+    },
+  }),
+  withProps<ChatFooterProps, Props>(props => ({
+    value: props.message,
+    change: props.onChange,
+    submit: props.onSubmit,
+  })),
+);
 
-  public onChange: React.ChangeEventHandler<HTMLInputElement> =
-    e => this.setState({ message: e.target.value })
-
-  public onSubmit = async () => {
-    const { sendMessage, selected } = this.props;
-    await sendMessage(selected, this.state.message);
-    this.setState({ message: '' });
-  }
-
-  public render() {
-    return (
-      <ChatFooter
-        value={this.state.message}
-        change={this.onChange}
-        submit={this.onSubmit} />
-    );
-  }
-}
-
-const mapState = (state: Store) => ({ selected: state.selected.dialog });
-const mapDispatch = (dispatch: Dispatch) => ({
-  sendMessage: (id: number, text: string) => dispatch(sendText(id, text)),
-});
-const connected =
-  connect<ConnectedState, ConnectedActions, OwnProps>(mapState, mapDispatch)(ChatFooterContainer);
+const connected = enhance(ChatFooter);
 
 export { connected as ChatFooter };
