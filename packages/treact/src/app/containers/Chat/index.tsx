@@ -3,41 +3,27 @@ import { connect } from 'react-redux';
 
 import { Chat, DefaultScreen } from 'components/Chat';
 import { Message } from 'components/Message';
-import { RichText, Entity } from 'components/RichText';
+import { Entity, RichText } from 'components/RichText';
+import { MessageGroup } from 'components/MessageGroup';
 import { getPeerData } from 'helpers/Telegram/Peers';
 import { getPeerName } from 'helpers/Telegram/Peers';
-import { Obj, path, props } from 'ramda';
-import { loadOffset, selectChat } from 'redux/api/chatList';
+import { eqProps, groupWith, map, Obj, path, pipe, props } from 'ramda';
+import { loadOffset } from 'redux/api/chatList';
 import { TPeersType } from 'redux/modules/peers';
 import { MtpChat, MtpMessage, MtpUser } from 'redux/mtproto';
 import { Dispatch, Store } from 'redux/store.h';
 
-const onChatSelect = async (currentId: number, nextId: number) => {
+/*const onChatSelect = async (currentId: number, nextId: number) => {
   if (nextId && nextId !== currentId) {
     await selectChat(nextId);
   }
-};
-
-const MessageItem = ({ id, from_id, date, message, entities }: MtpMessage) =>
-  <Message
-    key={id}
-    id={id}
-    date={date}
-    user={from_id}
-    // HACK: what to do here?
-    text={
-      <RichText
-        id={id}
-        // TODO: remove any cast
-        // tslint:disable-next-line
-        entities={(entities as any) as Entity[]}
-        text={message} />} />;
+};*/
 
 class ChatContainer extends React.Component<Props, {}> {
-  public componentWillReceiveProps(nextProps: ConnectedState) {
+  /*public componentWillReceiveProps(nextProps: ConnectedState) {
     const { selected } = this.props;
     onChatSelect(selected, nextProps.selected);
-  }
+  }*/
   public loadSliceRange = async () => {
     const { loadOffset, selected, history } = this.props;
     const maxID = history[0];
@@ -53,7 +39,7 @@ class ChatContainer extends React.Component<Props, {}> {
         name={peerName}
         userCount={0}
         loadMore={this.loadSliceRange}>
-        {messages.map(MessageItem)}
+        {groupByUser(messages)}
       </Chat>
     );
   }
@@ -76,6 +62,36 @@ type Props = ConnectedState & ConnectedActions;
 
 type MessagesPath = (obj: Store) => Obj<MtpMessage>;
 const messagesPath: MessagesPath = path(['messages', 'byId']);
+
+const messageItem = ({ id, from_id, date, message, entities, out }: MtpMessage) =>
+  <Message
+    key={id}
+    id={id}
+    date={date}
+    user={from_id}
+    own={out}
+    // HACK: what to do here?
+    text={
+      <RichText
+        id={id}
+        // TODO: remove any cast
+        // tslint:disable-next-line
+        entities={(entities as any) as Entity[]}
+        text={message} />} />;
+
+const messageGroup = ([first, ...rest]: MtpMessage[]) =>
+  <MessageGroup
+    key={`${first.from_id}_${first.date}`}
+    messages={[first, ...rest]}
+    message={messageItem}
+    first={first} />;
+
+const groupByUser = pipe(
+  groupWith<MtpMessage, MtpMessage[]>((a, b) => {
+    return eqProps('from_id', a, b) && (b.date < a.date + 900);
+  }),
+  map(messageGroup),
+);
 
 const stateMap = (state: Store): ConnectedState => {
   const selected = state.selected.dialog;
