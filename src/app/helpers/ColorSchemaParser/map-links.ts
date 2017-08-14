@@ -3,11 +3,13 @@ import {
   filter,
   fromPairs,
   map,
+  mergeAll,
   mergeWith,
   of,
   partition,
   pipe,
   uniqBy,
+  values,
 } from 'ramda';
 
 import Color from './color-value';
@@ -67,13 +69,20 @@ export function mergeThemes(
   return Object.assign({}, fallbacks, main);
 }
 
-export function parseWithDefaults(rawDefaultTheme: string) {
-  const [, defaultTheme] = inputToColorPair(parser(rawDefaultTheme));
-  return (rawTheme: string) => {
-    const theme = inputToColorPair(parser(rawTheme));
-    return mergeThemes(theme, [[], defaultTheme]);
+export function parseWithDefaults(defaultThemePairs: InputPair[]) {
+  const defaultTheme = inputToColorPair(defaultThemePairs);
+  return (themePairs: InputPair[]) => {
+    const theme = inputToColorPair(themePairs);
+    return mergeThemes(theme, [[], defaultTheme[1]]);
   };
 }
+
+export const processingToObject = pipe(
+  inputToColorPair,
+  processing,
+  values,
+  mergeAll,
+);
 
 function processingToPairs(list: InputPair[]) {
   const { main, fallbacks } = processing(inputToColorPair(list));
