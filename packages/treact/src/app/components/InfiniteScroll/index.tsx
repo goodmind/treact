@@ -161,10 +161,10 @@ class InfiniteScroll extends React.Component<Props, {}> {
     };
 
     return React.createElement(
-        element,
-        props,
-        children,
-        hasMore && (loader || this.defaultLoader),
+      element,
+      props,
+      children,
+      hasMore && (loader || this.defaultLoader),
     );
   }
 }
