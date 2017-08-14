@@ -110,8 +110,8 @@ test('Should merge InputPair correctly 2', () => {
 describe('parse with defaults', () => {
 
   test('short example', () => {
-    const withDefaults = parseWithDefaults(example);
-    const result = withDefaults(shortExample);
+    const withDefaults = parseWithDefaults(parser(example));
+    const result = withDefaults(parser(shortExample));
     expect(result).toMatchSnapshot();
   });
 
@@ -119,15 +119,15 @@ describe('parse with defaults', () => {
     const shortExample = `
 shadowFg: #00000018;
 callBarUnmuteRipple: #777777;
-`
+`;
 
     // tslint:disable
     const shortDefaults = `
 importantTooltipBg: #ffffff | shadowFg;
 callBarUnmuteRipple: #ffffff | shadowFg;
-`
-    const withDefaults = parseWithDefaults(shortDefaults);
-    const result = withDefaults(shortExample);
+`;
+    const withDefaults = parseWithDefaults(parser(shortDefaults));
+    const result = withDefaults(parser(shortExample));
     expect(result).toMatchSnapshot();
   })
 
