@@ -4,21 +4,6 @@ import * as React from 'react';
 import { Themeable } from 'themes/theme.h';
 import * as style from './style.css';
 
-interface ChatListBasicProps {
-  id: number;
-  name: string;
-  selected: boolean;
-  click: React.MouseEventHandler<{}>;
-  children?: React.ReactNode;
-}
-
-interface ChatListFullProps extends ChatListBasicProps {
-  isYou: boolean;
-  previewName: string;
-  text: string;
-  unreadCount: number;
-}
-
 const active = 'active';
 
 const Counter = styled.div<Themeable>(({ theme }) => ({
@@ -42,48 +27,25 @@ const StyledUnreadBadge = styled.div<UnreadProps & Themeable>(({ unread, theme }
   },
 }));
 
-const StyledSenderPreview = styled.div<SenderProps>(props => ({
-  display: props.userName ? 'inline-block' : 'none',
-  color: '#538bb4',
+const StyledSenderPreview = styled.div<SenderProps & Themeable>(({ theme, userName }) => ({
+  display: userName ? 'inline-block' : 'none',
+  color: theme.dialogsTextFgService,
   paddingRight: '4px',
   [`.${active} &`]: {
-    color: '#fff',
+    color: theme.dialogsTextFgServiceActive,
   },
 }));
 
-const StyledMessagePreview = styled.div({
-  color: '#888888',
+const StyledMessagePreview = styled.div(({ theme }) => ({
   flex: 1,
   textOverflow: 'ellipsis',
   overflow: 'hidden',
   whiteSpace: 'nowrap',
+  color: theme.dialogsTextFg,
   [`.${active} &`]: {
-    color: '#fff',
+    color: theme.dialogsTextFgActive,
   },
-});
-
-type UnreadProps = { unread: number };
-const UnreadBadge = ({ unread }: UnreadProps) => (
-  <StyledUnreadBadge unread={unread}>
-    <Counter>{unread}</Counter>
-  </StyledUnreadBadge>
-);
-
-type SenderProps = { userName: string };
-const SenderPreview = ({ userName }: SenderProps) => (
-  <StyledSenderPreview userName={userName}>
-    <span>{userName}</span>
-    <span>:</span>
-  </StyledSenderPreview>
-);
-
-type MessageProps = { text: string, userName: string, isYou: boolean };
-const MessagePreview = ({ text, userName, isYou }: MessageProps) => (
-  <StyledMessagePreview>
-    <SenderPreview userName={isYou ? 'You' : userName} />
-    <span>{text}</span>
-  </StyledMessagePreview>
-);
+}));
 
 type DialogItemProps = { active: boolean };
 const StyledDialogItem = styled.div<DialogItemProps & Themeable>({
@@ -124,6 +86,52 @@ const Name = styled.div<Themeable>(({ theme }) => ({
   },
 }));
 
+const Time = styled.div<Themeable>(({ theme }) => ({
+  alignSelf: 'center',
+  color: theme.dialogsDateFg,
+  [`.${active} &`]: {
+    color: theme.dialogsDateFgActive,
+  },
+}));
+
+interface ChatListBasicProps {
+  id: number;
+  name: string;
+  selected: boolean;
+  click: React.MouseEventHandler<{}>;
+  children?: React.ReactNode;
+}
+
+interface ChatListFullProps extends ChatListBasicProps {
+  isYou: boolean;
+  previewName: string;
+  text: string;
+  unreadCount: number;
+}
+
+type UnreadProps = { unread: number };
+const UnreadBadge = ({ unread }: UnreadProps) => (
+  <StyledUnreadBadge unread={unread}>
+    <Counter>{unread}</Counter>
+  </StyledUnreadBadge>
+);
+
+type SenderProps = { userName: string };
+const SenderPreview = ({ userName }: SenderProps) => (
+  <StyledSenderPreview userName={userName}>
+    <span>{userName}</span>
+    <span>:</span>
+  </StyledSenderPreview>
+);
+
+type MessageProps = { text: string, userName: string, isYou: boolean };
+const MessagePreview = ({ text, userName, isYou }: MessageProps) => (
+  <StyledMessagePreview>
+    <SenderPreview userName={isYou ? 'You' : userName} />
+    <span>{text}</span>
+  </StyledMessagePreview>
+);
+
 export const ChatListItemEmpty = ({
   id,
   name,
@@ -139,7 +147,7 @@ export const ChatListItemEmpty = ({
       <div className={style.info}>
         <div className={style.top}>
           <Name>{name}</Name>
-          <div className={style.time}>00:00</div>
+          <Time>00:00</Time>
         </div>
         <div className={style.bottom}>
           {children}
