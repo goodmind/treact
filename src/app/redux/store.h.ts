@@ -11,6 +11,7 @@ import { StoreMessages } from './modules/messages';
 import { StorePeers } from './modules/peers';
 import { StorePhotos } from './modules/photos';
 import { StoreSelected } from './modules/selected';
+import { StoreTheme } from './modules/theme';
 import { StoreUsers } from './modules/users';
 
 import { StoreList } from 'helpers/state';
@@ -33,6 +34,7 @@ export interface Store {
     locations: StoreList<MtpFileLocation>;
   };
   photos: StorePhotos;
+  theme: StoreTheme;
 }
 
 export type ThunkAction<R, S, E> = (dispatch: Redux.Dispatch<S>, getState: () => S, extraArgument?: E) => R;
