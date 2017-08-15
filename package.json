@@ -75,7 +75,6 @@
   "license": "MIT",
   "devDependencies": {
     "@types/babel-generator": "^6.25.0",
-    "@types/babel-template": "^6.25.0",
     "@types/babel-types": "^6.25.1",
     "@types/classnames": "^2.2.0",
     "@types/history": "^4.6.0",
