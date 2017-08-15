@@ -55,7 +55,7 @@ interface OwnProps {
   user: number;
   // TODO: Should be children?
   text: React.ReactNode;
-  own: boolean;
+  own?: boolean;
 }
 
 const formatTime = (date: number) => {
