@@ -1,6 +1,7 @@
 import Color from 'helpers/ColorSchemaParser/color-value';
+import { InputPair } from 'helpers/ColorSchemaParser/map-links';
 
-const pairs = [
+const pairs: InputPair[] = [
   ['windowBg', [new Color([40, 46, 51, 255])]],
   ['windowFg', [new Color([245, 245, 245, 255])]],
   ['windowBgOver', [new Color([49, 59, 67, 255])]],
