@@ -81,6 +81,7 @@
     "@types/jest": "^20.0.7",
     "@types/jszip": "0.0.33",
     "@types/node": "^8.0.17",
+    "@types/ramda": "github:types/npm-ramda#dist",
     "@types/react": "^15.6.0",
     "@types/react-dom": "^15.5.1",
     "@types/react-helmet": "0.0.28",
