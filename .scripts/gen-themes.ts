@@ -17,8 +17,12 @@ const createThemePairs = pipe(
     t.arrayExpression(v[1].map(c => c instanceof Color
       ? t.newExpression(
         t.identifier('Color'),
-        // tslint:disable-next-line
-        [t.arrayExpression(Array.from((c as any).data).map(x => t.numericLiteral(x)))])
+        [t.arrayExpression(
+          Array
+            // tslint:disable-next-line
+            .from((c as any).data)
+            .map((x: number) => t.numericLiteral(x)),
+        )])
       : t.stringLiteral(c))),
   ])),
   t.arrayExpression,
@@ -27,13 +31,15 @@ const createThemePairs = pipe(
 export const parse = (code: string, meta, background: string = './background.jpg') => {
   const build = template(`
   import Color from 'helpers/ColorSchemaParser/color-value';
-  const pairs = THEME;
+  import { InputPair } from 'helpers/ColorSchemaParser/map-links';
+  const pairs: InputPair[] = THEME;
   export default {
     meta: META,
     pairs,
   }
   `, {
     sourceType: 'module',
+    plugins: ['flow'],
   });
 
   const sourceFile = t.program(build({
