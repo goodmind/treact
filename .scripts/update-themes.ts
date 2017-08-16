@@ -59,6 +59,8 @@ const themes = [
   ]),
 ];
 
-Promise.all(themes);
+Promise
+  .all(themes)
+  .catch(err => console.error(err));
 
 
