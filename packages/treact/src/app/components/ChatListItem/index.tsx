@@ -105,7 +105,8 @@ interface ChatListBasicProps {
 interface ChatListFullProps extends ChatListBasicProps {
   isYou: boolean;
   previewName: string;
-  text: string;
+  // TODO: use children?
+  text: React.ReactNode;
   unreadCount: number;
 }
 
@@ -124,11 +125,11 @@ const SenderPreview = ({ userName }: SenderProps) => (
   </StyledSenderPreview>
 );
 
-type MessageProps = { text: string, userName: string, isYou: boolean };
+type MessageProps = { text: React.ReactNode, userName: string, isYou: boolean };
 const MessagePreview = ({ text, userName, isYou }: MessageProps) => (
   <StyledMessagePreview>
     <SenderPreview userName={isYou ? 'You' : userName} />
-    <span>{text}</span>
+    {text}
   </StyledMessagePreview>
 );
 
