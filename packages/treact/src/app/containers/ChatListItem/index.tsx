@@ -3,8 +3,8 @@ import * as React from 'react';
 import { isEmpty, path } from 'ramda';
 
 import { ChatListItem, ChatListItemEmpty } from 'components/ChatListItem';
-import { getPeerData } from 'helpers/Telegram/Peers';
-import { getPeerName, getPeerShortName } from 'helpers/Telegram/Peers';
+import { Media } from 'containers/Media';
+import { getPeerData, getPeerName, getPeerShortName } from 'helpers/Telegram/Peers';
 import { connect } from 'react-redux';
 import { selectChat } from 'redux/api/chatList';
 import { StoreHistory } from 'redux/modules/histories';
@@ -27,7 +27,10 @@ class ChatListItemContainer extends React.Component<Props & Funcs & State, {}> {
   }
   public renderItem = () => {
     const { id, selected, peer, peerData, from, fromData, isNotChat, isYou, message } = this.props;
-    const lastMsg = message || {message: ''};
+    const { media } = message;
+    // TODO: move this to component?
+    const text = path<'message', string>(['message'], message)
+      || (media && <Media media={media} preview={true} />);
     return <ChatListItem
       id={id}
       click={this.click}
@@ -36,7 +39,7 @@ class ChatListItemContainer extends React.Component<Props & Funcs & State, {}> {
       unreadCount={this.props.dialog.unread_count}
       previewName={isNotChat ? '' : (getPeerShortName(from, fromData) || '')}
       isYou={isYou}
-      text={lastMsg.message || ''}
+      text={text}
       />;
   }
   public click = () => this.props.click(this.props.id);
@@ -67,7 +70,7 @@ interface State {
   from: TPeersType;
   isNotChat: boolean;
   isYou: boolean;
-  message?: MtpMessage;
+  message: MtpMessage;
 }
 
 const preview = (state: Store, message: MtpMessage, peer: TPeersType) => {
@@ -89,7 +92,7 @@ const preview = (state: Store, message: MtpMessage, peer: TPeersType) => {
 const messagesPath = path(['messages', 'byId']);
 
 const mapState = (state: Store, { id, peer, dialog }: Props): State => {
-  const message = messagesPath<Store['messages']['byId']>(state)[dialog.top_message];
+  const message = (messagesPath(state) as Store['messages']['byId'])[dialog.top_message];
   const peerData = getPeerData(id, peer, state);
 
   return {
