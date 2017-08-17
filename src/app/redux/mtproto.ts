@@ -54,6 +54,29 @@ type TMtpStorageType =
   | TMtpFileMp4
   | TMtpFileWebp;
 
+// TODO: where is my TL parser???
+type TMtpMessageMediaEmpty = 'messageMediaEmpty';
+type TMtpMessageMediaGeo = 'messageMediaGeo';
+type TMtpMessageMediaContact = 'messageMediaContact';
+type TMtpMessageMediaUnsupported = 'messageMediaUnsupported';
+type TMtpMessageMediaVenue = 'messageMediaVenue';
+type TMtpMessageMediaPhoto = 'messageMediaPhoto';
+type TMtpMessageMediaDocument = 'messageMediaDocument';
+type TMtpMessageMediaWebPage = 'messageMediaWebPage';
+type TMtpMessageMediaGame = 'messageMediaGame';
+type TMtpMessageMediaInvoice = 'messageMediaInvoice';
+export type TMtpMessageMediaType =
+  | TMtpMessageMediaEmpty
+  | TMtpMessageMediaGeo
+  | TMtpMessageMediaContact
+  | TMtpMessageMediaUnsupported
+  | TMtpMessageMediaVenue
+  | TMtpMessageMediaPhoto
+  | TMtpMessageMediaDocument
+  | TMtpMessageMediaWebPage
+  | TMtpMessageMediaGame
+  | TMtpMessageMediaInvoice;
+
 interface MtpPrimitive<T> {
   _: T;
 }
@@ -64,6 +87,7 @@ export interface MtpHelpObject<T extends TMtpHelpType> extends MtpPrimitive<T> {
 export interface MtpPeerObject<T extends TMtpPeerType> extends MtpPrimitive<T> { }
 export interface MtpUploadObject<T extends TMtpUploadType> extends MtpPrimitive<T> { }
 export interface MtpStorageObject<T extends TMtpStorageType> extends MtpPrimitive<T> { }
+export interface MtpMessageMediaObject<T extends TMtpMessageMediaType> extends MtpPrimitive<T> { }
 
 export interface MtpObject<T extends TMtpType> extends MtpPrimitive<T> {
   id: number;
@@ -97,6 +121,8 @@ export interface MtpMessage extends MtpObject<TMtpMessage> {
   mentioned?: true;
   via_bot_id?: number;
   entities?: MtpVector<MtpMessageEntity>; // Vector of message markdown if any
+  // tslint:disable-next-line
+  media: MtpMessageMedia;
   unread?: true;
   peerID?: true;
   out?: true;
@@ -155,6 +181,63 @@ export interface MtpGetDialogs extends MtpObject<TMtpGetDialogs> {
 
 export type MtpObjectGeneric = MtpDcOption|MtpMessage|MtpDialog|
   MtpFileLocation|MtpPhoto|MtpUser|MtpChat|MtpMessagesSlice|MtpGetDialogs;
+// MESSAGE MEDIA
+export type MtpMessageMedia =
+  | MtpMessageMediaEmpty
+  | MtpMessageMediaGeo
+  | MtpMessageMediaContact
+  | MtpMessageMediaUnsupported
+  | MtpMessageMediaVenue
+  | MtpMessageMediaPhoto
+  | MtpMessageMediaDocument
+  | MtpMessageMediaWebPage
+  | MtpMessageMediaGame
+  | MtpMessageMediaInvoice;
+export interface MtpMessageMediaEmpty extends MtpMessageMediaObject<TMtpMessageMediaEmpty> { }
+export interface MtpMessageMediaGeo extends MtpMessageMediaObject<TMtpMessageMediaGeo> {
+  geo: any;
+}
+export interface MtpMessageMediaContact extends MtpMessageMediaObject<TMtpMessageMediaContact> {
+  phone_number: string;
+  first_name: string;
+  last_name: string;
+  user_id: number;
+}
+export interface MtpMessageMediaUnsupported extends MtpMessageMediaObject<TMtpMessageMediaUnsupported> { }
+export interface MtpMessageMediaVenue extends MtpMessageMediaObject<TMtpMessageMediaVenue> {
+  geo: any;
+  title: string;
+  address: string;
+  provider: string;
+  venue_id: string;
+}
+export interface MtpMessageMediaPhoto extends MtpMessageMediaObject<TMtpMessageMediaPhoto> {
+  photo: any;
+  caption: string;
+}
+export interface MtpMessageMediaDocument extends MtpMessageMediaObject<TMtpMessageMediaDocument> {
+  document: any;
+  caption: string;
+}
+export interface MtpMessageMediaWebPage extends MtpMessageMediaObject<TMtpMessageMediaWebPage> {
+  webpage: any;
+}
+export interface MtpMessageMediaGame extends MtpMessageMediaObject<TMtpMessageMediaGame> {
+  game: any;
+}
+export interface MtpMessageMediaInvoice extends MtpMessageMediaObject<TMtpMessageMediaInvoice> {
+  shipping_address_requested?: true;
+  test?: true;
+  title: string;
+  description: string;
+  photo?: any;
+  receipt_msg_id?: number;
+  currency: string;
+  total_amount: number;
+  start_param: string;
+}
+
+
 // PEER OBJECTS
 
 export type MtpPeer = MtpPeerUser|MtpPeerChat|MtpPeerChannel;
