@@ -3,11 +3,10 @@ import { connect } from 'react-redux';
 
 import { Chat, DefaultScreen } from 'components/Chat';
 import { Message } from 'components/Message';
-import { Entity, RichText } from 'components/RichText';
 import { MessageGroup } from 'components/MessageGroup';
-import { getPeerData } from 'helpers/Telegram/Peers';
-import { getPeerName } from 'helpers/Telegram/Peers';
-import { eqProps, groupWith, map, Obj, path, pipe, props } from 'ramda';
+import { Entity, RichText } from 'components/RichText';
+import { getPeerData, getPeerName } from 'helpers/Telegram/Peers';
+import { eqProps, groupWith, map, path, pipe, props } from 'ramda';
 import { loadOffset } from 'redux/api/chatList';
 import { TPeersType } from 'redux/modules/peers';
 import { MtpChat, MtpMessage, MtpUser } from 'redux/mtproto';
@@ -60,15 +59,16 @@ type ConnectedActions = {
 
 type Props = ConnectedState & ConnectedActions;
 
-type MessagesPath = (obj: Store) => Obj<MtpMessage>;
+type MessagesPath = (obj: Store) => Store['messages']['byId'];
 const messagesPath: MessagesPath = path(['messages', 'byId']);
 
-const messageItem = ({ id, from_id, date, message, entities, out }: MtpMessage) =>
+const messageItem = ({ id, from_id, date, message, media, entities, out }: MtpMessage) =>
   <Message
     key={id}
     id={id}
     date={date}
     user={from_id}
+    media={media}
     own={out}
     // HACK: what to do here?
     text={
@@ -87,9 +87,8 @@ const messageGroup = ([first, ...rest]: MtpMessage[]) =>
     first={first} />;
 
 const groupByUser = pipe(
-  groupWith<MtpMessage, MtpMessage[]>((a, b) => {
-    return eqProps('from_id', a, b) && (b.date < a.date + 900);
-  }),
+  groupWith<MtpMessage, MtpMessage[]>((a, b) =>
+    eqProps('from_id', a, b) && (b.date < a.date + 900)),
   map(messageGroup),
 );
 
