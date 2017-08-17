@@ -1,5 +1,7 @@
 import styled from 'glamorous';
 import * as React from 'react';
+import { MtpMessageMedia } from 'redux/mtproto';
+import { Media } from 'containers';
 
 const StyledTime = styled.div(({ theme }) => ({
   marginRight: '1em',
@@ -55,6 +57,7 @@ interface OwnProps {
   user: number;
   // TODO: Should be children?
   text: React.ReactNode;
+  media?: MtpMessageMedia;
   own?: boolean;
 }
 
@@ -76,14 +79,17 @@ const Time = ({ date }: TimeProps) => {
   );
 };
 
-export const Message = ({ user, date, text, own = false }: OwnProps) => {
+export const Message = ({ user, date, text, media, own = false }: OwnProps) => {
   console.debug(`Message`, user, text, own);
   return (
     <StyledMessage>
       <Body>
         <Sender>{user}</Sender>
         <TextBody>
-          <Text>{text}</Text>
+          <Text>
+            {text}
+            {media && <Media media={media} />}
+          </Text>
           <Time date={date} />
         </TextBody>
       </Body>
