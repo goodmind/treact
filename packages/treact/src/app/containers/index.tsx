@@ -10,3 +10,5 @@ export { Chat } from './Chat';
 export { ChatList } from './ChatList';
 export { ChatListItem } from './ChatListItem';
 export { ChatFooter } from './ChatFooter';
+export { PeerPhoto } from './PeerPhoto';
+export { Media } from './Media';
