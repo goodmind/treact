@@ -13,13 +13,13 @@ export const Step = styled.div({
   width: '300px',
 });
 
-export const Heading = styled.h1(({ theme }) => ({
+export const Heading = styled.h1<Themeable>(({ theme }) => ({
   color: theme.introTitleFg,
   fontWeight: 400,
 }));
 
 type ButtonProps = { primary?: boolean } & Themeable;
-export const Button = styled.button<ButtonProps>(({ theme }) => ({
+export const Button = styled.button<ButtonProps>({
   border: 'none',
   outline: 'none',
   cursor: 'pointer',
@@ -35,7 +35,7 @@ export const Button = styled.button<ButtonProps>(({ theme }) => ({
     paddingTop: '2px',
     paddingBottom: '0px',
   },
-}), ({ primary, theme }) => primary ? {
+}, ({ primary, theme }) => primary ? {
   backgroundColor: theme.activeButtonBg,
   color: theme.activeButtonFg,
   ':hover': {

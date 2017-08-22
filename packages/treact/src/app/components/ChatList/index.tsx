@@ -2,8 +2,9 @@ import { ChatListSearch } from 'components';
 import { InfiniteScroll } from 'components/InfiniteScroll';
 import styled from 'glamorous';
 import * as React from 'react';
+import { Themeable } from 'themes/theme.h';
 
-const StyledChatList = styled.div(({ theme }) => ({
+const StyledChatList = styled.div<Themeable>(({ theme }) => ({
   backgroundColor: theme.dialogsBg,
   flex: 35,
   minWidth: '260px',

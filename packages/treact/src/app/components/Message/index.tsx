@@ -2,8 +2,9 @@ import { Media } from 'containers';
 import styled from 'glamorous';
 import * as React from 'react';
 import { MtpMessageMedia } from 'redux/mtproto';
+import { Themeable } from 'themes/theme.h';
 
-const StyledTime = styled.div(({ theme }) => ({
+const StyledTime = styled.div<Themeable>(({ theme }) => ({
   marginRight: '1em',
   marginLeft: '1em',
   marginTop: 'auto',
@@ -11,7 +12,7 @@ const StyledTime = styled.div(({ theme }) => ({
   color: theme.msgInDateFg,
 }));
 
-const Body = styled.div(({ theme }) => ({
+const Body = styled.div<Themeable>(({ theme }) => ({
   backgroundColor: theme.msgInBg,
   borderRadius: '16px',
   float: 'left',
@@ -23,7 +24,7 @@ const Body = styled.div(({ theme }) => ({
   wordWrap: 'break-word',
 }));
 
-const Text = styled.div(({ theme }) => ({
+const Text = styled.div<Themeable>(({ theme }) => ({
   color: theme.historyTextInFg,
   whiteSpace: 'pre-wrap',
   wordBreak: 'break-all',
@@ -37,7 +38,7 @@ const TextBody = styled.div({
 });
 
 const sender = 'sender';
-const Sender = styled.div(sender, ({ theme }) => ({
+const Sender = styled.div<Themeable>(sender, ({ theme }) => ({
   color: theme.historyTextInFg,
   fontWeight: 600,
 }));

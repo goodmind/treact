@@ -1,15 +1,16 @@
 import styled from 'glamorous';
 import * as React from 'react';
 import AutoSizeTextarea from 'react-autosize-textarea';
+import { Themeable } from 'themes/theme.h';
 
-const StyledChatFooter = styled.div(({ theme }) => ({
+const StyledChatFooter = styled.div<Themeable>(({ theme }) => ({
   backgroundColor: theme.historyComposeAreaBg,
   borderTop: `1px solid ${theme.shadowFg}`,
   borderLeft: `1px solid ${theme.shadowFg}`,
   display: 'flex',
 }));
 
-const SendButton = styled.button(({ theme }) => ({
+const SendButton = styled.button<Themeable>(({ theme }) => ({
   border: 0,
   userSelect: 'none',
   alignSelf: 'flex-end',
@@ -21,7 +22,7 @@ const SendButton = styled.button(({ theme }) => ({
   transition: 'all .2s linear',
 }));
 
-const Textarea = styled(AutoSizeTextarea)(({ theme }) => ({
+const Textarea = styled(AutoSizeTextarea)<Themeable>(({ theme }) => ({
   color: theme.historyComposeAreaFg,
   border: 'none',
   background: 'none',
