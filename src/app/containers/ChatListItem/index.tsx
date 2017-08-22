@@ -3,7 +3,6 @@ import * as React from 'react';
 import { isEmpty, path } from 'ramda';
 
 import { ChatListItem, ChatListItemEmpty } from 'components/ChatListItem';
-import { Media } from 'containers/Media';
 import { getPeerData, getPeerName, getPeerShortName } from 'helpers/Telegram/Peers';
 import { connect } from 'react-redux';
 import { selectChat } from 'redux/api/chatList';
@@ -27,10 +26,6 @@ class ChatListItemContainer extends React.Component<Props & Funcs & State, {}> {
   }
   public renderItem = () => {
     const { id, selected, peer, peerData, from, fromData, isNotChat, isYou, message } = this.props;
-    const { media } = message;
-    // TODO: move this to component?
-    const text = path<'message', string>(['message'], message)
-      || (media && <Media media={media} preview={true} />);
     return <ChatListItem
       id={id}
       click={this.click}
@@ -39,7 +34,7 @@ class ChatListItemContainer extends React.Component<Props & Funcs & State, {}> {
       unreadCount={this.props.dialog.unread_count}
       previewName={isNotChat ? '' : (getPeerShortName(from, fromData) || '')}
       isYou={isYou}
-      text={text}
+      message={message}
       />;
   }
   public click = () => this.props.click(this.props.id);
