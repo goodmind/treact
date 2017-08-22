@@ -16,7 +16,7 @@ const StyledChat = styled.div<StyledChatProps>(({ theme, selected }) => ({
   height: '100%',
 }));
 
-const Header = styled.div(({ theme }) => ({
+const Header = styled.div<Themeable>(({ theme }) => ({
   color: theme.dialogsNameFg,
   backgroundColor: theme.topBarBg,
   borderBottom: `1px solid ${theme.shadowFg}`,
@@ -26,7 +26,7 @@ const Header = styled.div(({ theme }) => ({
   borderLeft: `1px solid ${theme.shadowFg}`,
 }));
 
-const Bubble = styled.div(({ theme }) => ({
+const Bubble = styled.div<Themeable>(({ theme }) => ({
   alignSelf: 'center',
   backgroundColor: theme.msgServiceBg,
   color: theme.msgServiceFg,
@@ -37,7 +37,7 @@ const Bubble = styled.div(({ theme }) => ({
   padding: '3px 12px 4px 12px',
 }));
 
-const ChatBody = styled.div(({ theme }) => ({
+const ChatBody = styled.div<Themeable>(({ theme }) => ({
   alignItems: 'flex-start',
   display: 'flex',
   flex: 1,
