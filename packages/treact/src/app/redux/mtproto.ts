@@ -1,4 +1,4 @@
-type TMtpVectorSubType = 'User'|'Message'|'Chat'|'Dialog';
+type TMtpVectorSubType = 'User' | 'Message' | 'Chat' | 'Dialog';
 
 type TMtpVector = 'Vector';
 type TMtpMessagesSlice = 'messages.MessagesSlice';
@@ -9,16 +9,17 @@ type TMtpChat = 'Chat';
 type TMtpChannel = 'Channel';
 type TMtpDialog = 'Dialog';
 type TMtpPhoto = 'UserProfilePhoto';
+type TMtpDocument = 'document';
 type TMtpFileLocation = 'FileLocation';
 type TMtpDcOption = 'DcOption';
-export type TMtpType = TMtpVector|TMtpMessagesSlice|TMtpMessage|TMtpUser|
-  TMtpChat|TMtpChannel|TMtpDialog|TMtpDcOption|TMtpPhoto|TMtpFileLocation|
-  TMtpDialogsSlice|TMtpGetDialogs;
+export type TMtpType = TMtpVector | TMtpMessagesSlice | TMtpMessage | TMtpUser |
+  TMtpChat | TMtpChannel | TMtpDialog | TMtpDcOption | TMtpPhoto | TMtpFileLocation |
+  TMtpDialogsSlice | TMtpGetDialogs | TMtpDocument | TMtpDocumentAttributeType;
 
 type TMtpNearestDc = 'NearestDc';
 type TMtpConfig = 'Config';
 type TMtpGetDialogs = 'messages.Dialogs';
-type TMtpHelpType = TMtpConfig|TMtpNearestDc;
+type TMtpHelpType = TMtpConfig | TMtpNearestDc;
 
 type TMtpPeerUser = 'PeerUser';
 type TMtpPeerChat = 'PeerChat';
@@ -26,8 +27,8 @@ type TMtpPeerChannel = 'PeerChannel';
 type TMtpInputPeerUser = 'inputPeerUser';
 type TMtpInputPeerChat = 'inputPeerChat';
 type TMtpInputPeerChannel = 'inputPeerChannel';
-type TMtpPeerType = TMtpPeerUser|TMtpInputPeerUser|TMtpPeerChat|TMtpInputPeerChat|
-  TMtpPeerChannel|TMtpInputPeerChannel;
+type TMtpPeerType = TMtpPeerUser | TMtpInputPeerUser | TMtpPeerChat | TMtpInputPeerChat |
+  TMtpPeerChannel | TMtpInputPeerChannel;
 
 type TMtpFile = 'upload.File';
 type TMtpUploadType = TMtpFile;
@@ -76,6 +77,44 @@ export type TMtpMessageMediaType =
   | TMtpMessageMediaWebPage
   | TMtpMessageMediaGame
   | TMtpMessageMediaInvoice;
+export type TMtpMessageMediaRecord = {
+  messageMediaEmpty: MtpMessageMediaEmpty,
+  messageMediaGeo: MtpMessageMediaGeo,
+  messageMediaContact: MtpMessageMediaContact,
+  messageMediaUnsupported: MtpMessageMediaUnsupported,
+  messageMediaVenue: MtpMessageMediaVenue,
+  messageMediaPhoto: MtpMessageMediaPhoto,
+  messageMediaDocument: MtpMessageMediaDocument,
+  messageMediaWebPage: MtpMessageMediaWebPage,
+  messageMediaGame: MtpMessageMediaGame,
+  messageMediaInvoice: MtpMessageMediaInvoice,
+};
+
+type TMtpDocumentAttributeImageSize = 'documentAttributeImageSize';
+type TMtpDocumentAttributeAnimated = 'documentAttributeAnimated';
+type TMtpDocumentAttributeSticker = 'documentAttributeSticker';
+type TMtpDocumentAttributeVideo = 'documentAttributeVideo';
+type TMtpDocumentAttributeAudio = 'documentAttributeAudio';
+type TMtpDocumentAttributeFilename = 'documentAttributeFilename';
+type TMtpDocumentAttributeHasStickers = 'documentAttributeHasStickers';
+export type TMtpDocumentAttributeType =
+  | TMtpDocumentAttributeImageSize
+  | TMtpDocumentAttributeAnimated
+  | TMtpDocumentAttributeSticker
+  | TMtpDocumentAttributeVideo
+  | TMtpDocumentAttributeAudio
+  | TMtpDocumentAttributeFilename
+  | TMtpDocumentAttributeHasStickers;
+
+export type TMtpDocumentAttributeRecord = {
+  documentAttributeImageSize: MtpDocumentAttributeImageSize,
+  documentAttributeAnimated: MtpDocumentAttributeAnimated,
+  documentAttributeSticker: MtpDocumentAttributeSticker,
+  documentAttributeVideo: MtpDocumentAttributeVideo,
+  documentAttributeAudio: MtpDocumentAttributeAudio,
+  documentAttributeFilename: MtpDocumentAttributeFilename,
+  documentAttributeHasStickers: MtpDocumentAttributeHasStickers,
+};
 
 interface MtpPrimitive<T> {
   _: T;
@@ -88,17 +127,14 @@ export interface MtpPeerObject<T extends TMtpPeerType> extends MtpPrimitive<T> {
 export interface MtpUploadObject<T extends TMtpUploadType> extends MtpPrimitive<T> { }
 export interface MtpStorageObject<T extends TMtpStorageType> extends MtpPrimitive<T> { }
 export interface MtpMessageMediaObject<T extends TMtpMessageMediaType> extends MtpPrimitive<T> { }
+export interface MtpDocumentAttributeObject<T extends TMtpDocumentAttributeType> extends MtpPrimitive<T> { }
 
 export interface MtpObject<T extends TMtpType> extends MtpPrimitive<T> {
   id: number;
   flags: number; // NOTE: I'm not shure thats any object has it
 }
 
-export interface MtpVector<T extends MtpObject<TMtpType>> extends MtpObject<TMtpVector> {
-  type: TMtpVectorSubType;
-  list: T[];
-  _byId: TById<T>;
-}
+export type MtpVector<T extends MtpPrimitive<TMtpType>> = T[];
 
 // STANDART OBJECTS
 
@@ -148,6 +184,18 @@ export interface MtpPhoto extends MtpObject<TMtpPhoto> {
   photo_big: MtpFileLocation;
 }
 
+export interface MtpDocument extends MtpObject<TMtpDocument> {
+  id: number;
+  access_hash: number;
+  date: number;
+  mime_type: string;
+  size: number;
+  thumb: any;
+  dc_id: number;
+  version: number;
+  attributes: MtpVector<MtpDocumentAttribute>;
+}
+
 export interface MtpUser extends MtpObject<TMtpUser> {
   access_hash: string;
   first_name?: string;
@@ -179,8 +227,49 @@ export interface MtpGetDialogs extends MtpObject<TMtpGetDialogs> {
   count: number;
 }
 
-export type MtpObjectGeneric = MtpDcOption|MtpMessage|MtpDialog|
-  MtpFileLocation|MtpPhoto|MtpUser|MtpChat|MtpMessagesSlice|MtpGetDialogs;
+export type MtpObjectGeneric = MtpDcOption | MtpMessage | MtpDialog |
+  MtpFileLocation | MtpPhoto | MtpUser | MtpChat | MtpMessagesSlice | MtpGetDialogs;
+
+// DOCUMENT ATTRIBUTE
+export type MtpDocumentAttribute =
+  | MtpDocumentAttributeImageSize
+  | MtpDocumentAttributeAnimated
+  | MtpDocumentAttributeSticker
+  | MtpDocumentAttributeVideo
+  | MtpDocumentAttributeAudio
+  | MtpDocumentAttributeFilename
+  | MtpDocumentAttributeHasStickers;
+export interface MtpDocumentAttributeImageSize extends MtpDocumentAttributeObject<TMtpDocumentAttributeImageSize> {
+  w: number;
+  h: number;
+}
+export interface MtpDocumentAttributeAnimated extends MtpDocumentAttributeObject<TMtpDocumentAttributeAnimated> { }
+export interface MtpDocumentAttributeSticker extends MtpDocumentAttributeObject<TMtpDocumentAttributeSticker> {
+  mask?: true;
+  alt: string;
+  stickerset: any;
+  mask_coords?: any;
+}
+export interface MtpDocumentAttributeVideo extends MtpDocumentAttributeObject<TMtpDocumentAttributeVideo> {
+  round_message?: true;
+  duration: number;
+  w: number;
+  h: number;
+}
+export interface MtpDocumentAttributeAudio extends MtpDocumentAttributeObject<TMtpDocumentAttributeAudio> {
+  voice?: true;
+  duration: number;
+  title?: string;
+  performer?: string;
+  waveform?: Bytes;
+}
+export interface MtpDocumentAttributeFilename extends MtpDocumentAttributeObject<TMtpDocumentAttributeFilename> {
+  file_name: string;
+}
+export interface MtpDocumentAttributeHasStickers extends MtpDocumentAttributeObject<TMtpDocumentAttributeHasStickers> {
+
+}
+
 // MESSAGE MEDIA
 export type MtpMessageMedia =
   | MtpMessageMediaEmpty
@@ -216,7 +305,7 @@ export interface MtpMessageMediaPhoto extends MtpMessageMediaObject<TMtpMessageM
   caption: string;
 }
 export interface MtpMessageMediaDocument extends MtpMessageMediaObject<TMtpMessageMediaDocument> {
-  document: any;
+  document: MtpDocument;
   caption: string;
 }
 export interface MtpMessageMediaWebPage extends MtpMessageMediaObject<TMtpMessageMediaWebPage> {
@@ -240,17 +329,17 @@ export interface MtpMessageMediaInvoice extends MtpMessageMediaObject<TMtpMessag
 
 // PEER OBJECTS
 
-export type MtpPeer = MtpPeerUser|MtpPeerChat|MtpPeerChannel;
+export type MtpPeer = MtpPeerUser | MtpPeerChat | MtpPeerChannel;
 
-export interface MtpPeerUser extends MtpPeerObject<TMtpPeerUser|TMtpInputPeerUser> {
+export interface MtpPeerUser extends MtpPeerObject<TMtpPeerUser | TMtpInputPeerUser> {
   user_id: number;
 }
 
-export interface MtpPeerChat extends MtpPeerObject<TMtpPeerChat|TMtpInputPeerChat> {
+export interface MtpPeerChat extends MtpPeerObject<TMtpPeerChat | TMtpInputPeerChat> {
   chat_id: number;
 }
 
-export interface MtpPeerChannel extends MtpPeerObject<TMtpPeerChannel|TMtpInputPeerChannel> {
+export interface MtpPeerChannel extends MtpPeerObject<TMtpPeerChannel | TMtpInputPeerChannel> {
   channel_id: number;
 }
 
@@ -295,4 +384,4 @@ export interface MtpUploadFile extends MtpUploadObject<TMtpFile> {
   bytes: Bytes;
 }
 
-export type TById<T> = {[id: number]: T};
+export type TById<T> = { [id: number]: T };
