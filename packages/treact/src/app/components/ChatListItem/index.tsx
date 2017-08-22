@@ -1,6 +1,9 @@
+import Media from 'containers/Media';
 import { PeerPhoto } from 'containers/PeerPhoto';
 import styled from 'glamorous';
+import { cond, isEmpty, prop, propIs, T } from 'ramda';
 import * as React from 'react';
+import { MtpMessage } from 'redux/mtproto';
 import { Themeable } from 'themes/theme.h';
 import * as style from './style.css';
 
@@ -36,7 +39,7 @@ const StyledSenderPreview = styled.div<SenderProps & Themeable>(({ theme, userNa
   },
 }));
 
-const StyledMessagePreview = styled.div(({ theme }) => ({
+const StyledMessagePreview = styled.div<Themeable>(({ theme }) => ({
   flex: 1,
   textOverflow: 'ellipsis',
   overflow: 'hidden',
@@ -105,8 +108,7 @@ interface ChatListBasicProps {
 interface ChatListFullProps extends ChatListBasicProps {
   isYou: boolean;
   previewName: string;
-  // TODO: use children?
-  text: React.ReactNode;
+  message: MtpMessage;
   unreadCount: number;
 }
 
@@ -125,11 +127,11 @@ const SenderPreview = ({ userName }: SenderProps) => (
   </StyledSenderPreview>
 );
 
-type MessageProps = { text: React.ReactNode, userName: string, isYou: boolean };
-const MessagePreview = ({ text, userName, isYou }: MessageProps) => (
+type MessageProps = { children: React.ReactNode, userName: string, isYou: boolean };
+const MessagePreview = ({ children, userName, isYou }: MessageProps) => (
   <StyledMessagePreview>
     <SenderPreview userName={isYou ? 'You' : userName} />
-    {text}
+    {children}
   </StyledMessagePreview>
 );
 
@@ -158,11 +160,24 @@ export const ChatListItemEmpty = ({
   );
 };
 
+const messageIsNotEmpty = (data: MtpMessage) =>
+  !isEmpty(data.message);
+// TODO: move to container
+const shortPreview =
+  cond<MtpMessage, React.ReactNode>([
+    [messageIsNotEmpty, prop('message')],
+    [propIs(Object, 'media'), ({ media }) =>
+      <Media media={media} preview={true} />],
+    [T, () => 'Unknown case'],
+  ]);
+
 export const ChatListItem = ({
   id, name, click, selected,
-  previewName, text, unreadCount, isYou }: ChatListFullProps) => (
+  previewName, message, unreadCount, isYou }: ChatListFullProps) => (
   <ChatListItemEmpty id={id} name={name} click={click} selected={selected}>
-    <MessagePreview text={text} userName={previewName} isYou={isYou} />
-    <UnreadBadge unread={unreadCount}/>
+    <MessagePreview userName={previewName} isYou={isYou}>
+      {shortPreview(message)}
+    </MessagePreview>
+    <UnreadBadge unread={unreadCount} />
   </ChatListItemEmpty>
 );
