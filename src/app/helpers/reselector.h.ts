@@ -1,4 +1,4 @@
-import { MtpChat, MtpDialog, MtpFileLocation, MtpMessage, MtpUser } from 'redux/mtproto';
+import { MtpChat, MtpDialog, MtpDocument, MtpFileLocation, MtpMessage, MtpUser } from 'redux/mtproto';
 export type Payload<T> = {
   entities: {
     [K in keyof T]: {
@@ -16,6 +16,34 @@ export type TLPhoto = {
   photo_big: number;
 };
 
+export type TLDocument = ({
+  type: 'voice' | 'audio',
+  duration: number,
+  audioTitle?: string,
+  audioPerformer?: string,
+} | {
+  type: 'round' | 'video',
+  duration: number,
+  w: number,
+  h: number,
+} | {
+  type: 'sticker',
+  sticker: boolean,
+  emoji: string,
+  // tslint:disable-next-line
+  stickerset: any,
+  // tslint:disable-next-line
+  stickerSetInput: any,
+} | {
+  type: 'gif',
+  animated: boolean,
+} | {
+  type: 'document',
+  file_name: string,
+}) & MtpDocument & {
+  file_name: string,
+};
+
 export type Slice = {
   histories: number,
   chats: MtpChat,
@@ -24,6 +52,7 @@ export type Slice = {
   dialogs: MtpDialog,
   photos: TLPhoto,
   fileLocations: MtpFileLocation,
+  documents: TLDocument,
 };
 
 export type SlicePayload = Payload<Slice>;
