@@ -8,7 +8,6 @@ import {
   MtpMessageMediaGeo,
   MtpMessageMediaInvoice,
   MtpMessageMediaPhoto,
-  MtpMessageMediaUnsupported,
   MtpMessageMediaVenue,
   MtpMessageMediaWebPage,
 } from 'redux/mtproto';
@@ -34,7 +33,7 @@ export const MessageMediaContact = ({ phone_number, user_id, first_name, last_na
   </div>
 );
 
-export const MessageMediaUnsupported = (props: MtpMessageMediaUnsupported) => (
+export const MessageMediaUnsupported = () => (
   <div>
     This message is not supported by your version of Telegram
   </div>
