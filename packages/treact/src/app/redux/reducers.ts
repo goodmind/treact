@@ -5,6 +5,7 @@ import chats from './modules/chats';
 import { currentDcReducer } from './modules/currentDc';
 import { currentUserReducer } from './modules/currentUser';
 import dialogs from './modules/dialogs';
+import documents from './modules/documents/index';
 import files from './modules/files';
 import histories from './modules/histories';
 import loadings from './modules/loadings';
@@ -30,6 +31,7 @@ const rootReducer = combineReducers<Store>({
   loadings,
   selected,
   messages,
+  documents,
   files,
   photos,
   theme,
