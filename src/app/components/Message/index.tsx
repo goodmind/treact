@@ -1,7 +1,7 @@
+import { Media } from 'containers';
 import styled from 'glamorous';
 import * as React from 'react';
 import { MtpMessageMedia } from 'redux/mtproto';
-import { Media } from 'containers';
 
 const StyledTime = styled.div(({ theme }) => ({
   marginRight: '1em',
