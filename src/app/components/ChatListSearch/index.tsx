@@ -1,5 +1,6 @@
 import styled from 'glamorous';
 import * as React from 'react';
+import { Themeable } from 'themes/theme.h';
 
 import * as pencil from './pencil.png';
 import * as search from './search.png';
@@ -17,7 +18,7 @@ const SearchButton = styled.div({
   },
 });
 
-const SearchInput = styled.input(({ theme }) => ({
+const SearchInput = styled.input<Themeable>(({ theme }) => ({
   background: `url(${search}) no-repeat 10px 7px`,
   backgroundColor: theme.filterInputInactiveBg,
   backgroundSize: '15px',
