@@ -11,6 +11,11 @@ declare module '' {}
 /// <reference path="normalizr.d.ts" />
 /// <reference path="universal-router.d.ts" />
 
+// TODO: move to reduce wrapper
+interface Array<T> {
+  reduce<U, V>(callbackfn: (previousValue: U | V, currentValue: T, currentIndex: number, array: T[]) => U | V, initialValue: V): U;
+}
+
 declare module '*.png' {
   const image: any;
   export = image;
