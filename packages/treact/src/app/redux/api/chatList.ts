@@ -6,12 +6,11 @@ import { assocPath, converge, flip, identity, isNil,
 
 import { CHATS } from 'actions';
 import { unifiedGetId } from 'helpers/state';
-import { api } from 'helpers/Telegram/pool';
-import { MtpDialog, MtpMessage, MtpUser, TById } from 'redux/mtproto';
-import { AsyncAction, Dispatch } from 'redux/store.h';
-import { MtpMessagesSlice, MtpPeer } from '../mtproto';
-
 import { getPeerData, retrieveInputPeer } from 'helpers/Telegram/Peers';
+import { api } from 'helpers/Telegram/pool';
+import { processDoc } from 'modules/documents/preprocess';
+import { MtpDialog, MtpMessage, MtpMessagesSlice, MtpPeer, MtpUser, TById } from 'redux/mtproto';
+import { AsyncAction, Dispatch } from 'redux/store.h';
 
 const { LOAD_SLICE, SELECT, GET_DIALOGS } = CHATS;
 
@@ -29,12 +28,27 @@ const photos = new schema.Entity('photos', {
 }, {
   idAttribute: pipe(nthArg(1), prop('id'), e => +e),
 });
+const documents = new schema.Entity('documents', {}, {
+  processStrategy: pipe(
+    doc => doc.thumb && doc.thumb._ === 'photoSizeEmpty'
+      ? Object.assign({}, doc, { thumb: undefined })
+      : doc,
+    processDoc,
+  ),
+  idAttribute: pipe(prop('id'), e => +e),
+});
+const messageMediaDocument = new schema.Object({
+  document: documents,
+});
+export const media = new schema.Union({
+  messageMediaDocument,
+}, '_');
 const users = new schema.Entity('users', { photo: photos });
-const messages = new schema.Entity('messages');
+const messages = new schema.Entity('messages', { media });
 const chats = new schema.Entity('chats', { photo: photos });
 
 const dialogs = new schema.Entity('dialogs', {}, {
-  idAttribute: pipe( prop('peer'), unifiedGetId ),
+  idAttribute: pipe(prop('peer'), unifiedGetId),
 });
 
 const sliceSchema = {
@@ -64,7 +78,7 @@ const addModelIndex = (obj: any, modelName: string) =>
 
 const modelsIndexation = flip(reduce(addModelIndex));
 
-const indexation = modelsIndexation(['photos', 'fileLocations']);
+const indexation = modelsIndexation(['photos', 'documents', 'fileLocations']);
 
 const fullNormalize = <T>(obj: T) => indexation(normalize(obj, sliceSchema));
 
