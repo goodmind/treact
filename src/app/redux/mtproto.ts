@@ -14,7 +14,7 @@ type TMtpFileLocation = 'FileLocation';
 type TMtpDcOption = 'DcOption';
 export type TMtpType = TMtpVector | TMtpMessagesSlice | TMtpMessage | TMtpUser |
   TMtpChat | TMtpChannel | TMtpDialog | TMtpDcOption | TMtpPhoto | TMtpFileLocation |
-  TMtpDialogsSlice | TMtpGetDialogs | TMtpDocument | TMtpDocumentAttributeType;
+  TMtpDialogsSlice | TMtpGetDialogs | TMtpDocument | TMtpDocumentAttributeType | TMtpGeoPoint;
 
 type TMtpNearestDc = 'NearestDc';
 type TMtpConfig = 'Config';
@@ -30,6 +30,7 @@ type TMtpInputPeerChannel = 'inputPeerChannel';
 type TMtpPeerType = TMtpPeerUser | TMtpInputPeerUser | TMtpPeerChat | TMtpInputPeerChat |
   TMtpPeerChannel | TMtpInputPeerChannel;
 
+type TMtpGeoPoint = 'geoPoint';
 type TMtpFile = 'upload.File';
 type TMtpUploadType = TMtpFile;
 
@@ -148,6 +149,11 @@ export interface MtpDcOption extends MtpObject<TMtpDcOption> {
 // TODO: generate from TL
 // tslint:disable-next-line
 type MtpMessageEntity = any;
+
+export interface MtpGeoPoint extends MtpObject<TMtpGeoPoint> {
+  long: number;
+  lat: number;
+}
 
 export interface MtpMessage extends MtpObject<TMtpMessage> {
   from_id: number;
@@ -284,7 +290,7 @@ export type MtpMessageMedia =
   | MtpMessageMediaInvoice;
 export interface MtpMessageMediaEmpty extends MtpMessageMediaObject<TMtpMessageMediaEmpty> { }
 export interface MtpMessageMediaGeo extends MtpMessageMediaObject<TMtpMessageMediaGeo> {
-  geo: any;
+  geo: MtpGeoPoint;
 }
 export interface MtpMessageMediaContact extends MtpMessageMediaObject<TMtpMessageMediaContact> {
   phone_number: string;
@@ -294,7 +300,7 @@ export interface MtpMessageMediaContact extends MtpMessageMediaObject<TMtpMessag
 }
 export interface MtpMessageMediaUnsupported extends MtpMessageMediaObject<TMtpMessageMediaUnsupported> { }
 export interface MtpMessageMediaVenue extends MtpMessageMediaObject<TMtpMessageMediaVenue> {
-  geo: any;
+  geo: MtpGeoPoint;
   title: string;
   address: string;
   provider: string;
