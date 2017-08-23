@@ -58,7 +58,7 @@ const mappings: Mappings = {
 
 type Props = Pick<MtpMessage, 'media'> & { preview?: boolean };
 const Media = ({ media, preview }: Props) => {
-  console.error(media);
+  console.log(media);
 
   const [Attachment, Preview] = mappings[media._];
   const text = typeof Preview === 'function'
