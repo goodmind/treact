@@ -1,3 +1,4 @@
+import { LocationMap } from 'components/LocationMap';
 import { PeerPhoto } from 'containers';
 import * as React from 'react';
 import {
@@ -19,10 +20,8 @@ export const MessageMediaEmpty = (props: MtpMessageMediaEmpty) => (
   </div>
 );
 
-export const MessageMediaGeo = (props: MtpMessageMediaGeo) => (
-  <div>
-    {props._}
-  </div>
+export const MessageMediaGeo = ({ geo: { lat, long: lng } }: MtpMessageMediaGeo) => (
+  <LocationMap geo={{ lat, lng }} />
 );
 
 export const MessageMediaContact = ({ phone_number, user_id, first_name, last_name }: MtpMessageMediaContact) => (
@@ -39,9 +38,16 @@ export const MessageMediaUnsupported = () => (
   </div>
 );
 
-export const MessageMediaVenue = (props: MtpMessageMediaVenue) => (
+export const MessageMediaVenue = ({
+  geo: { lat, long: lng },
+  title, address,
+}: MtpMessageMediaVenue) => (
   <div>
-    {props._}
+    <strong>{title}</strong>
+    <div>{address}</div>
+    <LocationMap
+      geo={{ lat, lng }}
+      place={{ title, address }} />
   </div>
 );
 
