@@ -5,11 +5,11 @@ import { MtpMessageMedia } from 'redux/mtproto';
 import { Themeable } from 'themes/theme.h';
 
 const StyledTime = styled.div<Themeable>(({ theme }) => ({
-  marginRight: '1em',
-  marginLeft: '1em',
-  marginTop: 'auto',
+  marginLeft: '13px',
+  marginTop: '4px',
   whiteSpace: 'nowrap',
   color: theme.msgInDateFg,
+  alignSelf: 'flex-end',
 }));
 
 const Body = styled.div<Themeable>(({ theme }) => ({
@@ -19,8 +19,8 @@ const Body = styled.div<Themeable>(({ theme }) => ({
   fontSize: '13px',
   margin: '10px 36px 2px 7px',
   maxWidth: '404px',
-  minWidth: '115px',
-  padding: '7px 13px 8px 13px',
+  // minWidth: '115px',
+  padding: '7px 13px 4px 13px',
   wordWrap: 'break-word',
 }));
 
@@ -66,7 +66,7 @@ const formatTime = (date: number) => {
   const dateObject = new Date(date * 1000);
   return {
     dateString: dateObject.toLocaleDateString(),
-    timeString: dateObject.toLocaleTimeString(),
+    timeString: dateObject.toLocaleTimeString([], { hour: '2-digit', minute:'2-digit', hour12: false }),
   };
 };
 
