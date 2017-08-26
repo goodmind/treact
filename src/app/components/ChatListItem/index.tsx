@@ -1,4 +1,4 @@
-import Media from 'containers/Media';
+import { PreviewMedia } from 'containers/Media';
 import { PeerPhoto } from 'containers/PeerPhoto';
 import styled from 'glamorous';
 import { cond, isEmpty, prop, propIs, T } from 'ramda';
@@ -167,7 +167,7 @@ const shortPreview =
   cond<MtpMessage, React.ReactNode>([
     [messageIsNotEmpty, prop('message')],
     [propIs(Object, 'media'), ({ media }) =>
-      <Media media={media} preview={true} />],
+      <PreviewMedia media={media} />],
     [T, () => 'Unknown case'],
   ]);
 
