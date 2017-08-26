@@ -14,17 +14,17 @@ import {
 } from 'redux/mtproto';
 
 // Text
-export const MessageMediaEmpty = (props: MtpMessageMediaEmpty) => (
+export const Empty = (props: MtpMessageMediaEmpty) => (
   <div>
     {props._}
   </div>
 );
 
-export const MessageMediaGeo = ({ geo: { lat, long: lng } }: MtpMessageMediaGeo) => (
+export const Geo = ({ geo: { lat, long: lng } }: MtpMessageMediaGeo) => (
   <LocationMap geo={{ lat, lng }} />
 );
 
-export const MessageMediaContact = ({ phone_number, user_id, first_name, last_name }: MtpMessageMediaContact) => (
+export const Contact = ({ phone_number, user_id, first_name, last_name }: MtpMessageMediaContact) => (
   <div>
     {user_id > 0 && <PeerPhoto peerID={user_id} />}
     <div>{first_name} {last_name}</div>
@@ -32,13 +32,13 @@ export const MessageMediaContact = ({ phone_number, user_id, first_name, last_na
   </div>
 );
 
-export const MessageMediaUnsupported = () => (
+export const Unsupported = () => (
   <div>
     This message is not supported by your version of Telegram
   </div>
 );
 
-export const MessageMediaVenue = ({
+export const Venue = ({
   geo: { lat, long: lng },
   title, address,
 }: MtpMessageMediaVenue) => (
@@ -52,31 +52,31 @@ export const MessageMediaVenue = ({
 );
 
 // Media content
-export const MessageMediaPhoto = (props: MtpMessageMediaPhoto) => (
+export const Photo = (props: MtpMessageMediaPhoto) => (
   <div>
     {props._}
   </div>
 );
 
-export const MessageMediaDocument = (props: MtpMessageMediaDocument) => (
+export const Document = (props: MtpMessageMediaDocument) => (
   <div>
     {props._}
   </div>
 );
 
-export const MessageMediaWebPage = (props: MtpMessageMediaWebPage) => (
+export const WebPage = (props: MtpMessageMediaWebPage) => (
   <div>
     Webpage type: {props.webpage.type}
   </div>
 );
 
-export const MessageMediaGame = (props: MtpMessageMediaGame) => (
+export const Game = (props: MtpMessageMediaGame) => (
   <div>
     {props._}
   </div>
 );
 
-export const MessageMediaInvoice = (props: MtpMessageMediaInvoice) => (
+export const Invoice = (props: MtpMessageMediaInvoice) => (
   <div>
     {props._}
   </div>
