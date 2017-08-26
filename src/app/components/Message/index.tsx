@@ -1,4 +1,4 @@
-import { Media } from 'containers';
+import { FullMedia } from 'containers/Media';
 import styled from 'glamorous';
 import * as React from 'react';
 import { MtpMessageMedia } from 'redux/mtproto';
@@ -89,7 +89,7 @@ export const Message = ({ user, date, text, media, own = false }: OwnProps) => {
         <TextBody>
           <Text>
             {text}
-            {media && <Media media={media} />}
+            {media && <FullMedia media={media} />}
           </Text>
           <Time date={date} />
         </TextBody>
