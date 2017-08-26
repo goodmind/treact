@@ -11,4 +11,6 @@ export { ChatList } from './ChatList';
 export { ChatListItem } from './ChatListItem';
 export { ChatFooter } from './ChatFooter';
 export { PeerPhoto } from './PeerPhoto';
-export { default as Media } from './Media';
+
+export { FullMedia } from './Media';
+export { PreviewMedia } from './Media';
