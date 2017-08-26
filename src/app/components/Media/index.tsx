@@ -1,2 +1,1 @@
-export * from './types';
-export * from './preview';
+export { StyledPreview } from './preview';
