@@ -1,16 +1,7 @@
-import {
-  MediaPreview,
-  MessageMediaContact,
-  MessageMediaDocument,
-  MessageMediaEmpty,
-  MessageMediaGame,
-  MessageMediaGeo,
-  MessageMediaInvoice,
-  MessageMediaPhoto,
-  MessageMediaUnsupported,
-  MessageMediaVenue,
-  MessageMediaWebPage,
-} from 'components/Media';
+import * as Preview from 'components/Media/preview';
+import * as Full from 'components/Media/types';
+
+import { StyledPreview } from 'components/Media';
 import { denormalize } from 'normalizr';
 import { map, prop } from 'ramda';
 import * as React from 'react';
@@ -30,49 +21,47 @@ type StoredMedia = {
 type Mappings = {
   [K in keyof TMtpMessageMediaRecord]: [
     React.StatelessComponent<MtpMessageMedia>,
-    string | ((media: StoredMedia[K]) => string)
+    string | ((media: StoredMedia[K]) => React.ReactNode)
   ];
 };
 
-// TODO: move preview to another component or not?
+// TODO: do something with this?
 const mappings: Mappings = {
-  messageMediaEmpty: [MessageMediaEmpty, 'Empty Message'],
-  messageMediaGeo: [MessageMediaGeo, 'Location'],
-  messageMediaContact: [MessageMediaContact, 'Contact'],
-  messageMediaUnsupported: [MessageMediaUnsupported, 'Unsupported message'],
-  messageMediaVenue: [MessageMediaVenue, 'Venue'],
-  messageMediaPhoto: [MessageMediaPhoto, 'Photo'],
-  messageMediaDocument: [MessageMediaDocument, ({ document }) => ({
-    'sticker' : 'Sticker',
-    'gif'     : 'GIF',
-    'round'   : 'Video message',
-    'audio'   : 'Audio',
-    'voice'   : 'Voice message',
-    'video'   : 'Video',
-    'document': document.file_name,
-  }[document.type])],
-  messageMediaWebPage: [MessageMediaWebPage, 'Webpage'],
-  messageMediaGame: [MessageMediaGame, 'Game'],
-  messageMediaInvoice: [MessageMediaInvoice, 'Invoice'],
+  messageMediaEmpty: [Full.Empty, Preview.Empty],
+  messageMediaGeo: [Full.Geo, Preview.Geo],
+  messageMediaContact: [Full.Contact, Preview.Contact],
+  messageMediaUnsupported: [Full.Unsupported, Preview.Unsupported],
+  messageMediaVenue: [Full.Venue, Preview.Venue],
+  messageMediaPhoto: [Full.Photo, Preview.Photo],
+  messageMediaDocument: [Full.Document, Preview.Document],
+  messageMediaWebPage: [Full.WebPage, Preview.WebPage],
+  messageMediaGame: [Full.Game, Preview.Game],
+  messageMediaInvoice: [Full.Invoice, Preview.Invoice],
 };
 
-type Props = Pick<MtpMessage, 'media'> & { preview?: boolean };
-const Media = ({ media, preview }: Props) => {
-  console.log(media);
+type Props = Pick<MtpMessage, 'media'>;
+const mediaSelector = (state: Store, { media }: Props): MtpMessageMedia => {
+  const entities = map(prop('byId'), state);
+  return denormalize(media, schema, entities);
+};
 
-  const [Attachment, Preview] = mappings[media._];
+const mapPreview = (state: Store, props: Props) => {
+  const media = mediaSelector(state, props);
+  const [, Preview] = mappings[media._];
   const text = typeof Preview === 'function'
     ? Preview(media)
     : Preview;
 
-  return preview
-    ? <MediaPreview>{text}</MediaPreview>
-    : React.createElement(Attachment, media);
+  return { children: text };
 };
 
-const mapStateToProps = (state: Store, { media }: Props) => {
-  const entities = map(prop('byId'), state);
-  return { media: denormalize(media, schema, entities) };
+const mapFull = (state: Store, props: Props) => {
+  const media = mediaSelector(state, props);
+  const [Attachment] = mappings[media._]
+  return { Attachment, media };
 };
 
-export default connect(mapStateToProps)(Media);
+export const PreviewMedia = connect(mapPreview)(StyledPreview);
+
+export const FullMedia = connect(mapFull)(({ Attachment, media }) =>
+  React.createElement(Attachment, media));
