@@ -1,4 +1,12 @@
-import { MtpChat, MtpDialog, MtpDocument, MtpFileLocation, MtpMessage, MtpUser } from 'redux/mtproto';
+import {
+  MtpChat,
+  MtpDialog,
+  MtpDocument,
+  MtpFileLocation,
+  MtpMessage,
+  MtpUser,
+  TMtpMessageMediaRecord,
+} from 'redux/mtproto';
 export type Payload<T> = {
   entities: {
     [K in keyof T]: {
@@ -10,7 +18,7 @@ export type Payload<T> = {
   };
 };
 
-export type TLPhoto = {
+export type TLAvatar = {
   photo_id?: string;
   photo_small: number;
   photo_big: number;
@@ -44,15 +52,37 @@ export type TLDocument = ({
   file_name: string,
 };
 
+export type TLMediaTypes = {
+  messageMediaEmpty: 'empty',
+  messageMediaGeo: 'geo';
+  messageMediaContact: 'contact';
+  messageMediaUnsupported: 'unsupported';
+  messageMediaVenue: 'venue';
+  messageMediaPhoto: 'photo';
+  messageMediaDocument: TLDocument['type'];
+  messageMediaWebPage: 'webpage';
+  messageMediaGame: 'game';
+  messageMediaInvoice: 'invoice';
+};
+export type TLMediaRecord =
+  TMtpMessageMediaRecord
+  & {
+    [K in keyof TLMediaTypes]: { type: TLMediaTypes[K] }
+  };
+export type TLMedia<T = TLMediaRecord> = T[keyof T];
+
 export type Slice = {
   histories: number,
   chats: MtpChat,
   users: MtpUser,
   messages: MtpMessage,
   dialogs: MtpDialog,
-  photos: TLPhoto,
+  avatars: TLAvatar,
   fileLocations: MtpFileLocation,
+
+  media: TLMedia,
   documents: TLDocument,
+  photos: {},
 };
 
 export type SlicePayload = Payload<Slice>;
