@@ -1,7 +1,7 @@
 import { createReducer } from 'redux-act';
 
 import { CACHE, CHATS } from 'actions';
-import { SlicePayload, TLPhoto } from 'helpers/reselector.h';
+import { SlicePayload, TLAvatar } from 'helpers/reselector.h';
 
 
 import { __, contains, has, into, isEmpty, map, merge,
@@ -12,12 +12,12 @@ const { LOAD, DONE } = CACHE;
 
 export type Status = 'idle' | 'queue' | 'download' | 'cached';
 export type Store = { [key: number]: Status };
-type Photos = { [key: number]: TLPhoto };
+type Avatars = { [key: number]: TLAvatar };
 
-const getPhotoIds = pipe<Photos, TLPhoto[], number[]>(values, pluck('photo_small'));
+const getPhotoIds = pipe<Avatars, TLAvatar[], number[]>(values, pluck('photo_small'));
 
 const updater = (store: Store, payload: SlicePayload): Store => {
-  const data = getPhotoIds(payload.entities.photos);
+  const data = getPhotoIds(payload.entities.avatars);
   const isPhoto = (id: number) => contains(id, data);
   const filesIds = payload.result.fileLocations;
 
