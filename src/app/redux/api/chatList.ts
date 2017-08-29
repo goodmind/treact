@@ -8,7 +8,7 @@ import { CHATS } from 'actions';
 import { unifiedGetId } from 'helpers/state';
 import { getPeerData, retrieveInputPeer } from 'helpers/Telegram/Peers';
 import { api } from 'helpers/Telegram/pool';
-import { processDoc } from 'modules/documents/preprocess';
+import { media, mediaIndexation } from 'modules/media/entities';
 import { MtpDialog, MtpMessage, MtpMessagesSlice, MtpPeer, MtpUser, TById } from 'redux/mtproto';
 import { AsyncAction, Dispatch } from 'redux/store.h';
 
@@ -22,30 +22,15 @@ export interface DialogPayload {
 const fileLocations  = new schema.Entity('fileLocations', {}, {
   idAttribute: 'local_id',
 });
-const photos = new schema.Entity('photos', {
+const avatars = new schema.Entity('avatars', {
   photo_small: fileLocations,
   photo_big: fileLocations,
 }, {
   idAttribute: pipe(nthArg(1), prop('id'), e => +e),
 });
-const documents = new schema.Entity('documents', {}, {
-  processStrategy: pipe(
-    doc => doc.thumb && doc.thumb._ === 'photoSizeEmpty'
-      ? Object.assign({}, doc, { thumb: undefined })
-      : doc,
-    processDoc,
-  ),
-  idAttribute: pipe(prop('id'), e => +e),
-});
-const messageMediaDocument = new schema.Object({
-  document: documents,
-});
-export const media = new schema.Union({
-  messageMediaDocument,
-}, '_');
-const users = new schema.Entity('users', { photo: photos });
+const users = new schema.Entity('users', { photo: avatars });
+const chats = new schema.Entity('chats', { photo: avatars });
 const messages = new schema.Entity('messages', { media });
-const chats = new schema.Entity('chats', { photo: photos });
 
 const dialogs = new schema.Entity('dialogs', {}, {
   idAttribute: pipe(prop('peer'), unifiedGetId),
@@ -57,8 +42,6 @@ const sliceSchema = {
   messages: [ messages ],
   dialogs: [ dialogs ],
 };
-
-
 
 /**
  * Add index list in `result` for model values in `entities`
@@ -78,7 +61,11 @@ const addModelIndex = (obj: any, modelName: string) =>
 
 const modelsIndexation = flip(reduce(addModelIndex));
 
-const indexation = modelsIndexation(['photos', 'documents', 'fileLocations']);
+const indexation = modelsIndexation([
+  ...mediaIndexation,
+  'avatars',
+  'fileLocations',
+]);
 
 const fullNormalize = <T>(obj: T) => indexation(normalize(obj, sliceSchema));
 
