@@ -13,7 +13,8 @@ const Caption = styled.span<Themeable>(({ theme }) => ({
   },
 }));
 
-export const StyledPreview = styled.span<Themeable>(({ theme }) => ({
+type PreviewProps = { children: React.ReactNode } & Themeable;
+export const StyledPreview = styled.span<PreviewProps>(({ theme }) => ({
   color: theme.dialogsTextFgService,
   [`.active &`]: {
     color: theme.dialogsTextFgServiceActive,
@@ -31,12 +32,11 @@ export const Invoice = 'Invoice';
 export const Venue = ({ title }: MtpMessageMediaVenue) => (
   <span>Location, <Caption>{title}</Caption></span>
 );
-export const Document = ({ document }: { document: TLDocument }) => ({
-  'sticker' : 'Sticker',
-  'gif'     : 'GIF',
-  'round'   : 'Video message',
-  'audio'   : 'Audio',
-  'voice'   : 'Voice message',
-  'video'   : 'Video',
-  'document': document.file_name,
-}[document.type]);
+
+export const Sticker = 'Sticker';
+export const GIF = 'GIF';
+export const Round = 'Video message';
+export const Audio = 'Audio';
+export const Voice = 'Voice message';
+export const Video = 'Video';
+export const Document = ({ document }: { document: TLDocument }) => document.file_name;
