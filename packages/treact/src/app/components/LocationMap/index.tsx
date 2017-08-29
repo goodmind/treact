@@ -1,20 +1,11 @@
 import GoogleMapReact, { Options } from 'google-map-react';
 import * as React from 'react';
+import { LazyMaps, Props } from './index.h';
 
-interface Props {
-  geo: { lat: number, lng: number };
-  width?: string;
-  height?: string;
-  place?: {
-    title: string,
-    address: string,
-  };
-}
-interface LazyMaps {
-  map: google.maps.Map;
-  maps: typeof google.maps;
-}
 export class LocationMap extends React.Component<Props, {}> {
+  private map: LazyMaps['map'];
+  private maps: LazyMaps['maps'];
+
   public static defaultProps = {
     width: '320px',
     height: '240px',
@@ -26,31 +17,45 @@ export class LocationMap extends React.Component<Props, {}> {
     zoomControl: false,
   })
 
-  private addMarker = ({ map, maps }: LazyMaps) => {
+  private onSearch = (places: google.maps.places.PlaceResult[]) => {
+    const { place_id: placeId, geometry: { location } } = places[0];
+    const { InfoWindow, Marker } = this.maps;
+
+    const infowindow = new InfoWindow();
+    const marker = new Marker({
+      map: this.map,
+      position: location,
+      place: { placeId, location },
+    });
+    marker.addListener('click', () =>
+      infowindow.open(this.map, marker));
+  }
+
+  private addMarker = () => {
     const { geo: { lat, lng }, place } = this.props;
-    const loc = new maps.LatLng(lat, lng);
+    const { LatLng, places, Marker } = this.maps;
+    const loc = new LatLng(lat, lng);
 
     if (place) {
-      const service = new maps.places.PlacesService(map);
-      service.textSearch({ query: `${place.title} ${place.address}`, location: loc, radius: 10 }, places => {
-        const { place_id: placeId, geometry: { location } } = places[0];
-        const infowindow = new maps.InfoWindow();
-        const marker = new maps.Marker({
-          map,
-          position: location,
-          place: { placeId, location },
-        });
-        marker.addListener('click', () => {
-          infowindow.open(map, marker);
-        });
-      });
+      const service = new places.PlacesService(this.map);
+      service.textSearch(
+        { query: `${place.title} ${place.address}`, location: loc, radius: 10 },
+        this.onSearch,
+      );
     } else {
-      const marker = new maps.Marker({
+      const marker = new Marker({
         position: loc,
       });
-      marker.setMap(map);
+      marker.setMap(this.map);
     }
   }
+
+  private onGoogleAPILoad = ({ map, maps }: LazyMaps) => {
+    this.map = map;
+    this.maps = maps;
+    this.addMarker();
+  }
+
   public render() {
     const { geo: { lat, lng }, width, height } = this.props;
 
@@ -65,7 +70,7 @@ export class LocationMap extends React.Component<Props, {}> {
           defaultCenter={{ lat, lng }}
           zoom={11}
           options={this.createOptions}
-          onGoogleApiLoaded={this.addMarker} />
+          onGoogleApiLoaded={this.onGoogleAPILoad} />
       </div>
     );
   }
