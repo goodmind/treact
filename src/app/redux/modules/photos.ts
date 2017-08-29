@@ -1,12 +1,12 @@
-import { CHATS } from 'actions';
-import { modelDefaults, updateStoreMap } from 'helpers/reselector';
-import { Slice, TLPhoto } from 'helpers/reselector.h';
-import { StoreList } from 'helpers/state';
 import { createReducer } from 'redux-act';
 
-export type StorePhotos = StoreList<TLPhoto>;
+import { CHATS } from 'actions';
+const { GET_DIALOGS, LOAD_SLICE } = CHATS;
 
-const { LOAD_SLICE, GET_DIALOGS } = CHATS;
+import { modelDefaults, updateStoreMap } from 'helpers/reselector';
+import { Slice, StoredPayload } from 'helpers/reselector.h';
+
+export type StoreMessages = StoredPayload<Slice['photos']>;
 
 const updater = updateStoreMap<Slice, 'photos'>('photos');
 
