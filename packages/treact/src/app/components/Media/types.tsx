@@ -1,5 +1,6 @@
 import { LocationMap } from 'components/LocationMap';
 import { PeerPhoto } from 'containers';
+import { FullMediaComp } from 'containers/Media';
 import * as React from 'react';
 import {
   MtpMessageMediaContact,
@@ -52,21 +53,24 @@ export const Venue = ({
 );
 
 // Media content
-export const Photo = (props: MtpMessageMediaPhoto) => (
+export const Photo = ({ _, caption }: MtpMessageMediaPhoto) => (
   <div>
-    {props._}
+    {_}
+    {caption}
   </div>
 );
 
-export const Document = (props: MtpMessageMediaDocument) => (
+export const Document = ({ document, caption }: MtpMessageMediaDocument) => (
   <div>
-    {props._}
+    {document._}
+    {caption}
   </div>
 );
 
-export const WebPage = (props: MtpMessageMediaWebPage) => (
+export const WebPage = ({ webpage }: MtpMessageMediaWebPage) => (
   <div>
-    Webpage type: {props.webpage.type}
+    Webpage type: {webpage.type}
+    {webpage.type !== 'article' && <FullMediaComp media={webpage} />}
   </div>
 );
 
