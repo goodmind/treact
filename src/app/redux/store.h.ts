@@ -2,6 +2,7 @@ import * as Redux from 'redux';
 // NOTE: This type coming from redux-thunk module, not from redux itself
 
 import { Auth } from './modules/auth';
+import { StoreAvatars } from './modules/avatars';
 import { StoreChats } from './modules/chats';
 import { StoreDialogs } from './modules/dialogs';
 import { StatusStore } from './modules/files';
@@ -9,7 +10,6 @@ import { StoreHistories } from './modules/histories';
 import { StoreLoadings } from './modules/loadings';
 import { StoreMessages } from './modules/messages';
 import { StorePeers } from './modules/peers';
-import { StorePhotos } from './modules/photos';
 import { StoreSelected } from './modules/selected';
 import { StoreTheme } from './modules/theme';
 import { StoreUsers } from './modules/users';
@@ -33,7 +33,7 @@ export interface Store {
     status: StatusStore;
     locations: StoreList<MtpFileLocation>;
   };
-  photos: StorePhotos;
+  avatars: StoreAvatars;
   theme: StoreTheme;
 }
 
