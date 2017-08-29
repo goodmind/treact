@@ -6,62 +6,72 @@ import { denormalize } from 'normalizr';
 import { map, prop } from 'ramda';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { media as schema } from 'redux/api/chatList';
-import { MtpMessage, MtpMessageMedia, TMtpMessageMediaRecord } from 'redux/mtproto';
+import { media as schema } from 'redux/modules/media/entities';
 import { Store } from 'redux/store.h';
-
-import { TLDocument } from 'helpers/reselector.h';
-
-type StoredMedia = {
-  [K in keyof TMtpMessageMediaRecord]: TMtpMessageMediaRecord[K]
-} & {
-  messageMediaDocument: { document: TLDocument },
-};
-
-type Mappings = {
-  [K in keyof TMtpMessageMediaRecord]: [
-    React.StatelessComponent<MtpMessageMedia>,
-    string | ((media: StoredMedia[K]) => React.ReactNode)
-  ];
-};
+import { Mappings, Props, TLMedia } from './index.h';
 
 // TODO: do something with this?
 const mappings: Mappings = {
-  messageMediaEmpty: [Full.Empty, Preview.Empty],
-  messageMediaGeo: [Full.Geo, Preview.Geo],
-  messageMediaContact: [Full.Contact, Preview.Contact],
-  messageMediaUnsupported: [Full.Unsupported, Preview.Unsupported],
-  messageMediaVenue: [Full.Venue, Preview.Venue],
-  messageMediaPhoto: [Full.Photo, Preview.Photo],
-  messageMediaDocument: [Full.Document, Preview.Document],
-  messageMediaWebPage: [Full.WebPage, Preview.WebPage],
-  messageMediaGame: [Full.Game, Preview.Game],
-  messageMediaInvoice: [Full.Invoice, Preview.Invoice],
+  unsupported: [Full.Unsupported, Preview.Unsupported],
+  contact: [Full.Contact, Preview.Contact],
+  invoice: [Full.Invoice, Preview.Invoice],
+  webpage: [Full.WebPage, Preview.WebPage],
+  empty: [Full.Empty, Preview.Empty],
+  venue: [Full.Venue, Preview.Venue],
+  photo: [Full.Photo, Preview.Photo],
+  game: [Full.Game, Preview.Game],
+  geo: [Full.Geo, Preview.Geo],
+
+  document: [Full.Document, Preview.Document],
+  sticker: [Full.Document, Preview.Sticker],
+  voice: [Full.Document, Preview.Voice],
+  audio: [Full.Document, Preview.Audio],
+  round: [Full.Document, Preview.Round],
+  video: [Full.Document, Preview.Video],
+  gif: [Full.Document, Preview.GIF],
 };
 
-type Props = Pick<MtpMessage, 'media'>;
-const mediaSelector = (state: Store, { media }: Props): MtpMessageMedia => {
+const mapMedia = (state: Store, { media }: Props): { media: TLMedia } => {
   const entities = map(prop('byId'), state);
-  return denormalize(media, schema, entities);
+  return {
+    media: denormalize(media, schema, entities),
+  };
 };
 
-const mapPreview = (state: Store, props: Props) => {
-  const media = mediaSelector(state, props);
-  const [, Preview] = mappings[media._];
-  const text = typeof Preview === 'function'
-    ? Preview(media)
-    : Preview;
+const preview =
+  (Base: React.ComponentType) => {
+    const Comp: React.SFC<{ media: TLMedia }> = ({ media }) => {
+      const [, Preview] = mappings[media.type];
+      const text: React.ReactNode = typeof Preview === 'function'
+        // TODO: wait until https://github.com/Microsoft/TypeScript/pull/17790 lands
+        // tslint:disable-next-line
+        ? (Preview as any)(media)
+        : Preview;
 
-  return { children: text };
-};
+      return <Base>{text}</Base>;
+    };
+    Comp.displayName = `preview(${Base.displayName})`;
+    return Comp;
+  };
 
-const mapFull = (state: Store, props: Props) => {
-  const media = mediaSelector(state, props);
-  const [Attachment] = mappings[media._]
-  return { Attachment, media };
-};
+type FullProps = { Attachment: React.SFC<TLMedia>, media: TLMedia };
+const full =
+  (Base: React.SFC<FullProps>) => {
+    const Comp: React.SFC<{ media: TLMedia }> = ({ media }) => {
+      const [Attachment] = mappings[media.type];
+      Base.displayName = `full(${Attachment.name})`;
+      return <Base Attachment={Attachment} media={media} />;
+    };
+    return Comp;
+  };
 
-export const PreviewMedia = connect(mapPreview)(StyledPreview);
 
-export const FullMedia = connect(mapFull)(({ Attachment, media }) =>
+// TODO: move from containers
+export const PreviewMediaComp = preview(StyledPreview);
+export const FullMediaComp = full(({ Attachment, media }) =>
   React.createElement(Attachment, media));
+
+export const PreviewMedia = connect(mapMedia)(PreviewMediaComp);
+export const FullMedia = connect(mapMedia)(FullMediaComp);
+
+
