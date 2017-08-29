@@ -1,4 +1,5 @@
 import { TLDocument } from 'helpers/reselector.h';
+import { pipe } from 'ramda';
 import { MtpDocument, MtpDocumentAttribute, TMtpDocumentAttributeRecord } from 'redux/mtproto';
 
 type Mappings = {
@@ -42,12 +43,17 @@ type Value = {
   attribute: MtpDocumentAttribute,
 };
 
-export const processDoc = (document: MtpDocument) =>
-  document.attributes
-  .map(attribute => ({ f: mappings[attribute._], attribute }))
-  .reduce<TLDocument, MtpDocument>(
-    (acc, { f, attribute }: Value) =>
-      Object.assign({}, acc, f(attribute, document, acc)),
-    document,
-  );
+export const processDoc = pipe(
+  (doc: MtpDocument) => doc.thumb && doc.thumb._ === 'photoSizeEmpty'
+    ? Object.assign({}, doc, { thumb: undefined })
+    : doc,
+  (document: MtpDocument) =>
+    document.attributes
+      .map(attribute => ({ f: mappings[attribute._], attribute }))
+      .reduce<TLDocument, MtpDocument>(
+        (acc, { f, attribute }: Value) =>
+          Object.assign({}, acc, f(attribute, document, acc)),
+        document,
+      ),
+);
 
