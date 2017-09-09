@@ -10,7 +10,7 @@ var config = {
   app: {
     head: {
       title: 'barbar-vortigern',
-      titleTemplate: 'barbar-vortigern: %s',
+      titleTemplate: 'TREACT ✒️: %s',
       meta: [
         { charset: 'utf-8' },
         { 'http-equiv': 'x-ua-compatible', content: 'ie=edge' },
