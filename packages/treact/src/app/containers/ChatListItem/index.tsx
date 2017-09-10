@@ -55,7 +55,7 @@ interface Props {
 }
 
 interface Funcs {
-  click(id: number): Promise<void>;
+  click(id: number): void;
 }
 
 interface State {
