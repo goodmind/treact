@@ -47,13 +47,13 @@ export const processDoc = pipe(
   (doc: MtpDocument) => doc.thumb && doc.thumb._ === 'photoSizeEmpty'
     ? Object.assign({}, doc, { thumb: undefined })
     : doc,
-  (document: MtpDocument) =>
-    document.attributes
+  (doc: MtpDocument) =>
+    doc.attributes
       .map(attribute => ({ f: mappings[attribute._], attribute }))
       .reduce<TLDocument, MtpDocument>(
         (acc, { f, attribute }: Value) =>
-          Object.assign({}, acc, f(attribute, document, acc)),
-        document,
+          Object.assign({}, acc, f(attribute, doc, acc)),
+        doc,
       ),
 );
 
