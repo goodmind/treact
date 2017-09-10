@@ -14,7 +14,7 @@ type ConnectedState = {
   selected: number,
 };
 type ConnectedActions = {
-  sendMessage(id: number, text: string): Promise<void>,
+  sendMessage(id: number, text: string): Promise<{}>,
   setMessage(s: string): string,
   onChange: React.ChangeEventHandler<HTMLInputElement>,
   onSubmit: React.MouseEventHandler<{}>,
@@ -23,7 +23,7 @@ type OwnProps = {};
 type Props = ConnectedState & ConnectedActions & OwnProps & State;
 
 const enhance = compose(
-  connect<ConnectedState, ConnectedActions, OwnProps>(
+  connect<ConnectedState, Pick<ConnectedActions, 'sendMessage'>, OwnProps>(
     (state: Store) => ({ selected: state.selected.dialog }),
     (dispatch: Dispatch) => ({
       sendMessage: (id: number, text: string) => dispatch(sendText(id, text)),
