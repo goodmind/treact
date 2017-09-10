@@ -6,11 +6,12 @@ import { Message } from 'components/Message';
 import { MessageGroup } from 'components/MessageGroup';
 import { Entity, RichText } from 'components/RichText';
 import { getPeerData, getPeerName } from 'helpers/Telegram/Peers';
-import { eqProps, groupWith, map, path, pipe, props } from 'ramda';
+import { eqProps, groupWith, pipe, props } from 'ramda';
 import { loadOffset } from 'redux/api/chatList';
 import { TPeersType } from 'redux/modules/peers';
 import { MtpChat, MtpMessage, MtpUser } from 'redux/mtproto';
 import { Dispatch, Store } from 'redux/store.h';
+import { createSelector } from 'reselect';
 
 /*const onChatSelect = async (currentId: number, nextId: number) => {
   if (nextId && nextId !== currentId) {
@@ -38,7 +39,7 @@ class ChatContainer extends React.Component<Props, {}> {
         name={peerName}
         userCount={0}
         loadMore={this.loadSliceRange}>
-        {groupByUser(messages)}
+        {messages.map(messageGroup)}
       </Chat>
     );
   }
@@ -47,7 +48,7 @@ class ChatContainer extends React.Component<Props, {}> {
 type ConnectedState =  {
   selected: number;
   history: number[];
-  messages: MtpMessage[];
+  messages: MtpMessage[][];
   peer?: TPeersType;
   peerData?: MtpUser | MtpChat;
   peerName: string;
@@ -58,9 +59,6 @@ type ConnectedActions = {
 };
 
 type Props = ConnectedState & ConnectedActions;
-
-type MessagesPath = (obj: Store) => Store['messages']['byId'];
-const messagesPath: MessagesPath = path(['messages', 'byId']);
 
 const messageItem = ({ id, from_id, date, message, media, entities, out }: MtpMessage) =>
   <Message
@@ -79,17 +77,40 @@ const messageItem = ({ id, from_id, date, message, media, entities, out }: MtpMe
         entities={(entities as any) as Entity[]}
         text={message} />} />;
 
-const messageGroup = ([first, ...rest]: MtpMessage[]) =>
+const messageGroup = (messages: MtpMessage[]) =>
   <MessageGroup
-    key={`${first.from_id}_${first.date}`}
-    messages={[first, ...rest]}
+    key={`${messages[0].from_id}_${messages[0].date}`}
+    messages={messages}
     message={messageItem}
-    first={first} />;
+    first={messages[0]} />;
 
+// TODO: sort only ids?
+// TODO: move to redux?
 const groupByUser = pipe(
   groupWith<MtpMessage, MtpMessage[]>((a, b) =>
     eqProps('from_id', a, b) && (b.date < a.date + 900)),
-  map(messageGroup),
+);
+
+const messagesPath = ({ messages }: Store) => messages.byId;
+const historiesPath = ({ histories }: Store) => histories.byId;
+const selectedPath = ({ selected }: Store) => selected.dialog;
+
+const historySelector = createSelector(
+  historiesPath,
+  selectedPath,
+  (histories, selected) => histories[selected] || [],
+);
+
+const messagesSelector = createSelector(
+  messagesPath,
+  historySelector,
+  // TODO: sort only ids?
+  (messages, history) => props(history, messages),
+);
+
+const groupedMessagesSelector = createSelector(
+  messagesSelector,
+  groupByUser,
 );
 
 const stateMap = (state: Store): ConnectedState => {
@@ -102,9 +123,8 @@ const stateMap = (state: Store): ConnectedState => {
     peerName: '',
   };
 
-  const history = state.histories.byId[selected] || [];
-  const messagesStore = messagesPath(state);
-  const messages = props(history, messagesStore);
+  const history = historySelector(state);
+  const messages = groupedMessagesSelector(state);
   const peer = state.peers.byId[selected];
   const peerData = getPeerData(selected, peer, state);
   const peerName = getPeerName(peer, peerData);
