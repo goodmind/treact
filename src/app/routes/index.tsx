@@ -37,11 +37,25 @@ const routes: Route[] = [
       {
         path: '/im',
         guard: true,
-        async action({ store: { dispatch } }) {
-          const { InstantMessages } = await import (/* webpackChunkName: "im" */ 'containers/InstantMessages');
-          await dispatch(fetchChatList());
-          return InstantMessages;
-        },
+        children: [
+          {
+            path: '/',
+            guard: true,
+            async action({ store: { dispatch } }) {
+              const { InstantMessages } = await import (/* webpackChunkName: "im" */ 'containers/InstantMessages');
+              await dispatch(fetchChatList());
+              return InstantMessages;
+            },
+          },
+          {
+            path: '/:id',
+            guard: true,
+            action: async (context, { id }: { id: number }) => (props: {}) => {
+              console.debug('im route', id, props, context);
+              return <div>Memes</div>;
+            },
+          },
+        ],
       },
 
       {
