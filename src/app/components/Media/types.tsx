@@ -1,6 +1,7 @@
 import { LocationMap } from 'components/LocationMap';
 import { PeerPhoto } from 'containers';
-import { FullMediaComp } from 'containers/Media';
+// import { FullMediaComp } from 'containers/Media';
+import picStore from 'helpers/FileManager/picStore';
 import * as React from 'react';
 import {
   MtpMessageMediaContact,
@@ -43,14 +44,14 @@ export const Venue = ({
   geo: { lat, long: lng },
   title, address,
 }: MtpMessageMediaVenue) => (
-  <div>
-    <strong>{title}</strong>
-    <div>{address}</div>
-    <LocationMap
-      geo={{ lat, lng }}
-      place={{ title, address }} />
-  </div>
-);
+    <div>
+      <strong>{title}</strong>
+      <div>{address}</div>
+      <LocationMap
+        geo={{ lat, lng }}
+        place={{ title, address }} />
+    </div>
+  );
 
 // Media content
 export const Photo = ({ _, caption }: MtpMessageMediaPhoto) => (
@@ -60,17 +61,23 @@ export const Photo = ({ _, caption }: MtpMessageMediaPhoto) => (
   </div>
 );
 
-export const Document = ({ document, caption }: MtpMessageMediaDocument) => (
+// TODO: use normalized types, split document to different types
+export const Document = ({ document: { type, thumb, w, h }, caption }: MtpMessageMediaDocument) => (
   <div>
-    {document._}
+    {type}
     {caption}
+    {thumb && <div>
+      Thumb: <img
+        style={{ height: h, width: w }}
+        src={picStore.get(thumb.location.local_id)} />
+    </div>}
   </div>
 );
 
 export const WebPage = ({ webpage }: MtpMessageMediaWebPage) => (
   <div>
     Webpage type: {webpage.type}
-    {webpage.type !== 'article' && <FullMediaComp media={webpage} />}
+    {/*webpage.type !== 'article' && <FullMediaComp media={webpage} />*/}
   </div>
 );
 
