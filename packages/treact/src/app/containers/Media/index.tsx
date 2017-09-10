@@ -12,20 +12,20 @@ import { makeMediaSelector } from './selector';
 const mappings: Mappings = {
   unsupported: [Full.Unsupported, Preview.Unsupported],
   contact: [Full.Contact, Preview.Contact],
-  invoice: [Full.Invoice, Preview.Invoice],
-  webpage: [Full.WebPage, Preview.WebPage],
   empty: [Full.Empty, Preview.Empty],
   venue: [Full.Venue, Preview.Venue],
-  photo: [Full.Photo, Preview.Photo],
-  game: [Full.Game, Preview.Game],
   geo: [Full.Geo, Preview.Geo],
 
   document: [Full.Document, Preview.Document],
   sticker: [Full.Document, Preview.Sticker],
+  webpage: [Full.WebPage, Preview.WebPage],
+  invoice: [Full.Invoice, Preview.Invoice],
   voice: [Full.Document, Preview.Voice],
   audio: [Full.Document, Preview.Audio],
   round: [Full.Document, Preview.Round],
   video: [Full.Document, Preview.Video],
+  photo: [Full.Photo, Preview.Photo],
+  game: [Full.Game, Preview.Game],
   gif: [Full.Document, Preview.GIF],
 };
 
