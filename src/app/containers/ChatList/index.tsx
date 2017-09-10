@@ -56,7 +56,7 @@ class ChatListContainer extends React.Component<Props, State> {
     const offsetId = dialogsIds[dialogsIds.length - 1];
     console.log('loadSliceRange', offsetId, offsetDate, loadAtDate);
     loadAtDate(offsetDate)
-      .then(({ payload: { result } }) => this.setState({
+      .then(({ payload: { result = { dialogs: [] } } }) => this.setState({
         hasMore: result.dialogs.length !== 0,
       }))
       .catch(e => console.error(e));
