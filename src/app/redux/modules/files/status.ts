@@ -27,7 +27,8 @@ const updater = (store: Store, payload: SlicePayload): Store => {
 
   const onlyNew = reject(inStore, filesIds);
 
-  const remap = (id: number): [number, Status] => isPhoto(id)
+  // TODO: what to do with this check?
+  const remap = (id: number): [number, Status] => true
     ? [ id, 'queue' ]
     : [ id, 'idle' ];
 
