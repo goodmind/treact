@@ -46,6 +46,16 @@
     "comment-format": [
       false
     ],
+    "no-submodule-imports": [
+      true,
+      "containers",
+      "components",
+      "redux",
+      "helpers",
+      "api",
+      "themes",
+      "modules"
+    ],
     "no-non-null-assertion": true,
     "no-any": true,
     "no-var-requires": true,
