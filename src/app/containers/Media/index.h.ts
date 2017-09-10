@@ -30,3 +30,7 @@ export type Mappings = {
 };
 
 export type Props = Pick<MtpMessage, 'media'>;
+
+export type ConnectedState = { media: TLMedia };
+
+export type FullProps = { Attachment: React.SFC<TLMedia>, media: TLMedia };
