@@ -29,10 +29,13 @@ const mappings: Mappings = {
   gif: [Full.Document, Preview.GIF],
 };
 
-const mapMedia = (state: Store, { media }: Props): { media: TLMedia } => {
-  const entities = map(prop('byId'), state);
-  return {
-    media: denormalize(media, schema, entities),
+const mapMedia = () => {
+  const mediaSelector = makeMediaSelector();
+  return (state: Store, props: Props): ConnectedState => {
+    const media = mediaSelector(state, props);
+    return {
+      media,
+    };
   };
 };
 
