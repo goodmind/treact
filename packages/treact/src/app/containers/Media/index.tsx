@@ -41,7 +41,7 @@ const mapMedia = () => {
 
 const preview =
   (Base: React.ComponentType) => {
-    const Comp: React.SFC<{ media: TLMedia }> = ({ media }) => {
+    const Comp: React.SFC<ConnectedState> = ({ media }) => {
       const [, Preview] = mappings[media.type];
       const text: React.ReactNode = typeof Preview === 'function'
         // TODO: wait until https://github.com/Microsoft/TypeScript/pull/17790 lands
@@ -55,10 +55,9 @@ const preview =
     return Comp;
   };
 
-type FullProps = { Attachment: React.SFC<TLMedia>, media: TLMedia };
 const full =
   (Base: React.SFC<FullProps>) => {
-    const Comp: React.SFC<{ media: TLMedia }> = ({ media }) => {
+    const Comp: React.SFC<ConnectedState> = ({ media }) => {
       const [Attachment] = mappings[media.type];
       Base.displayName = `full(${Attachment.name})`;
       return <Base Attachment={Attachment} media={media} />;
@@ -74,5 +73,3 @@ export const FullMediaComp = full(({ Attachment, media }) =>
 
 export const PreviewMedia = connect(mapMedia)(PreviewMediaComp);
 export const FullMedia = connect(mapMedia)(FullMediaComp);
-
-
