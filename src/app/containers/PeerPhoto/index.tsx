@@ -27,10 +27,10 @@ const PeerPhotoContainer = ({ photoId, className = '' }: Props) => {
 };
 
 
-const photoFromState = (state: Store, peerID: number): number | 'default' => pathOr('default',
-  ['photos', 'byId', peerID, 'photo_small'])(state);
+const photoFromState = (state: Store, peerID: number): number | 'default' =>
+  pathOr('default', ['avatars', 'byId', peerID, 'photo_small'])(state);
 
-const fileStatus = (state: Store, photoId: number ): FileStatus =>
+const fileStatus = (state: Store, photoId: number): FileStatus =>
   pathOr('idle', ['files', 'status', photoId])(state);
 
 const getPhotoId = (state: Store, peerID: number) => {
