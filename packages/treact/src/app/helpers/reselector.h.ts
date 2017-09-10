@@ -82,7 +82,9 @@ export type Slice = {
 
   media: TLMedia,
   documents: TLDocument,
+  // TODO: add types
   photos: {},
+  photoSizes: {},
 };
 
 export type SlicePayload = Payload<Slice>;
