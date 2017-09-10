@@ -155,7 +155,7 @@
     "localforage": "^1.5.0",
     "mtproto-storage-browser": "^0.1.3",
     "normalizr": "^3.2.3",
-    "normalizr-entities": "^0.1.2",
+    "normalizr-entities": "^0.1.3",
     "ramda": "^0.24.1",
     "react": "^15.6.1",
     "react-autosize-textarea": "^0.4.7",
