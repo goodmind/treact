@@ -6,7 +6,7 @@ const { GET_DIALOGS, LOAD_SLICE } = CHATS;
 import { modelDefaults, updateStoreMap } from 'helpers/reselector';
 import { Slice, StoredPayload } from 'helpers/reselector.h';
 
-export type StoreMessages = StoredPayload<Slice['documents']>;
+export type StoreDocuments = StoredPayload<Slice['documents']>;
 
 const updater = updateStoreMap<Slice, 'documents'>('documents');
 
