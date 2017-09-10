@@ -5,11 +5,15 @@ import { Auth } from './modules/auth';
 import { StoreAvatars } from './modules/avatars';
 import { StoreChats } from './modules/chats';
 import { StoreDialogs } from './modules/dialogs';
+import { StoreDocuments } from './modules/documents';
 import { StatusStore } from './modules/files';
 import { StoreHistories } from './modules/histories';
 import { StoreLoadings } from './modules/loadings';
+import { StoreMedia } from './modules/media';
 import { StoreMessages } from './modules/messages';
 import { StorePeers } from './modules/peers';
+import { StorePhotos } from './modules/photos';
+import { StorePhotoSizes } from './modules/photos/sizes';
 import { StoreSelected } from './modules/selected';
 import { StoreTheme } from './modules/theme';
 import { StoreUsers } from './modules/users';
@@ -35,6 +39,10 @@ export interface Store {
   };
   avatars: StoreAvatars;
   theme: StoreTheme;
+  media: StoreMedia;
+  documents: StoreDocuments;
+  photos: StorePhotos;
+  photoSizes: StorePhotoSizes;
 }
 
 export type ThunkAction<R, S, E> = (dispatch: Redux.Dispatch<S>, getState: () => S, extraArgument?: E) => R;
