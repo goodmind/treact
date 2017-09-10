@@ -1,14 +1,12 @@
-import * as Preview from 'components/Media/preview';
-import * as Full from 'components/Media/types';
-
-import { StyledPreview } from 'components/Media';
-import { denormalize } from 'normalizr';
-import { map, prop } from 'ramda';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { media as schema } from 'redux/modules/media/entities';
+
+import { StyledPreview } from 'components/Media';
+import * as Preview from 'components/Media/preview';
+import * as Full from 'components/Media/types';
 import { Store } from 'redux/store.h';
-import { Mappings, Props, TLMedia } from './index.h';
+import { ConnectedState, FullProps, Mappings, Props } from './index.h';
+import { makeMediaSelector } from './selector';
 
 // TODO: do something with this?
 const mappings: Mappings = {
