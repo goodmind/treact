@@ -2,6 +2,8 @@ import { InstantMessages } from 'components';
 import { Chat, ChatList } from 'containers';
 import pool from 'helpers/Telegram/pool';
 import * as React from 'react';
+
+import PhotoSizesAssistant from '../Media/photoSizesAssistant';
 import DownloadAssistant from './downloadAssistant';
 
 class InstantMessagesImpl extends React.Component<{}, {}> {
@@ -22,6 +24,7 @@ class InstantMessagesImpl extends React.Component<{}, {}> {
         <ChatList />
         <Chat />
         <DownloadAssistant />
+        <PhotoSizesAssistant />
       </InstantMessages>
     );
   }
