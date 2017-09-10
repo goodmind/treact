@@ -8,6 +8,7 @@ import { CHATS } from 'actions';
 import { unifiedGetId } from 'helpers/state';
 import { getPeerData, retrieveInputPeer } from 'helpers/Telegram/Peers';
 import { api } from 'helpers/Telegram/pool';
+import { fileLocations } from 'modules/files/entities';
 import { media, mediaIndexation } from 'modules/media/entities';
 import { MtpDialog, MtpMessage, MtpMessagesSlice, MtpPeer, MtpUser, TById } from 'redux/mtproto';
 import { AsyncAction, Dispatch } from 'redux/store.h';
@@ -19,9 +20,6 @@ export interface DialogPayload {
   users: MtpUser[];
 }
 
-const fileLocations  = new schema.Entity('fileLocations', {}, {
-  idAttribute: 'local_id',
-});
 const avatars = new schema.Entity('avatars', {
   photo_small: fileLocations,
   photo_big: fileLocations,
