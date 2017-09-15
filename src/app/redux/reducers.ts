@@ -14,6 +14,7 @@ import media from './modules/media';
 import messages from './modules/messages';
 import peers from './modules/peers';
 import photos from './modules/photos';
+import photoCachedSizes from './modules/photos/cachedSizes';
 import photoSizes from './modules/photos/sizes';
 import selected from './modules/selected';
 import settings from './modules/settings';
@@ -44,6 +45,7 @@ const rootReducer = combineReducers<Store>({
   documents,
   photos,
   photoSizes,
+  photoCachedSizes,
 });
 
 export default rootReducer;
