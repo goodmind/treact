@@ -1,38 +1,44 @@
 import picStore from 'helpers/FileManager/picStore';
-import { filter } from 'ramda';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Store } from 'redux/store.h';
+import { createSelector } from 'reselect';
 
 // TODO: move assistants to middlewares?
 
 type ConnectedState = {
-  cachedIds: number[],
+  cached: {
+    ids: number[],
+    sizes: Store['photoCachedSizes']['byId'],
+  },
   // TODO: describe TL types in redux/mtproto
   // TODO: WHERE IS TL PARSERRRR
-  photoSizes: Store['photoSizes']['byId'],
+  sizes: Store['photoSizes']['byId'],
 };
 
-const PhotoSizesAssistant = ({ cachedIds, photoSizes }: ConnectedState) => {
+const PhotoSizesAssistant = ({ cached }: ConnectedState) => {
   console.count('PhotoSizesAssistant');
   const addCached = (id: number) => {
-    const photo = photoSizes[id];
+    const photo = cached.sizes[id];
     console.warn(`cached size`, photo);
     picStore.addPic(id, photo.bytes);
   };
   const run = () => {
-    cachedIds.map(addCached);
+    cached.ids.map(addCached);
   };
   setTimeout(run, 10);
   return <span />;
 };
 
-const mapState = ({ photoSizes }: Store): ConnectedState => ({
-  cachedIds: filter(
-    id => photoSizes.byId[id]._ === 'photoCachedSize',
-    photoSizes.ids,
-  ),
-  photoSizes: photoSizes.byId,
-});
+const mapState = createSelector(
+  ({ photoCachedSizes }: Store) => photoCachedSizes.ids,
+  ({ photoCachedSizes }) => photoCachedSizes.byId,
+  (cachedIds, cachedById) => ({
+    cached: {
+      ids: cachedIds,
+      sizes: cachedById,
+    },
+  }),
+);
 
 export default connect(mapState)(PhotoSizesAssistant);
