@@ -17,16 +17,16 @@ const mappings: Mappings = {
   geo: [Full.Geo, Preview.Geo],
 
   document: [Full.Document, Preview.Document],
-  sticker: [Full.Document, Preview.Sticker],
+  sticker: [Full.Sticker, Preview.Sticker],
   webpage: [Full.WebPage, Preview.WebPage],
   invoice: [Full.Invoice, Preview.Invoice],
-  voice: [Full.Document, Preview.Voice],
-  audio: [Full.Document, Preview.Audio],
-  round: [Full.Document, Preview.Round],
-  video: [Full.Document, Preview.Video],
+  voice: [Full.Voice, Preview.Voice],
+  audio: [Full.Audio, Preview.Audio],
+  round: [Full.Round, Preview.Round],
+  video: [Full.Video, Preview.Video],
   photo: [Full.Photo, Preview.Photo],
   game: [Full.Game, Preview.Game],
-  gif: [Full.Document, Preview.GIF],
+  gif: [Full.GIF, Preview.GIF],
 };
 
 const mapMedia = () => {
