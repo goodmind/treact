@@ -136,7 +136,7 @@ export const fetchChatList = (limit: number = 20, date: number = 0) =>
         limit,
       });
       const normalized = fullNormalize(result);
-      const histories = mapTopMessage(normalized.entities.dialogs);
+      const histories = mapTopMessage(normalized.entities.dialogs || {});
       normalized.entities.histories = histories;
       normalized.result.histories = normalized.result.dialogs;
       return dispatch(GET_DIALOGS.DONE(normalized));
