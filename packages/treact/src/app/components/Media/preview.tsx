@@ -2,6 +2,7 @@ import styled from 'glamorous';
 import { TLDocument } from 'helpers/reselector.h';
 import * as React from 'react';
 import {
+  MtpMessageMediaPhoto,
   MtpMessageMediaVenue,
 } from 'redux/mtproto';
 import { Themeable } from 'themes/theme.h';
@@ -25,10 +26,14 @@ export const Empty = 'Empty Message';
 export const Geo = 'Location';
 export const Contact = 'Contact';
 export const Unsupported = 'Unsupported message';
-export const Photo = 'Photo';
 export const WebPage = 'Webpage';
 export const Game = 'Game';
 export const Invoice = 'Invoice';
+export const Photo = ({ caption }: MtpMessageMediaPhoto) => caption ? (
+  <span>Photo, <Caption>{caption}</Caption></span>
+) : (
+  <span>Photo</span>
+);
 export const Venue = ({ title }: MtpMessageMediaVenue) => (
   <span>Location, <Caption>{title}</Caption></span>
 );
