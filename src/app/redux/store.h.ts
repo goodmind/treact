@@ -13,6 +13,7 @@ import { StoreMedia } from './modules/media';
 import { StoreMessages } from './modules/messages';
 import { StorePeers } from './modules/peers';
 import { StorePhotos } from './modules/photos';
+import { StorePhotoCachedSizes } from './modules/photos/cachedSizes';
 import { StorePhotoSizes } from './modules/photos/sizes';
 import { StoreSelected } from './modules/selected';
 import { StoreTheme } from './modules/theme';
@@ -43,6 +44,7 @@ export interface Store {
   documents: StoreDocuments;
   photos: StorePhotos;
   photoSizes: StorePhotoSizes;
+  photoCachedSizes: StorePhotoCachedSizes;
 }
 
 export type ThunkAction<R, S, E> = (dispatch: Redux.Dispatch<S>, getState: () => S, extraArgument?: E) => R;
