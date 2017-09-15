@@ -16,7 +16,13 @@ export const createDeepEqualSelector = createSelectorCreator(
   equals,
 );
 
-type SelectedStore = Pick<Store, 'media' | 'documents' | 'photos' | 'photoSizes' | 'files'>;
+type SelectedStore = Pick<Store,
+  | 'media'
+  | 'documents'
+  | 'photos'
+  | 'photoSizes'
+  | 'photoCachedSizes'
+  | 'files'>;
 
 const dataSelector = (_: Store, { media }: Props) => media;
 
@@ -25,21 +31,27 @@ export const memoizeStore = createSelector(
   ({ documents }) => documents.byId,
   ({ photos }) => photos.byId,
   ({ photoSizes }) => photoSizes.byId,
+  ({ photoCachedSizes }) => photoCachedSizes.byId,
   ({ files }) => files.locations.byId,
-  (media, documents, photos, photoSizes, fileLocations) => ({
-    media, documents, photos, photoSizes, fileLocations,
+  (media, documents, photos, photoSizes, photoCachedSizes, fileLocations) => ({
+    media, documents, photos, photoSizes, photoCachedSizes, fileLocations,
   }),
 );
 
 export const entitiesSelector = createSelector(
   memoizeStore,
   dataSelector,
-  (store, data) => mapObjIndexed(
-    (v, key) => v.reduce(
-      (acc, id) => ({ ...acc, [id]: store[key][id] }),
-      {}),
-    getEntities<typeof store, number>(data, schema, store),
-  ),
+  (store, data) => {
+    const entities = getEntities<typeof store, number>(data, schema, store);
+    const o = mapObjIndexed(
+      (v, key) => v.reduce(
+        (acc, id) => ({ ...acc, [id]: store[key][id] }),
+        {}),
+      entities,
+    );
+    console.debug('entities', o, entities);
+    return o;
+  },
 );
 
 export const makeMediaSelector = () => createDeepEqualSelector(
