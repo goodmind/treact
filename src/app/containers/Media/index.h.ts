@@ -1,5 +1,5 @@
-import { TLDocument, TLMedia, TLMediaTypes } from 'helpers/reselector.h';
-import { MtpMessage, MtpMessageMedia, TMtpMessageMediaRecord } from 'redux/mtproto';
+import { TLDocument, TLMedia, TLMediaRecord, TLMediaTypes } from 'helpers/reselector.h';
+import { MtpMessage } from 'redux/mtproto';
 
 export { TLMedia };
 
@@ -17,14 +17,16 @@ type Swap<
 };
 
 export type StoredMedia = {
-  [K in keyof Swap<TLMediaTypes>]: TMtpMessageMediaRecord[Swap<TLMediaTypes>[K]]
+  [K in keyof Swap<TLMediaTypes>]: TLMediaRecord[Swap<TLMediaTypes>[K]]
 } & {
   document: { document: TLDocument },
 };
 
+type MediaComponent<T = TLMedia> = React.SFC<T>;
+
 export type Mappings = {
   [K in keyof Swap<TLMediaTypes>]: [
-    React.StatelessComponent<MtpMessageMedia>,
+    MediaComponent<StoredMedia[K]>,
     string | ((media: StoredMedia[K]) => React.ReactNode)
   ];
 };
@@ -33,4 +35,4 @@ export type Props = Pick<MtpMessage, 'media'>;
 
 export type ConnectedState = { media: TLMedia };
 
-export type FullProps = { Attachment: React.SFC<TLMedia>, media: TLMedia };
+export type FullProps = { Attachment: MediaComponent, media: TLMedia };
