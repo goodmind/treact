@@ -1,4 +1,6 @@
 import { processDoc } from 'modules/documents/preprocess';
+import { processPhoto } from 'modules/photos/preprocess';
+
 import { fileLocations } from 'modules/files/entities';
 import { schema } from 'normalizr';
 import { map, path, pipe, prop, zipObj } from 'ramda';
@@ -13,7 +15,7 @@ const mediaSettings = {
   idAttribute: (_: void, parent: MtpMessage) => path<number>(['id'], parent),
 };
 
-const photoSize = new schema.Entity('photoSizes', {
+const photoSize = new schema.Entity('photoCachedSizes', {
   location: fileLocations,
 }, {
   idAttribute: v => v.location.local_id,
@@ -37,6 +39,7 @@ export const document = new schema.Entity('documents', {
 const photo = new schema.Entity('photos', {
   sizes: new schema.Array(metaPhotoSize, '_'),
 }, {
+  processStrategy: processPhoto,
   idAttribute: pipe(prop('id'), e => +e),
 });
 
@@ -78,6 +81,7 @@ export const mediaIndexation = [
   'documents',
   'photos',
   'photoSizes',
+  'photoCachedSizes',
 ];
 
 export const media = new schema.Union({
