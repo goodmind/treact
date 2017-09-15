@@ -40,20 +40,26 @@ interface PropsDispatch {
 const beginLoad = async (id: number, loc: MtpFileLocation) => {
   const { dc_id = 2, volume_id, secret, local_id } = loc;
   const inputLocation = { _: 'inputFileLocation', dc_id, volume_id, secret, local_id };
-  console.warn(`idle`, loc);
+  console.warn(`idle`, id, loc);
   const cached = picStorage.getItem<Blob>(id.toString())
-    .then(when(isNil, Promise.reject))
+    .then(when(isNil, Promise.reject.bind(Promise)))
     .then(blob => picStore.addBlob(id, blob), () => ({}));
-  const loader = () => api<MtpUploadFile>('upload.getFile', {
-    location: inputLocation,
-    offset: 0,
-    limit: 1024 * 1024,
-  }, {
-    dcID: loc.dc_id || 2,
-    fileDownload: true,
-    createNetworker: true,
-    noErrorBox: true,
-  }).then(data => picStorage.setItem(id.toString(), picStore.addPic(id, data.bytes)), () => ({}));
+  const loader = () => {
+    console.warn(`loading`, id, inputLocation);
+    return api<MtpUploadFile>('upload.getFile', {
+      location: inputLocation,
+      offset: 0,
+      limit: 1024 * 1024,
+    }, {
+      dcID: loc.dc_id || 2,
+      fileDownload: true,
+      createNetworker: true,
+      noErrorBox: true,
+    }).then(data => {
+      console.warn(`done`, id, data);
+      return picStorage.setItem(id.toString(), picStore.addPic(id, data.bytes));
+    }, err => console.error(`error`, id, err));
+  };
   return unless(isNil, loader, await cached);
 };
 // tslint:disable:no-debugger
@@ -63,7 +69,10 @@ const DownloadAssistant = ({ photoCache, files, load, done }: PropsStore & Props
   const mapLoad = (id: number) => {
     const file = files[id];
     return beginLoad(id, file)
-    .then(() => done(id), () => ({}));
+    .then(() => done(id), e => {
+      console.error(`error`, e);
+      return {};
+    });
   };
   const run = () => {
     load(photoCache);
