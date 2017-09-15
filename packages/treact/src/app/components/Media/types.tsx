@@ -2,6 +2,7 @@ import { LocationMap } from 'components/LocationMap';
 import { PeerPhoto } from 'containers';
 // import { FullMediaComp } from 'containers/Media';
 import picStore from 'helpers/FileManager/picStore';
+import { TLMediaDocumentRecord } from 'helpers/reselector.h';
 import * as React from 'react';
 import {
   MtpMessageMediaContact,
@@ -54,21 +55,88 @@ export const Venue = ({
   );
 
 // Media content
-export const Photo = ({ _, caption }: MtpMessageMediaPhoto) => (
+export const Photo = ({ _, photo: { thumb }, caption }: MtpMessageMediaPhoto) => (
   <div>
     {_}
     {caption}
+    {thumb && <div>
+      Thumb: <img
+        style={thumb.sizes}
+        src={picStore.get(thumb.id)} />
+    </div>}
   </div>
 );
 
 // TODO: use normalized types, split document to different types
-export const Document = ({ document: { type, thumb, w, h }, caption }: MtpMessageMediaDocument) => (
+export const GIF = ({ document: { type, thumb, w, h }, caption }: TLMediaDocumentRecord['gif']) => (
   <div>
     {type}
     {caption}
     {thumb && <div>
       Thumb: <img
         style={{ height: h, width: w }}
+        src={picStore.get(thumb.location.local_id)} />
+    </div>}
+  </div>
+);
+
+export const Round = ({ document: { type, thumb, w, h }, caption }: TLMediaDocumentRecord['round']) => (
+  <div>
+    {type}
+    {caption}
+    {thumb && <div>
+      Thumb: <img
+        style={{ height: h, width: w }}
+        src={picStore.get(thumb.location.local_id)} />
+    </div>}
+  </div>
+);
+
+export const Video = ({ document: { type, thumb, w, h }, caption }: TLMediaDocumentRecord['video']) => (
+  <div>
+    {type}
+    {caption}
+    {thumb && <div>
+      Thumb: <img
+        style={{ height: h, width: w }}
+        src={picStore.get(thumb.location.local_id)} />
+    </div>}
+  </div>
+);
+
+export const Audio = ({ document: { type }, caption }: TLMediaDocumentRecord['audio']) => (
+  <div>
+    {type}
+    {caption}
+  </div>
+);
+
+export const Voice = ({ document: { type }, caption }: TLMediaDocumentRecord['voice']) => (
+  <div>
+    {type}
+    {caption}
+  </div>
+);
+
+export const Sticker = ({ document: { type, thumb, w, h }, caption }: TLMediaDocumentRecord['sticker']) => (
+  <div>
+    {type}
+    {caption}
+    {thumb && <div>
+      Thumb: <img
+        style={{ height: h, width: w }}
+        src={picStore.get(thumb.location.local_id)} />
+    </div>}
+  </div>
+);
+
+export const Document = ({ document: { type, thumb }, caption }: TLMediaDocumentRecord['document']) => (
+  <div>
+    {type}
+    {caption}
+    {thumb && <div>
+      Thumb: <img
+        style={{ height: thumb.h, width: thumb.w }}
         src={picStore.get(thumb.location.local_id)} />
     </div>}
   </div>
