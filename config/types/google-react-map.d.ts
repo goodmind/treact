@@ -1,3 +1,8 @@
+// Type definitions for google-map-react 0.24.0
+// Project: https://github.com/istarkov/google-map-react
+// Definitions by: goodmind <https://github.com/goodmind>
+// Definitions: https://github.com/goodmind/treact
+
 /// <reference types="googlemaps" />
 
 declare module 'google-map-react' {
