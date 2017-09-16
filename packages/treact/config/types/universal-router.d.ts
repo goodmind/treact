@@ -1,3 +1,8 @@
+// Type definitions for universal-router 3.2.0
+// Project: https://github.com/kriasoft/universal-router
+// Definitions by: goodmind <https://github.com/goodmind>
+// Definitions: https://github.com/goodmind/treact
+
 declare module 'universal-router' {
   type Obj<T> = { [k: string]: T };
   type Bool = '0'|'1';
