@@ -1,3 +1,4 @@
+import { App } from 'containers';
 import { Location } from 'history';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
@@ -48,8 +49,8 @@ const render = async (location: Location, Routes: typeof routes) => {
   if (routes)
     currentRoutes = Routes;
   const Router = new UniversalRouter(currentRoutes, { resolveRoute, context: { store } });
-  const Route = await Router.resolve<JSX.Element>({ path: location.pathname });
-  return renderComponent(Route);
+  const Route = await Router.resolve<JSX.Element>({ pathname: location.pathname });
+  return renderComponent(<App>{Route}</App>);
 };
 
 init();
