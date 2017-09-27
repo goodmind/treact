@@ -191,7 +191,7 @@ const pairs: InputPair[] = [
   ['emojiPanHeaderBg', [new Color([255, 255, 255, 242]), 'emojiPanBg']],
   ['emojiIconFg', ['checkboxFg']],
   ['emojiIconFgActive', ['windowBgActive']],
-  ['stickerPanDeleteBg', [new Color([0, 0, 0, 204])]],
+  ['stickerPanDeleteBg', [new Color([0, 0, 0, 255])]],
   ['stickerPanDeleteFg', ['windowFgActive']],
   ['stickerPreviewBg', [new Color([255, 255, 255, 176])]],
   ['historyTextInFg', ['windowFg']],
