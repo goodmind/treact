@@ -1,4 +1,4 @@
-// Type definitions for universal-router 3.2.0
+// Type definitions for universal-router 4.0.0
 // Project: https://github.com/kriasoft/universal-router
 // Definitions by: goodmind <https://github.com/goodmind>
 // Definitions: https://github.com/goodmind/treact
@@ -44,22 +44,23 @@ declare module 'universal-router' {
   export interface ActionResult {}
 
   type ActionResultType = ObjectProp<ActionResult, 'type', any>;
+  type NextFunctionType = ObjectProp<NextFunction, 'type', any>;
 
   interface NextFunction {
-    (resume?: boolean, parent?: Route): Promise<ActionResultType>
+    (resume?: boolean, parent?: Route): Promise<NextFunctionType>
   }
 
   export interface Context {
     router: Router;
     route: Route;
     next: NextFunction;
-    url: string;
+    pathname: string;
     baseUrl: string;
     path: string;
     params: Params;
   }
 
-  export type Location = { path: string } & Partial<Context>;
+  export type Location = { pathname: string } & Partial<Context>;
 
   export interface Route {
     path: string;
@@ -74,4 +75,21 @@ declare module 'universal-router' {
     baseUrl: string;
     resolveRoute(context: Context, params: Params): Promise<any>;
   }
+}
+
+declare module 'universal-router/generateUrls' {
+  import Router, { Params } from 'universal-router'
+
+  type Options = {
+    encode(s: string): string,
+    stringifyQueryParams(params: Params): string
+  }
+
+  type URLGenerator = {
+    (routeName: string, params: Params): string
+  }
+
+  function generateUrls(router: Router, options?: Partial<Options>): URLGenerator
+
+  export default generateUrls
 }
