@@ -7,7 +7,11 @@ import { ComponentType } from 'react'
 
 declare module 'universal-router' {
   export interface ActionResult {
-    type: ComponentType<any>
+    type: ComponentType<any>;
+  }
+
+  export interface NextFunction {
+    type: JSX.Element;
   }
 
   export interface Route {
