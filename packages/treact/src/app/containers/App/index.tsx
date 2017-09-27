@@ -1,7 +1,7 @@
 import { App } from 'components';
 import { Header } from 'containers';
 import * as React from 'react';
-import * as Helmet from 'react-helmet';
+import Helmet from 'react-helmet';
 import * as appConfig from '../../../../config/main';
 
 interface Props {
