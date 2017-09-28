@@ -160,7 +160,6 @@
     "normalizr-entities": "^0.1.4",
     "ramda": "^0.24.1",
     "react": "^16.0.0",
-    "react-autosize-textarea": "^0.4.9",
     "react-dom": "^16.0.0",
     "react-helmet": "^5.2.0",
     "react-redux": "^5.0.6",
@@ -171,7 +170,7 @@
     "redux-thunk": "^2.1.0",
     "reselect": "^3.0.1",
     "reselect-map": "^1.0.2",
-    "telegram-mtproto": "^3.2.9",
+    "telegram-mtproto": "3.2.9",
     "theming": "^1.1.0",
     "typelevel-ts": "^0.2.0",
     "universal-router": "^4.2.0"
