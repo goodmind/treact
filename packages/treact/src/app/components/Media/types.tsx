@@ -1,9 +1,9 @@
-import { LocationMap } from 'components/LocationMap';
-import { PeerPhoto } from 'containers';
-// import { FullMediaComp } from 'containers/Media';
-import picStore from 'helpers/FileManager/picStore';
-import { TLMediaDocumentRecord } from 'helpers/reselector.h';
-import * as React from 'react';
+import { LocationMap } from 'components/LocationMap'
+import { PeerPhoto } from 'containers'
+// import { FullMediaComp } from 'containers/Media'
+import picStore from 'helpers/FileManager/picStore'
+import { TLMediaDocumentRecord } from 'helpers/reselector.h'
+import * as React from 'react'
 import {
   MtpMessageMediaContact,
   MtpMessageMediaDocument,
@@ -14,18 +14,18 @@ import {
   MtpMessageMediaPhoto,
   MtpMessageMediaVenue,
   MtpMessageMediaWebPage,
-} from 'redux/mtproto';
+} from 'redux/mtproto'
 
 // Text
 export const Empty = (props: MtpMessageMediaEmpty) => (
   <div>
     {props._}
   </div>
-);
+)
 
 export const Geo = ({ geo: { lat, long: lng } }: MtpMessageMediaGeo) => (
   <LocationMap geo={{ lat, lng }} />
-);
+)
 
 export const Contact = ({ phone_number, user_id, first_name, last_name }: MtpMessageMediaContact) => (
   <div>
@@ -33,13 +33,13 @@ export const Contact = ({ phone_number, user_id, first_name, last_name }: MtpMes
     <div>{first_name} {last_name}</div>
     <div>{phone_number}</div>
   </div>
-);
+)
 
 export const Unsupported = () => (
   <div>
     This message is not supported by your version of Telegram
   </div>
-);
+)
 
 export const Venue = ({
   geo: { lat, long: lng },
@@ -52,7 +52,7 @@ export const Venue = ({
         geo={{ lat, lng }}
         place={{ title, address }} />
     </div>
-  );
+  )
 
 // Media content
 export const Photo = ({ _, photo: { thumb }, caption }: MtpMessageMediaPhoto) => (
@@ -65,7 +65,7 @@ export const Photo = ({ _, photo: { thumb }, caption }: MtpMessageMediaPhoto) =>
         src={picStore.get(thumb.id)} />
     </div>}
   </div>
-);
+)
 
 // TODO: use normalized types, split document to different types
 export const GIF = ({ document: { type, thumb, w, h }, caption }: TLMediaDocumentRecord['gif']) => (
@@ -78,7 +78,7 @@ export const GIF = ({ document: { type, thumb, w, h }, caption }: TLMediaDocumen
         src={picStore.get(thumb.location.local_id)} />
     </div>}
   </div>
-);
+)
 
 export const Round = ({ document: { type, thumb, w, h }, caption }: TLMediaDocumentRecord['round']) => (
   <div>
@@ -90,7 +90,7 @@ export const Round = ({ document: { type, thumb, w, h }, caption }: TLMediaDocum
         src={picStore.get(thumb.location.local_id)} />
     </div>}
   </div>
-);
+)
 
 export const Video = ({ document: { type, thumb, w, h }, caption }: TLMediaDocumentRecord['video']) => (
   <div>
@@ -102,21 +102,21 @@ export const Video = ({ document: { type, thumb, w, h }, caption }: TLMediaDocum
         src={picStore.get(thumb.location.local_id)} />
     </div>}
   </div>
-);
+)
 
 export const Audio = ({ document: { type }, caption }: TLMediaDocumentRecord['audio']) => (
   <div>
     {type}
     {caption}
   </div>
-);
+)
 
 export const Voice = ({ document: { type }, caption }: TLMediaDocumentRecord['voice']) => (
   <div>
     {type}
     {caption}
   </div>
-);
+)
 
 export const Sticker = ({ document: { type, thumb, w, h }, caption }: TLMediaDocumentRecord['sticker']) => (
   <div>
@@ -128,7 +128,7 @@ export const Sticker = ({ document: { type, thumb, w, h }, caption }: TLMediaDoc
         src={picStore.get(thumb.location.local_id)} />
     </div>}
   </div>
-);
+)
 
 export const Document = ({ document: { type, thumb }, caption }: TLMediaDocumentRecord['document']) => (
   <div>
@@ -140,23 +140,23 @@ export const Document = ({ document: { type, thumb }, caption }: TLMediaDocument
         src={picStore.get(thumb.location.local_id)} />
     </div>}
   </div>
-);
+)
 
 export const WebPage = ({ webpage }: MtpMessageMediaWebPage) => (
   <div>
     Webpage type: {webpage.type}
     {/*webpage.type !== 'article' && <FullMediaComp media={webpage} />*/}
   </div>
-);
+)
 
 export const Game = (props: MtpMessageMediaGame) => (
   <div>
     {props._}
   </div>
-);
+)
 
 export const Invoice = (props: MtpMessageMediaInvoice) => (
   <div>
     {props._}
   </div>
-);
+)

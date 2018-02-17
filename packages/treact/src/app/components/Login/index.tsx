@@ -1,5 +1,5 @@
-import styled from 'glamorous';
-import { Themeable } from 'themes/theme.h';
+import styled from 'glamorous'
+import { Themeable } from 'themes/theme.h'
 
 export const Login = styled.div<Themeable>(({ theme }) => ({
   backgroundColor: theme.introBg,
@@ -9,7 +9,7 @@ export const Login = styled.div<Themeable>(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-}));
+}))
 
 
 

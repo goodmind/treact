@@ -1,11 +1,11 @@
-import * as React from 'react';
-import * as renderer from 'react-test-renderer';
-import { ChatListSearch } from './';
+import * as React from 'react'
+import * as renderer from 'react-test-renderer'
+import { ChatListSearch } from './'
 
 it('ChatListSearch renders correctly', () => {
   const tree = renderer.create(
     <ChatListSearch />,
-  ).toJSON();
+  ).toJSON()
 
-  expect(tree).toMatchSnapshot();
-});
+  expect(tree).toMatchSnapshot()
+})

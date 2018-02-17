@@ -1,8 +1,8 @@
-import { FullMedia } from 'containers/Media';
-import styled from 'glamorous';
-import * as React from 'react';
-import { MtpMessageMedia } from 'redux/mtproto';
-import { Themeable } from 'themes/theme.h';
+import { FullMedia } from 'containers/Media'
+import styled from 'glamorous'
+import * as React from 'react'
+import { MtpMessageMedia } from 'redux/mtproto'
+import { Themeable } from 'themes/theme.h'
 
 const StyledTime = styled.div<Themeable>(({ theme }) => ({
   marginLeft: '13px',
@@ -10,7 +10,7 @@ const StyledTime = styled.div<Themeable>(({ theme }) => ({
   whiteSpace: 'nowrap',
   color: theme.msgInDateFg,
   alignSelf: 'flex-end',
-}));
+}))
 
 const Body = styled.div<Themeable>(({ theme }) => ({
   backgroundColor: theme.msgInBg,
@@ -22,7 +22,7 @@ const Body = styled.div<Themeable>(({ theme }) => ({
   // minWidth: '115px',
   padding: '7px 13px 4px 13px',
   wordWrap: 'break-word',
-}));
+}))
 
 const Text = styled.div<Themeable>(({ theme }) => ({
   color: theme.historyTextInFg,
@@ -31,18 +31,18 @@ const Text = styled.div<Themeable>(({ theme }) => ({
   [`& pre, & code`]: {
     color: theme.msgInMonoFg,
   },
-}));
+}))
 
 const TextBody = styled.div({
   display: 'flex',
-});
+})
 
-const sender = 'sender';
+const sender = 'sender'
 const Sender = styled.div<Themeable>(sender, ({ theme }) => ({
   color: theme.historyTextInFg,
   fontWeight: 600,
-}));
-Sender.toString = () => `.${sender}`;
+}))
+Sender.toString = () => `.${sender}`
 
 const StyledMessage = styled.div({
   width: '100%',
@@ -50,38 +50,38 @@ const StyledMessage = styled.div({
   [`&:not(:first-child) ${Sender}`]: {
     display: 'none',
   },
-});
+})
 
 interface OwnProps {
-  id: number;
-  date: number;
-  user: number;
+  id: number,
+  date: number,
+  user: number,
   // TODO: Should be children?
-  text: React.ReactNode;
-  media?: MtpMessageMedia;
-  own?: boolean;
+  text: React.ReactNode,
+  media?: MtpMessageMedia,
+  own?: boolean
 }
 
 const formatTime = (date: number) => {
-  const dateObject = new Date(date * 1000);
+  const dateObject = new Date(date * 1000)
   return {
     dateString: dateObject.toLocaleDateString(),
-    timeString: dateObject.toLocaleTimeString([], { hour: '2-digit', minute:'2-digit', hour12: false }),
-  };
-};
+    timeString: dateObject.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }),
+  }
+}
 
-type TimeProps = { date: number };
+type TimeProps = { date: number }
 const Time = ({ date }: TimeProps) => {
-  const { timeString } = formatTime(date);
+  const { timeString } = formatTime(date)
   return (
     <StyledTime>
       <span>{timeString}</span>
     </StyledTime>
-  );
-};
+  )
+}
 
-export const Message = ({ user, date, text, media, own = false }: OwnProps) => {
-  console.debug(`Message`, user, text, own);
+export const Message = ({ user, date, text, media, own }: OwnProps) => {
+  console.debug(`Message`, user, text, own)
   return (
     <StyledMessage>
       <Body>
@@ -95,5 +95,8 @@ export const Message = ({ user, date, text, media, own = false }: OwnProps) => {
         </TextBody>
       </Body>
     </StyledMessage>
-  );
-};
+  )
+}
+Message.defaultProps = {
+  own: false,
+}

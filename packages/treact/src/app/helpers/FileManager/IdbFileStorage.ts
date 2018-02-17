@@ -1,10 +1,10 @@
 class IdbFileStorage {
-  public name = 'IndexedDB';
+  public name = 'IndexedDB'
   public isAvailable() {
-    return false;
+    return false
   }
 }
 
-const singleton = new IdbFileStorage();
+const singleton = new IdbFileStorage()
 
-export { singleton as IdbFileStorage };
+export { singleton as IdbFileStorage }

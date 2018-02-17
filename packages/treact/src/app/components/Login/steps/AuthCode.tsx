@@ -1,11 +1,10 @@
-import { FormState } from 'containers/Login';
-import * as React from 'react';
-import { Button, Heading, RowFormGroup, Step } from './';
-import { CommonProps } from './';
+import { FormState } from 'containers/Login'
+import * as React from 'react'
+import { Button, CommonProps, Heading, RowFormGroup, Step } from './'
 
 type Props = CommonProps & {
   form: FormState,
-};
+}
 
 const AuthCode = ({ form, error, nextStep, change }: Props) => (
   <Step>
@@ -23,6 +22,6 @@ const AuthCode = ({ form, error, nextStep, change }: Props) => (
     {error && <div>Error type: {error.message}</div>}
     <Button onClick={nextStep} primary>Next</Button>
   </Step>
-);
+)
 
-export { AuthCode };
+export { AuthCode }

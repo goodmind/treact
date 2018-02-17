@@ -1,39 +1,39 @@
-import { byIdGetter } from 'helpers/Telegram/helpers';
-import { F, T } from 'ramda';
-import { combineReducers } from 'redux';
-import { createReducer } from 'redux-act';
-import { REHYDRATE } from 'redux-persist/constants';
+import { byIdGetter } from 'helpers/Telegram/helpers'
+import { F, T } from 'ramda'
+import { combineReducers } from 'redux'
+import { createReducer } from 'redux-act'
+import { REHYDRATE } from 'redux-persist/constants'
 
-import { AUTH } from 'actions';
+import { AUTH } from 'actions'
 
 export interface AuthError {
-  code: number;
-  type: string;
-  message: string;
+  code: number
+  type: string
+  message: string
 }
 export const isAuthError =
   // tslint:disable-next-line
   (p: any): p is AuthError =>
     typeof p === 'object'
     && typeof p.code === 'number'
-    && typeof p.type === 'string';
+    && typeof p.type === 'string'
 export interface Auth {
-  authenticated: boolean;
-  loading: boolean;
-  phoneNumber: string;
-  phoneCodeHash: string;
-  phoneCode: string;
-  passwordSalt: string;
-  error: AuthError;
+  authenticated: boolean
+  loading: boolean
+  phoneNumber: string
+  phoneCodeHash: string
+  phoneCode: string
+  passwordSalt: string
+  error: AuthError
 }
 
-const { SEND_CODE, SIGN_IN, GET_PASSWORD, LOG_OUT } = AUTH;
+const { SEND_CODE, SIGN_IN, GET_PASSWORD, LOG_OUT } = AUTH
 
 const passwordSalt = createReducer({
   [GET_PASSWORD.DONE]: (_, { passwordSalt }) => passwordSalt,
-}, '');
+}, '')
 
-const saveError = (_: AuthError, { code, message, type }: AuthError): AuthError => ({ code, message, type });
+const saveError = (_: AuthError, { code, message, type }: AuthError): AuthError => ({ code, message, type })
 
 const error = createReducer<AuthError>({
   [SEND_CODE.FAIL]: saveError,
@@ -43,7 +43,7 @@ const error = createReducer<AuthError>({
   code: -1,
   message: '',
   type: '',
-});
+})
 
 const loading = createReducer({
   [SEND_CODE.INIT]: T,
@@ -55,25 +55,25 @@ const loading = createReducer({
   [GET_PASSWORD.INIT]: T,
   [GET_PASSWORD.DONE]: F,
   [GET_PASSWORD.FAIL]: F,
-}, false);
+}, false)
 
 const authenticated = createReducer({
   [SIGN_IN.DONE]: T,
   [LOG_OUT.DONE]: F,
   [REHYDRATE]: (_, { authKey, currentUser, currentDc }) => !!byIdGetter(currentDc)(authKey) && !!currentUser,
-}, false);
+}, false)
 
 const phoneNumber = createReducer({
   [SEND_CODE.DONE]: (_, { phoneNumber }) => phoneNumber,
-}, '');
+}, '')
 
 const phoneCodeHash = createReducer({
   [SEND_CODE.DONE]: (_, { phoneCodeHash }) => phoneCodeHash,
-}, '');
+}, '')
 
 const loggedOut = createReducer<boolean>({
   [LOG_OUT.DONE]: T,
-}, false);
+}, false)
 
 export const authReducer = combineReducers<Auth>({
   loading,
@@ -83,4 +83,4 @@ export const authReducer = combineReducers<Auth>({
   passwordSalt,
   phoneNumber,
   phoneCodeHash,
-});
+})

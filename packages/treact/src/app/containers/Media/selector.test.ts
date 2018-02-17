@@ -1,5 +1,5 @@
-import { Store } from 'redux/store.h';
-import { entitiesSelector, mediaSelector } from './selector';
+import { Store } from 'redux/store.h'
+import { entitiesSelector, mediaSelector } from './selector'
 
 describe('Memoized media selector', () => {
   const store1 = ({
@@ -23,7 +23,7 @@ describe('Memoized media selector', () => {
     files: {
       locations: {},
     },
-  } as any) as Store;
+  } as any) as Store
 
   const store2 = ({
     media: {
@@ -52,23 +52,23 @@ describe('Memoized media selector', () => {
         2: { _: 'fileLocation' },
       },
     },
-  } as any) as Store;
+  } as any) as Store
 
   it('should called two times', () => {
     const mediaProps: any = {
       media: { id: 1, schema: 'messageMediaDocument' },
-    };
+    }
 
-    const media1 = mediaSelector(store1, mediaProps);
-    const media2 = mediaSelector(store2, mediaProps);
-    const entities1 = entitiesSelector(store1, mediaProps);
-    const entities2 = entitiesSelector(store2, mediaProps);
+    const media1 = mediaSelector(store1, mediaProps)
+    const media2 = mediaSelector(store2, mediaProps)
+    const entities1 = entitiesSelector(store1, mediaProps)
+    const entities2 = entitiesSelector(store2, mediaProps)
 
-    expect(entities1).toEqual(entities2);
-    expect(media1).toEqual(media2);
-  });
+    expect(entities1).toEqual(entities2)
+    expect(media1).toEqual(media2)
+  })
 
   it('should not recompute mediaSelector', () => {
-    expect(mediaSelector.recomputations()).toBe(1);
-  });
-});
+    expect(mediaSelector.recomputations()).toBe(1)
+  })
+})

@@ -1,10 +1,10 @@
 class TmpfsFileStorage {
-  public name = 'TmpFS';
+  public name = 'TmpFS'
   public isAvailable() {
-    return false;
+    return false
   }
 }
 
-const singleton = new TmpfsFileStorage();
+const singleton = new TmpfsFileStorage()
 
-export { singleton as TmpfsFileStorage };
+export { singleton as TmpfsFileStorage }

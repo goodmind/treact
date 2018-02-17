@@ -1,18 +1,18 @@
-import { bufferConcat, sha256HashSync } from 'telegram-mtproto/lib/bin';
+import { bufferConcat, sha256HashSync } from 'telegram-mtproto/lib/bin'
 
-const ready = null;
+const ready = null
 
 export function isReady() {
-  return ready;
+  return ready
 }
 
 export function makePasswordHash(salt: string, password: string) {
-  const passwordUTF8 = decodeURIComponent(encodeURIComponent(password));
-  let buffer = new ArrayBuffer(passwordUTF8.length);
-  const byteView = new Uint8Array(buffer);
-  const len = passwordUTF8.length;
+  const passwordUTF8 = decodeURIComponent(encodeURIComponent(password))
+  let buffer = new ArrayBuffer(passwordUTF8.length)
+  const byteView = new Uint8Array(buffer)
+  const len = passwordUTF8.length
   for (let i = 0; i < len; i++) {
-    byteView[i] = passwordUTF8.charCodeAt(i);
+    byteView[i] = passwordUTF8.charCodeAt(i)
   }
 
   buffer = bufferConcat(
@@ -21,11 +21,11 @@ export function makePasswordHash(salt: string, password: string) {
       byteView,
     ),
     salt,
-  );
+  )
 
-  return sha256HashSync(buffer);
+  return sha256HashSync(buffer)
 }
 
-export { APP_ID, APP_HASH } from './constants';
+export { APP_ID, APP_HASH } from './constants'
 // export { authKeyWithSaltToStorableBuffer } from './helpers';
-export { ready as client };
+export { ready as client }

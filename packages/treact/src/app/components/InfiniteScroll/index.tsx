@@ -1,20 +1,20 @@
-import * as React from 'react';
+import * as React from 'react'
 
-type Loader = React.ReactElement<object> | null;
+type Loader = React.ReactElement<object> | null
 
 interface Props {
-  element: string;
-  hasMore: boolean;
-  initialLoad: boolean;
-  isReverse: boolean;
-  loadMore: (n: number) => void;
-  pageStart: number;
-  threshold: number;
-  useCapture: boolean;
-  useWindow: boolean;
-  children: React.ReactNode;
-  loader: Loader;
-  ref(node: HTMLElement): void;
+  element: string
+  hasMore: boolean
+  initialLoad: boolean
+  isReverse: boolean
+  loadMore: (n: number) => void
+  pageStart: number
+  threshold: number
+  useCapture: boolean
+  useWindow: boolean
+  children: React.ReactNode
+  loader: Loader
+  ref(node: HTMLElement): void
 }
 
 type ExtProps = React.HTMLProps<HTMLElement> & {
@@ -29,12 +29,12 @@ type ExtProps = React.HTMLProps<HTMLElement> & {
   useWindow?: boolean;
   children: React.ReactNode;
   loader?: Loader;
-};
+}
 
 class InfiniteScroll extends React.Component<Props, {}> {
-  private scrollComponent: HTMLElement;
-  private pageLoaded: number;
-  private defaultLoader: Loader;
+  private scrollComponent: HTMLElement
+  private pageLoaded: number
+  private defaultLoader: Loader
 
   public static defaultProps: Partial<Props> = {
     element: 'div',
@@ -46,98 +46,98 @@ class InfiniteScroll extends React.Component<Props, {}> {
     isReverse: false,
     useCapture: false,
     loader: null,
-  };
+  }
 
   constructor(props: Props) {
-    super(props);
+    super(props)
 
-    this.scrollListener = this.scrollListener.bind(this);
+    this.scrollListener = this.scrollListener.bind(this)
   }
 
   public componentDidMount() {
-    this.pageLoaded = this.props.pageStart;
-    this.attachScrollListener();
+    this.pageLoaded = this.props.pageStart
+    this.attachScrollListener()
   }
 
   public componentDidUpdate() {
-    this.attachScrollListener();
+    this.attachScrollListener()
   }
 
   public componentWillUnmount() {
-    this.detachScrollListener();
+    this.detachScrollListener()
   }
 
   // Set a defaut loader for all your `InfiniteScroll` components
   public setDefaultLoader(loader: Loader) {
-    this.defaultLoader = loader;
+    this.defaultLoader = loader
   }
 
   public detachScrollListener() {
-    let scrollEl: EventTarget = window;
+    let scrollEl: EventTarget = window
     if (this.props.useWindow === false && this.scrollComponent.parentNode) {
-      scrollEl = this.scrollComponent.parentNode;
+      scrollEl = this.scrollComponent.parentNode
     }
 
-    scrollEl.removeEventListener('scroll', this.scrollListener, this.props.useCapture);
-    scrollEl.removeEventListener('resize', this.scrollListener, this.props.useCapture);
+    scrollEl.removeEventListener('scroll', this.scrollListener, this.props.useCapture)
+    scrollEl.removeEventListener('resize', this.scrollListener, this.props.useCapture)
   }
 
   public attachScrollListener() {
     if (!this.props.hasMore) {
-      return;
+      return
     }
 
-    let scrollEl: EventTarget = window;
+    let scrollEl: EventTarget = window
     if (this.props.useWindow === false && this.scrollComponent.parentNode) {
-      scrollEl = this.scrollComponent.parentNode;
+      scrollEl = this.scrollComponent.parentNode
     }
 
-    scrollEl.addEventListener('scroll', this.scrollListener, this.props.useCapture);
-    scrollEl.addEventListener('resize', this.scrollListener, this.props.useCapture);
+    scrollEl.addEventListener('scroll', this.scrollListener, this.props.useCapture)
+    scrollEl.addEventListener('resize', this.scrollListener, this.props.useCapture)
 
     if (this.props.initialLoad) {
-      this.scrollListener();
+      this.scrollListener()
     }
   }
 
   public scrollListener() {
-    const el = this.scrollComponent;
-    const scrollEl = window;
+    const el = this.scrollComponent
+    const scrollEl = window
 
-    let offset;
+    let offset
     if (this.props.useWindow) {
       const scrollTop = (scrollEl.pageYOffset !== undefined) ?
        scrollEl.pageYOffset :
-       (document.documentElement || document.body.parentNode || document.body).scrollTop;
+       (document.documentElement || document.body.parentNode || document.body).scrollTop
 
       if (this.props.isReverse) {
-        offset = scrollTop;
+        offset = scrollTop
       } else {
         offset = this.calculateTopPosition(el) +
                      (el.offsetHeight -
                      scrollTop -
-                     window.innerHeight);
+                     window.innerHeight)
       }
     } else if (this.props.isReverse && el.parentElement) {
-      offset = el.parentElement.scrollTop;
+      offset = el.parentElement.scrollTop
     } else if (el.parentElement) {
-      offset = el.scrollHeight - el.parentElement.scrollTop - el.parentElement.clientHeight;
+      offset = el.scrollHeight - el.parentElement.scrollTop - el.parentElement.clientHeight
     }
 
     if (offset && offset < Number(this.props.threshold)) {
-      this.detachScrollListener();
+      this.detachScrollListener()
       // Call loadMore after detachScrollListener to allow for non-async loadMore functions
       if (typeof this.props.loadMore === 'function') {
-        this.props.loadMore(this.pageLoaded += 1);
+        this.props.loadMore(this.pageLoaded += 1)
       }
     }
   }
 
   public calculateTopPosition(el: HTMLElement): number {
     if (!el) {
-      return 0;
+      return 0
     }
-    return el.offsetTop + this.calculateTopPosition(el.offsetParent as HTMLElement);
+    return el.offsetTop + this.calculateTopPosition(el.offsetParent as HTMLElement)
   }
 
   public render() {
@@ -157,18 +157,18 @@ class InfiniteScroll extends React.Component<Props, {}> {
     } = this.props;
 
     (props as Props).ref = (node: HTMLElement) => {
-      this.scrollComponent = node;
-    };
+      this.scrollComponent = node
+    }
 
     return React.createElement(
       element,
       props,
       children,
       hasMore && (loader || this.defaultLoader),
-    );
+    )
   }
 }
 
-const hoc: React.ComponentClass<ExtProps> = InfiniteScroll;
+const hoc: React.ComponentClass<ExtProps> = InfiniteScroll
 
-export { hoc as InfiniteScroll };
+export { hoc as InfiniteScroll }

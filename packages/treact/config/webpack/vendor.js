@@ -1,22 +1,23 @@
-const { resolve, join } = require('path');
-const webpack = require('webpack');
-const source = resolve(process.cwd(), 'src');
-const build = resolve(process.cwd(), 'build');
+const { resolve, join } = require('path')
+const webpack = require('webpack')
+const source = resolve(process.cwd(), 'src')
+const build = resolve(process.cwd(), 'build')
 
-const BabiliPlugin = require('babili-webpack-plugin');
+const BabiliPlugin = require('babili-webpack-plugin')
 
 const plugins = [
   new webpack.optimize.ModuleConcatenationPlugin(),
   new webpack.DllPlugin({
     name: '[name]',
-    path: join(build, '[name].json')
-  })
-];
+    path: join(build, '[name].json'),
+  }),
+]
 
-if (process.env.NODE_ENV === 'production')
+if (process.env.NODE_ENV === 'production') {
   plugins.push(new BabiliPlugin({}, {
-    comments: false
-  }));
+    comments: false,
+  }))
+}
 
 const config = {
   context: source,
@@ -34,23 +35,23 @@ const config = {
       'recompose',
       'reselect',
       'reselect-map',
-      'normalizr'
+      'normalizr',
     ],
     Vendor: [
       'ramda',
       'history',
       'classnames',
-      'localforage'
+      'localforage',
       // 'telegram-mtproto',
-    ]
+    ],
   },
 
   output: {
     path: build,
     filename: '[name].dll.js',
-    library: '[name]'
+    library: '[name]',
   },
-  plugins
-};
+  plugins,
+}
 
-module.exports = config;
+module.exports = config

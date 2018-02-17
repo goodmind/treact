@@ -6,8 +6,8 @@ import {
   MtpMessage,
   MtpUser,
   TMtpMessageMediaRecord,
-} from 'redux/mtproto';
-import { ObjectOverwrite } from 'typelevel-ts';
+} from 'redux/mtproto'
+import { ObjectOverwrite } from 'typelevel-ts'
 export type Payload<T> = {
   entities: {
     [K in keyof T]: {
@@ -17,22 +17,22 @@ export type Payload<T> = {
   result: {
     [K in keyof T]: number[]
   };
-};
+}
 
 export type TLAvatar = {
   photo_id?: string;
   photo_small: number;
   photo_big: number;
-};
+}
 
 export type TLAttrImageSize = {
   w: number,
   h: number,
-};
-export type TLAttrFileName = { file_name: string };
+}
+export type TLAttrFileName = { file_name: string }
 export type TLAttrDocument = {
   type: 'document',
-};
+}
 export type TLAttrSticker = {
   type: 'sticker',
   sticker: boolean,
@@ -41,33 +41,33 @@ export type TLAttrSticker = {
   stickerset: any,
   // tslint:disable-next-line
   stickerSetInput: any,
-};
+}
 export type TLAttrGIF = {
   type: 'gif',
   animated: boolean,
-};
+}
 export type TLAttrVoice = {
   type: 'voice',
   duration: number,
-};
+}
 export type TLAttrAudio = {
   type: 'audio',
   duration: number,
   audioTitle?: string,
   audioPerformer?: string,
-};
+}
 export type TLAttrRound = {
   type: 'round',
   duration: number,
   w: number,
   h: number,
-};
+}
 export type TLAttrVideo = {
   type: 'video',
   duration: number,
   w: number,
   h: number,
-};
+}
 export type TLDocumentRecord = {
   audio: TLAttrAudio,
   voice: TLAttrVoice,
@@ -76,9 +76,9 @@ export type TLDocumentRecord = {
   sticker: TLAttrSticker & TLAttrImageSize,
   gif: TLAttrGIF & TLAttrImageSize,
   document: TLAttrDocument,
-};
+}
 export type TLDocument<T = TLDocumentRecord> =
-  T[keyof T] & MtpDocument & TLAttrFileName;
+  T[keyof T] & MtpDocument & TLAttrFileName
 
 export type TLMediaTypes = {
   messageMediaEmpty: 'empty',
@@ -91,7 +91,7 @@ export type TLMediaTypes = {
   messageMediaWebPage: 'webpage';
   messageMediaGame: 'game';
   messageMediaInvoice: 'invoice';
-};
+}
 export type TLMediaDocumentRecord = {
   [K in TLDocument['type']]:
     TMtpMessageMediaRecord['messageMediaDocument']
@@ -99,7 +99,7 @@ export type TLMediaDocumentRecord = {
       type: K,
       document: TLDocumentRecord[K] & MtpDocument & TLAttrFileName,
     }
-};
+}
 export type TLMediaRecord = ObjectOverwrite<
   TMtpMessageMediaRecord & {
     [K in keyof TLMediaTypes]: { type: TLMediaTypes[K] }
@@ -107,8 +107,8 @@ export type TLMediaRecord = ObjectOverwrite<
   {
     messageMediaDocument: TLMediaDocumentRecord[TLDocument['type']],
   }
->;
-export type TLMedia<T = TLMediaRecord> = T[keyof T];
+>
+export type TLMedia<T = TLMediaRecord> = T[keyof T]
 
 export type Slice = {
   histories: number,
@@ -125,28 +125,28 @@ export type Slice = {
   photos: {},
   photoSizes: {},
   photoCachedSizes: {},
-};
+}
 
-export type SlicePayload = Payload<Slice>;
+export type SlicePayload = Payload<Slice>
 
 export type SelectedPayload<T> = {
   entities: {
     [key: number]: T;
   }
   result: number[];
-};
+}
 
 export type StoredPayload<T> = {
   byId: {
     [key: number]: T;
   }
   ids: number[];
-};
+}
 
 export type SelectModel = <T, P>(modelName: string) =>
   (payload: Payload<P>) =>
-    SelectedPayload<T>;
+    SelectedPayload<T>
 
 export type ReducerCreator = <T, P>(modelName: string) =>
   (store: StoredPayload<T>, payload: Payload<P>) =>
-    StoredPayload<T>;
+    StoredPayload<T>

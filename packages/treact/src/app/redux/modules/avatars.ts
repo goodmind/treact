@@ -1,18 +1,18 @@
-import { CHATS } from 'actions';
-import { modelDefaults, updateStoreMap } from 'helpers/reselector';
-import { Slice, TLAvatar } from 'helpers/reselector.h';
-import { StoreList } from 'helpers/state';
-import { createReducer } from 'redux-act';
+import { CHATS } from 'actions'
+import { modelDefaults, updateStoreMap } from 'helpers/reselector'
+import { Slice, TLAvatar } from 'helpers/reselector.h'
+import { StoreList } from 'helpers/state'
+import { createReducer } from 'redux-act'
 
-export type StoreAvatars = StoreList<TLAvatar>;
+export type StoreAvatars = StoreList<TLAvatar>
 
-const { LOAD_SLICE, GET_DIALOGS } = CHATS;
+const { LOAD_SLICE, GET_DIALOGS } = CHATS
 
-const updater = updateStoreMap<Slice, 'avatars'>('avatars');
+const updater = updateStoreMap<Slice, 'avatars'>('avatars')
 
 const reducer = createReducer({
   [LOAD_SLICE.DONE]: updater,
   [GET_DIALOGS.DONE]: updater,
-}, modelDefaults);
+}, modelDefaults)
 
-export default reducer;
+export default reducer
