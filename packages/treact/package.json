@@ -161,7 +161,6 @@
     "normalizr-entities": "^0.1.4",
     "ramda": "^0.24.1",
     "react": "^16.2.0",
-    "react-autosize-textarea": "^0.4.9",
     "react-dom": "^16.0.0",
     "react-helmet": "^5.2.0",
     "react-redux": "^5.0.6",
