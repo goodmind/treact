@@ -1,7 +1,7 @@
-import { path } from 'ramda';
+import { path } from 'ramda'
 
-export const getFromStore = (key: string) => JSON.parse(localStorage.getItem(`reduxPersist:${key}`) || 'null');
-export const byIdGetter = (id: string) => path(['byId', id]);
+export const getFromStore = (key: string) => JSON.parse(localStorage.getItem(`reduxPersist:${key}`) || 'null')
+export const byIdGetter = (id: string) => path(['byId', id])
 
 // TODO: remove this function
 /*

@@ -1,12 +1,12 @@
-import styled from 'glamorous';
-import * as React from 'react';
+import styled from 'glamorous'
+import * as React from 'react'
 // TODO: use absolute paths
-import { Link } from '../../../vendor/containers/Link';
-import * as logo from './title-logo.png';
+import { Link } from '../../../vendor/containers/Link'
+import * as logo from './title-logo.png'
 
 interface Props {
-  logOut: React.MouseEventHandler<HTMLAnchorElement>;
-  switchNightMode(): void;
+  logOut: React.MouseEventHandler<HTMLAnchorElement>
+  switchNightMode(): void
 }
 
 // TODO: use flexbox
@@ -36,19 +36,19 @@ const StyledHeader = styled.header({
       marginTop: '1px',
     },
   },
-});
+})
 
 const Logo = styled.img({
   float: 'left',
   height: '26px',
   margin: '7px',
   width: '26px',
-});
-Logo.defaultProps = { src: logo };
+})
+Logo.defaultProps = { src: logo }
 
 const LogoutLink = styled.a({
   float: 'right',
-});
+})
 
 const Header = ({ logOut, switchNightMode }: Props) => (
   <StyledHeader>
@@ -58,6 +58,6 @@ const Header = ({ logOut, switchNightMode }: Props) => (
     <LogoutLink onClick={logOut}>Logout</LogoutLink>
     <a onClick={switchNightMode}>Night Mode</a>
   </StyledHeader>
-);
+)
 
-export { Header };
+export { Header }

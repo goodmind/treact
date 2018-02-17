@@ -1,8 +1,7 @@
-import * as React from 'react';
-import { Button, FormGroup, Heading, Step } from './';
-import { CommonProps } from './';
+import * as React from 'react'
+import { Button, CommonProps, FormGroup, Heading, Step } from './'
 
-type Props = CommonProps;
+type Props = CommonProps
 
 const Password = ({ error, change, nextStep }: Props) => (
   <Step>
@@ -20,6 +19,6 @@ const Password = ({ error, change, nextStep }: Props) => (
     {error && <div>Error type: {error.message}</div>}
     <Button onClick={nextStep} primary>Submit</Button>
   </Step>
-);
+)
 
-export { Password };
+export { Password }

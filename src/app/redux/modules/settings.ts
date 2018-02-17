@@ -1,5 +1,5 @@
-import { combineReducers } from 'redux';
-import { createReducer } from 'redux-act';
+import { combineReducers } from 'redux'
+import { createReducer } from 'redux-act'
 
 export type StoreSettings = {
   autoMediaDownload: {
@@ -11,7 +11,7 @@ export type StoreSettings = {
     document: boolean,
     video: boolean,
   },
-};
+}
 
 const autoMediaDownload = createReducer<StoreSettings['autoMediaDownload']>({}, {
   sticker: true,
@@ -21,10 +21,10 @@ const autoMediaDownload = createReducer<StoreSettings['autoMediaDownload']>({}, 
   gif: true,
   document: false,
   video: false,
-});
+})
 
 const reducer = combineReducers<StoreSettings>({
   autoMediaDownload,
-});
+})
 
-export default reducer;
+export default reducer

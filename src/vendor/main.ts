@@ -5,6 +5,6 @@
  * Example:
  * require('./bootstrap/css/bootstrap.min.css');
  */
-import 'flexboxgrid';
-import './app.css';
-import './font.css';
+import 'flexboxgrid'
+import './app.css'
+import './font.css'

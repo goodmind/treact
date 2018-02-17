@@ -1,11 +1,11 @@
-import * as React from 'react';
-import { CommonProps } from '../';
-import { Button, Heading, RowFormGroup, Step } from '../';
-import * as s from './style.css';
+import * as React from 'react'
+import { CommonProps } from '../'
+import { Button, Heading, RowFormGroup, Step } from '../'
+import * as s from './style.css'
 
 type Props = CommonProps & {
   phoneCode: string,
-};
+}
 
 const PhoneNumber = ({ error, nextStep, change, phoneCode }: Props) => (
   <Step>
@@ -28,6 +28,6 @@ const PhoneNumber = ({ error, nextStep, change, phoneCode }: Props) => (
     {error && <div>Error type: {error.message}</div>}
     <Button onClick={nextStep} primary>Next</Button>
   </Step>
-);
+)
 
-export { PhoneNumber };
+export { PhoneNumber }

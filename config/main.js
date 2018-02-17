@@ -16,9 +16,9 @@ var config = {
         { 'http-equiv': 'x-ua-compatible', content: 'ie=edge' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         { name: 'description', content: 'React Redux Typescript' },
-      ]
-    }
-  }
-};
+      ],
+    },
+  },
+}
 
-module.exports = config;
+module.exports = config

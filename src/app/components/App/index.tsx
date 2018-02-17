@@ -1,4 +1,4 @@
-import styled from 'glamorous';
+import styled from 'glamorous'
 
 const App = styled.section({
   display: 'flex',
@@ -7,6 +7,6 @@ const App = styled.section({
   margin: 0,
   width: '100%',
   height: '100%',
-});
+})
 
-export { App };
+export { App }

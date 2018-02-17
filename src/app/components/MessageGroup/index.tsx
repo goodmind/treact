@@ -1,12 +1,12 @@
-import { PeerPhoto } from 'containers/PeerPhoto';
-import styled from 'glamorous';
-import * as React from 'react';
-import { MtpMessage } from 'redux/mtproto';
+import { PeerPhoto } from 'containers/PeerPhoto'
+import styled from 'glamorous'
+import * as React from 'react'
+import { MtpMessage } from 'redux/mtproto'
 
 const Styled = styled.div({
   display: 'flex',
   alignItems: 'flex-end',
-});
+})
 
 const StyledPeerPhoto = styled(PeerPhoto)({
   position: 'sticky',
@@ -17,17 +17,17 @@ const StyledPeerPhoto = styled(PeerPhoto)({
   borderRadius: '33px',
   height: '33px',
   width: '33px',
-});
+})
 
 const Group = styled.div({
   display: 'flex',
   flexDirection: 'column',
-});
+})
 
 interface Props {
-  messages: MtpMessage[];
-  first: MtpMessage;
-  message(m: MtpMessage): JSX.Element;
+  messages: MtpMessage[],
+  first: MtpMessage,
+  message(m: MtpMessage): JSX.Element
 }
 
 export const MessageGroup = ({ messages, first, message }: Props) => (
@@ -37,4 +37,4 @@ export const MessageGroup = ({ messages, first, message }: Props) => (
       {messages.map(message)}
     </Group>
   </Styled>
-);
+)

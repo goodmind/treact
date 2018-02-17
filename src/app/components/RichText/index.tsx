@@ -1,12 +1,12 @@
-import * as React from 'react';
-import { Entity, parse, RichText } from './parser';
+import * as React from 'react'
+import { Entity, parse, RichText } from './parser'
 
-export { Entity };
+export { Entity }
 
 interface Props {
-  id: number;
-  entities?: Entity[];
-  text: string;
+  id: number,
+  entities?: Entity[],
+  text: string
 }
 
 // TODO: better place for this?
@@ -49,18 +49,18 @@ const transformers: { [key: string]: (props: RichText) => JSX.Element } = {
 
   // Custom entity
   messageEntityText       : ({ text }) => <span>{text}</span>,
-};
+}
 
 const RichText = ({ id, entities = [], text }: Props) => {
-  const formattedText = parse(entities, text);
+  const formattedText = parse(entities, text)
   return (
     <span>
       {formattedText.map((p, i) => {
-        const Entity = transformers[p._];
-        return <Entity key={`rt${id}_${i}`} {...p} />;
+        const Entity = transformers[p._]
+        return <Entity key={`rt${id}_${i}`} {...p} />
       })}
     </span>
-  );
-};
+  )
+}
 
-export { RichText };
+export { RichText }

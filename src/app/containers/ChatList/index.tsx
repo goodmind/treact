@@ -1,27 +1,27 @@
-import { fetchChatList } from 'api/chatList';
-import { ChatList } from 'components';
-import { ChatListItem } from 'containers';
-import { Payload, Slice } from 'helpers/reselector.h';
-import { path, sort } from 'ramda';
-import * as React from 'react';
-import { connect } from 'react-redux';
-import { Action } from 'redux-act';
-import { StoreHistory } from 'redux/modules/histories';
-import { TPeersType } from 'redux/modules/peers';
-import { MtpDialog, TById } from 'redux/mtproto';
-import { Dispatch, Store } from 'redux/store.h';
-import { createSelector } from 'reselect';
+import { fetchChatList } from 'api/chatList'
+import { ChatList } from 'components'
+import { ChatListItem } from 'containers'
+import { Payload, Slice } from 'helpers/reselector.h'
+import { path, sort } from 'ramda'
+import * as React from 'react'
+import { connect } from 'react-redux'
+import { Action } from 'redux-act'
+import { StoreHistory } from 'redux/modules/histories'
+import { TPeersType } from 'redux/modules/peers'
+import { MtpDialog, TById } from 'redux/mtproto'
+import { Dispatch, Store } from 'redux/store.h'
+import { createSelector } from 'reselect'
 
 interface Props {
-  offsetDate: number;
-  sortedDialogsIds: number[];
-  dialogsIds: number[];
-  dialogsMap: TById<MtpDialog>;
-  historiesMap: TById<StoreHistory>;
-  peersMap: TById<TPeersType>;
-  selected: number;
-  loading: boolean;
-  loadAtDate: (date: number) => Promise<Action<Payload<Slice>, {}>>;
+  offsetDate: number
+  sortedDialogsIds: number[]
+  dialogsIds: number[]
+  dialogsMap: TById<MtpDialog>
+  historiesMap: TById<StoreHistory>
+  peersMap: TById<TPeersType>
+  selected: number
+  loading: boolean
+  loadAtDate: (date: number) => Promise<Action<Payload<Slice>, {}>>
   // item?: any;
   // activeChat?: any;
   // dialogs: any;
@@ -32,13 +32,13 @@ interface Props {
 }
 
 interface State {
-  hasMore: boolean;
+  hasMore: boolean
 }
 
 class ChatListContainer extends React.Component<Props, State> {
   public state: State = {
     hasMore: true,
-  };
+  }
 
   public renderChat = (id: number) => (
     <ChatListItem
@@ -52,21 +52,21 @@ class ChatListContainer extends React.Component<Props, State> {
   )
 
   public loadSliceRange = () => {
-    const { dialogsIds, offsetDate, loadAtDate } = this.props;
-    const offsetId = dialogsIds[dialogsIds.length - 1];
-    console.log('loadSliceRange', offsetId, offsetDate, loadAtDate);
+    const { dialogsIds, offsetDate, loadAtDate } = this.props
+    const offsetId = dialogsIds[dialogsIds.length - 1]
+    console.log('loadSliceRange', offsetId, offsetDate, loadAtDate)
     loadAtDate(offsetDate)
       .then(({ payload: { result = { dialogs: [] } } }) => this.setState({
         hasMore: result.dialogs.length !== 0,
       }))
-      .catch(e => console.error(e));
+      .catch(e => console.error(e))
   }
 
   public render() {
     const {
       sortedDialogsIds,
       loading,
-    } = this.props;
+    } = this.props
     return (
       <ChatList
         loading={loading}
@@ -74,7 +74,7 @@ class ChatListContainer extends React.Component<Props, State> {
         loadMore={this.loadSliceRange}>
         {sortedDialogsIds.map(this.renderChat)}
       </ChatList>
-    );
+    )
   }
 }
 
@@ -91,7 +91,7 @@ const sortDialogs = createSelector<
     (a, b) => msgs[dmap[b].top_message].date - msgs[dmap[a].top_message].date,
     dialogs,
   ),
-);
+)
 
 const offsetDate = createSelector<
   Store,
@@ -104,14 +104,14 @@ const offsetDate = createSelector<
   path(['dialogs', 'byId']),
   path(['messages', 'byId']),
   (ids, dialogsMap, messages) => {
-    const id = ids[ids.length - 1];
-    const msgId = dialogsMap[id].top_message;
-    return messages[msgId].date;
-  });
+    const id = ids[ids.length - 1]
+    const msgId = dialogsMap[id].top_message
+    return messages[msgId].date
+  })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadAtDate: (date: number) => dispatch(fetchChatList(undefined, date)),
-});
+})
 
 const mapStateToProps = (state: Store) => ({
   // offsetDate: reduce(addSortedId(state), 0, state.dialogs.ids),
@@ -123,8 +123,8 @@ const mapStateToProps = (state: Store) => ({
   peersMap: state.peers.byId,
   selected: state.selected.dialog,
   loading: state.loadings.chatList,
-});
+})
 
-const connected = connect(mapStateToProps, mapDispatchToProps)(ChatListContainer);
+const connected = connect(mapStateToProps, mapDispatchToProps)(ChatListContainer)
 
-export { connected as ChatList };
+export { connected as ChatList }

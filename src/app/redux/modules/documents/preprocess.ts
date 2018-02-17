@@ -1,6 +1,6 @@
-import { TLDocument } from 'helpers/reselector.h';
-import { pipe } from 'ramda';
-import { MtpDocument, MtpDocumentAttribute, TMtpDocumentAttributeRecord } from 'redux/mtproto';
+import { TLDocument } from 'helpers/reselector.h'
+import { pipe } from 'ramda'
+import { MtpDocument, MtpDocumentAttribute, TMtpDocumentAttributeRecord } from 'redux/mtproto'
 
 type Mappings = {
   [K in keyof TMtpDocumentAttributeRecord]: <T extends {}>(
@@ -8,7 +8,7 @@ type Mappings = {
     document: MtpDocument,
     prev: TLDocument,
   ) => T
-};
+}
 const mappings: Mappings = {
   documentAttributeFilename: ({ file_name }, _, { type }) => ({
     type: type || 'document',
@@ -37,11 +37,11 @@ const mappings: Mappings = {
     animated: true,
   }),
   documentAttributeHasStickers: () => ({}),
-};
+}
 type Value = {
   f: <T>(attribute: MtpDocumentAttribute, document: MtpDocument, prev?: Partial<TLDocument>) => T,
   attribute: MtpDocumentAttribute,
-};
+}
 
 export const processDoc = pipe(
   (doc: MtpDocument) => doc.thumb && doc.thumb._ === 'photoSizeEmpty'
@@ -55,5 +55,5 @@ export const processDoc = pipe(
           Object.assign({}, acc, f(attribute, doc, acc)),
         doc,
       ),
-);
+)
 

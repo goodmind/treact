@@ -1,5 +1,5 @@
-import Color from 'helpers/ColorSchemaParser/color-value';
-import { InputPair } from 'helpers/ColorSchemaParser/map-links';
+import Color from 'helpers/ColorSchemaParser/color-value'
+import { InputPair } from 'helpers/ColorSchemaParser/map-links'
 
 const pairs: InputPair[] = [
   ['windowBg', [new Color([255, 255, 255, 255])]],
@@ -467,7 +467,7 @@ const pairs: InputPair[] = [
   ['importantTooltipBg', ['toastBg']],
   ['importantTooltipFg', ['toastFg']],
   ['importantTooltipFgLink', ['mediaviewTextLinkFg']],
-];
+]
 
 export default {
   meta: {
@@ -476,4 +476,4 @@ export default {
   },
 
   pairs,
-};
+}

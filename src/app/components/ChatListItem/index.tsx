@@ -1,13 +1,13 @@
-import { PreviewMedia } from 'containers/Media';
-import { PeerPhoto } from 'containers/PeerPhoto';
-import styled from 'glamorous';
-import { cond, isEmpty, prop, propIs, T } from 'ramda';
-import * as React from 'react';
-import { MtpMessage } from 'redux/mtproto';
-import { Themeable } from 'themes/theme.h';
-import * as style from './style.css';
+import { PreviewMedia } from 'containers/Media'
+import { PeerPhoto } from 'containers/PeerPhoto'
+import styled from 'glamorous'
+import { cond, isEmpty, prop, propIs, T } from 'ramda'
+import * as React from 'react'
+import { MtpMessage } from 'redux/mtproto'
+import { Themeable } from 'themes/theme.h'
+import * as style from './style.css'
 
-const active = 'active';
+const active = 'active'
 
 const Counter = styled.div<Themeable>(({ theme }) => ({
   backgroundColor: theme.dialogsUnreadBg,
@@ -20,7 +20,7 @@ const Counter = styled.div<Themeable>(({ theme }) => ({
   [`.${active} &`]: {
     backgroundColor: theme.dialogsUnreadBgActive,
   },
-}));
+}))
 
 const StyledUnreadBadge = styled.div<UnreadProps & Themeable>(({ unread, theme }) => ({
   display: unread ? 'block' : 'none',
@@ -28,7 +28,7 @@ const StyledUnreadBadge = styled.div<UnreadProps & Themeable>(({ unread, theme }
   [`.${active} &`]: {
     color: theme.dialogsUnreadFgActive,
   },
-}));
+}))
 
 const StyledSenderPreview = styled.div<SenderProps & Themeable>(({ theme, userName }) => ({
   display: userName ? 'inline-block' : 'none',
@@ -37,7 +37,7 @@ const StyledSenderPreview = styled.div<SenderProps & Themeable>(({ theme, userNa
   [`.${active} &`]: {
     color: theme.dialogsTextFgServiceActive,
   },
-}));
+}))
 
 const StyledMessagePreview = styled.div<Themeable>(({ theme }) => ({
   flex: 1,
@@ -48,9 +48,9 @@ const StyledMessagePreview = styled.div<Themeable>(({ theme }) => ({
   [`.${active} &`]: {
     color: theme.dialogsTextFgActive,
   },
-}));
+}))
 
-type DialogItemProps = { active: boolean };
+type DialogItemProps = { active: boolean }
 const StyledDialogItem = styled.div<DialogItemProps & Themeable>({
   height: '62px',
   paddingRight: '10px',
@@ -65,7 +65,7 @@ const StyledDialogItem = styled.div<DialogItemProps & Themeable>({
     backgroundColor: theme.dialogsBgActive,
     marginRight: '-1px',
   },
-}));
+}))
 
 const StyledPeerPhoto = styled(PeerPhoto)({
   borderRadius: '50px',
@@ -74,7 +74,7 @@ const StyledPeerPhoto = styled(PeerPhoto)({
   width: '46px',
   margin: '8px 10px',
   marginRight: '12px',
-});
+})
 
 const Name = styled.div<Themeable>(({ theme }) => ({
   alignSelf: 'center',
@@ -87,7 +87,7 @@ const Name = styled.div<Themeable>(({ theme }) => ({
   [`.${active} &`]: {
     color: theme.dialogsNameFgActive,
   },
-}));
+}))
 
 const Time = styled.div<Themeable>(({ theme }) => ({
   alignSelf: 'center',
@@ -95,45 +95,45 @@ const Time = styled.div<Themeable>(({ theme }) => ({
   [`.${active} &`]: {
     color: theme.dialogsDateFgActive,
   },
-}));
+}))
 
 interface ChatListBasicProps {
-  id: number;
-  name: string;
-  selected: boolean;
-  click: React.MouseEventHandler<{}>;
-  children?: React.ReactNode;
+  id: number
+  name: string
+  selected: boolean
+  click: React.MouseEventHandler<{}>
+  children?: React.ReactNode
 }
 
 interface ChatListFullProps extends ChatListBasicProps {
-  isYou: boolean;
-  previewName: string;
-  message: MtpMessage;
-  unreadCount: number;
+  isYou: boolean
+  previewName: string
+  message: MtpMessage
+  unreadCount: number
 }
 
-type UnreadProps = { unread: number };
+type UnreadProps = { unread: number }
 const UnreadBadge = ({ unread }: UnreadProps) => (
   <StyledUnreadBadge unread={unread}>
     <Counter>{unread}</Counter>
   </StyledUnreadBadge>
-);
+)
 
-type SenderProps = { userName: string };
+type SenderProps = { userName: string }
 const SenderPreview = ({ userName }: SenderProps) => (
   <StyledSenderPreview userName={userName}>
     <span>{userName}</span>
     <span>:</span>
   </StyledSenderPreview>
-);
+)
 
-type MessageProps = { children: React.ReactNode, userName: string, isYou: boolean };
+type MessageProps = { children: React.ReactNode, userName: string, isYou: boolean }
 const MessagePreview = ({ children, userName, isYou }: MessageProps) => (
   <StyledMessagePreview>
     <SenderPreview userName={isYou ? 'You' : userName} />
     {children}
   </StyledMessagePreview>
-);
+)
 
 export const ChatListItemEmpty = ({
   id,
@@ -157,11 +157,11 @@ export const ChatListItemEmpty = ({
         </div>
       </div>
     </StyledDialogItem>
-  );
-};
+  )
+}
 
 const messageIsNotEmpty = (data: MtpMessage) =>
-  !isEmpty(data.message);
+  !isEmpty(data.message)
 // TODO: move to container
 const shortPreview =
   cond<MtpMessage, React.ReactNode>([
@@ -169,7 +169,7 @@ const shortPreview =
     [propIs(Object, 'media'), ({ media }) =>
       <PreviewMedia media={media} />],
     [T, () => 'Unknown case'],
-  ]);
+  ])
 
 export const ChatListItem = ({
   id, name, click, selected,
@@ -180,4 +180,4 @@ export const ChatListItem = ({
     </MessagePreview>
     <UnreadBadge unread={unreadCount} />
   </ChatListItemEmpty>
-);
+)
