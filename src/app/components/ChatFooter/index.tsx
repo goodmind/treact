@@ -1,6 +1,5 @@
 import styled from 'glamorous'
 import * as React from 'react'
-import AutoSizeTextarea from 'react-autosize-textarea'
 import { Themeable } from 'themes/theme.h'
 
 const StyledChatFooter = styled.div<Themeable>(({ theme }) => ({
@@ -22,7 +21,15 @@ const SendButton = styled.button<Themeable>(({ theme }) => ({
   transition: 'all .2s linear',
 }))
 
-const Textarea = styled(AutoSizeTextarea)<Themeable>(({ theme }) => ({
+function PlainTextarea({ children, ...props }: any) {
+  return (
+    <div contentEditable {...props}>
+      {children}
+    </div>
+  )
+}
+
+const Textarea = styled(PlainTextarea)<Themeable>(({ theme }) => ({
   color: theme.historyComposeAreaFg,
   border: 'none',
   background: 'none',
@@ -35,6 +42,8 @@ const Textarea = styled(AutoSizeTextarea)<Themeable>(({ theme }) => ({
   outline: 'none',
   paddingLeft: '5px',
   resize: 'none',
+  wordWrap: 'break-word',
+  wordBreak: 'break-all',
 }))
 
 export interface Props {
