@@ -5,7 +5,7 @@ const tsRules = {
   ],
   'no-non-null-assertion': true,
   'no-any': true,
-  'no-unsafe-any': true,
+  //'no-unsafe-any': true,
   'no-inferred-empty-object-type': true,
   'no-var-requires': true,
 }
