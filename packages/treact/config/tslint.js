@@ -50,7 +50,7 @@ const jsRules = {
   'comment-format': [
     false, ,
   ],
-  'no-submodule-imports': [
+  /*'no-submodule-imports': [
     true,
     'containers',
     'components',
@@ -59,7 +59,7 @@ const jsRules = {
     'api',
     'themes',
     'modules',
-  ],
+  ],*/
   'arrow-parens': false,
   'object-literal-sort-keys': false,
   'object-literal-key-quotes': [false],
