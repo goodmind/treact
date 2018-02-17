@@ -72,6 +72,7 @@ const jsRules = {
   'jsx-boolean-value': false,
   'jsx-wrap-multiline': false,
   'prefer-object-spread': false,
+  'no-implicit-dependencies': false,
 }
 
 module.exports = {
