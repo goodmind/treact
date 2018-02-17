@@ -91,7 +91,7 @@
     "@types/react-hot-loader": "^3.0.4",
     "@types/react-infinite-scroller": "^1.0.3",
     "@types/react-redux": "^5.0.10",
-    "@types/react-test-renderer": "^15.5.4",
+    "@types/react-test-renderer": "^16.0.1",
     "@types/redux-devtools": "^3.0.34",
     "@types/redux-devtools-dock-monitor": "^1.1.29",
     "@types/redux-devtools-log-monitor": "^1.0.32",
