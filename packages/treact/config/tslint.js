@@ -60,6 +60,7 @@ const jsRules = {
     'themes',
     'modules',
   ],*/
+  'no-submodule-imports': false,
   'arrow-parens': false,
   'object-literal-sort-keys': false,
   'object-literal-key-quotes': [false],
