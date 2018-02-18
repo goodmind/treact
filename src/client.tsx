@@ -57,7 +57,7 @@ init()
 
 if (module.hot) {
   module.hot.accept('./app/routes', () => {
-    const NewApp = require('./app/routes').default
+    const NewApp: typeof routes = require('./app/routes').default
     render(history.location, NewApp)
   })
 }
