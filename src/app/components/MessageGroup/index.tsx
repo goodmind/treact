@@ -8,7 +8,7 @@ const Styled = styled.div({
   alignItems: 'flex-end',
 })
 
-const StyledPeerPhoto = styled(PeerPhoto)({
+const StyledPeerPhoto = styled<{ peerID: number }>(PeerPhoto)({
   position: 'sticky',
   bottom: '8px',
   top: '8px',
