@@ -1,4 +1,5 @@
 // import { History } from 'history';
+import { effectorMiddleware } from 'effector'
 import {
   applyMiddleware, compose, createStore, Middleware,
   Store as ReduxStore, StoreEnhancerStoreCreator,
@@ -8,6 +9,7 @@ import { autoRehydrate } from 'redux-persist'
 import thunk from 'redux-thunk'
 import * as appConfig from '../../../config/main'
 import { batchUpdate } from './batchUpdate'
+import { rootDomain } from './domain'
 import rootReducer from './reducers'
 import { Store } from './store.h'
 
@@ -24,6 +26,7 @@ export function configureStore(/*history: History*/) {
     // routerMiddleware(history),
     batchUpdate,
     thunk,
+    effectorMiddleware,
   ]
 
   /** Add Only Dev. Middlewares */
@@ -42,6 +45,8 @@ export function configureStore(/*history: History*/) {
   )
 
   const store = createStore<Store>(rootReducer, storeEnhancer)
+
+  rootDomain.register(store)
 
   if (appConfig.env === 'development' && module.hot) {
     module.hot.accept('./reducers', () => {
