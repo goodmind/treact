@@ -41,9 +41,13 @@ const beginLoad = async (id: number, loc: MtpFileLocation) => {
   const { dc_id = 2, volume_id, secret, local_id } = loc
   const inputLocation = { _: 'inputFileLocation', dc_id, volume_id, secret, local_id }
   console.warn(`idle`, id, loc)
+
   const cached = picStorage.getItem<Blob>(id.toString())
-    .then(when(isNil, Promise.reject.bind(Promise)))
+    .then(blob => isNil(blob)
+      ? Promise.reject(blob)
+      : Promise.resolve(blob))
     .then(blob => picStore.addBlob(id, blob), () => ({}))
+
   const loader = async () => {
     console.warn(`loading`, id, inputLocation)
     return api<MtpUploadFile>('upload.getFile', {
