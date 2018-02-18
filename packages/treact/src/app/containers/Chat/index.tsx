@@ -55,7 +55,7 @@ type ConnectedState =  {
 }
 
 type ConnectedActions = {
-  loadOffset<T>(id: number, offset?: number): Promise<T>;
+  loadOffset: typeof loadOffset,
 }
 
 type Props = ConnectedState & ConnectedActions
@@ -138,10 +138,11 @@ const stateMap = (state: Store): ConnectedState => {
   }
 }
 
-const dispatchMap = (dispatch: Dispatch) => ({
-  loadOffset: (id: number, offset: number) => dispatch(loadOffset(id, offset)),
-})
+const dispatchMap = {
+  // TODO: check this works?
+  loadOffset,
+}
 
-const connected = connect<ConnectedState, ConnectedActions, {}>(stateMap, dispatchMap)(ChatContainer)
+const connected = connect<ConnectedState, ConnectedActions, {}, Store>(stateMap, dispatchMap)(ChatContainer)
 
 export { connected as Chat }
