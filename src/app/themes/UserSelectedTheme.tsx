@@ -2,6 +2,7 @@ import { ThemeProvider } from 'glamorous'
 import { parseWithDefaults, processingToObject } from 'helpers/ColorSchemaParser/map-links'
 import * as React from 'react'
 import { connect } from 'react-redux'
+import { Store } from 'redux/store.h'
 import defaultTheme from './default'
 import { RawTheme, Theme } from './theme.h'
 
@@ -30,4 +31,4 @@ class UserSelectedTheme extends React.Component<{ theme: RawTheme }> {
   }
 }
 
-export default connect(state => ({ theme: state.theme }))(UserSelectedTheme)
+export default connect((state: Store) => ({ theme: state.theme }))(UserSelectedTheme)
