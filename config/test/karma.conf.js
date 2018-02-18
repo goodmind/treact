@@ -1,10 +1,10 @@
-var path = require('path');
-var webpack = require('webpack');
-var postcssAssets = require('postcss-assets');
-var postcssNext = require('postcss-cssnext');
-var appConfig = require('../main');
+var path = require('path')
+var webpack = require('webpack')
+var postcssAssets = require('postcss-assets')
+var postcssNext = require('postcss-cssnext')
+var appConfig = require('../main')
 
-module.exports = function (config) {
+module.exports = function(config) {
   const conf = {
     frameworks: ['mocha', 'chai', 'es6-shim'],
 
@@ -15,7 +15,7 @@ module.exports = function (config) {
     preprocessors: {
       '../src/**/*.ts': ['coverage'],
       '../src/**/*.tsx': ['coverage'],
-      '../webpack/test.js': ['webpack']
+      '../webpack/test.js': ['webpack'],
     },
 
     plugins: ['karma-*'],
@@ -24,7 +24,7 @@ module.exports = function (config) {
 
     coverageReporter: {
       dir: '../../coverage',
-      reporters: []
+      reporters: [],
     },
 
     hostname: appConfig.host,
@@ -50,30 +50,30 @@ module.exports = function (config) {
           '../../src',
           '../../src/app',
           '../../src/app/redux',
-          'node_modules'
+          'node_modules',
         ],
-        extensions: ['', '.json', '.js', '.ts', '.tsx', '.jsx']
+        extensions: ['', '.json', '.js', '.ts', '.tsx', '.jsx'],
       },
 
       module: {
         preLoaders: [
           {
             test: /\.tsx?$/,
-            loader: 'tslint'
-          }
+            loader: 'tslint',
+          },
         ],
         loaders: [
           {
             test: /\.tsx?$/,
-            loader: 'ts'
+            loader: 'ts',
           },
           {
             test: /\.(jpe?g|png|gif)$/i,
-            loader: 'url?limit=1000&name=images/[hash].[ext]'
+            loader: 'url?limit=1000&name=images/[hash].[ext]',
           },
           {
             test: /\.json$/,
-            loader: 'json-loader'
+            loader: 'json-loader',
           },
           {
             test: /\.css$/,
@@ -81,38 +81,38 @@ module.exports = function (config) {
             loaders: [
               'style',
               'css?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]',
-              'postcss'
-            ]
+              'postcss',
+            ],
           },
           {
             test: /\.css$/,
             exclude: path.resolve('./src/app'),
-            loader: 'style!css'
-          }
+            loader: 'style!css',
+          },
         ],
         postLoaders: [
           {
             test: /\.tsx?$/,
             loader: 'istanbul-instrumenter-loader',
-            include: path.resolve('./src/app')
-          }
+            include: path.resolve('./src/app'),
+          },
+        ],
+      },
+
+      postcss: function() {
+        return [
+          postcssNext(),
+          postcssAssets({ relative: true }),
         ]
       },
 
-      postcss: function () {
-        return [
-          postcssNext(),
-          postcssAssets({ relative: true })
-        ];
-      },
-
       tslint: {
-        failOnHint: true
+        failOnHint: true,
       },
 
       externals: {
         'react/lib/ExecutionEnvironment': true,
-        'react/lib/ReactContext': 'window'
+        'react/lib/ReactContext': 'window',
       },
 
       plugins: [
@@ -122,26 +122,26 @@ module.exports = function (config) {
         new webpack.DefinePlugin({
           'process.env': {
             BROWSER: JSON.stringify(true),
-            NODE_ENV: JSON.stringify('development')
-          }
-        })
-      ]
+            NODE_ENV: JSON.stringify('development'),
+          },
+        }),
+      ],
     },
 
     webpackServer: {
-      noInfo: true
-    }
-  };
-
-  if (process.env.NODE_ENV === 'ci') {
-    conf.autoWatch = false;
-    conf.singleRun = true;
-    conf.browsers.push('Firefox');
-    conf.coverageReporter.reporters.push({ type: 'lcov', subdir: '.' });
-  } else {
-    conf.coverageReporter.reporters.push({ type: 'html', subdir: 'html' });
-    conf.browsers.push('Chrome');
+      noInfo: true,
+    },
   }
 
-  config.set(conf);
-};
+  if (process.env.NODE_ENV === 'ci') {
+    conf.autoWatch = false
+    conf.singleRun = true
+    conf.browsers.push('Firefox')
+    conf.coverageReporter.reporters.push({ type: 'lcov', subdir: '.' })
+  } else {
+    conf.coverageReporter.reporters.push({ type: 'html', subdir: 'html' })
+    conf.browsers.push('Chrome')
+  }
+
+  config.set(conf)
+}

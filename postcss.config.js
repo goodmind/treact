@@ -1,6 +1,6 @@
-const postcssAssets = require('postcss-assets');
-const postcssNext = require('postcss-cssnext');
-const stylelint = require('stylelint');
+const postcssAssets = require('postcss-assets')
+const postcssNext = require('postcss-cssnext')
+const stylelint = require('stylelint')
 
 module.exports = ({ options }) => Object.assign({}, options, {
   plugins: [
@@ -8,4 +8,4 @@ module.exports = ({ options }) => Object.assign({}, options, {
     postcssNext(),
     postcssAssets({ relative: true }),
   ],
-});
+})

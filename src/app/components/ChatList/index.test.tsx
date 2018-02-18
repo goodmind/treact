@@ -1,9 +1,9 @@
-import * as React from 'react';
-import * as renderer from 'react-test-renderer';
-import { ChatList } from './';
+import * as React from 'react'
+import * as renderer from 'react-test-renderer'
+import { ChatList } from './'
 
 it('ChatList renders correctly', () => {
-  const noop = () => false;
+  const noop = () => false
   const tree = renderer.create(
     <ChatList
       loading={false}
@@ -11,7 +11,7 @@ it('ChatList renders correctly', () => {
       loadMore={noop}>
       Hello, world!
     </ChatList>,
-  ).toJSON();
+  ).toJSON()
 
-  expect(tree).toMatchSnapshot();
-});
+  expect(tree).toMatchSnapshot()
+})

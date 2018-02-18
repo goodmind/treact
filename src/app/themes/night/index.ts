@@ -1,5 +1,5 @@
-import Color from 'helpers/ColorSchemaParser/color-value';
-import { InputPair } from 'helpers/ColorSchemaParser/map-links';
+import Color from 'helpers/ColorSchemaParser/color-value'
+import { InputPair } from 'helpers/ColorSchemaParser/map-links'
 
 const pairs: InputPair[] = [
   ['windowBg', [new Color([40, 46, 51, 255])]],
@@ -447,7 +447,7 @@ const pairs: InputPair[] = [
   ['emojiIconFg', [new Color([108, 114, 120, 255])]],
   ['emojiIconFgActive', [new Color([54, 205, 185, 255])]],
   ['overviewCheckBorder', [new Color([228, 234, 239, 255])]],
-];
+]
 
 export default {
   meta: {
@@ -457,4 +457,4 @@ export default {
   },
 
   pairs,
-};
+}

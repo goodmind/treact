@@ -1,6 +1,6 @@
-import * as React from 'react';
-import * as renderer from 'react-test-renderer';
-import { RichText } from './';
+import * as React from 'react'
+import * as renderer from 'react-test-renderer'
+import { RichText } from './'
 
 it('RichText renders correctly without data', () => {
   const tree = renderer.create(
@@ -8,10 +8,10 @@ it('RichText renders correctly without data', () => {
       id={1}
       entities={[]}
       text="" />,
-  ).toJSON();
+  ).toJSON()
 
-  expect(tree).toMatchSnapshot();
-});
+  expect(tree).toMatchSnapshot()
+})
 
 it('RichText renders correctly with data', () => {
   const msg = {
@@ -38,14 +38,14 @@ it('RichText renders correctly with data', () => {
       },
     ],
     message: 'abc123 abc123 abc123 **___*_*`_** 😃😂😏😁🅱❤👅 youtube.com goo.gl must show',
-  };
+  }
 
   const tree = renderer.create(
     <RichText
       id={2}
       entities={msg.entities}
       text={msg.message} />,
-  ).toJSON();
+  ).toJSON()
 
-  expect(tree).toMatchSnapshot();
-});
+  expect(tree).toMatchSnapshot()
+})

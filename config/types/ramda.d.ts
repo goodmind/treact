@@ -1425,13 +1425,13 @@ declare namespace R {
     // hard to mix cuz different generics
 
     // keyof
-    mapObjIndexed<T, V, M extends Obj<T>>(fn: (value: T, key: string, obj?: M) => V, obj: M): {[K in keyof M]: V};
-    mapObjIndexed<T, V, M extends Obj<T>>(fn: (value: T, key: string, obj?: M) => V): (obj: M) => {[K in keyof M]: V};
+    // mapObjIndexed<T, V, M extends Obj<T>>(fn: (value: T, key: string, obj?: M) => V, obj: M): {[K in keyof M]: V};
+    // mapObjIndexed<T, V, M extends Obj<T>>(fn: (value: T, key: string, obj?: M) => V): (obj: M) => {[K in keyof M]: V};
     // mapObjIndexed<T, V, M extends Obj<T>>: CurriedFunction2<(value: T, key: string, obj?: M) => V, M, {[K in keyof M]: V}>;
 
     // Record
-    mapObjIndexed<T, U, K extends string>(f: (value: T, key: string, obj?: Record<K, T>) => U, obj: Record<K, T>): Record<K, U>;
-    mapObjIndexed<T, U, K extends string>(f: (value: T, key: string, obj?: Record<K, T>) => U): <K extends string>(obj: Record<K, T>) => Record<K, U>;  // potentially overwriting K but whatever
+    mapObjIndexed<T, U, K extends string>(f: (value: T, key: K, obj?: Record<K, T>) => U, obj: Record<K, T>): Record<K, U>;
+    mapObjIndexed<T, U, K extends string>(f: (value: T, key: K, obj?: Record<K, T>) => U): <K extends string>(obj: Record<K, T>) => Record<K, U>;  // potentially overwriting K but whatever
     // mapObjIndexed<T, U, K extends string>: CurriedFunction2<(value: T, key: string, obj?: Record<K, T>) => U, Record<K, T>), Record<K, U>>;
 
     /**

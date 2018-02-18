@@ -1,8 +1,9 @@
-import styled from 'glamorous';
-import * as React from 'react';
+import styled from 'glamorous'
+import * as React from 'react'
+import { Themeable } from 'themes/theme.h'
 
-import * as pencil from './pencil.png';
-import * as search from './search.png';
+import * as pencil from './pencil.png'
+import * as search from './search.png'
 
 const SearchButton = styled.div({
   position: 'absolute',
@@ -15,9 +16,9 @@ const SearchButton = styled.div({
   ':active': {
     marginTop: '1px',
   },
-});
+})
 
-const SearchInput = styled.input(({ theme }) => ({
+const SearchInput = styled.input<Themeable>(({ theme }) => ({
   background: `url(${search}) no-repeat 10px 7px`,
   backgroundColor: theme.filterInputInactiveBg,
   backgroundSize: '15px',
@@ -41,23 +42,23 @@ const SearchInput = styled.input(({ theme }) => ({
   '&:active ::placeholder, &:focus ::placeholder': {
     color: theme.placeholderFgActive,
   },
-}));
+}))
 SearchInput.defaultProps = {
   type: 'text',
   placeholder: 'Search',
-};
+}
 
 const Panel = styled.div({
   position: 'relative',
   display: 'flex',
   padding: '11px',
-});
+})
 
 const ChatListSearch = () => (
   <Panel>
     <SearchInput />
     <SearchButton />
   </Panel>
-);
+)
 
-export { ChatListSearch };
+export { ChatListSearch }

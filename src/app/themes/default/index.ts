@@ -1,5 +1,5 @@
-import Color from 'helpers/ColorSchemaParser/color-value';
-import { InputPair } from 'helpers/ColorSchemaParser/map-links';
+import Color from 'helpers/ColorSchemaParser/color-value'
+import { InputPair } from 'helpers/ColorSchemaParser/map-links'
 
 const pairs: InputPair[] = [
   ['windowBg', [new Color([255, 255, 255, 255])]],
@@ -191,7 +191,7 @@ const pairs: InputPair[] = [
   ['emojiPanHeaderBg', [new Color([255, 255, 255, 242]), 'emojiPanBg']],
   ['emojiIconFg', ['checkboxFg']],
   ['emojiIconFgActive', ['windowBgActive']],
-  ['stickerPanDeleteBg', [new Color([0, 0, 0, 204])]],
+  ['stickerPanDeleteBg', [new Color([0, 0, 0, 255])]],
   ['stickerPanDeleteFg', ['windowFgActive']],
   ['stickerPreviewBg', [new Color([255, 255, 255, 176])]],
   ['historyTextInFg', ['windowFg']],
@@ -467,7 +467,7 @@ const pairs: InputPair[] = [
   ['importantTooltipBg', ['toastBg']],
   ['importantTooltipFg', ['toastFg']],
   ['importantTooltipFgLink', ['mediaviewTextLinkFg']],
-];
+]
 
 export default {
   meta: {
@@ -476,4 +476,4 @@ export default {
   },
 
   pairs,
-};
+}

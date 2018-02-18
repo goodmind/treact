@@ -1,7 +1,7 @@
 
-export { parseWithDefaults } from './map-links';
-export { parser } from './parser';
+export { parseWithDefaults } from './map-links'
+export { parser } from './parser'
 
-import resolver from './map-links';
+import resolver from './map-links'
 
-export default resolver;
+export default resolver

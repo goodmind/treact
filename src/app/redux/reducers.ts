@@ -1,20 +1,26 @@
-import { combineReducers } from 'redux';
-import { authReducer } from './modules/auth';
-import { authKeyReducer } from './modules/authKey';
-import chats from './modules/chats';
-import { currentDcReducer } from './modules/currentDc';
-import { currentUserReducer } from './modules/currentUser';
-import dialogs from './modules/dialogs';
-import files from './modules/files';
-import histories from './modules/histories';
-import loadings from './modules/loadings';
-import messages from './modules/messages';
-import peers from './modules/peers';
-import photos from './modules/photos';
-import selected from './modules/selected';
-import theme from './modules/theme';
-import users from './modules/users';
-import { Store } from './store.h';
+import { combineReducers } from 'redux'
+import { authReducer } from './modules/auth'
+import { authKeyReducer } from './modules/authKey'
+import avatars from './modules/avatars'
+import chats from './modules/chats'
+import { currentDcReducer } from './modules/currentDc'
+import { currentUserReducer } from './modules/currentUser'
+import dialogs from './modules/dialogs'
+import documents from './modules/documents/index'
+import files from './modules/files'
+import histories from './modules/histories'
+import loadings from './modules/loadings'
+import media from './modules/media'
+import messages from './modules/messages'
+import peers from './modules/peers'
+import photos from './modules/photos'
+import photoCachedSizes from './modules/photos/cachedSizes'
+import photoSizes from './modules/photos/sizes'
+import selected from './modules/selected'
+import settings from './modules/settings'
+import theme from './modules/theme'
+import users from './modules/users'
+import { Store } from './store.h'
 
 const rootReducer = combineReducers<Store>({
   // routing: routerReducer,
@@ -30,9 +36,16 @@ const rootReducer = combineReducers<Store>({
   loadings,
   selected,
   messages,
+  settings,
   files,
-  photos,
+  avatars,
   theme,
-});
 
-export default rootReducer;
+  media,
+  documents,
+  photos,
+  photoSizes,
+  photoCachedSizes,
+})
+
+export default rootReducer

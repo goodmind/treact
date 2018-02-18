@@ -1,20 +1,20 @@
-import { createReducer } from 'redux-act';
+import { createReducer } from 'redux-act'
 
-import { CHATS, MESSAGES } from 'actions';
-const { GET_DIALOGS, LOAD_SLICE } = CHATS;
-const { SEND_TEXT } = MESSAGES;
+import { CHATS, MESSAGES } from 'actions'
+const { GET_DIALOGS, LOAD_SLICE } = CHATS
+const { SEND_TEXT } = MESSAGES
 
-import { modelDefaults, updateStoreMap } from 'helpers/reselector';
-import { Slice, StoredPayload } from 'helpers/reselector.h';
+import { modelDefaults, updateStoreMap } from 'helpers/reselector'
+import { Slice, StoredPayload } from 'helpers/reselector.h'
 
-export type StoreMessages = StoredPayload<Slice['messages']>;
+export type StoreMessages = StoredPayload<Slice['messages']>
 
-const updater = updateStoreMap<Slice, 'messages'>('messages');
+const updater = updateStoreMap<Slice, 'messages'>('messages')
 
 const reducer = createReducer({
   [SEND_TEXT.DONE]: updater,
   [LOAD_SLICE.DONE]: updater,
   [GET_DIALOGS.DONE]: updater,
-}, modelDefaults);
+}, modelDefaults)
 
-export default reducer;
+export default reducer

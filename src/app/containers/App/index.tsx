@@ -1,11 +1,11 @@
-import { App } from 'components';
-import { Header } from 'containers';
-import * as React from 'react';
-import * as Helmet from 'react-helmet';
-import * as appConfig from '../../../../config/main';
+import { App } from 'components'
+import { Header } from 'containers'
+import * as React from 'react'
+import Helmet from 'react-helmet'
+import * as appConfig from '../../../../config/main'
 
 interface Props {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 const AppContainer = ({ children }: Props) =>
@@ -13,6 +13,6 @@ const AppContainer = ({ children }: Props) =>
     <Helmet {...appConfig.app} {...appConfig.app.head}/>
     <Header />
     {children}
-  </App>;
+  </App>
 
-export { AppContainer as App };
+export { AppContainer as App }

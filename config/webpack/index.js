@@ -1,14 +1,14 @@
-'use strict';
-const { resolve, join } = require('path');
+'use strict'
+const { resolve, join } = require('path')
 
-const source = resolve(process.cwd(), 'src');
-const app = resolve(source, 'app');
-const build = resolve(process.cwd(), 'build');
+const source = resolve(process.cwd(), 'src')
+const app = resolve(source, 'app')
+const build = resolve(process.cwd(), 'build')
 
-const reactDll = require(join(build, 'React.json'));
-const vendorDll = require(join(build, 'Vendor.json'));
+const reactDll = require(join(build, 'React.json'))
+const vendorDll = require(join(build, 'Vendor.json'))
 
-const isProd = process.env.NODE_ENV === 'production';
+const isProd = process.env.NODE_ENV === 'production'
 
 /* TODO: use options instead of shorthand
          notation in webpack */
@@ -24,19 +24,19 @@ const rules = [
   }, */{
     enforce: 'pre',
     test: /\.js$/,
-    loader: "source-map-loader"
+    loader: 'source-map-loader',
   }, {
     enforce: 'pre',
     test: /\.tsx?$/,
-    loader: "source-map-loader"
+    loader: 'source-map-loader',
   }, {
     test: /\.tsx?$/,
     // loader: 'react-hot-loader!ts'
     exclude: /node_modules/,
     use: [
       'babel-loader',
-      { loader: 'ts-loader', options: { transpileOnly: true } }
-    ]
+      { loader: 'ts-loader', options: { transpileOnly: true } },
+    ],
   }, {
     test: /\.css$/,
     include: app,
@@ -47,41 +47,41 @@ const rules = [
         options: {
           modules: true,
           importLoaders: 2,
-          localIdentName: '[local]___[hash:base64:5]'
-        }
+          localIdentName: '[local]___[hash:base64:5]',
+        },
       },
-      'postcss-loader'
-    ]
+      'postcss-loader',
+    ],
   }, {
     test: /\.css$/,
     exclude: app,
     loaders: [
       'style-loader',
-      'css-loader'
-    ]
+      'css-loader',
+    ],
   },
   {
     test: /\.eot(\?.*)?$/,
-    loader: 'file-loader?name=fonts/[hash].[ext]'
+    loader: 'file-loader?name=fonts/[hash].[ext]',
   }, {
     test: /\.(woff|woff2)(\?.*)?$/,
-    loader: 'file-loader?name=fonts/[hash].[ext]'
+    loader: 'file-loader?name=fonts/[hash].[ext]',
   }, {
     test: /\.ttf(\?.*)?$/,
-    loader: 'url-loader?limit=10000&mimetype=application/octet-stream&name=fonts/[hash].[ext]'
+    loader: 'url-loader?limit=10000&mimetype=application/octet-stream&name=fonts/[hash].[ext]',
   }, {
     test: /\.svg(\?.*)?$/,
-    loader: 'url-loader?limit=10000&mimetype=image/svg+xml&name=fonts/[hash].[ext]'
+    loader: 'url-loader?limit=10000&mimetype=image/svg+xml&name=fonts/[hash].[ext]',
   }, {
     test: /\.(jpe?g|png|gif)$/i,
-    loader: 'url-loader?limit=1000&name=images/[hash].[ext]'
-  }
-];
+    loader: 'url-loader?limit=1000&name=images/[hash].[ext]',
+  },
+]
 
 const unifiedConfig = {
   node: {
     fs: 'empty',
-    net: 'empty'
+    net: 'empty',
   },
   context: source,
   resolve: {
@@ -91,21 +91,21 @@ const unifiedConfig = {
       'app',
       'redux',
       'node_modules',
-    ]
+    ],
   },
 
   output: {
     path: build,
     publicPath: '/',
     filename: 'bundle.js',
-    pathinfo: true
+    pathinfo: true,
   },
 
   module: {
-    rules
-  }
-};
+    rules,
+  },
+}
 
-const getConfig = () => isProd ? require('./prod') : require('./dev');
+const getConfig = () => isProd ? require('./prod') : require('./dev')
 
-module.exports = Object.assign(unifiedConfig, getConfig());
+module.exports = Object.assign(unifiedConfig, getConfig())

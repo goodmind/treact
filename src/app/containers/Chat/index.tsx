@@ -1,17 +1,17 @@
-import * as React from 'react';
-import { connect } from 'react-redux';
+import * as React from 'react'
+import { connect } from 'react-redux'
 
-import { Chat, DefaultScreen } from 'components/Chat';
-import { Message } from 'components/Message';
-import { Entity, RichText } from 'components/RichText';
-import { MessageGroup } from 'components/MessageGroup';
-import { getPeerData } from 'helpers/Telegram/Peers';
-import { getPeerName } from 'helpers/Telegram/Peers';
-import { eqProps, groupWith, map, Obj, path, pipe, props } from 'ramda';
-import { loadOffset } from 'redux/api/chatList';
-import { TPeersType } from 'redux/modules/peers';
-import { MtpChat, MtpMessage, MtpUser } from 'redux/mtproto';
-import { Dispatch, Store } from 'redux/store.h';
+import { Chat, DefaultScreen } from 'components/Chat'
+import { Message } from 'components/Message'
+import { MessageGroup } from 'components/MessageGroup'
+import { Entity, RichText } from 'components/RichText'
+import { getPeerData, getPeerName } from 'helpers/Telegram/Peers'
+import { eqProps, groupWith, pipe, props } from 'ramda'
+import { loadOffset } from 'redux/api/chatList'
+import { TPeersType } from 'redux/modules/peers'
+import { MtpChat, MtpMessage, MtpUser } from 'redux/mtproto'
+import { Dispatch, Store } from 'redux/store.h'
+import { createSelector } from 'reselect'
 
 /*const onChatSelect = async (currentId: number, nextId: number) => {
   if (nextId && nextId !== currentId) {
@@ -25,50 +25,48 @@ class ChatContainer extends React.Component<Props, {}> {
     onChatSelect(selected, nextProps.selected);
   }*/
   public loadSliceRange = async () => {
-    const { loadOffset, selected, history } = this.props;
-    const maxID = history[0];
+    const { loadOffset, selected, history } = this.props
+    const maxID = history[0]
     // TODO: remove console.log
-    console.log(await loadOffset(selected, maxID));
+    console.log(await loadOffset(selected, maxID))
   }
   public render() {
-    if (!this.props.selected) return <DefaultScreen />;
-    const { messages, peerName } = this.props;
-    console.log(messages);
+    if (!this.props.selected) return <DefaultScreen />
+    const { messages, peerName } = this.props
+    console.log(messages)
     return (
       <Chat
         name={peerName}
         userCount={0}
         loadMore={this.loadSliceRange}>
-        {groupByUser(messages)}
+        {messages.map(messageGroup)}
       </Chat>
-    );
+    )
   }
 }
 
 type ConnectedState =  {
   selected: number;
   history: number[];
-  messages: MtpMessage[];
+  messages: MtpMessage[][];
   peer?: TPeersType;
   peerData?: MtpUser | MtpChat;
   peerName: string;
-};
+}
 
 type ConnectedActions = {
-  loadOffset<T>(id: number, offset?: number): Promise<T>;
-};
+  loadOffset: typeof loadOffset,
+}
 
-type Props = ConnectedState & ConnectedActions;
+type Props = ConnectedState & ConnectedActions
 
-type MessagesPath = (obj: Store) => Obj<MtpMessage>;
-const messagesPath: MessagesPath = path(['messages', 'byId']);
-
-const messageItem = ({ id, from_id, date, message, entities, out }: MtpMessage) =>
+const messageItem = ({ id, from_id, date, message, media, entities, out }: MtpMessage) =>
   <Message
     key={id}
     id={id}
     date={date}
     user={from_id}
+    media={media}
     own={out}
     // HACK: what to do here?
     text={
@@ -77,38 +75,59 @@ const messageItem = ({ id, from_id, date, message, entities, out }: MtpMessage) 
         // TODO: remove any cast
         // tslint:disable-next-line
         entities={(entities as any) as Entity[]}
-        text={message} />} />;
+        text={message} />} />
 
-const messageGroup = ([first, ...rest]: MtpMessage[]) =>
+const messageGroup = (messages: MtpMessage[]) =>
   <MessageGroup
-    key={`${first.from_id}_${first.date}`}
-    messages={[first, ...rest]}
+    key={`${messages[0].from_id}_${messages[0].date}`}
+    messages={messages}
     message={messageItem}
-    first={first} />;
+    first={messages[0]} />
 
+// TODO: sort only ids?
+// TODO: move to redux?
 const groupByUser = pipe(
-  groupWith<MtpMessage, MtpMessage[]>((a, b) => {
-    return eqProps('from_id', a, b) && (b.date < a.date + 900);
-  }),
-  map(messageGroup),
-);
+  groupWith<MtpMessage, MtpMessage[]>((a, b) =>
+    eqProps('from_id', a, b) && (b.date < a.date + 900)),
+)
+
+const messagesPath = ({ messages }: Store) => messages.byId
+const historiesPath = ({ histories }: Store) => histories.byId
+const selectedPath = ({ selected }: Store) => selected.dialog
+
+const historySelector = createSelector(
+  historiesPath,
+  selectedPath,
+  (histories, selected) => histories[selected] || [],
+)
+
+const messagesSelector = createSelector(
+  messagesPath,
+  historySelector,
+  // TODO: sort only ids?
+  (messages, history) => props(history, messages),
+)
+
+const groupedMessagesSelector = createSelector(
+  messagesSelector,
+  groupByUser,
+)
 
 const stateMap = (state: Store): ConnectedState => {
-  const selected = state.selected.dialog;
+  const selected = state.selected.dialog
   if (!selected) return {
     selected,
     history: [],
     messages: [],
     // TODO: This is arguable
     peerName: '',
-  };
+  }
 
-  const history = state.histories.byId[selected] || [];
-  const messagesStore = messagesPath(state);
-  const messages = props(history, messagesStore);
-  const peer = state.peers.byId[selected];
-  const peerData = getPeerData(selected, peer, state);
-  const peerName = getPeerName(peer, peerData);
+  const history = historySelector(state)
+  const messages = groupedMessagesSelector(state)
+  const peer = state.peers.byId[selected]
+  const peerData = getPeerData(selected, peer, state)
+  const peerName = getPeerName(peer, peerData)
   return {
     selected,
     history,
@@ -116,13 +135,14 @@ const stateMap = (state: Store): ConnectedState => {
     peer,
     peerData,
     peerName,
-  };
-};
+  }
+}
 
-const dispatchMap = (dispatch: Dispatch) => ({
-  loadOffset: (id: number, offset: number) => dispatch(loadOffset(id, offset)),
-});
+const dispatchMap = {
+  // TODO: check this works?
+  loadOffset,
+}
 
-const connected = connect<ConnectedState, ConnectedActions, {}>(stateMap, dispatchMap)(ChatContainer);
+const connected = connect<ConnectedState, ConnectedActions, {}, Store>(stateMap, dispatchMap)(ChatContainer)
 
-export { connected as Chat };
+export { connected as Chat }

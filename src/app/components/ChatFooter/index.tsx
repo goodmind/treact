@@ -1,15 +1,15 @@
-import styled from 'glamorous';
-import * as React from 'react';
-import AutoSizeTextarea from 'react-autosize-textarea';
+import styled from 'glamorous'
+import * as React from 'react'
+import { Themeable } from 'themes/theme.h'
 
-const StyledChatFooter = styled.div(({ theme }) => ({
+const StyledChatFooter = styled.div<Themeable>(({ theme }) => ({
   backgroundColor: theme.historyComposeAreaBg,
   borderTop: `1px solid ${theme.shadowFg}`,
   borderLeft: `1px solid ${theme.shadowFg}`,
   display: 'flex',
-}));
+}))
 
-const SendButton = styled.button(({ theme }) => ({
+const SendButton = styled.button<Themeable>(({ theme }) => ({
   border: 0,
   userSelect: 'none',
   alignSelf: 'flex-end',
@@ -19,9 +19,21 @@ const SendButton = styled.button(({ theme }) => ({
   fontSize: '16px',
   padding: '12px 16px',
   transition: 'all .2s linear',
-}));
+}))
 
-const Textarea = styled(AutoSizeTextarea)(({ theme }) => ({
+type PlainTextareaProps = React.DetailedHTMLProps<
+  React.TextareaHTMLAttributes<{}>,
+  HTMLDivElement
+>
+function PlainTextarea({ children, ...props }: PlainTextareaProps) {
+  return (
+    <div contentEditable {...props}>
+      {children}
+    </div>
+  )
+}
+
+const Textarea = styled(PlainTextarea)<Themeable>(({ theme }) => ({
   color: theme.historyComposeAreaFg,
   border: 'none',
   background: 'none',
@@ -34,12 +46,14 @@ const Textarea = styled(AutoSizeTextarea)(({ theme }) => ({
   outline: 'none',
   paddingLeft: '5px',
   resize: 'none',
-}));
+  wordWrap: 'break-word',
+  wordBreak: 'break-all',
+}))
 
 export interface Props {
-  value: string;
-  change: React.ChangeEventHandler<{}>;
-  submit: React.MouseEventHandler<{}>;
+  value: string
+  change: React.ChangeEventHandler<{}>
+  submit: React.MouseEventHandler<{}>
 }
 
 export const ChatFooter = ({ value, change, submit }: Props) => (
@@ -51,4 +65,4 @@ export const ChatFooter = ({ value, change, submit }: Props) => (
       placeholder="  Write a message" />
     <SendButton onClick={submit}>Send</SendButton>
   </StyledChatFooter>
-);
+)

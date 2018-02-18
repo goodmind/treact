@@ -1,3 +1,8 @@
+// Type definitions for normalizr 3.2.3
+// Project: https://github.com/paularmstrong/normalizr
+// Definitions by: goodmind <https://github.com/goodmind>
+// Definitions: https://github.com/goodmind/treact
+
 declare module 'normalizr' {
   export namespace schema {
     export type StrategyFunction = (value: any, parent: any, key: string) => any;

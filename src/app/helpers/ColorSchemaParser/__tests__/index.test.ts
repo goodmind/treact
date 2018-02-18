@@ -1,18 +1,18 @@
-import linkedParser, { parser, parseWithDefaults } from '..';
-import Color from '../color-value';
-import { flatten, InputPair, mergeThemes } from '../map-links';
+import linkedParser, { parser, parseWithDefaults } from '..'
+import Color from '../color-value'
+import { flatten, InputPair, mergeThemes } from '../map-links'
 
 test('Parser works correctly', () => {
-  const result = linkedParser(example);
+  const result = linkedParser(example)
 
-  expect(result).toMatchSnapshot();
-});
+  expect(result).toMatchSnapshot()
+})
 
 test('Parser without linking', () => {
-  const result = parser(example);
+  const result = parser(example)
 
-  expect(result).toMatchSnapshot();
-});
+  expect(result).toMatchSnapshot()
+})
 
 test('Should merge InputPair correctly', () => {
   const a: InputPair[] = [
@@ -39,7 +39,7 @@ test('Should merge InputPair correctly', () => {
         'shadowFg',
       ],
     ],
-  ];
+  ]
 
   const b: InputPair[] = [
     [
@@ -53,12 +53,12 @@ test('Should merge InputPair correctly', () => {
         ]),
       ],
     ],
-  ];
+  ]
 
-  const result = mergeThemes([flatten(a), []], [flatten(b), []]);
+  const result = mergeThemes([flatten(a), []], [flatten(b), []])
 
-  expect(result).toMatchSnapshot();
-});
+  expect(result).toMatchSnapshot()
+})
 
 test('Should merge InputPair correctly 2', () => {
   const a: InputPair[] = [
@@ -74,7 +74,7 @@ test('Should merge InputPair correctly 2', () => {
         'shadowFg',
       ],
     ],
-  ];
+  ]
 
   const b: InputPair[] = [
     [
@@ -99,27 +99,27 @@ test('Should merge InputPair correctly 2', () => {
         ]),
       ],
     ],
-  ];
+  ]
 
-  const result = mergeThemes([flatten(a), []], [flatten(b), []]);
+  const result = mergeThemes([flatten(a), []], [flatten(b), []])
 
-  expect(result).toMatchSnapshot();
-});
+  expect(result).toMatchSnapshot()
+})
 
 
 describe('parse with defaults', () => {
 
   test('short example', () => {
-    const withDefaults = parseWithDefaults(parser(example));
-    const result = withDefaults(parser(shortExample));
-    expect(result).toMatchSnapshot();
-  });
+    const withDefaults = parseWithDefaults(parser(example))
+    const result = withDefaults(parser(shortExample))
+    expect(result).toMatchSnapshot()
+  })
 
   test('edge case', () => {
     const shortExample = `
 shadowFg: #00000018;
 callBarUnmuteRipple: #777777;
-`;
+`
 
     // tslint:disable
     const shortDefaults = `

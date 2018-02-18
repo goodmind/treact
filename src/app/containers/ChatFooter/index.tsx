@@ -1,29 +1,29 @@
-import * as React from 'react';
-import { connect } from 'react-redux';
-import { compose, withHandlers, withProps, withState } from 'recompose';
+import * as React from 'react'
+import { connect } from 'react-redux'
+import { compose, withHandlers, withProps, withState } from 'recompose'
 
-import { ChatFooter, Props as ChatFooterProps } from 'components/ChatFooter';
-import { sendText } from 'redux/api/messages';
-import { Dispatch, Store } from 'redux/store.h';
+import { ChatFooter, Props as ChatFooterProps } from 'components/ChatFooter'
+import { sendText } from 'redux/api/messages'
+import { Dispatch, Store } from 'redux/store.h'
 
 type State = {
   message: string,
-};
+}
 
 type ConnectedState = {
   selected: number,
-};
+}
 type ConnectedActions = {
-  sendMessage(id: number, text: string): Promise<void>,
+  sendMessage(id: number, text: string): Promise<{}>,
   setMessage(s: string): string,
   onChange: React.ChangeEventHandler<HTMLInputElement>,
   onSubmit: React.MouseEventHandler<{}>,
-};
-type OwnProps = {};
-type Props = ConnectedState & ConnectedActions & OwnProps & State;
+}
+type OwnProps = {}
+type Props = ConnectedState & ConnectedActions & OwnProps & State
 
 const enhance = compose(
-  connect<ConnectedState, ConnectedActions, OwnProps>(
+  connect<ConnectedState, Pick<ConnectedActions, 'sendMessage'>, OwnProps, Store>(
     (state: Store) => ({ selected: state.selected.dialog }),
     (dispatch: Dispatch) => ({
       sendMessage: (id: number, text: string) => dispatch(sendText(id, text)),
@@ -32,8 +32,8 @@ const enhance = compose(
   withHandlers<Props, {}>({
     onChange: ({ setMessage }) => e => setMessage(e.target.value),
     onSubmit: ({ sendMessage, selected, setMessage, message }) => async () => {
-      await sendMessage(selected, message);
-      setMessage('');
+      await sendMessage(selected, message)
+      setMessage('')
     },
   }),
   withProps<ChatFooterProps, Props>(props => ({
@@ -41,8 +41,8 @@ const enhance = compose(
     change: props.onChange,
     submit: props.onSubmit,
   })),
-);
+)
 
-const connected = enhance(ChatFooter);
+const connected = enhance(ChatFooter)
 
-export { connected as ChatFooter };
+export { connected as ChatFooter }
