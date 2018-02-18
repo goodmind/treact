@@ -33,7 +33,7 @@ type ExtProps = React.HTMLProps<HTMLElement> & {
 
 class InfiniteScroll extends React.Component<Props, {}> {
   private scrollComponent: HTMLElement
-  private pageLoaded: number
+  private pageLoaded: number = 0
   private defaultLoader: Loader
 
   public static defaultProps: Partial<Props> = {
