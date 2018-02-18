@@ -80,23 +80,27 @@ const Time = ({ date }: TimeProps) => {
   )
 }
 
-export const Message = ({ user, date, text, media, own }: OwnProps) => {
-  console.debug(`Message`, user, text, own)
-  return (
-    <StyledMessage>
-      <Body>
-        <Sender>{user}</Sender>
-        <TextBody>
-          <Text>
-            {text}
-            {media && <FullMedia media={media} />}
-          </Text>
-          <Time date={date} />
-        </TextBody>
-      </Body>
-    </StyledMessage>
-  )
-}
-Message.defaultProps = {
-  own: false,
+export class Message extends React.Component<OwnProps> {
+  public render() {
+    const { user, date, text, media, own } = this.props
+    console.debug(`Message`, user, text, own)
+    return (
+      <StyledMessage>
+        <Body>
+          <Sender>{user}</Sender>
+          <TextBody>
+            <Text>
+              {text}
+              {media && <FullMedia media={media} />}
+            </Text>
+            <Time date={date} />
+          </TextBody>
+        </Body>
+      </StyledMessage>
+    )
+  }
+
+  public static defaultProps = {
+    own: false,
+  }
 }
