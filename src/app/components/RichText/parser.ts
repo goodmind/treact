@@ -10,6 +10,8 @@ export interface Entity {
 export type RichText = {
   _: string,
   text: string,
+  url?: string,
+  user_id?: number,
 }
 
 type ParseReducer = (
