@@ -10,6 +10,7 @@ interface Props {
 }
 
 // TODO: better place for this?
+// TODO: use switch
 const transformers: { [key: string]: (props: RichText) => JSX.Element } = {
   messageEntityUnknown    : ({ text }) =>
     <span className="unknown">{text}</span>,
@@ -41,10 +42,10 @@ const transformers: { [key: string]: (props: RichText) => JSX.Element } = {
   messageEntityPre        : ({ text }) =>
     <pre>{text}</pre>,
 
-  messageEntityTextUrl    : ({ text, url }: RichText & { url: string }) =>
+  messageEntityTextUrl    : ({ text, url }) =>
     <a href={url}>{text}</a>,
 
-  messageEntityMentionName: ({ text, user_id }: RichText & { user_id: number }) =>
+  messageEntityMentionName: ({ text, user_id }) =>
     <a href={`#${user_id}`}>{text}</a>,
 
   // Custom entity
