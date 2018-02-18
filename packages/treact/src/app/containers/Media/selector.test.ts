@@ -64,6 +64,11 @@ describe('Memoized media selector', () => {
     const entities1 = entitiesSelector(store1, mediaProps)
     const entities2 = entitiesSelector(store2, mediaProps)
 
+    expect(media1).toMatchSnapshot()
+    expect(media2).toMatchSnapshot()
+    expect(entities1).toMatchSnapshot()
+    expect(entities2).toMatchSnapshot()
+
     expect(entities1).toEqual(entities2)
     expect(media1).toEqual(media2)
   })
