@@ -23,7 +23,7 @@ type OwnProps = {}
 type Props = ConnectedState & ConnectedActions & OwnProps & State
 
 const enhance = compose(
-  connect<ConnectedState, Pick<ConnectedActions, 'sendMessage'>, OwnProps>(
+  connect<ConnectedState, Pick<ConnectedActions, 'sendMessage'>, OwnProps, Store>(
     (state: Store) => ({ selected: state.selected.dialog }),
     (dispatch: Dispatch) => ({
       sendMessage: (id: number, text: string) => dispatch(sendText(id, text)),
