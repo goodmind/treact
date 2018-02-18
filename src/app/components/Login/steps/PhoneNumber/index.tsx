@@ -1,6 +1,5 @@
 import * as React from 'react'
-import { CommonProps } from '../'
-import { Button, Heading, RowFormGroup, Step } from '../'
+import { Button, CommonProps, Heading, RowFormGroup, Step } from '../'
 import * as s from './style.css'
 
 type Props = CommonProps & {
