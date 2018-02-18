@@ -1,6 +1,9 @@
 import { createAction } from 'redux-act'
 import { AuthError } from 'redux/modules/auth'
 
+import { Payload } from 'helpers/reselector.h'
+import { MtpUser } from 'redux/mtproto'
+
 export const actionEvent = <I, D, F>(reduxMessage: string) => ({
   INIT: createAction<I, {}>(`[begin] ${reduxMessage}`),
   DONE: createAction<D, {}>(`[end] ${reduxMessage}`),
@@ -23,7 +26,7 @@ export const UPDATES = {
 }
 
 export const CHATS = {
-  LOAD_SLICE : actionEvent('load slice'),
+  LOAD_SLICE : actionEvent<{}, Payload<MtpUser>, {}>('load slice'),
   GET_DIALOGS: actionEvent('load every dialog slice'),
   SELECT     : createAction('select dialog by id'),
 }
@@ -32,8 +35,4 @@ export const CACHE = {
   QUEUE: createAction('add imgs to download queue'),
   LOAD : createAction<number[], {}>('load next img'),
   DONE : createAction('complete downloading img'),
-}
-
-export const THEME = {
-  APPLY: createAction('apply theme'),
 }
