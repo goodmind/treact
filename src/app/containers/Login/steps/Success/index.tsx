@@ -24,7 +24,6 @@ class SuccessImpl extends React.Component<Props, {}> {
 }
 
 const mapStateToProps = (state: Store) => ({ currentUser: state.currentUser })
-const Success =
-  connect<ConnectedState, ConnectedActions, {}>(mapStateToProps)(SuccessImpl)
+const Success = connect(mapStateToProps)(SuccessImpl)
 
 export { Success }

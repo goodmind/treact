@@ -101,6 +101,6 @@ const mapDispatch = (dispatch: Dispatch) => ({
   click: (id: number) => dispatch(selectChat(id)),
 })
 
-const connected = connect<State, Funcs, Props>(mapState, mapDispatch)(ChatListItemContainer)
+const connected = connect<State, Funcs, Props, Store>(mapState, mapDispatch)(ChatListItemContainer)
 
 export { connected as ChatListItem }
