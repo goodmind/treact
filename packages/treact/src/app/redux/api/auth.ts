@@ -26,7 +26,11 @@ function getPassword() {
   })
   return (dispatch: Dispatch) => {
     dispatch(GET_PASSWORD.INIT())
-    return api('account.getPassword', {}, options)
+    return api<{ current_salt: string }>(
+      'account.getPassword',
+      {},
+      options,
+    )
       .then(onDone, GET_PASSWORD.FAIL)
       // TODO: why promise loses type here?
       // tslint:disable-next-line
@@ -38,7 +42,7 @@ export function checkPassword(password: string) {
   return (dispatch: Dispatch, getState: () => Store) => {
     const { auth } = getState()
     const hash = makePasswordHash(auth.passwordSalt, password)
-    return api('auth.checkPassword', {
+    return api<{ user: MtpUser }>('auth.checkPassword', {
       password_hash: hash,
     }, options).then(addDc)
       .then(SIGN_IN.DONE, SIGN_IN.FAIL)
@@ -56,7 +60,7 @@ export function signIn(phoneCode: string) {
     const catchAndDispatch = pipe(tap(catchNeedPass), err => dispatch(SIGN_IN.FAIL(err)))
     const { auth } = getState()
     dispatch(SIGN_IN.INIT())
-    return api('auth.signIn', {
+    return api<{ user: MtpUser }>('auth.signIn', {
       phone_number: auth.phoneNumber,
       phone_code_hash: auth.phoneCodeHash,
       phone_code: phoneCode,
@@ -76,7 +80,7 @@ export function sendCode(phoneNumber: string) {
   })
   return (dispatch: Dispatch) => {
     dispatch(SEND_CODE.INIT())
-    return api('auth.sendCode', {
+    return api<{ phone_code_hash: string }>('auth.sendCode', {
       phone_number: phoneNumber,
       current_number: false,
       api_id: APP_ID,
