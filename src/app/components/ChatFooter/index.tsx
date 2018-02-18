@@ -21,7 +21,11 @@ const SendButton = styled.button<Themeable>(({ theme }) => ({
   transition: 'all .2s linear',
 }))
 
-function PlainTextarea({ children, ...props }: any) {
+type PlainTextareaProps = React.DetailedHTMLProps<
+  React.TextareaHTMLAttributes<{}>,
+  HTMLDivElement
+>
+function PlainTextarea({ children, ...props }: PlainTextareaProps) {
   return (
     <div contentEditable {...props}>
       {children}
