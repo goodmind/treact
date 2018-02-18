@@ -1,3 +1,4 @@
+import { Effect as _Effect, Event as _Event } from 'effector'
 import * as Redux from 'redux'
 // NOTE: This type coming from redux-thunk module, not from redux itself
 
@@ -51,10 +52,17 @@ export type ThunkAction<R, S, E> = (dispatch: Redux.Dispatch<S>, getState: () =>
 
 export type AsyncAction<R> = ThunkAction<R, Store, undefined>
 
-export type Dispatch = Redux.Dispatch<Store>
+export type Dispatch = {
+  <R>(thunk: AsyncAction<R>): R,
+  <T>(t: T): T,
+}
 
 export type Ids = number[]
 
 export type Reducer<S, P> = (state: S, payload: P) => S
 
 export type ReducerIds<P> = Reducer<Ids, P>
+
+export type Effect<Params, Done, Fail> = _Effect<Params, Done, Fail, Store>
+
+export type Event<Payload> = _Event<Payload, Store>
