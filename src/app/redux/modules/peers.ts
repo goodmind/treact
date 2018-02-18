@@ -30,7 +30,7 @@ const payloadProcess = pipe(
   map(prop('_')),
 )
 
-const peerReducer = (store: StorePeers, payload: Payload<MtpUser>) => {
+const peerReducer = (store: StorePeers, payload: Payload<MtpUser>): StorePeers => {
   const peersMap = payloadProcess(payload)
   const filteredMap = omit(keys(store), peersMap)
   return isEmpty(filteredMap)
@@ -41,7 +41,7 @@ const peerReducer = (store: StorePeers, payload: Payload<MtpUser>) => {
   }, store)
 }
 
-export default createReducer({
+export default createReducer<StorePeers>({
   [LOAD_SLICE.DONE]: peerReducer,
   [GET_DIALOGS.DONE]: peerReducer,
 }, modelDefaults)
