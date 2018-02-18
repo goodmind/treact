@@ -52,6 +52,6 @@ class PasswordImpl extends React.Component<Props, State> {
 
 const mapStateToProps = (state: Store) => ({ auth: state.auth })
 const PasswordContainer =
-  connect<ConnectedState, ConnectedActions, OwnProps>(mapStateToProps)(PasswordImpl)
+  connect<ConnectedState, ConnectedActions, OwnProps, Store>(mapStateToProps)(PasswordImpl)
 
 export { PasswordContainer as Password }

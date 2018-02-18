@@ -108,7 +108,6 @@ export interface StepSkip extends Step {
 }
 
 const mapStateToProps = (state: Store) => ({ auth: state.auth })
-const LoginContainer =
-  connect<ConnectedState, ConnectedActions, OwnProps>(mapStateToProps)(LoginImpl)
+const LoginContainer = connect(mapStateToProps)(LoginImpl)
 
 export { LoginContainer as Login }

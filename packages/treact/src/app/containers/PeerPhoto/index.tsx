@@ -19,11 +19,18 @@ interface OwnProps {
 
 type Props = ConnectedState & OwnProps
 
-const PeerPhotoContainer = ({ photoId, className = '' }: Props) => {
-  const css = classNames('avatar', className)
-  return picStore.has(photoId)
-    ? <PeerPhoto id={photoId} className={css} />
-    : <PeerPhotoEmpty className={css}/>
+class PeerPhotoContainer extends React.Component<Props> {
+  public render() {
+    const { photoId, className } = this.props
+    const css = classNames('avatar', className)
+    return picStore.has(photoId)
+      ? <PeerPhoto id={photoId} className={css} />
+      : <PeerPhotoEmpty className={css}/>
+  }
+
+  public static defaultProps = {
+    className: '',
+  }
 }
 
 
@@ -46,6 +53,6 @@ const propsState = (state: Store, { peerID }: OwnProps) => ({
   photoId: getPhotoId(state, peerID),
 })
 
-const connected = connect<ConnectedState, {}, OwnProps>(propsState)(PeerPhotoContainer)
+const connected = connect(propsState)(PeerPhotoContainer)
 
 export { connected as PeerPhoto }

@@ -24,6 +24,6 @@ class HomeImpl extends React.Component<Props, {}> {
 }
 
 const mapStateToProps = (state: Store) => ({ auth: state.auth })
-const Home = connect<ConnectedState, ConnectedActions, OwnProps>(mapStateToProps)(HomeImpl)
+const Home = connect<ConnectedState, ConnectedActions, OwnProps, Store>(mapStateToProps)(HomeImpl)
 
 export { Home }
