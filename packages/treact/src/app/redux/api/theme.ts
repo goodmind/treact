@@ -1,13 +1,7 @@
-import { THEME } from 'actions'
+import { applyTheme } from 'redux/modules/theme'
 import { Dispatch, Store } from 'redux/store.h'
 import defaultTheme from 'themes/default'
 import nightTheme from 'themes/night'
-import { RawTheme } from 'themes/theme.h'
-const { APPLY } = THEME
-
-export function applyTheme(theme: RawTheme) {
-  return (dispatch: Dispatch) => dispatch(APPLY(theme))
-}
 
 export function switchNightMode() {
   return (dispatch: Dispatch, getState: () => Store) => {
