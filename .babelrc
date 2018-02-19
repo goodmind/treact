@@ -6,5 +6,12 @@
     // "react-hot-loader/babel",
     "dynamic-import-webpack",
     "transform-async-to-generator"
-  ]
+  ],
+  "env": {
+    "development": {
+      "plugins": [
+        "glamorous-displayname"
+      ]
+    }
+  }
 }

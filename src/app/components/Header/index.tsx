@@ -1,20 +1,61 @@
+import styled from 'glamorous';
 import * as React from 'react';
 // TODO: use absolute paths
 import { Link } from '../../../vendor/containers/Link';
-import * as s from './style.css';
 import * as logo from './title-logo.png';
 
 interface Props {
   logOut: React.MouseEventHandler<HTMLAnchorElement>;
 }
 
+// TODO: use flexbox
+
+const StyledHeader = styled.header({
+  backgroundColor: '#6389a8',
+  flex: 1,
+  height: '39px',
+  width: '100%',
+  '& a': {
+    color: '#d4e3ef',
+    cursor: 'default',
+    textDecoration: 'none',
+    float: 'left',
+    fontSize: '13px',
+    fontWeight: 400,
+    height: '39px',
+    lineHeight: '39px',
+    padding: '0 7px',
+    transition: 'all .15s linear',
+    userSelect: 'none',
+    ':hover': {
+      color: '#fff',
+      textDecoration: 'none',
+    },
+    ':active': {
+      marginTop: '1px',
+    },
+  },
+});
+
+const Logo = styled.img({
+  float: 'left',
+  height: '26px',
+  margin: '7px',
+  width: '26px',
+});
+Logo.defaultProps = { src: logo };
+
+const LogoutLink = styled.a({
+  float: 'right',
+});
+
 const Header = ({ logOut }: Props) => (
-  <header className={s.header}>
-    <img className={s.headerIcon} src={logo} />
+  <StyledHeader>
+    <Logo />
     <Link to="/">Home</Link>
     <Link to="login">Login</Link>
-    <a className={s.logout} onClick={logOut}>Logout</a>
-  </header>
+    <LogoutLink onClick={logOut}>Logout</LogoutLink>
+  </StyledHeader>
 );
 
 export { Header };

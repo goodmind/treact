@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { CommonProps } from '../';
-import * as t from '../../style.css';
+import { Button, Heading, RowFormGroup, Step } from '../';
 import * as s from './style.css';
 
 type Props = CommonProps & {
@@ -8,12 +8,12 @@ type Props = CommonProps & {
 };
 
 const PhoneNumber = ({ error, nextStep, change, phoneCode }: Props) => (
-  <div className={t.loginStep}>
-    <h1>Your Phone</h1>
+  <Step>
+    <Heading>Your Phone</Heading>
     <p>
       Please confirm your country code and enter your phone number.
     </p>
-    <div className={`row ${t.formGroupLogin}`}>
+    <RowFormGroup>
       <input
         onChange={change}
         name="phoneCode"
@@ -24,10 +24,10 @@ const PhoneNumber = ({ error, nextStep, change, phoneCode }: Props) => (
         name="phoneNumber"
         className="col-xs-10 form-control form-control-lg"
         placeholder="--- --- -- --" type="tel" />
-    </div>
+    </RowFormGroup>
     {error && <div>Error type: {error.message}</div>}
-    <button onClick={nextStep} className={`${t.btn} ${t.primary}`}>Next</button>
-  </div>
+    <Button onClick={nextStep} primary>Next</Button>
+  </Step>
 );
 
 export { PhoneNumber };

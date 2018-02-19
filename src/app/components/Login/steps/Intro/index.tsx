@@ -1,27 +1,29 @@
 import { StepNext } from 'containers/Login';
 import * as React from 'react';
-import * as t from '../../style.css';
+import { Button, Heading, Step } from '../';
 import * as icon from './icon102.png';
 
 type Props = Pick<StepNext, 'nextStep'>;
 
-const Intro = ({ nextStep }: Props) => {
-  return (
-    <div className={t.loginStep}>
-      <img
-        width={102}
-        height={102}
-        src={icon} />
-      <h1>Telegram Desktop</h1>
-      <p>
-        Welcome to the official <a href="https://telegram.org">Telegram</a> desktop app.
-      </p>
-      <p>
-        It's <strong>fast</strong> and <strong>secure</strong>.
-      </p>
-      <button onClick={nextStep} className={`${t.btn} ${t.primary}`}>Start messaging</button>
-    </div>
-  );
-};
+const Logo = () => (
+  <img
+    width={102}
+    height={102}
+    src={icon} />
+);
+
+const Intro = ({ nextStep }: Props) => (
+  <Step>
+    <Logo />
+    <Heading>Telegram Desktop</Heading>
+    <p>
+      Welcome to the unofficial <a href="https://telegram.org">Telegram</a> web app.
+    </p>
+    <p>
+      It's <strong>fast</strong> and <strong>secure</strong>.
+    </p>
+    <Button onClick={nextStep} primary>Start messaging</Button>
+  </Step>
+);
 
 export { Intro };

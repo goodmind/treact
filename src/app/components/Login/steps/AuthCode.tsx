@@ -1,6 +1,6 @@
 import { FormState } from 'containers/Login';
 import * as React from 'react';
-import * as t from '../style.css';
+import { Button, Heading, RowFormGroup, Step } from './';
 import { CommonProps } from './';
 
 type Props = CommonProps & {
@@ -8,21 +8,21 @@ type Props = CommonProps & {
 };
 
 const AuthCode = ({ form, error, nextStep, change }: Props) => (
-  <div className={t.loginStep}>
-    <h1>{form.phoneNumber}</h1>
+  <Step>
+    <Heading>{form.phoneNumber}</Heading>
     <p>
       Please enter the code you've just received in the previous <strong>Telegram</strong> app.
     </p>
-    <div className={`row center-xs ${t.formGroupLogin}`}>
+    <RowFormGroup className="center-xs">
       <input
         onChange={change}
         name="authCode"
         className="col-xs-4 form-control form-control-lg"
         placeholder="Your code" type="text" maxLength={5} />
-    </div>
+    </RowFormGroup>
     {error && <div>Error type: {error.message}</div>}
-    <button onClick={nextStep} className={`${t.btn} ${t.primary}`}>Next</button>
-  </div>
+    <Button onClick={nextStep} primary>Next</Button>
+  </Step>
 );
 
 export { AuthCode };
