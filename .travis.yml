@@ -8,12 +8,11 @@ cache:
   directories:
   - node_modules
 install:
-  - npm install
+  - lerna bootstrap
 before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
 script:
-  - npm run lint || true
-  - npm run build:vendor
-  - npm run build
-  - npm test
+  - lerna run --scope treact build:vendor
+  - lerna run --scope treact build
+  - lerna run --scope treact test
