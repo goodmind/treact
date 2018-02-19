@@ -26,6 +26,10 @@ declare module '@goodmind/*' {
   export = module;
 }
 
+declare module 'telegram-mtproto/lib/plugins/math-help' {
+  export function getRandomId(): [number, number];
+}
+
 declare module 'telegram-mtproto/lib/bin' {
   export function bufferConcat(b1: ArrayBuffer | Uint8Array | string, b2: ArrayBuffer | Uint8Array | string): ArrayBuffer;
   export function sha256HashSync(b: ArrayBuffer): string;

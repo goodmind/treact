@@ -1,12 +1,146 @@
-import parser from '..';
+import linkedParser, { parser, parseWithDefaults } from '..';
+import Color from '../color-value';
+import { flatten, InputPair, mergeThemes } from '../map-links';
 
 test('Parser works correctly', () => {
+  const result = linkedParser(example);
+
+  expect(result).toMatchSnapshot();
+});
+
+test('Parser without linking', () => {
   const result = parser(example);
 
   expect(result).toMatchSnapshot();
 });
 
+test('Should merge InputPair correctly', () => {
+  const a: InputPair[] = [
+    [
+      'someColor',
+      [
+        new Color([
+          127,
+          127,
+          127,
+          255,
+        ]),
+      ],
+    ],
+    [
+      'callBarUnmuteRipple',
+      [
+        new Color([
+          127,
+          127,
+          127,
+          255,
+        ]),
+        'shadowFg',
+      ],
+    ],
+  ];
+
+  const b: InputPair[] = [
+    [
+      'shadowFg',
+      [
+        new Color([
+          0,
+          0,
+          0,
+          24,
+        ]),
+      ],
+    ],
+  ];
+
+  const result = mergeThemes([flatten(a), []], [flatten(b), []]);
+
+  expect(result).toMatchSnapshot();
+});
+
+test('Should merge InputPair correctly 2', () => {
+  const a: InputPair[] = [
+    [
+      'callBarUnmuteRipple',
+      [
+        new Color([
+          127,
+          127,
+          127,
+          255,
+        ]),
+        'shadowFg',
+      ],
+    ],
+  ];
+
+  const b: InputPair[] = [
+    [
+      'callBarUnmuteRipple',
+      [
+        new Color([
+          128,
+          128,
+          128,
+          255,
+        ]),
+      ],
+    ],
+    [
+      'shadowFg',
+      [
+        new Color([
+          0,
+          0,
+          0,
+          24,
+        ]),
+      ],
+    ],
+  ];
+
+  const result = mergeThemes([flatten(a), []], [flatten(b), []]);
+
+  expect(result).toMatchSnapshot();
+});
+
+
+describe('parse with defaults', () => {
+
+  test('short example', () => {
+    const withDefaults = parseWithDefaults(parser(example));
+    const result = withDefaults(parser(shortExample));
+    expect(result).toMatchSnapshot();
+  });
+
+  test('edge case', () => {
+    const shortExample = `
+shadowFg: #00000018;
+callBarUnmuteRipple: #777777;
+`;
+
+    // tslint:disable
+    const shortDefaults = `
+importantTooltipBg: #ffffff | shadowFg;
+callBarUnmuteRipple: #ffffff | shadowFg;
+`;
+    const withDefaults = parseWithDefaults(parser(shortDefaults));
+    const result = withDefaults(parser(shortExample));
+    expect(result).toMatchSnapshot();
+  })
+
+});
+
+
 // tslint:disable
+const shortExample = `
+importantTooltipBg: #ffffff;
+callBarUnmuteRipple: #ffffff;
+callBarBgMuted: toastBg;
+`
+
 const example = `
 /*
 This file is part of Telegram Desktop,

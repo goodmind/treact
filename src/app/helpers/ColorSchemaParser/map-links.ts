@@ -1,106 +1,191 @@
 import {
   append,
-  chain,
+  filter,
   fromPairs,
-  lensProp,
   map,
-  over,
+  mergeAll,
+  mergeWith,
+  of,
+  partition,
   pipe,
-  toPairs,
+  uniqBy,
+  values,
 } from 'ramda';
 
 import Color from './color-value';
+import parser from './parser';
 
-type ColorRef = [string, number];
-type ColorLink = [string, number, number];
-type InputPair = [string, Array<Color | string>];
-type IndexMap = {[field: string]: number};
+export type InputPair = [string, Array<Color | string>];
 
+const intoArrays = mergeWith((c1: Color[], c2: Color[]) => c1.concat(c2));
+const arrifyProps: (x: {[name: string]: Color}) => {[name: string]: Color[]} =
+  map(of);
 
-const createNamesMap: (list: InputPair[]) => {[name: string]: ColorRef[]} =
-pipe(
-  map(([name]: InputPair) => name),
-  map((name: string): [string, ColorRef[]] => [name, []]),
-  fromPairs,
-);
+const splitFallbacks: (colors: ColorValue[]) => [ColorValue[], ColorValue[]] =
+  partition(val => !val.isFallback);
 
-const addToNameMap = (
-  name: string,
-  index: number,
-  ref: string,
-  namesMap: {[name: string]: ColorRef[]},
-): {[name: string]: ColorRef[]} =>
-  over(lensProp(ref), append([name, index]), namesMap);
+const inputToColorPair: (list: InputPair[]) => [ColorValue[], ColorValue[]] =
+  pipe(flatten, splitFallbacks);
 
-type ReducerAcc = {
-  colorList: Color[],
-  namesMap: {[name: string]: ColorRef[]},
-  results: ColorLink[],
-};
+const makePendings = (list: ColorValue[]) => ({
+  pending: list.filter(val => !val.isColor),
+  colorMap: makeColorMap(list),
+});
 
-function colorReducer(
-  { colorList, namesMap, results }: ReducerAcc,
-  [name, color, index]: [string, Color | string, number],
-) {
-  if (typeof color === 'string')
-    return {
-      colorList,
-      namesMap: addToNameMap(name, index, color, namesMap),
-      results,
-    };
+export function processing([mainColors, defaults]: [ColorValue[], ColorValue[]]) {
+  let firsts = makePendings(mainColors);
+  let fallbacks = makePendings(defaults);
+  while (firsts.pending.length > 0 || fallbacks.pending.length > 0) {
+    const iteration = resolveLoop(
+      firsts.pending, fallbacks.pending,
+      firsts.colorMap, fallbacks.colorMap,
+    );
+    const uselessIteration =  // Prevents infinite loop
+      iteration.firsts.pending.length === firsts.pending.length &&
+      iteration.fallbacks.pending.length === fallbacks.pending.length;
+    if (uselessIteration) break;
+    firsts = iteration.firsts;
+    fallbacks = iteration.fallbacks;
+  }
   return {
-    colorList: append(color, colorList),
-    namesMap,
-    results: append([name, index, colorList.length], results),
+    main: firsts.colorMap,
+    fallbacks: fallbacks.colorMap,
   };
 }
 
-function colorsReducer(
-  acc: ReducerAcc,
-  [name, colors]: InputPair) {
-  return colors
-    .map((color, index) => [name, color, index])
-    .reduce(colorReducer, acc);
+const uniqColor = uniqBy((color: ColorValue) => color.name);
+const join = (listR: ColorValue[]) => (listL: ColorValue[]) => uniqColor(listL.concat(listR));
+
+export type ThemePair = [ColorValue[], ColorValue[]];
+
+export function mergeThemes(
+  [leftMain, leftFallbacks = []]: ThemePair,
+  [rightMain, rightFallbacks = []]: ThemePair,
+) {
+  const { main, fallbacks } = processing([
+    join(rightMain)(leftMain),
+    join(rightFallbacks)(leftFallbacks),
+  ]);
+  return Object.assign({}, fallbacks, main);
 }
 
-const converter = (field: string, refMap: IndexMap) =>
-  ([name, index]: ColorRef): ColorLink  => [name, index, refMap[field]];
+export function parseWithDefaults(defaultThemePairs: InputPair[]) {
+  const defaultTheme = inputToColorPair(defaultThemePairs);
+  return (themePairs: InputPair[]) => {
+    const theme = inputToColorPair(themePairs);
+    return mergeThemes(theme, [[], defaultTheme[1]]);
+  };
+}
 
-function joinResults(results: ColorLink[], linked: ColorLink[], colorList: Color[]) {
-  return results
-    .concat(linked)
-    .reduce(reducer, {});
+export const processingToObject = pipe(
+  inputToColorPair,
+  processing,
+  values,
+  mergeAll,
+);
 
-  function reducer(acc: {[key: string]: Color[]}, [name, index, ref]: ColorLink) {
-    if (!colorList[ref])
-      return acc;
-    if (!acc[name])
-      acc[name] = [];
-    acc[name][index] = colorList[ref];
-    return acc;
+function processingToPairs(list: InputPair[]) {
+  const { main, fallbacks } = processing(inputToColorPair(list));
+  return intoArrays(
+    arrifyProps(main),
+    arrifyProps(fallbacks),
+  );
+}
+
+export default pipe(parser, processingToPairs);
+
+const loopAcc = { found: [], notFound: [] };
+
+function resolveLoop(
+  pending: ColorValue[],
+  pendingS: ColorValue[],
+  colorMap: {[name: string]: Color},
+  colorMapS: {[name: string]: Color},
+) {
+  const resolver = resolve(
+    reduceColorMap(colorMap, colorMapS),
+    getFound(colorMap, colorMapS),
+  );
+  return {
+    firsts: resolver(pending, colorMap),
+    fallbacks: resolver(pendingS, colorMapS),
+  };
+}
+
+const resolve = (reducer, getter) => (pending, colorMap) => {
+  const step =  pending.reduce(reducer, loopAcc);
+  const foundMap = fromPairs(step.found.map(getter));
+  const resultMap = Object.assign({}, colorMap, foundMap);
+  return {
+    pending: step.notFound,
+    colorMap: resultMap,
+  };
+};
+
+const getFound = (
+  colorMap: {[name: string]: Color},
+  colorMapS: {[name: string]: Color},
+) => (val: ColorValue) => {
+  const name = val.name;
+  const value = val.value as string;
+  return [name, colorMap[value] || colorMapS[value]];
+};
+
+class ColorValue {
+  public isColor: boolean;
+  constructor(
+    public name: string,
+    public value: Color | string,
+    public isFallback: boolean = false,
+  ) {
+    this.isColor = value instanceof Color;
   }
 }
 
-function createRefMap(results: ColorLink[]) {
-  const refPairs = results
-    .filter(([_, index]) => index === 0)
-    .map(([name, _, position]): ColorRef => [name, position]);
-
-  return fromPairs<number>(refPairs);
+export function flatten(list: InputPair[]) {
+  const result: ColorValue[] = [];
+  for (const [name, pair] of list) {
+    switch (pair.length) {
+      case 1: {
+        result.push(new ColorValue(name, pair[0]));
+        break;
+      }
+      case 2: {
+        result.push(new ColorValue(name, pair[0]));
+        result.push(new ColorValue(name, pair[1], true));
+        break;
+      }
+      default: throw new RangeError(`Unexpected array ${pair.toString()}`);
+    }
+  }
+  return result;
 }
 
-function resolveLinks({ colorList, namesMap, results }: ReducerAcc): {[name: string]: Color[]} {
-  const namePairs = toPairs(namesMap);
-  const refMap = createRefMap(results);
+const makeColorMap: (list: ColorValue[]) => {[name: string]: Color} =
+  pipe(
+    filter(val => val.isColor),
+    map((val): [string, Color] => [val.name, val.value as Color]),
+    fromPairs,
+  );
 
-  const linker = ([field, links]: [string, ColorRef[]]) => links.map(converter(field, refMap));
-  const linked: ColorLink[]  = chain<[string, ColorRef[]], ColorLink>(linker, namePairs);
-  return joinResults(results, linked, colorList);
-}
+type SearchReduceAcc = {
+  found: ColorValue[],
+  notFound: ColorValue[],
+};
 
-export default function processing(list: InputPair[]) {
-  const namesMap = createNamesMap(list);
-  const initialAcc = { colorList: [], namesMap, results: [] };
-  const result = list.reduce(colorsReducer, initialAcc);
-  return resolveLinks(result);
-}
+const reduceColorMap = (
+  colorMap: {[name: string]: Color},
+  colorMapS: {[name: string]: Color},
+) =>
+  ({ found, notFound }: SearchReduceAcc, value: ColorValue) => {
+  const data = value.value as string;
+  if (colorMap[data] || colorMapS[data])
+    return {
+      notFound,
+      found: append(value, found),
+    };
+  return {
+    notFound: append(value, notFound),
+    found,
+  };
+};

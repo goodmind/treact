@@ -12,6 +12,7 @@ import messages from './modules/messages';
 import peers from './modules/peers';
 import photos from './modules/photos';
 import selected from './modules/selected';
+import theme from './modules/theme';
 import users from './modules/users';
 import { Store } from './store.h';
 
@@ -31,6 +32,7 @@ const rootReducer = combineReducers<Store>({
   messages,
   files,
   photos,
+  theme,
 });
 
 export default rootReducer;

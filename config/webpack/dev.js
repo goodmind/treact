@@ -50,7 +50,8 @@ const config = {
       }
     }),
     new ForkTsCheckerWebpackPlugin({
-      tsconfig: resolve(process.cwd(), 'tsconfig.json')
+      tsconfig: resolve(process.cwd(), 'tsconfig.json'),
+      memoryLimit: 4096,
     }),
     // new BundleAnalyzerPlugin(),
     // new webpack.optimize.CommonsChunkPlugin({

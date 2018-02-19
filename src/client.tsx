@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import { persistStore } from 'redux-persist';
 import { configureStore } from 'redux/store';
 import routes, { resolveRoute } from 'routes';
+import UserSelectedTheme from 'themes/UserSelectedTheme';
 import UniversalRouter from 'universal-router';
 // TODO: use absolute paths
 import history from './history';
@@ -19,7 +20,9 @@ const renderComponent = (Component: JSX.Element | null) => {
   return ReactDOM.render((
     <AppContainer>
       <Provider store={store} key="provider">
-        {Component}
+        <UserSelectedTheme>
+          {Component}
+        </UserSelectedTheme>
       </Provider>
     </AppContainer>
   ), document.getElementById('app'));
@@ -31,7 +34,12 @@ const init = () => {
   history.listen(onHistory);
   renderComponent(<div>Loading...</div>);
   persistStore(store,
-    {whitelist: ['authKey', 'currentUser', 'currentDc']}, onPersist);
+    {whitelist: [
+      'authKey',
+      'currentUser',
+      'currentDc',
+      'selected',
+    ]}, onPersist);
 
   console.log(history.location);
 };

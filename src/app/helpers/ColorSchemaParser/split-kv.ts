@@ -18,11 +18,11 @@ const checkString: StringPred = both(
   str => str.length > 0,
 );
 
-const process = pipe(
+const process: (x: string[]) => string[][] = pipe(
   filter(contains(':')),
   map(split(':')),
-  map(map(trim)),
-  filter(all(checkString)),
+  map<string[], string[]>(map(trim)),
+  filter<string[]>(all(checkString)),
 );
 
 export default process;

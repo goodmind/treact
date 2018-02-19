@@ -6,24 +6,25 @@ export { Password } from './Password';
 import { StepNext } from 'containers/Login';
 import styled from 'glamorous';
 import { AuthError } from 'redux/modules/auth';
+import { Themeable } from 'themes/theme.h';
 
 export const Step = styled.div({
   textAlign: 'center',
   width: '300px',
 });
 
-export const Heading = styled.h1({
+export const Heading = styled.h1(({ theme }) => ({
+  color: theme.introTitleFg,
   fontWeight: 400,
-});
+}));
 
-type ButtonProps = { primary?: boolean };
-export const Button = styled.button<ButtonProps>({
+type ButtonProps = { primary?: boolean } & Themeable;
+export const Button = styled.button<ButtonProps>(({ theme }) => ({
   border: 'none',
   outline: 'none',
   cursor: 'pointer',
   backgroundColor: '#ccc',
   lineHeight: '54px',
-  color: '#fff',
   padding: '1px 75px',
   width: '100%',
   borderRadius: '3px',
@@ -34,10 +35,12 @@ export const Button = styled.button<ButtonProps>({
     paddingTop: '2px',
     paddingBottom: '0px',
   },
-}, props => props.primary ? {
-  backgroundColor: '#2fa9e2',
+}), ({ primary, theme }) => primary ? {
+  backgroundColor: theme.activeButtonBg,
+  color: theme.activeButtonFg,
   ':hover': {
-    backgroundColor: '#279ad0',
+    color: theme.activeButtonFgOver,
+    backgroundColor: theme.activeButtonBgOver,
   },
 } : {});
 

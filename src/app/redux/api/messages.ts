@@ -2,7 +2,7 @@ import { getInputPeerById, getOutputPeer } from 'helpers/Telegram/Peers';
 import { api } from 'helpers/Telegram/pool';
 import { normalize, schema } from 'normalizr';
 import { pick } from 'ramda';
-import { bigint, nextRandomInt } from 'telegram-mtproto/lib/bin';
+import { getRandomId } from 'telegram-mtproto/lib/plugins/math-help';
 import { tsNow } from 'telegram-mtproto/lib/service/time-manager';
 
 import { Dispatch, Store } from 'redux/store.h';
@@ -23,11 +23,10 @@ type Flags = {
 const buildMessage =
   // TODO: generate types from TL
   // tslint:disable-next-line
-  (id: number, text: string, randomId: number[], self: /*peerUser*/any, outputPeer: /*peer*/any) =>
+  (id: number, text: string, self: /*peerUser*/any, outputPeer: /*peer*/any) =>
     // tslint:disable-next-line
     (message: any) => {
   const messageId = tempId--;
-  const randomIds = bigint(randomId[0]).shiftLeft(32).add(bigint(randomId[1])).toString();
   const fromID = self.id;
   const pFlags: Flags = {};
   let flags = 0;
@@ -46,7 +45,6 @@ const buildMessage =
     ...pFlags,
     date: tsNow(true),
     message: text,
-    random_id: randomIds,
     pending: true, ...(message._ === 'updateShortSentMessage'
     ? pick(['flags', 'date', 'id', 'media', 'entities'], message)
     : {})};
@@ -64,7 +62,7 @@ export function sendText(id: number, text: string) {
     const state = getState();
     const inputPeer = dispatch(getInputPeerById(id));
     const outputPeer = dispatch(getOutputPeer(id));
-    const randomId = [nextRandomInt(0xFFFFFFFF), nextRandomInt(0xFFFFFFFF)];
+    const randomId = getRandomId();
 
     dispatch(SEND_TEXT.INIT());
     return api('messages.sendMessage', {
@@ -72,7 +70,7 @@ export function sendText(id: number, text: string) {
       message: text,
       random_id: randomId,
     })
-      .then(buildMessage(id, text, randomId, state.currentUser, outputPeer))
+      .then(buildMessage(id, text, state.currentUser, outputPeer))
       .then(SEND_TEXT.DONE, SEND_TEXT.FAIL)
       // TODO: why promise loses type here?
       // tslint:disable-next-line

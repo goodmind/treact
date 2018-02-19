@@ -2,13 +2,13 @@
 
 exports[`ChatList renders correctly 1`] = `
 <div
-  className="chatlist"
+  className="css-i95908"
 >
   <div
     className="css-c5c4qt"
   >
     <input
-      className="css-1816i7f"
+      className="css-wdr6gu"
       placeholder="Search"
       type="text"
     />
@@ -17,10 +17,10 @@ exports[`ChatList renders correctly 1`] = `
     />
   </div>
   <div
-    className="chatbody"
+    className="css-73if51"
   >
     <div
-      className="box"
+      className="css-lj1hy9"
     >
       Hello, world!
     </div>

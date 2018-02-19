@@ -6,6 +6,7 @@ import * as logo from './title-logo.png';
 
 interface Props {
   logOut: React.MouseEventHandler<HTMLAnchorElement>;
+  switchNightMode(): void;
 }
 
 // TODO: use flexbox
@@ -49,12 +50,13 @@ const LogoutLink = styled.a({
   float: 'right',
 });
 
-const Header = ({ logOut }: Props) => (
+const Header = ({ logOut, switchNightMode }: Props) => (
   <StyledHeader>
     <Logo />
     <Link to="/">Home</Link>
     <Link to="login">Login</Link>
     <LogoutLink onClick={logOut}>Logout</LogoutLink>
+    <a onClick={switchNightMode}>Night Mode</a>
   </StyledHeader>
 );
 

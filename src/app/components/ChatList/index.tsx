@@ -1,41 +1,64 @@
-import { ChatListSearch, InfiniteScroll } from 'components';
+import { ChatListSearch } from 'components';
+import { InfiniteScroll } from 'components/InfiniteScroll';
+import styled from 'glamorous';
 import * as React from 'react';
-import * as style from './style.css';
+
+const StyledChatList = styled.div(({ theme }) => ({
+  backgroundColor: theme.dialogsBg,
+  flex: 35,
+  minWidth: '260px',
+}));
+
+const Loader = styled.div({
+  color: '#767676',
+  fontSize: '14px',
+  marginTop: '45px',
+  textAlign: 'center',
+});
+
+const ChatBody = styled.div({
+  display: 'flex',
+  flex: 1,
+  height: '92%', /* TODO: remove this hack */
+  overflowY: 'auto',
+});
+
+const StyledInfiniteScroll = styled(InfiniteScroll)({
+  width: '100%',
+  minHeight: 'min-content',
+  display: 'flex',
+  flexDirection: 'column',
+  flex: 1,
+});
 
 interface Props {
   loading: boolean;
   hasMore: boolean;
   loadMore: () => void;
+  children?: React.ReactNode;
 }
 
 const LoadingPane = () => (
-  <div className={style.chatlist}>
-    <div className={style.loading}>Loading...</div>
-  </div>
+  <StyledChatList>
+    <Loader>Loading...</Loader>
+  </StyledChatList>
 );
 
-class ChatList extends React.Component<Props, {}> {
-  public render() {
-    const { children, loadMore, hasMore } = this.props;
-
-    return (
-      <div className={style.chatlist}>
-        <ChatListSearch />
-        <div className={style.chatbody}>
-          <InfiniteScroll
-            className={style.box}
-            pageStart={0}
-            loadMore={loadMore}
-            initialLoad={false}
-            hasMore={hasMore}
-            loader={<LoadingPane />}
-            useWindow={false}>
-            {children}
-          </InfiniteScroll>
-        </div>
-      </div>
-    );
-  }
-}
+const ChatList = ({ children, loadMore, hasMore }: Props) => (
+  <StyledChatList>
+    <ChatListSearch />
+    <ChatBody>
+      <StyledInfiniteScroll
+        pageStart={0}
+        loadMore={loadMore}
+        initialLoad={false}
+        hasMore={hasMore}
+        loader={<LoadingPane />}
+        useWindow={false}>
+        {children}
+      </StyledInfiniteScroll>
+    </ChatBody>
+  </StyledChatList>
+);
 
 export { ChatList };
