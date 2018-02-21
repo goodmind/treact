@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "lib",
+    "declaration": true,
+    "module": "esnext",
+    "target": "es2015",
+    "pretty": true,
+    "sourceMap": true,
+    "inlineSourceMap": false,
+    "inlineSources": false,
+    "experimentalDecorators": true,
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "strict": true,
+    "moduleResolution": "node",
+    "lib": [
+      "es2015",
+      "dom"
+    ]
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

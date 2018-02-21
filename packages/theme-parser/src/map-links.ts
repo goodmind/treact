@@ -131,7 +131,7 @@ const getFound = (
   return [name, colorMap[value] || colorMapS[value]]
 }
 
-class ColorValue {
+export class ColorValue {
   public isColor: boolean
   constructor(
     public name: string,
