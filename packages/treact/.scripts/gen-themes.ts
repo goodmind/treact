@@ -1,7 +1,7 @@
 #!/usr/bin/env ./node_modules/.bin/ts-node --project .scripts
 
+import { Color, InputPair, parser } from '@treact/theme-parser'
 import { map, pipe } from 'ramda'
-import { parser, Color, InputPair } from '@treact/theme-parser'
 
 import generate from 'babel-generator'
 import * as template from 'babel-template'
