@@ -2,6 +2,7 @@
   "name": "@treact/theme-parser",
   "version": "0.1.0",
   "description": "Telegram Desktop theme parser",
+  "typings": "lib/index.d.ts",
   "main": "lib/index.js",
   "publishConfig": {
     "access": "public"
