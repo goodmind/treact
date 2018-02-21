@@ -1,5 +1,4 @@
-import Color from 'helpers/ColorSchemaParser/color-value'
-import { InputPair } from 'helpers/ColorSchemaParser/map-links'
+import { Color, InputPair } from '@treact/theme-parser';
 
 const pairs: InputPair[] = [
   ['windowBg', [new Color([40, 46, 51, 255])]],
@@ -341,7 +340,7 @@ const pairs: InputPair[] = [
   ['toastBg', [new Color([0, 0, 0, 178])]],
   ['toastFg', ['windowFgActive']],
   ['reportSpamBg', [new Color([54, 60, 66, 255])]],
-  ['reportSpamFg', [new Color([60, 66, 72, 255])]],
+  ['reportSpamFg', ['windowFg']],
   ['historyToDownBg', [new Color([67, 77, 87, 255])]],
   ['historyToDownBgOver', [new Color([81, 91, 101, 255])]],
   ['historyToDownBgRipple', [new Color([99, 109, 119, 255])]],
@@ -447,7 +446,7 @@ const pairs: InputPair[] = [
   ['emojiIconFg', [new Color([108, 114, 120, 255])]],
   ['emojiIconFgActive', [new Color([54, 205, 185, 255])]],
   ['overviewCheckBorder', [new Color([228, 234, 239, 255])]],
-]
+];
 
 export default {
   meta: {
@@ -457,4 +456,4 @@ export default {
   },
 
   pairs,
-}
+};

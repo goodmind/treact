@@ -1,5 +1,4 @@
-import Color from 'helpers/ColorSchemaParser/color-value'
-import { InputPair } from 'helpers/ColorSchemaParser/map-links'
+import { Color, InputPair } from '@treact/theme-parser';
 
 const pairs: InputPair[] = [
   ['windowBg', [new Color([255, 255, 255, 255])]],
@@ -248,6 +247,7 @@ const pairs: InputPair[] = [
   ['historyPeer8NameFgSelected', ['historyPeer8NameFg']],
   ['historyPeer8UserpicBg', [new Color([250, 167, 116, 255])]],
   ['historyPeerUserpicFg', ['windowFgActive']],
+  ['historyPeerSavedMessagesBg', ['historyPeer4UserpicBg']],
   ['historyScrollBarBg', [new Color([81, 124, 65, 122])]],
   ['historyScrollBarBgOver', [new Color([81, 124, 65, 188])]],
   ['historyScrollBg', [new Color([81, 124, 65, 76])]],
@@ -467,7 +467,7 @@ const pairs: InputPair[] = [
   ['importantTooltipBg', ['toastBg']],
   ['importantTooltipFg', ['toastFg']],
   ['importantTooltipFgLink', ['mediaviewTextLinkFg']],
-]
+];
 
 export default {
   meta: {
@@ -476,4 +476,4 @@ export default {
   },
 
   pairs,
-}
+};

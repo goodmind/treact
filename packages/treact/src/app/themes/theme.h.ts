@@ -1,4 +1,4 @@
-import { InputPair } from 'helpers/ColorSchemaParser/map-links'
+import { InputPair } from '@treact/theme-parser'
 export interface Theme {
   backgroundImage: string
 
