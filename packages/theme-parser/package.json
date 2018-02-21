@@ -57,5 +57,8 @@
   "license": "MIT",
   "dependencies": {
     "ramda": "^0.25.0"
+  },
+  "devDependencies": {
+    "typescript": "^2.7.2"
   }
 }
