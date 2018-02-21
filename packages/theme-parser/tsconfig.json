@@ -19,6 +19,9 @@
       "dom"
     ]
   },
+  "include": [
+    "../../types/ramda.d.ts"
+  ],
   "exclude": [
     "node_modules",
     "lib"
