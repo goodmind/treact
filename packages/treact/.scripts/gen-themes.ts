@@ -1,14 +1,13 @@
 #!/usr/bin/env ./node_modules/.bin/ts-node --project .scripts
-import { map, pipe } from 'ramda';
-import { parser } from '../src/app/helpers/ColorSchemaParser';
-import Color from '../src/app/helpers/ColorSchemaParser/color-value';
-import { InputPair } from '../src/app/helpers/ColorSchemaParser/map-links';
 
-import generate from 'babel-generator';
-import * as template from 'babel-template';
-import * as t from 'babel-types';
-import * as getStdin from 'get-stdin';
-import * as recast from 'recast';
+import { map, pipe } from 'ramda'
+import { parser, Color, InputPair } from '@treact/theme-parser'
+
+import generate from 'babel-generator'
+import * as template from 'babel-template'
+import * as t from 'babel-types'
+import * as getStdin from 'get-stdin'
+import * as recast from 'recast'
 
 const createThemePairs = pipe(
   parser,
@@ -26,12 +25,11 @@ const createThemePairs = pipe(
       : t.stringLiteral(c))),
   ])),
   t.arrayExpression,
-);
+)
 
 export const parse = (code: string, meta, background: string = './background.jpg') => {
   const build = template(`
-  import Color from 'helpers/ColorSchemaParser/color-value';
-  import { InputPair } from 'helpers/ColorSchemaParser/map-links';
+  import { Color, InputPair } from '@treact/theme-parser';
   const pairs: InputPair[] = THEME;
   export default {
     meta: META,
@@ -40,7 +38,7 @@ export const parse = (code: string, meta, background: string = './background.jpg
   `, {
     sourceType: 'module',
     plugins: ['flow'],
-  });
+  })
 
   const sourceFile = t.program(build({
     THEME: createThemePairs(code),
@@ -52,19 +50,19 @@ export const parse = (code: string, meta, background: string = './background.jpg
       ),
       ...meta,
     ]),
-  }));
+  }))
 
   const file = recast.prettyPrint(sourceFile, {
     tabWidth: 2,
     quote: 'single',
     trailingComma: true,
-  });
+  })
 
-  return `${file.code}\n`;
-};
+  return `${file.code}\n`
+}
 
 if (require.main === module) {
   getStdin().then(str => {
-    console.log(parse(str, []));
-  });
+    console.log(parse(str, []))
+  })
 }
