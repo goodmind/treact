@@ -89,7 +89,7 @@ const unifiedConfig = {
     modules: [
       source,
       'app',
-      'redux',
+      'store',
       'node_modules',
     ],
   },
