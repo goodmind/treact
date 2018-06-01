@@ -20,7 +20,8 @@
     ]
   },
   "include": [
-    "../../types/ramda.d.ts"
+    "../../types/ramda.d.ts",
+    "src"
   ],
   "exclude": [
     "node_modules",

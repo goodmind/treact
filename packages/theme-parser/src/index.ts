@@ -1,5 +1,5 @@
 
-export { parseWithDefaults } from './map-links'
+export { parseWithDefaults, processingToObject } from './map-links'
 export { parser } from './parser'
 export { default as Color } from './color-value'
 export { InputPair } from './map-links'
