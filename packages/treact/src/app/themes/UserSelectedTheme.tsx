@@ -1,8 +1,8 @@
+import { parseWithDefaults, processingToObject } from '@treact/theme-parser'
 import { ThemeProvider } from 'glamorous'
-import { parseWithDefaults, processingToObject } from 'helpers/ColorSchemaParser/map-links'
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { Store } from 'redux/store.h'
+import { Store } from 'store/store.h'
 import defaultTheme from './default'
 import { RawTheme, Theme } from './theme.h'
 
