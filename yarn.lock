@@ -3582,13 +3582,14 @@ ee-first@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
 
-effector@^0.12.1:
-  version "0.12.1"
-  resolved "https://registry.yarnpkg.com/effector/-/effector-0.12.1.tgz#2095e98b40482755f4cbe30b5d7923661aae15e0"
+effector@^0.17.5:
+  version "0.17.5"
+  resolved "https://registry.yarnpkg.com/effector/-/effector-0.17.5.tgz#55b32999905c3395ec2deea455be226cc7f8e4e4"
   dependencies:
+    invariant "^2.2.4"
     most "^1.7.3"
-    most-subject "5.3.0"
     symbol-observable "^1.2.0"
+    warning "^3.0.0"
 
 ejs@^2.5.7:
   version "2.5.8"
@@ -5174,7 +5175,7 @@ interpret@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.1.0.tgz#7ed1b1410c6a0e0f78cf95d3b8440c63f78b8614"
 
-invariant@^2.0.0, invariant@^2.2.0, invariant@^2.2.1, invariant@^2.2.2:
+invariant@^2.0.0, invariant@^2.2.0, invariant@^2.2.1, invariant@^2.2.2, invariant@^2.2.4:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
   dependencies:
@@ -7103,7 +7104,7 @@ morgan@^1.8.1, morgan@^1.9.0:
     on-finished "~2.3.0"
     on-headers "~1.0.1"
 
-most-subject@5.3.0, most-subject@^5.3.0:
+most-subject@^5.3.0:
   version "5.3.0"
   resolved "https://registry.yarnpkg.com/most-subject/-/most-subject-5.3.0.tgz#3a6e3efd436fa93bd8b33c2a239c9088230a6102"
   dependencies:
