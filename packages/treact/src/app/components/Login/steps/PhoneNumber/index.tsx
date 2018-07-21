@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Button, CommonProps, Heading, RowFormGroup, Step } from '../'
-import * as s from './style.css'
+import * as s from './style'
 
 type Props = CommonProps & {
   phoneCode: string,
