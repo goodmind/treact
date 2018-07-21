@@ -7,11 +7,11 @@ import { MessageGroup } from 'components/MessageGroup'
 import { Entity, RichText } from 'components/RichText'
 import { getPeerData, getPeerName } from 'helpers/Telegram/Peers'
 import { eqProps, groupWith, pipe, props } from 'ramda'
-import { loadOffset } from 'redux/api/chatList'
-import { TPeersType } from 'redux/modules/peers'
-import { MtpChat, MtpMessage, MtpUser } from 'redux/mtproto'
-import { Dispatch, Store } from 'redux/store.h'
 import { createSelector } from 'reselect'
+import { loadOffset } from 'store/api/chatList'
+import { TPeersType } from 'store/modules/peers'
+import { MtpChat, MtpMessage, MtpUser } from 'store/mtproto'
+import { Dispatch, Store } from 'store/store.h'
 
 /*const onChatSelect = async (currentId: number, nextId: number) => {
   if (nextId && nextId !== currentId) {
