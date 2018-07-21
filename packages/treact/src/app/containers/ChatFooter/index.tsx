@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 import { compose, withHandlers, withProps, withState } from 'recompose'
 
 import { ChatFooter, Props as ChatFooterProps } from 'components/ChatFooter'
-import { sendText } from 'redux/api/messages'
-import { Dispatch, Store } from 'redux/store.h'
+import { sendText } from 'store/api/messages'
+import { Dispatch, Store } from 'store/store.h'
 
 type State = {
   message: string,
