@@ -5,7 +5,7 @@ export { Password } from './Password'
 
 import { StepNext } from 'containers/Login'
 import styled from 'glamorous'
-import { AuthError } from 'redux/modules/auth'
+import { AuthError } from 'store/modules/auth'
 import { Themeable } from 'themes/theme.h'
 
 export const Step = styled.div({
