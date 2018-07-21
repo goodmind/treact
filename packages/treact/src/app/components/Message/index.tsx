@@ -1,10 +1,12 @@
+import { Time as FormattedTime } from 'components/Time'
 import { FullMedia } from 'containers/Media'
+import { PeerName } from 'containers/PeerName'
 import styled from 'glamorous'
 import * as React from 'react'
-import { MtpMessageMedia } from 'redux/mtproto'
+import { MtpMessageMedia } from 'store/mtproto'
 import { Themeable } from 'themes/theme.h'
 
-const StyledTime = styled.div<Themeable>(({ theme }) => ({
+const Time = styled(FormattedTime)<Themeable>(({ theme }) => ({
   marginLeft: '13px',
   marginTop: '4px',
   whiteSpace: 'nowrap',
@@ -70,16 +72,6 @@ const formatTime = (date: number) => {
   }
 }
 
-type TimeProps = { date: number }
-const Time = ({ date }: TimeProps) => {
-  const { timeString } = formatTime(date)
-  return (
-    <StyledTime>
-      <span>{timeString}</span>
-    </StyledTime>
-  )
-}
-
 export class Message extends React.Component<OwnProps> {
   public render() {
     const { user, date, text, media, own } = this.props
@@ -87,7 +79,9 @@ export class Message extends React.Component<OwnProps> {
     return (
       <StyledMessage>
         <Body>
-          <Sender>{user}</Sender>
+          <Sender>
+            <PeerName id={user} />
+          </Sender>
           <TextBody>
             <Text>
               {text}
