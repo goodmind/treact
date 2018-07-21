@@ -79,6 +79,7 @@ const rules = [
 ]
 
 const unifiedConfig = {
+  mode: isProd ? 'production' : 'development',
   node: {
     fs: 'empty',
     net: 'empty',
@@ -99,6 +100,7 @@ const unifiedConfig = {
     publicPath: '/',
     filename: 'bundle.js',
     pathinfo: true,
+    globalObject: 'self',
   },
 
   module: {
