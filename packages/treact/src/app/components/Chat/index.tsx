@@ -1,9 +1,30 @@
 import { ChatFooter } from 'containers'
+import { css } from 'glamor'
 import styled from 'glamorous'
 import * as React from 'react'
 import { Themeable } from 'themes/theme.h'
 import InfiniteScroll from './scroll'
-import * as s from './style.css'
+
+const s = {
+  left: css({
+    alignSelf: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    fontSize: '13px',
+  }),
+  top: css({
+    flex: '1',
+    fontWeight: '700',
+    padding: '2px 0',
+  }),
+  bottom: css({
+    color: '#979797',
+    flex: '1',
+    fontWeight: '400',
+    padding: '2px 0',
+  }),
+  right: css({}),
+}
 
 type StyledChatProps = { selected?: boolean } & Themeable
 const StyledChat = styled.div<StyledChatProps>(({ theme, selected }) => ({
