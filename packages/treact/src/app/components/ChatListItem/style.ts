@@ -1,4 +1,24 @@
-.item {
+import { css } from 'glamor'
+
+export const info = css({
+  display: 'flex',
+  flexDirection: 'column',
+  fontSize: '13px',
+  marginTop: '2px',
+  height: '100%',
+})
+
+export const top = css({
+  display: 'flex',
+  flex: '1',
+})
+
+export const bottom = css({
+  display: 'flex',
+  flex: '1',
+})
+
+/*.item {
   background-color: #ffffff;
   height: 62px;
   padding-right: 10px;
@@ -29,19 +49,6 @@
   margin-right: 12px;
 }
 
-.info {
-  display: flex;
-  flex-direction: column;
-  font-size: 13px;
-  margin-top: 2px;
-  height: 100%;
-}
-
-.top {
-  display: flex;
-  flex: 1;
-}
-
 .chatname {
   align-self: center;
   color: #000;
@@ -55,11 +62,6 @@
 .time {
   align-self: center;
   color: #a8a8a8;
-}
-
-.bottom {
-  display: flex;
-  flex: 1;
 }
 
 .message {
@@ -100,4 +102,4 @@
 
 .hidden {
   display: none;
-}
+}*/

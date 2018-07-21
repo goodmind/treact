@@ -1,11 +1,12 @@
+import { Time as FormattedTime } from 'components/Time'
 import { PreviewMedia } from 'containers/Media'
 import { PeerPhoto } from 'containers/PeerPhoto'
 import styled from 'glamorous'
 import { cond, isEmpty, prop, propIs, T } from 'ramda'
 import * as React from 'react'
-import { MtpMessage } from 'redux/mtproto'
+import { MtpMessage } from 'store/mtproto'
 import { Themeable } from 'themes/theme.h'
-import * as style from './style.css'
+import * as style from './style'
 
 const active = 'active'
 
@@ -89,7 +90,7 @@ const Name = styled.div<Themeable>(({ theme }) => ({
   },
 }))
 
-const Time = styled.div<Themeable>(({ theme }) => ({
+const Time = styled(FormattedTime)<Themeable>(({ theme }) => ({
   alignSelf: 'center',
   color: theme.dialogsDateFg,
   [`.${active} &`]: {
@@ -102,6 +103,7 @@ interface ChatListBasicProps {
   name: string
   selected: boolean
   click: React.MouseEventHandler<{}>
+  date?: number
   children?: React.ReactNode
 }
 
@@ -141,6 +143,7 @@ export const ChatListItemEmpty = ({
   click,
   selected,
   children,
+  date,
 }: ChatListBasicProps) => {
   return (
     <StyledDialogItem
@@ -150,7 +153,7 @@ export const ChatListItemEmpty = ({
       <div className={style.info}>
         <div className={style.top}>
           <Name>{name}</Name>
-          <Time>00:00</Time>
+          <Time date={date} />
         </div>
         <div className={style.bottom}>
           {children}
@@ -174,7 +177,7 @@ const shortPreview =
 export const ChatListItem = ({
   id, name, click, selected,
   previewName, message, unreadCount, isYou }: ChatListFullProps) => (
-  <ChatListItemEmpty id={id} name={name} click={click} selected={selected}>
+  <ChatListItemEmpty id={id} name={name} click={click} selected={selected} date={message.date}>
     <MessagePreview userName={previewName} isYou={isYou}>
       {shortPreview(message)}
     </MessagePreview>
