@@ -1,7 +1,7 @@
 import { join, pipe, trim } from 'ramda'
-import { TPeersType } from 'redux/modules/peers'
-import { MtpChat, MtpUser } from 'redux/mtproto'
-import { Dispatch, Store } from 'redux/store.h'
+import { TPeersType } from 'store/modules/peers'
+import { MtpChat, MtpUser } from 'store/mtproto'
+import { Dispatch, Store } from 'store/store.h'
 
 export const retrieveInputPeer = (id: number, peer: TPeersType, peerData: MtpUser | MtpChat) => {
   switch (peer) {

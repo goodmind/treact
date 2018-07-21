@@ -6,7 +6,7 @@ import {
   MtpMessage,
   MtpUser,
   TMtpMessageMediaRecord,
-} from 'redux/mtproto'
+} from 'store/mtproto'
 import { ObjectOverwrite } from 'typelevel-ts'
 export type Payload<T> = {
   entities: {

@@ -1,5 +1,5 @@
 import { complement, find, isNil, pipe as P, props } from 'ramda'
-import { MtpPeer, TById } from 'redux/mtproto'
+import { MtpPeer, TById } from 'store/mtproto'
 
 // TODO: this looks like duplicate of StoredPayload from reselector
 export interface StoreList<T> {
