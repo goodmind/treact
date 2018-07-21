@@ -4,7 +4,7 @@ import * as React from 'react'
 import {
   MtpMessageMediaPhoto,
   MtpMessageMediaVenue,
-} from 'redux/mtproto'
+} from 'store/mtproto'
 import { Themeable } from 'themes/theme.h'
 
 const Caption = styled.span<Themeable>(({ theme }) => ({
