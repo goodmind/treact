@@ -82,7 +82,7 @@ declare module 'redux-act' {
 
     options(opts: Object): void
     has(actionCreator: ActionCreatorOrString<any, any>): boolean
-    on<P, M>(actionCreator: ActionCreatorOrString<P, M>, handler: Handler<S, P, M>): void
+    on<P, M>(actionCreator: ActionCreatorOrString<P, M>, handler: Handler<S, P, M>): Reducer<S>
     off(actionCreator: ActionCreatorOrString<any, any>): void
   }
 
