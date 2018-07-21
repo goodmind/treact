@@ -5,11 +5,11 @@ import { isEmpty, path } from 'ramda'
 import { ChatListItem, ChatListItemEmpty } from 'components/ChatListItem'
 import { getPeerData, getPeerName, getPeerShortName } from 'helpers/Telegram/Peers'
 import { connect } from 'react-redux'
-import { selectChat } from 'redux/api/chatList'
-import { StoreHistory } from 'redux/modules/histories'
-import { TPeersType } from 'redux/modules/peers'
-import { MtpChat, MtpDialog, MtpMessage /* MtpMessage */, MtpUser } from 'redux/mtproto'
-import { Dispatch, Store } from 'redux/store.h'
+import { selectChat } from 'store/api/chatList'
+import { StoreHistory } from 'store/modules/histories'
+import { TPeersType } from 'store/modules/peers'
+import { MtpChat, MtpDialog, MtpMessage /* MtpMessage */, MtpUser } from 'store/mtproto'
+import { Dispatch, Store } from 'store/store.h'
 
 // const getLastMessage =
 //  (history: StoreHistory): MtpMessage => history.byId[last<number, typeof history.ids>(history.ids)];
