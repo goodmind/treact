@@ -11,8 +11,8 @@ export const appSettings = {
 }
 
 export const serverConfig = {
-  webogram: location.protocol === 'https:',
-  // dev: true,
+  webogram: window && window.location && window.location.protocol === 'https:',
+  dev: true,
 }
 
 export const config = {
