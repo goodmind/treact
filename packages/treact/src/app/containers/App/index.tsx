@@ -1,8 +1,8 @@
-import { App } from 'components'
-import { Header } from 'containers'
+import { App } from 'components/App'
+import { Header } from 'containers/Header'
 import * as React from 'react'
-import Helmet from 'react-helmet'
-import * as appConfig from '../../../../config/main'
+//import Helmet from 'react-helmet'
+//import * as appConfig from '../../../../config/main'
 
 interface Props {
   children: React.ReactNode
@@ -10,7 +10,7 @@ interface Props {
 
 const AppContainer = ({ children }: Props) =>
   <App>
-    <Helmet {...appConfig.app} {...appConfig.app.head}/>
+    {/*<Helmet {...appConfig.app} {...appConfig.app.head}/>*/}
     <Header />
     {children}
   </App>
