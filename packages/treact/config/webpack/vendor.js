@@ -14,9 +14,14 @@ const plugins = [
 ]
 
 if (process.env.NODE_ENV === 'production') {
-  plugins.push(new BabiliPlugin({}, {
-    comments: false,
-  }))
+  plugins.push(
+    new BabiliPlugin(
+      {},
+      {
+        comments: false,
+      },
+    ),
+  )
 }
 
 const config = {
@@ -45,7 +50,7 @@ const config = {
       // 'telegram-mtproto',
     ],
   },
-
+  mode: 'none',
   output: {
     path: build,
     filename: '[name].dll.js',
