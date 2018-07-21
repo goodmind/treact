@@ -3,8 +3,8 @@ import * as React from 'react'
 import { LazyMaps, Props } from './index.h'
 
 export class LocationMap extends React.Component<Props, {}> {
-  private map: LazyMaps['map']
-  private maps: LazyMaps['maps']
+  private map!: LazyMaps['map']
+  private maps!: LazyMaps['maps']
 
   public static defaultProps = {
     width: '320px',
