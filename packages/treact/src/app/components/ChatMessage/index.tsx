@@ -1,6 +1,6 @@
 /* tslint:disable */
 // TODO: remove this component
-
+/*
 import * as React from 'react';
 import * as s from './style.css';
 
@@ -33,3 +33,4 @@ class ChatMessage extends React.Component<Props, {}> {
 }
 
 export { ChatMessage };
+*/
