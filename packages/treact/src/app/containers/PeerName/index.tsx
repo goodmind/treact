@@ -9,12 +9,6 @@ type Props = {
   name: string,
 }
 
-
-type M<K extends string, T> = {
-  [P in K]: T
-}
-const s: 'Meme' = 'wrong'
-
 class PeerName extends React.Component<Props> {
   public render() {
     return this.props.name
