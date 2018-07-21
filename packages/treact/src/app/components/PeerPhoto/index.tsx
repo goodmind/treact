@@ -4,7 +4,7 @@ import * as defPhoto from './usercolor1.png'
 
 interface Props {
   id: number | 'default',
-  className: string
+  className?: string
 }
 
 export const PeerPhotoEmpty = ({ className }: Pick<Props, 'className'>) =>
