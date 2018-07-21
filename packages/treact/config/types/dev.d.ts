@@ -4,6 +4,8 @@
 
 declare module '' {}
 
+type mixed = {}
+
 /// <reference path="ramda.d.ts" />
 /// <reference path="redux-act.d.ts" />
 /// <reference path="redux-connect.d.ts" />
