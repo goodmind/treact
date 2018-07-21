@@ -6,11 +6,11 @@ import { path, sort } from 'ramda'
 import * as React from 'react'
 import { connect } from 'react-redux'
 import { Action } from 'redux-act'
-import { StoreHistory } from 'redux/modules/histories'
-import { TPeersType } from 'redux/modules/peers'
-import { MtpDialog, TById } from 'redux/mtproto'
-import { Dispatch, Store } from 'redux/store.h'
 import { createSelector } from 'reselect'
+import { StoreHistory } from 'store/modules/histories'
+import { TPeersType } from 'store/modules/peers'
+import { MtpDialog, TById } from 'store/mtproto'
+import { Dispatch, Store } from 'store/store.h'
 
 interface Props {
   offsetDate: number
