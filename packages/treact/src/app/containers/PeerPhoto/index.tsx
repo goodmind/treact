@@ -1,11 +1,10 @@
-import * as classNames from 'classnames'
 import { PeerPhoto, PeerPhotoEmpty } from 'components/PeerPhoto'
 import picStore from 'helpers/FileManager/picStore'
 import { pathOr } from 'ramda'
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { FileStatus } from 'redux/modules/files'
-import { Store } from 'redux/store.h'
+import { FileStatus } from 'store/modules/files'
+import { Store } from 'store/store.h'
 
 interface ConnectedState {
   photoId: number | 'default'
@@ -22,10 +21,9 @@ type Props = ConnectedState & OwnProps
 class PeerPhotoContainer extends React.Component<Props> {
   public render() {
     const { photoId, className } = this.props
-    const css = classNames('avatar', className)
     return picStore.has(photoId)
-      ? <PeerPhoto id={photoId} className={css} />
-      : <PeerPhotoEmpty className={css}/>
+      ? <PeerPhoto id={photoId} className={className} />
+      : <PeerPhotoEmpty className={className} />
   }
 
   public static defaultProps = {

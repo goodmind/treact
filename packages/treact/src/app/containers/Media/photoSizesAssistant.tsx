@@ -1,8 +1,8 @@
 import picStore from 'helpers/FileManager/picStore'
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { Store } from 'redux/store.h'
 import { createSelector } from 'reselect'
+import { Store } from 'store/store.h'
 
 // TODO: move assistants to middlewares?
 

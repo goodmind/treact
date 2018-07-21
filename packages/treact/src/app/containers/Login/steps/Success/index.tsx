@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { Dispatch, Store } from 'redux/store.h'
+import { Dispatch, Store } from 'store/store.h'
 
 type ConnectedState = Pick<Store, 'currentUser'>
 type ConnectedActions = { dispatch: Dispatch }

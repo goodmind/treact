@@ -1,5 +1,5 @@
 import { TLDocument, TLMedia, TLMediaRecord, TLMediaTypes } from 'helpers/reselector.h'
-import { MtpMessage } from 'redux/mtproto'
+import { MtpMessage } from 'store/mtproto'
 
 export { TLMedia }
 

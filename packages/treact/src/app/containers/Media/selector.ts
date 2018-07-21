@@ -2,8 +2,8 @@ import { media as schema } from 'modules/media/entities'
 import { denormalize } from 'normalizr'
 import getEntities from 'normalizr-entities'
 import { equals, mapObjIndexed } from 'ramda'
-import { Store } from 'redux/store.h'
 import { createSelector, createSelectorCreator, defaultMemoize } from 'reselect'
+import { Store } from 'store/store.h'
 import { Props } from './index.h'
 
 // TODO: split into different connects instead of one selector

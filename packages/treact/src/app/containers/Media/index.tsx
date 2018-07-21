@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { StyledPreview } from 'components/Media'
 import * as Preview from 'components/Media/preview'
 import * as Full from 'components/Media/types'
-import { Store } from 'redux/store.h'
+import { Store } from 'store/store.h'
 import { ConnectedState, FullProps, Mappings, Props } from './index.h'
 import { makeMediaSelector } from './selector'
 

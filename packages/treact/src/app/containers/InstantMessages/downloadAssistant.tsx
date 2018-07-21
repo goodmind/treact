@@ -6,9 +6,9 @@ import { Action } from 'redux-act'
 
 import picStore from 'helpers/FileManager/picStore'
 import { api } from 'helpers/Telegram/pool'
-import { CACHE } from 'redux/actions'
-import { MtpFileLocation, MtpUploadFile } from 'redux/mtproto'
-import { Dispatch, Store } from 'redux/store.h'
+import { CACHE } from 'store/actions'
+import { MtpFileLocation, MtpUploadFile } from 'store/mtproto'
+import { Dispatch, Store } from 'store/store.h'
 
 import * as localForage from 'localforage'
 // import * as Knack from 'knack';

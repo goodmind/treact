@@ -1,7 +1,7 @@
 import { Login } from 'components/Login'
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { Dispatch, Store } from 'redux/store.h'
+import { Dispatch, Store } from 'store/store.h'
 import * as Steps from './steps'
 
 type ConnectedState = Pick<Store, 'auth'>

@@ -1,4 +1,4 @@
-import { Store } from 'redux/store.h'
+import { Store } from 'store/store.h'
 import { entitiesSelector, mediaSelector } from './selector'
 
 describe('Memoized media selector', () => {

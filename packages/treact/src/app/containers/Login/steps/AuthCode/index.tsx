@@ -2,8 +2,8 @@ import { signIn } from 'api/auth'
 import { AuthCode } from 'components/Login/steps'
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { AuthError, isAuthError } from 'redux/modules/auth'
-import { Dispatch, Store } from 'redux/store.h'
+import { AuthError, isAuthError } from 'store/modules/auth'
+import { Dispatch, Store } from 'store/store.h'
 import { StepSkip as OwnProps } from '../..'
 
 type ConnectedState = Pick<Store, 'auth'>
