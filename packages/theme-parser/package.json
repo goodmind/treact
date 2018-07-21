@@ -59,9 +59,5 @@
   "dependencies": {
     "ramda": "^0.25.0"
   },
-  "devDependencies": {
-    "jest": "^22.4.0",
-    "ts-jest": "^22.0.4",
-    "typescript": "^2.7.2"
-  }
+  "devDependencies": {}
 }

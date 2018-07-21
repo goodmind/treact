@@ -1,9 +1,39 @@
 {
- "private": true,
- "name": "treact",
- "version": "0.1.0",
- "devDependencies": {
-  "lerna": "^2.9.0"
- },
- "dependencies": {}
+  "private": true,
+  "name": "treact",
+  "version": "0.1.0",
+  "devDependencies": {
+    "lerna": "^2.9.0"
+  },
+  "_________": {
+    "nohoist": [
+      "**/react-native",
+      "**/react-native/**",
+      "**/treact",
+      "**/@treact/web",
+      "**/@treact/theme-parser",
+      "TreactNative/react-native-*",
+      "TreactNative/react-native-*/**",
+      "TreactNative/vm-browserify",
+      "TreactNative/vm-browserify/**"
+    ]
+  },
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "resolutions": {
+    "**/worker-loader": "2.0.0"
+  },
+  "dependencies": {
+    "ramda": "^0.25.0"
+  },
+  "scripts": {
+    "reset-modules": "rm -rf node_modules/ yarn.lock packages/*/node_modules",
+    "reset-yarn": "yarn cache clean",
+    "reset-rn": "watchman watch-del-all; rm -fr $TMPDIR/react-*; rm -rf $TMPDIR/haste-map-react-native-packager-*",
+    "reset-cache": "yarn reset-yarn && yarn reset-rn",
+    "reset": "yarn reset-modules && yarn reset-cache"
+  }
 }

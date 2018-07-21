@@ -7,7 +7,7 @@
         "src/app/store/*"
       ]
     },
-    "outDir": "build",
+    "outDir": "shared",
     "module": "esnext",
     "target": "es2015",
     "pretty": true,
@@ -32,6 +32,7 @@
     "node_modules",
     "gh-pages",
     "build",
+    "shared",
     "typings/main",
     "typings/main.d.ts"
   ]
