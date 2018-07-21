@@ -1,7 +1,7 @@
 import { PeerPhoto } from 'containers/PeerPhoto'
 import styled from 'glamorous'
 import * as React from 'react'
-import { MtpMessage } from 'redux/mtproto'
+import { MtpMessage } from 'store/mtproto'
 
 const Styled = styled.div({
   display: 'flex',
