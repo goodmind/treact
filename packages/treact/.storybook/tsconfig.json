@@ -1,0 +1,21 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "target": "es5",
+    "sourceMap": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "jsx": "react",
+    "typeRoots": ["node_modules/@types"],
+    "lib": ["es5", "es2015", "es2017", "dom"],
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "baseUrl": ".",
+    "paths": {
+      "*": ["*"],
+      "react": ["node_modules/@types/react"]
+    }
+  },
+  "exclude": ["node_modules"],
+  "no-var-requires": true
+}
