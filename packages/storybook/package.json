@@ -1,4 +1,6 @@
 {
+  "name": "@treact/storybook",
+  "version": "0.1.0",
   "scripts": {
     "storybook": "start-storybook -p 6006 -c ."
   },

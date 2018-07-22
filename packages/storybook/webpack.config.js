@@ -1,5 +1,5 @@
 const { resolve, join } = require('path')
-const main = resolve(__dirname, '../')
+const main = resolve(__dirname, '../treact')
 const source = resolve(main, 'src')
 const app = resolve(source, 'app')
 const tsconfig = resolve(__dirname, 'tsconfig.json')
