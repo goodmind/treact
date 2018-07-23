@@ -5,4 +5,6 @@ import * as actions from 'store/actions'
 
 console.log(actions)
 
-storiesOf('Button 1', module).add('with 1', () => <div>test 1</div>)
+import { App } from 'components/App'
+
+storiesOf('Components', module).add('App', () => <App />)

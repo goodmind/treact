@@ -1,13 +1,11 @@
 import { configure } from '@storybook/react'
 
-// const req = require.context('../', true, /.stories.tsx$/)
-// console.log(req.keys())
+function importAll(r) {
+  r.keys().forEach(r)
+}
+
 function loadStories() {
-  const test = require('./index.stories.tsx')
-  const test2 = require('components/App/index.stories.tsx')
-  console.log(test)
-  console.log(test2)
-  // req.keys().forEach(filename => req(filename))
+  importAll(require.context('app', true, /\.stories\.tsx$/))
 }
 
 configure(loadStories, module)
