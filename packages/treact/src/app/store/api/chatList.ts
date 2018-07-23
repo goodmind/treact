@@ -4,7 +4,7 @@ import { assocPath, converge, flip, identity, isNil,
   of, pathOr, pathSatisfies, pipe, prop,
   reduce, when } from 'ramda'
 
-import { CHATS } from 'actions'
+import { CHATS } from 'store/actions'
 import { unifiedGetId } from 'helpers/state'
 import { getPeerData, retrieveInputPeer } from 'helpers/Telegram/Peers'
 import { api } from 'helpers/Telegram/pool'
