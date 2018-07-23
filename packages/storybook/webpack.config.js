@@ -3,11 +3,17 @@ const { resolve } = require('path')
 const main = resolve(__dirname, '../treact')
 const source = resolve(main, 'src')
 const app = resolve(source, 'app')
+const store = resolve(app, 'store')
+
+const api = resolve(store, 'api')
+const modules = resolve(store, 'modules')
+
 const tsconfig = resolve(__dirname, 'tsconfig.json')
 
 const webpack = require('webpack')
 
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
+// const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
 
 // speed up hot start
 const HardSourceWebpackPlugin = require('hard-source-webpack-plugin')
@@ -28,7 +34,7 @@ module.exports = {
         loader: 'source-map-loader',
       },
       {
-        test: /\.tsx?$/,
+        test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
         use: [
           {
@@ -88,11 +94,17 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
     modules: [source, main, app, 'node_modules'],
+    alias: {
+      modules,
+      api,
+    },
+    // plugins: [new TsconfigPathsPlugin({ configFile: tsconfig })],
   },
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('development'),
+        STORYBOOK: true,
       },
     }),
     new ForkTsCheckerWebpackPlugin({

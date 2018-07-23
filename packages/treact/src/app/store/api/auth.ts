@@ -1,4 +1,4 @@
-import { AUTH } from 'actions'
+import { AUTH } from 'store/actions'
 import { makePasswordHash } from 'helpers/Telegram'
 import { APP_HASH, APP_ID, DEFAULT_DC_ID } from 'helpers/Telegram/config'
 import { api, storage } from 'helpers/Telegram/pool'
