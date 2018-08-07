@@ -4,7 +4,7 @@ import { PeerPhoto } from 'containers/PeerPhoto'
 import styled from 'glamorous'
 import { cond, isEmpty, prop, propIs, T } from 'ramda'
 import * as React from 'react'
-import { MtpMessage } from 'store/mtproto'
+import { Message } from 'store/mtproto.h'
 import { Themeable } from 'themes/theme.h'
 import * as style from './style'
 
@@ -110,7 +110,7 @@ interface ChatListBasicProps {
 interface ChatListFullProps extends ChatListBasicProps {
   isYou: boolean
   previewName: string
-  message: MtpMessage
+  message: Message
   unreadCount: number
 }
 
