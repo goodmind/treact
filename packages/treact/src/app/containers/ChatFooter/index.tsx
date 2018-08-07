@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { connect } from 'react-redux'
+import { connect as connectRedux } from 'react-redux'
 import { compose, withHandlers, withProps, withState } from 'recompose'
 
 import { ChatFooter, Props as ChatFooterProps } from 'components/ChatFooter'
@@ -7,42 +7,52 @@ import { sendText } from 'store/api/messages'
 import { Dispatch, Store } from 'store/store.h'
 
 type State = {
-  message: string,
+  message: string
+  setMessage(s: string): string
 }
 
-type ConnectedState = {
-  selected: number,
+type Handlers = {
+  onChange: React.ChangeEventHandler<HTMLInputElement>
+  onSubmit: React.MouseEventHandler<{}>
 }
-type ConnectedActions = {
-  sendMessage(id: number, text: string): Promise<{}>,
-  setMessage(s: string): string,
-  onChange: React.ChangeEventHandler<HTMLInputElement>,
-  onSubmit: React.MouseEventHandler<{}>,
-}
-type OwnProps = {}
-type Props = ConnectedState & ConnectedActions & OwnProps & State
 
-const enhance = compose(
-  connect<ConnectedState, Pick<ConnectedActions, 'sendMessage'>, OwnProps, Store>(
-    (state: Store) => ({ selected: state.selected.dialog }),
-    (dispatch: Dispatch) => ({
-      sendMessage: (id: number, text: string) => dispatch(sendText(id, text)),
-    })),
+type EnhancedProps = State & ChatFooterProps & ConnectedActions & ConnectedState
+
+const enhance = compose<ChatFooterProps, Connected>(
   withState('message', 'setMessage', ''),
-  withHandlers<Props, {}>({
+  withHandlers<EnhancedProps, Handlers>({
     onChange: ({ setMessage }) => e => setMessage(e.target.value),
     onSubmit: ({ sendMessage, selected, setMessage, message }) => async () => {
       await sendMessage(selected, message)
       setMessage('')
     },
   }),
-  withProps<ChatFooterProps, Props>(props => ({
+  withProps<ChatFooterProps, EnhancedProps & Handlers>(props => ({
     value: props.message,
     change: props.onChange,
     submit: props.onSubmit,
   })),
 )
 
-const connected = enhance(ChatFooter)
+type ConnectedState = {
+  selected: number
+}
 
+type ConnectedActions = {
+  sendMessage: typeof sendText
+}
+
+type Connected = ConnectedState & ConnectedActions
+
+type OwnProps = {}
+
+const connect = connectRedux<ConnectedState, ConnectedActions, OwnProps, Store>(
+  state => ({ selected: state.selected.dialog }),
+  { sendMessage: sendText },
+)
+
+const enhanced = enhance(ChatFooter)
+const connected = connect(enhanced)
+
+export { enhanced }
 export { connected as ChatFooter }

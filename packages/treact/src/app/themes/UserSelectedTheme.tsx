@@ -31,4 +31,5 @@ class UserSelectedTheme extends React.Component<{ theme: RawTheme }> {
   }
 }
 
+export { UserSelectedTheme }
 export default connect((state: Store) => ({ theme: state.theme }))(UserSelectedTheme)

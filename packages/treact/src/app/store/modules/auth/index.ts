@@ -5,7 +5,7 @@ import { createReducer } from 'redux-act'
 import { REHYDRATE } from 'redux-persist/constants'
 import { Store } from 'store/store.h'
 
-import { AUTH } from 'actions'
+import { AUTH } from 'store/actions'
 
 export interface AuthError {
   code: number
