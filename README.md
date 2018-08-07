@@ -24,7 +24,8 @@ You can clone from this repository
 ```bash
 $ git clone https://github.com/goodmind/treact
 $ cd treact
-$ npm install
+$ cd packages/theme-parser && yarn build
+$ cd packages/treact && yarn start:dev
 ```
 
 ## Usage
@@ -34,22 +35,22 @@ All commands defaults to development environment. You can set `NODE_ENV` to `pro
 ```bash
 # Running
 
-$ npm start # This starts the app in development mode
+$ yarn start # This starts the app in development mode
 
 # Starting it with the production build
-$ NODE_ENV=production npm start # or
-$ npm run start:prod
+$ NODE_ENV=production yarn start # or
+$ yarn start:prod
 
 # Building 
 
-$ npm build # This builds the app in development mode
+$ yarn build # This builds the app in development mode
 
 # Commands below builds the production build
-$ NODE_ENV=production npm build # or
-$ npm run build:prod
+$ NODE_ENV=production yarn build # or
+$ yarn build:prod
 
 # Testing
-$ npm test
+$ yarn test
 ```
 
 ## Credits
