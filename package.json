@@ -20,7 +20,9 @@
   },
   "workspaces": {
     "packages": [
-      "packages/*"
+      "packages/theme-parser",
+      "packages/treact",
+      "packages/storybook"
     ]
   },
   "resolutions": {
